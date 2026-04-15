@@ -1,0 +1,286 @@
+{%- comment -%}
+  VOXEL FORGE — Manufacturing & B2B Page
+  Template: templates/page.manufacturing.liquid
+  Go to Online Store → Pages → Manufacturing → Template → select "page.manufacturing"
+{%- endcomment -%}
+
+<div class="vf-mfg-page">
+
+  <div class="vf-mfg-header">
+    <p class="vf-section-label-teal">B2B · Rapid Prototyping · MSME</p>
+    <h1 class="vf-mfg-title">Manufacturing</h1>
+    <p class="vf-mfg-sub">High-precision FDM and resin printing for product engineers, manufacturers, and architectural firms in Chennai.</p>
+  </div>
+
+  <div class="vf-capabilities">
+    <div class="vf-cap-card">
+      <div class="vf-cap-rule" style="background:#C9A96E;"></div>
+      <h2>FDM Printing</h2>
+      <p>Bambu Lab P2S and custom-built rigs. PLA, ABS, PETG, PEEK, carbon-fibre composites. Dimensional accuracy to ±0.2mm.</p>
+      <div class="vf-cap-spec">
+        <span>Build volume · 256 × 256 × 256mm</span>
+        <span>Layer height · 0.05 — 0.35mm</span>
+        <span>Materials · 12 available</span>
+      </div>
+    </div>
+
+    <div class="vf-cap-card">
+      <div class="vf-cap-rule" style="background:#3D7A6B;"></div>
+      <h2>Resin Printing</h2>
+      <p>High-detail MSLA resin for fine-feature prototypes, mould masters, and architectural scale models. Surface finish to 25μm.</p>
+      <div class="vf-cap-spec">
+        <span>Resolution · 50μm XY</span>
+        <span>Layer height · 0.025 — 0.1mm</span>
+        <span>Resins · Standard, ABS-like, Flexible</span>
+      </div>
+    </div>
+
+    <div class="vf-cap-card">
+      <div class="vf-cap-rule" style="background:#C4614A;"></div>
+      <h2>Post-processing</h2>
+      <p>In-house support removal, sanding, priming, and painting. NDA available for all production runs. Confidential handling by default.</p>
+      <div class="vf-cap-spec">
+        <span>Finish · Raw · Sanded · Primed · Painted</span>
+        <span>NDA · On request, no charge</span>
+        <span>Delivery · Chennai metro, pan-India courier</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="vf-mfg-contact">
+    <p class="vf-form-label">Request a quote</p>
+    {% form 'contact', class: 'vf-contact-form' %}
+      {% if form.posted_successfully? %}
+        <p class="vf-form-success">Quote request received. We will respond within 24 hours with pricing and lead time.</p>
+      {% else %}
+        <div class="vf-field-row">
+          <div class="vf-field">
+            <label for="mfg-name">Name</label>
+            <input type="text" id="mfg-name" name="contact[name]" required>
+          </div>
+          <div class="vf-field">
+            <label for="mfg-company">Company / Organisation</label>
+            <input type="text" id="mfg-company" name="contact[company]">
+          </div>
+        </div>
+
+        <div class="vf-field-row">
+          <div class="vf-field">
+            <label for="mfg-email">Email</label>
+            <input type="email" id="mfg-email" name="contact[email]" required>
+          </div>
+          <div class="vf-field">
+            <label for="mfg-phone">Phone</label>
+            <input type="tel" id="mfg-phone" name="contact[phone]">
+          </div>
+        </div>
+
+        <div class="vf-field">
+          <label for="mfg-process">Process required</label>
+          <select id="mfg-process" name="contact[process]">
+            <option value="">Select</option>
+            <option value="fdm">FDM Printing</option>
+            <option value="resin">Resin Printing</option>
+            <option value="both">FDM + Resin</option>
+            <option value="unsure">Not sure — need advice</option>
+          </select>
+        </div>
+
+        <div class="vf-field">
+          <label for="mfg-brief">Project brief</label>
+          <textarea id="mfg-brief" name="contact[body]" rows="5" placeholder="Material, dimensions, quantity, required tolerances, deadline..."></textarea>
+        </div>
+
+        <button type="submit" class="vf-mfg-submit">Send enquiry</button>
+      {% endif %}
+    {% endform %}
+  </div>
+
+</div>
+
+<style>
+  .vf-mfg-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  .vf-section-label-teal {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 300;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: #3D7A6B;
+    margin-bottom: 16px;
+  }
+
+  .vf-mfg-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(40px, 5vw, 70px);
+    letter-spacing: 0.04em;
+    color: #E8E2D6;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .vf-mfg-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 200;
+    font-size: 14px;
+    color: #9A9585;
+    max-width: 560px;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+    margin-bottom: 64px;
+  }
+
+  .vf-capabilities {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 2px;
+    margin-bottom: 72px;
+  }
+
+  .vf-cap-card {
+    background-color: #1A1A1A;
+    border: 0.5px solid #2C2C2C;
+    padding: 28px;
+  }
+
+  .vf-cap-rule {
+    width: 24px;
+    height: 1px;
+    margin-bottom: 20px;
+  }
+
+  .vf-cap-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    color: #E8E2D6;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+
+  .vf-cap-card p {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 200;
+    font-size: 13px;
+    color: #9A9585;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .vf-cap-spec {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 16px;
+    border-top: 0.5px solid #2C2C2C;
+  }
+
+  .vf-cap-spec span {
+    font-family: 'DM Sans', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: #4A4A4A;
+    text-transform: uppercase;
+  }
+
+  .vf-mfg-contact { max-width: 700px; }
+
+  .vf-form-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #C9A96E;
+    margin-bottom: 28px;
+  }
+
+  .vf-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .vf-field {
+    margin-bottom: 16px;
+  }
+
+  .vf-field label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #4A4A4A;
+    margin-bottom: 7px;
+  }
+
+  .vf-field input,
+  .vf-field textarea,
+  .vf-field select {
+    width: 100%;
+    background-color: #1A1A1A;
+    border: 0.5px solid #2C2C2C;
+    border-radius: 0;
+    color: #E8E2D6;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 600ms cubic-bezier(0.25,0,0,1);
+  }
+
+  .vf-field input:focus,
+  .vf-field textarea:focus,
+  .vf-field select:focus {
+    border-color: #C9A96E;
+  }
+
+  .vf-field select option {
+    background-color: #1A1A1A;
+  }
+
+  .vf-mfg-submit {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #3D7A6B;
+    background: transparent;
+    border: 1px solid #3D7A6B;
+    padding: 14px 28px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 600ms cubic-bezier(0.25,0,0,1);
+  }
+
+  .vf-mfg-submit:hover {
+    background-color: #3D7A6B;
+    color: #0A0A0A;
+  }
+
+  .vf-form-success {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    color: #3D7A6B;
+    font-style: italic;
+    padding: 24px;
+    border: 0.5px solid #3D7A6B;
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 749px) {
+    .vf-mfg-page { padding: 48px 20px; }
+    .vf-capabilities { grid-template-columns: 1fr; }
+    .vf-field-row { grid-template-columns: 1fr; }
+  }
+</style>

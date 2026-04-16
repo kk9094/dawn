@@ -1,0 +1,106 @@
+/* ═══════════════════════════════════════════════════════════════
+   VOXEL FORGE — Core Architecture & Tokens
+   Brand Identity v1.0
+   Contains CSS variable definitions, color schemes, typography,
+   and structural resets.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── BRAND TOKENS ─── */
+:root {
+  --vf-obsidian: #0A0A0A;
+  --vf-charcoal: #1A1A1A;
+  --vf-graphite: #2C2C2C;
+  --vf-slate: #4A4A4A;
+  --vf-silver: #9A9585;
+  --vf-bone: #E8E2D6;
+  --vf-warm-white: #F5F1EA;
+  --vf-gold: #C9A96E;
+  --vf-gold-light: #E8C98A;
+  --vf-gold-dim: #8A6E3A;
+  --vf-teal: #3D7A6B;
+  --vf-teal-bright: #5BA89A;
+  --vf-coral: #C4614A;
+
+  /* Motion */
+  --vf-ease: cubic-bezier(0.25, 0, 0, 1);
+  --vf-duration: 600ms;
+
+  /* Typography */
+  --vf-serif: 'Cormorant Garamond', Georgia, serif;
+  --vf-sans: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ─── GLOBAL RESET OVERRIDES ─── */
+*,
+*::before,
+*::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 10px baseline for rems */
+}
+
+body {
+  background-color: var(--vf-obsidian);
+  color: var(--vf-bone);
+  font-family: var(--vf-sans);
+  font-weight: 300;
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  margin-top: 0;
+  color: var(--vf-bone);
+}
+
+/* ─── DAWN BASE ARCHITECTURE OVERRIDES ─── */
+:root {
+  --color-base-background-1: 10, 10, 10;
+  /* Obsidian */
+  --color-base-background-2: 26, 26, 26;
+  /* Charcoal */
+  --color-base-text: 232, 226, 214;
+  /* Bone */
+  --color-base-accent-1: 201, 169, 110;
+  /* Gold */
+  --color-base-accent-2: 61, 122, 107;
+  /* Forge Teal */
+  --color-base-outline-button-labels: 201, 169, 110;
+  --color-base-solid-button-labels: 10, 10, 10;
+  --payment-terms-background-color: rgb(10, 10, 10);
+
+  --font-heading-family: var(--vf-serif);
+  --font-heading-style: normal;
+  --font-heading-weight: 300;
+  
+  --font-body-family: var(--vf-sans);
+  --font-body-style: normal;
+  --font-body-weight: 300;
+  --font-body-weight-bold: 400; /* Though brand avoids bold when possible */
+
+  --font-heading-scale: 1.1;
+  --font-body-scale: 1.0;
+
+  /* Strict UI Geometry */
+  --buttons-radius: 0px;
+  --buttons-border-width: 1px;
+  --inputs-radius: 0px;
+  --inputs-border-width: 1px;
+  --variant-pills-radius: 0px;
+  --badge-corner-radius: 0px;
+
+  /* Grid Layouts */
+  --page-width: 1200px;
+  --grid-desktop-horizontal-spacing: 2px;
+  --grid-desktop-vertical-spacing: 2px;
+  --grid-mobile-horizontal-spacing: 2px;
+  --grid-mobile-vertical-spacing: 2px;
+}

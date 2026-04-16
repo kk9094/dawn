@@ -1,0 +1,64 @@
+/* ═══════════════════════════════════════════════════════════════
+   VOXEL FORGE — Component Architecture
+   Contains modular UI components adhering to the 1600px grid rule,
+   60% negative space, and rigid wireframe aesthetics.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Base Grid Constraints ─── */
+.vf-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+@media screen and (min-width: 990px) {
+  .vf-container {
+    padding: 0 8rem;
+  }
+}
+
+/* ─── Motion Base ─── */
+.vf-reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  will-change: opacity, transform;
+}
+
+.vf-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--vf-duration) var(--vf-ease),
+              transform var(--vf-duration) var(--vf-ease);
+}
+
+/* ─── Base Buttons ─── */
+.vf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid var(--vf-graphite);
+  color: var(--vf-bone);
+  font-family: var(--vf-sans);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1.2rem 3.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--vf-duration) var(--vf-ease),
+              color var(--vf-duration) var(--vf-ease);
+}
+
+.vf-btn:hover,
+.vf-btn:focus {
+  border-color: var(--vf-teal);
+  color: var(--vf-teal);
+}
+
+/* Prestige Button (Atelier) */
+.vf-btn--prestige:hover,
+.vf-btn--prestige:focus {
+  border-color: var(--vf-gold);
+  color: var(--vf-gold);
+}

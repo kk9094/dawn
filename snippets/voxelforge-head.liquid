@@ -12,8 +12,12 @@
   rel="stylesheet"
 >
 
-{%- comment -%} Brand stylesheet {%- endcomment -%}
-{{ 'voxelforge-brand.css' | asset_url | stylesheet_tag }}
+{%- comment -%} Brand Architecture CSS Extensions {%- endcomment -%}
+{{ 'voxel-forge-core.css' | asset_url | stylesheet_tag }}
+{{ 'voxel-components.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} Brand Motion Observer {%- endcomment -%}
+<script src="{{ 'voxel-motion.js' | asset_url }}" defer="defer"></script>
 
 {%- comment -%} Brand meta {%- endcomment -%}
 <meta name="theme-color" content="#0A0A0A">

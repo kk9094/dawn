@@ -882,3 +882,60 @@ h6 {
   box-shadow: none !important;
   border-bottom: 0.5px solid var(--vf-graphite) !important;
 }
+
+/* --- REFACTORED HEADER & ANNOUNCEMENT BAR STRUCTURE --- */
+
+/* Announcement Bar Slimming */
+.announcement-bar__message {
+  font-size: 1.2rem !important; /* Reduced font size */
+  padding-top: 0.5rem !important; /* Decreased vertical padding */
+  padding-bottom: 0.5rem !important;
+  min-height: auto !important; /* Override dawn default minimum heights */
+}
+
+/* Header Grid Reconfiguration (Absolute Center Logo, Left Nav, Right Icons) */
+.header {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  grid-template-areas: 'navigation heading icons' !important;
+  align-items: center !important;
+  padding-top: 1.2rem !important; /* Shrink vertical padding */
+  padding-bottom: 1.2rem !important; 
+}
+
+/* Ensure Nav anchors left */
+.header__inline-menu {
+  grid-area: navigation;
+  justify-self: start;
+}
+
+/* Ensure Logo centers */
+.header__heading,
+.header__heading-link {
+  grid-area: heading;
+  justify-self: center;
+}
+
+/* Ensure Icons anchor right */
+.header__icons {
+  grid-area: icons;
+  justify-self: end;
+}
+
+/* Icon Standardization (Equal widths & heights for all action SVG icons) */
+.header__icon .svg-wrapper,
+.header__icon svg.icon,
+.header__icon svg {
+  width: 24px !important; /* Exact width constraint */
+  height: 24px !important; /* Exact height constraint */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.header__icon {
+  width: auto !important; 
+  height: auto !important;
+  padding-left: 1rem !important; 
+  padding-right: 0 !important; /* Re-balance the click targets */
+}

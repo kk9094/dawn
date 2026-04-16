@@ -800,3 +800,10 @@ h6 {
     max-width: 100%;
     height: auto;
 }
+
+/* --- CUSTOM DESKTOP LOGO SIZING --- */
+.header__heading-logo {
+    width: 200px !important; /* Adjust this number up or down */
+    max-width: 100%;
+    height: auto;
+}

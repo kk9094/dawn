@@ -777,3 +777,21 @@ h6 {
 .multicolumn-card__info .rte {
   color: var(--vf-silver);
 }
+
+/* --- EDGE-TO-EDGE HEADER FIX --- */
+.utility-bar,
+.header-wrapper {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  background-color: var(--vf-charcoal) !important;
+  border-bottom: 0.5px solid var(--vf-graphite);
+}
+
+.header,
+.utility-bar__grid {
+  max-width: var(--page-width, 1200px);
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}

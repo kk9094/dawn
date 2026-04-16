@@ -160,7 +160,9 @@
                 }}
               </div>
             {%- else -%}
-              {% render 'voxelforge-logo' %}
+              <div class="header__heading-logo-wrapper">
+                {% render 'voxelforge-logo' %}
+              </div>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}
@@ -200,7 +202,9 @@
                 }}
               </div>
             {%- else -%}
-              {% render 'voxelforge-logo' %}
+              <div class="header__heading-logo-wrapper">
+                {% render 'voxelforge-logo' %}
+              </div>
             {%- endif -%}
           </a>
       {%- if request.page_type == 'index' -%}

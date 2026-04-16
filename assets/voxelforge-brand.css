@@ -6,27 +6,27 @@
 
 /* ─── TOKENS ─── */
 :root {
-  --vf-obsidian:    #0A0A0A;
-  --vf-charcoal:    #1A1A1A;
-  --vf-graphite:    #2C2C2C;
-  --vf-slate:       #4A4A4A;
-  --vf-silver:      #9A9585;
-  --vf-bone:        #E8E2D6;
-  --vf-warm-white:  #F5F1EA;
-  --vf-gold:        #C9A96E;
-  --vf-gold-light:  #E8C98A;
-  --vf-gold-dim:    #8A6E3A;
-  --vf-teal:        #3D7A6B;
+  --vf-obsidian: #0A0A0A;
+  --vf-charcoal: #1A1A1A;
+  --vf-graphite: #2C2C2C;
+  --vf-slate: #4A4A4A;
+  --vf-silver: #9A9585;
+  --vf-bone: #E8E2D6;
+  --vf-warm-white: #F5F1EA;
+  --vf-gold: #C9A96E;
+  --vf-gold-light: #E8C98A;
+  --vf-gold-dim: #8A6E3A;
+  --vf-teal: #3D7A6B;
   --vf-teal-bright: #5BA89A;
-  --vf-coral:       #C4614A;
+  --vf-coral: #C4614A;
 
   /* Motion */
-  --vf-ease:        cubic-bezier(0.25, 0, 0, 1);
-  --vf-duration:    600ms;
+  --vf-ease: cubic-bezier(0.25, 0, 0, 1);
+  --vf-duration: 600ms;
 
   /* Typography */
-  --vf-serif:       'Cormorant Garamond', Georgia, serif;
-  --vf-sans:        'DM Sans', system-ui, sans-serif;
+  --vf-serif: 'Cormorant Garamond', Georgia, serif;
+  --vf-sans: 'DM Sans', system-ui, sans-serif;
 }
 
 /* ─── GLOBAL RESET OVERRIDES ─── */
@@ -46,11 +46,16 @@ body {
 
 /* Dawn CSS variable overrides */
 :root {
-  --color-base-background-1: 10, 10, 10;       /* Obsidian */
-  --color-base-background-2: 26, 26, 26;       /* Charcoal */
-  --color-base-text: 232, 226, 214;            /* Bone */
-  --color-base-accent-1: 201, 169, 110;        /* Gold */
-  --color-base-accent-2: 61, 122, 107;         /* Forge Teal */
+  --color-base-background-1: 10, 10, 10;
+  /* Obsidian */
+  --color-base-background-2: 26, 26, 26;
+  /* Charcoal */
+  --color-base-text: 232, 226, 214;
+  /* Bone */
+  --color-base-accent-1: 201, 169, 110;
+  /* Gold */
+  --color-base-accent-2: 61, 122, 107;
+  /* Forge Teal */
   --color-base-outline-button-labels: 201, 169, 110;
   --color-base-solid-button-labels: 10, 10, 10;
   --payment-terms-background-color: rgb(10, 10, 10);
@@ -89,7 +94,7 @@ body {
 .announcement-bar__message {
   color: var(--vf-gold);
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 300;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -127,7 +132,7 @@ body {
 .header__menu-item,
 .header__menu-item span {
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 300;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -170,11 +175,9 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,10,10,0.3) 0%,
-    rgba(10,10,10,0.55) 100%
-  );
+  background: linear-gradient(to bottom,
+      rgba(10, 10, 10, 0.3) 0%,
+      rgba(10, 10, 10, 0.55) 100%);
   pointer-events: none;
 }
 
@@ -195,7 +198,7 @@ body {
 .banner__text {
   font-family: var(--vf-sans);
   font-weight: 200;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0.12em;
   color: var(--vf-silver);
   text-transform: uppercase;
@@ -206,7 +209,7 @@ body {
 .shopify-challenge__button,
 .customer button {
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 300;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -306,7 +309,7 @@ body {
   background-color: var(--vf-gold);
   color: var(--vf-obsidian);
   font-family: var(--vf-sans);
-  font-size: 9px;
+  font-size: 16px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   font-weight: 400;
@@ -331,7 +334,12 @@ body {
 /* Section headings */
 .rich-text__heading,
 .featured-collection .title,
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--vf-serif);
   font-weight: 300;
   color: var(--vf-bone);
@@ -341,7 +349,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── SECTION LABELS (decorative) ─── */
 .vf-section-label {
   font-family: var(--vf-sans);
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.36em;
   text-transform: uppercase;
@@ -371,7 +379,7 @@ h1, h2, h3, h4, h5, h6 {
 .rich-text p {
   font-family: var(--vf-sans);
   font-weight: 200;
-  font-size: 14px;
+  font-size: 16px;
   letter-spacing: 0.06em;
   color: var(--vf-silver);
   line-height: 1.9;
@@ -390,7 +398,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .product__description {
   font-family: var(--vf-sans);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 200;
   letter-spacing: 0.06em;
   color: var(--vf-silver);
@@ -409,7 +417,7 @@ h1, h2, h3, h4, h5, h6 {
 .variant-selects fieldset legend,
 .product-form__input label {
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 16px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--vf-silver);
@@ -449,7 +457,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--vf-bone);
   font-family: var(--vf-sans);
   font-weight: 300;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.06em;
   transition: border-color var(--vf-duration) var(--vf-ease);
 }
@@ -464,7 +472,7 @@ h1, h2, h3, h4, h5, h6 {
 .field__label,
 .select__label {
   font-family: var(--vf-sans);
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 300;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -510,7 +518,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .footer__heading {
   font-family: var(--vf-sans);
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -522,7 +530,7 @@ h1, h2, h3, h4, h5, h6 {
 .footer__list-item a,
 .link {
   font-family: var(--vf-sans);
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 200;
   letter-spacing: 0.1em;
   color: var(--vf-silver);
@@ -537,7 +545,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .copyright__content {
   font-family: var(--vf-sans);
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -561,7 +569,7 @@ h1, h2, h3, h4, h5, h6 {
 .newsletter__subheading {
   font-family: var(--vf-sans);
   font-weight: 200;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--vf-silver);
   letter-spacing: 0.08em;
 }
@@ -569,7 +577,7 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── BREADCRUMBS ─── */
 .breadcrumbs {
   font-family: var(--vf-sans);
-  font-size: 10px;
+  font-size: 15px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--vf-slate);
@@ -613,13 +621,13 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── COLLECTION FILTERS ─── */
 .facets__summary {
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 16px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--vf-silver);
 }
 
-.facets__checkbox:checked + .facets__label::before {
+.facets__checkbox:checked+.facets__label::before {
   background-color: var(--vf-gold);
   border-color: var(--vf-gold);
 }
@@ -682,14 +690,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ─── UTILITY CLASSES ─── */
-.vf-gold  { color: var(--vf-gold); }
-.vf-teal  { color: var(--vf-teal-bright); }
-.vf-bone  { color: var(--vf-bone); }
-.vf-serif { font-family: var(--vf-serif); }
-.vf-tracked { letter-spacing: 0.28em; text-transform: uppercase; font-size: 10px; }
+.vf-gold {
+  color: var(--vf-gold);
+}
+
+.vf-teal {
+  color: var(--vf-teal-bright);
+}
+
+.vf-bone {
+  color: var(--vf-bone);
+}
+
+.vf-serif {
+  font-family: var(--vf-serif);
+}
+
+.vf-tracked {
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-size: 15px;
+}
 
 /* ─── MOTION ─── */
 @media (prefers-reduced-motion: no-preference) {
+
   .card-wrapper,
   .button,
   .header__menu-item span,
@@ -705,8 +730,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   @keyframes vf-fadein {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
@@ -723,4 +755,25 @@ h1, h2, h3, h4, h5, h6 {
   .header__heading {
     font-size: 18px;
   }
+}
+
+
+/* --- MULTICOLUMN FIX --- */
+.multicolumn-card {
+  background-color: var(--vf-obsidian) !important;
+  border: 0.5px solid var(--vf-graphite);
+}
+
+.multicolumn-card__info {
+  background-color: transparent !important;
+  color: var(--vf-silver);
+}
+
+.multicolumn-card__info h3,
+.multicolumn-card__info .inline-richtext {
+  color: var(--vf-bone);
+}
+
+.multicolumn-card__info .rte {
+  color: var(--vf-silver);
 }

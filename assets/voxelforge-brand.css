@@ -807,3 +807,78 @@ h6 {
     max-width: 100%;
     height: auto;
 }
+
+/* --- 1. ANNOUNCEMENT BAR (WELCOME HEADER) --- */
+.announcement-bar__message {
+  font-family: var(--vf-sans) !important;
+  font-weight: 300 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+
+@keyframes mechanicalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.announcement-bar {
+  animation: mechanicalFadeIn 600ms cubic-bezier(0.25, 0, 0, 1) forwards !important;
+  opacity: 0; /* Pre-animation state */
+}
+
+/* --- 2. NAVIGATION MICRO-INTERACTIONS --- */
+.header__menu-item,
+.header__menu-item span {
+  text-decoration: none !important;
+  font-family: var(--vf-sans) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.08em !important;
+  color: var(--vf-bone) !important;
+  position: relative;
+}
+
+.header__menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--vf-forge-teal) !important;
+  transition: width 600ms cubic-bezier(0.25, 0, 0, 1) !important;
+}
+
+.header__menu-item:hover::after {
+  width: 100%;
+}
+
+/* --- 3. OPTICAL ALIGNMENT & ICONS --- */
+.header {
+  align-items: center !important;
+}
+
+.header__icon {
+  color: var(--vf-bone) !important;
+  transition: color 600ms cubic-bezier(0.25, 0, 0, 1);
+}
+
+.header__icon:hover,
+.header__icon:focus,
+.header__icon:hover .icon,
+.header__icon:focus .icon {
+  color: var(--vf-forge-teal) !important;
+  stroke: var(--vf-forge-teal) !important;
+}
+
+/* --- 4. STICKY HEADER BEHAVIOR --- */
+.shopify-section-header-sticky.scrolled-past-header,
+.scrolled-past-header {
+  box-shadow: none !important;
+  border-bottom: 0.5px solid var(--vf-graphite) !important;
+}

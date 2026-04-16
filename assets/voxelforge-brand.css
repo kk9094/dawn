@@ -795,3 +795,8 @@ h6 {
   padding-left: 20px;
   padding-right: 20px;
 }
+.header__heading-logo {
+    width: 200px !important; /* Adjust this number up or down */
+    max-width: 100%;
+    height: auto;
+}

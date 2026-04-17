@@ -35,10 +35,10 @@
 
   /* Layout */
   --vf-max-width: 1320px;
-  --vf-side-padding: 64px;
+  --vf-side-padding: 40px;
   --vf-col-gap: 24px;
-  --vf-navbar-height: 60px;
-  --vf-bar-height: 28px;
+  --vf-navbar-height: 52px;
+  --vf-bar-height: 26px;
 
   /* Dawn variable overrides — map brand tokens to Dawn's CSS custom props */
   --color-base-background-1: 10, 10, 10;
@@ -196,13 +196,33 @@ h6 {
 
 /* ── 4.1 ANNOUNCEMENT BAR ─────────────────────────────────────────────── */
 
+/* The section wrapper must span 100vw edge-to-edge */
+#shopify-section-announcement-bar {
+  width: 100%;
+  display: block;
+}
+
 .announcement-bar {
+  width: 100%;
   height: var(--vf-bar-height);
   background-color: #0E0E0E;
   border-bottom: 0.5px solid var(--vf-graphite);
   display: flex;
   align-items: center;
+  justify-content: center;
   animation: vf-fadein 600ms var(--vf-ease) both;
+}
+
+/* Override page-width padding inside the announcement bar only */
+.announcement-bar .page-width,
+.announcement-bar .utility-bar__grid {
+  max-width: 100% !important;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .announcement-bar__message {
@@ -213,21 +233,23 @@ h6 {
   text-transform: uppercase;
   color: var(--vf-gold);
   padding: 0;
-  margin: 0 auto;
+  margin: 0;
   min-height: auto;
+  text-align: center;
+  width: 100%;
 }
 
 @media screen and (max-width: 749px) {
   .announcement-bar {
     height: auto;
-    padding: 4px 0;
+    padding: 5px 0;
   }
 
   .announcement-bar__message {
     font-size: 9px;
     letter-spacing: 0.06em;
-    line-height: 1.3;
-    padding: 3px 12px;
+    line-height: 1.4;
+    padding: 0 16px;
   }
 }
 

@@ -8,7 +8,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "COMPLIMENTARY SHIPPING ON ORDERS ABOVE ₹6,000",
+            "text": "COMPLIMENTARY SHIPPING ON ORDERS ABOVE ₹5,000",
             "text_alignment": "center",
             "color_scheme": "scheme-1",
             "link": ""

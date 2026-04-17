@@ -198,12 +198,14 @@ h6 {
    ───────────────────────────────────────────────────────────────────────── */
 
 
-/* ── 4.1 ANNOUNCEMENT BAR ─────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────────────────
+   4.1 ANNOUNCEMENT BAR — SLIM LUXURY
+   ───────────────────────────────────────────────────────────────────────── */
 
-/* The section wrapper must span 100vw edge-to-edge */
 #shopify-section-announcement-bar {
   width: 100%;
-  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .announcement-bar {
@@ -211,19 +213,6 @@ h6 {
   height: var(--vf-bar-height);
   background-color: #0E0E0E;
   border-bottom: 0.5px solid var(--vf-graphite);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: vf-fadein 600ms var(--vf-ease) both;
-}
-
-/* Override page-width padding inside the announcement bar only */
-.announcement-bar .page-width,
-.announcement-bar .utility-bar__grid {
-  max-width: 100% !important;
-  padding-left: 40px !important;
-  padding-right: 40px !important;
-  width: 100% !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -236,56 +225,50 @@ h6 {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--vf-gold);
-  padding: 0;
   margin: 0;
-  min-height: auto;
-  text-align: center;
-  width: 100%;
+  padding: 0;
+  line-height: 1;
 }
 
-.header__heading,
-.header__icons,
-.header__inline-menu {
-  transform: translateY(-1px);
+/* ─────────────────────────────────────────────────────────────────────────
+   4.2 HEADER — LUXURY SLIM (FINAL FIXED)
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Kill Dawn spacing issues */
+#shopify-section-header {
+  margin: 0 !important;
+  padding: 0 !important;
 }
-
-@media screen and (max-width: 749px) {
-  .announcement-bar {
-    height: auto;
-    padding: 5px 0;
-  }
-
-  .announcement-bar__message {
-    font-size: 9px;
-    letter-spacing: 0.06em;
-    line-height: 1.4;
-    padding: 0 16px;
-  }
-}
-
-
-/* ── 4.2 HEADER (REVISED) ───────────────────────────────────────────────────────── */
 
 .header-wrapper {
   background-color: var(--vf-charcoal);
   border-bottom: 0.5px solid var(--vf-graphite);
-  /* Replaced the 100vw hack with a safer 100% to prevent horizontal scroll */
   width: 100%;
 }
 
-/* Desktop: Fluid 3-column grid for absolute optical centering */
+/* HARD RESET — removes Dawn interference */
+.header,
+.header__heading,
+.header__inline-menu,
+.header__icons {
+  min-height: 0 !important;
+}
+
+/* DESKTOP */
 @media screen and (min-width: 990px) {
   .header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    /* The structural fix */
     grid-template-areas: 'nav logo icons';
     align-items: center;
-    height: var(--vf-navbar-height);
-    max-width: var(--vf-max-width);
+
+    height: var(--vf-navbar-height) !important;
+    max-height: var(--vf-navbar-height);
+    overflow: hidden;
+
+    padding: 0 32px !important;
     margin: 0 auto;
-    padding: 0 var(--vf-side-padding);
-    padding: 0 32px transition: height var(--vf-duration) ease;
+    max-width: var(--vf-max-width);
   }
 
   .header__inline-menu {
@@ -293,11 +276,9 @@ h6 {
     justify-self: start;
   }
 
-  .header__heading,
-  .header__heading-link {
+  .header__heading {
     grid-area: logo;
     justify-self: center;
-    text-align: center;
   }
 
   .header__icons {
@@ -306,99 +287,91 @@ h6 {
   }
 }
 
-/* Mobile: Ensure true centering even with unequal icon counts */
+/* MOBILE */
 @media screen and (max-width: 989px) {
   .header {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    /* Forces symmetrical boundaries */
     grid-template-areas: 'left heading icons';
     align-items: center;
-    height: var(--vf-navbar-height-mobile);
-    /* Increased slightly for better mobile touch targets */
-    padding: 0 16px;
-    /* Improved side breathing room */
+
+    height: var(--vf-navbar-height-mobile) !important;
+    max-height: var(--vf-navbar-height-mobile);
+    overflow: hidden;
+
+    padding: 0 16px !important;
   }
 
-  /* Anchor the hamburger menu to the absolute left */
   .header__icon--menu {
     grid-area: left;
     justify-self: start;
   }
 
-  /* Lock the logo to the exact center of the screen */
   .header__heading {
     grid-area: heading;
     justify-self: center;
   }
 
-  /* Group right icons, align to the edge, and add spacing */
   .header__icons {
     grid-area: icons;
     justify-self: end;
     display: flex;
     align-items: center;
-    gap: 12px;
-    /* Prevents icons from feeling crowded */
+    gap: 10px;
   }
 }
 
-/* Sticky header: glass effect + compact height */
-.scrolled-past-header .header-wrapper {
-  background: rgba(11, 11, 11, 0.82);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 0.5px solid var(--vf-graphite);
-  box-shadow: none;
-}
-
-@media screen and (min-width: 990px) {
-  .scrolled-past-header .header {
-    height: 46px;
-  }
-}
-
-.scrolled-past-header .header__heading-logo {
-  transform: scale(0.88);
-}
-
-/* Logo */
-.header__heading-link {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
+/* LOGO */
 .header__heading-logo {
-  height: 24px;
+  height: 22px;
   width: auto;
-  max-width: 200px;
   object-fit: contain;
   transition: transform var(--vf-duration) ease;
 }
 
-/* Wordmark fallback */
-.header__heading {
-  font-family: var(--vf-serif);
-  font-weight: 300;
-  font-size: 22px;
-  letter-spacing: 0.18em;
-  color: var(--vf-bone);
-  text-transform: uppercase;
-  margin: 0;
+/* ICONS — reduced bulk */
+.header-wrapper .header__icon {
+  width: 28px;
+  height: 28px;
 }
 
-/* Dropdown panels */
-.disclosure__panel,
-.header__submenu {
-  background-color: var(--vf-charcoal);
-  border: 0.5px solid var(--vf-graphite);
-  border-top: 1px solid var(--vf-gold-dim);
+.header-wrapper .header__icon svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.4;
 }
 
-.header__submenu .header__menu-item span {
-  color: var(--vf-silver);
+/* MENU */
+.header__inline-menu .list-menu {
+  gap: 18px;
+}
+
+.header__menu-item {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  padding: 0;
+}
+
+/* OPTICAL ALIGNMENT FIX */
+.header__heading,
+.header__icons,
+.header__inline-menu {
+  transform: translateY(-1px);
+}
+
+/* STICKY — PREMIUM COMPRESSION */
+.scrolled-past-header .header {
+  height: 44px !important;
+}
+
+.scrolled-past-header .header-wrapper {
+  background: rgba(11, 11, 11, 0.82);
+  backdrop-filter: blur(16px);
+}
+
+.scrolled-past-header .header__heading-logo {
+  transform: scale(0.88);
 }
 
 

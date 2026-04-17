@@ -1,0 +1,95 @@
+<style>
+/* ─── VF STATEMENT ─────────────────────────────────────── */
+.vf-statement {
+  background: #F2EDE4;
+  padding: 10rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.vf-statement__inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.vf-statement__eyebrow {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #3D7A6B;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.vf-statement__eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 0.5px;
+  background: #3D7A6B;
+  flex-shrink: 0;
+}
+
+.vf-statement__text {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  line-height: 1.35;
+  color: #0D0D0D;
+  letter-spacing: -0.01em;
+}
+.vf-statement__text em {
+  font-style: italic;
+  color: #4A4A4A;
+}
+
+.vf-statement__rule {
+  width: 0.5px;
+  height: 80px;
+  background: #3D7A6B;
+  margin: 4rem 0;
+}
+
+.vf-statement__caption {
+  font-family: var(--vf-sans);
+  font-size: 12px;
+  line-height: 1.85;
+  color: #4A4A4A;
+  max-width: 420px;
+  letter-spacing: 0.02em;
+}
+
+@media screen and (max-width: 749px) {
+  .vf-statement { padding: 6rem 1.5rem; }
+}
+</style>
+
+<section class="vf-statement" id="vf-statement">
+  <div class="vf-statement__inner">
+    <div class="vf-statement__eyebrow vf-reveal">
+      {{ section.settings.eyebrow | default: 'The philosophy' }}
+    </div>
+    <p class="vf-statement__text vf-reveal vf-reveal-delay-1">
+      {{ section.settings.statement_text | default: 'Luxury is not a surface treatment. It is <em>the refusal to approximate.</em> Every Voxel Forge object is designed at the resolution of its material.' }}
+    </p>
+    <div class="vf-statement__rule vf-reveal vf-reveal-delay-2"></div>
+    <p class="vf-statement__caption vf-reveal vf-reveal-delay-3">
+      {{ section.settings.caption | default: 'We build objects that justify space. Not objects that fill it. Each piece is computed, calibrated, and produced at tolerances that conventional manufacturing cannot approach.' }}
+    </p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VF — Statement",
+  "tag": "div",
+  "class": "shopify-section--vf-statement",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The philosophy" },
+    { "type": "richtext", "id": "statement_text", "label": "Statement Text", "default": "<p>Luxury is not a surface treatment. It is <em>the refusal to approximate.</em> Every Voxel Forge object is designed at the resolution of its material.</p>" },
+    { "type": "textarea", "id": "caption", "label": "Caption Text", "default": "We build objects that justify space. Not objects that fill it. Each piece is computed, calibrated, and produced at tolerances that conventional manufacturing cannot approach." }
+  ],
+  "presets": [{ "name": "VF — Statement" }]
+}
+{% endschema %}

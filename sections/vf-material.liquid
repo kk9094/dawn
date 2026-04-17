@@ -1,0 +1,178 @@
+<style>
+/* ─── VF MATERIAL ──────────────────────────────────────── */
+.vf-material {
+  background: #F2EDE4;
+  padding: 10rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: center;
+}
+
+.vf-material__visual {
+  position: relative;
+  height: 560px;
+  background: #1C1C1C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.vf-material__grid-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+}
+
+.vf-material__title {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.2;
+  color: #0D0D0D;
+  margin-bottom: 2.5rem;
+}
+.vf-material__title em {
+  font-style: italic;
+  color: #4A4A4A;
+}
+
+.vf-material__specs {
+  list-style: none;
+  margin-bottom: 3rem;
+}
+.vf-material__specs li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.1rem 0;
+  border-bottom: 0.5px solid rgba(13,13,13,0.1);
+  font-family: var(--vf-sans);
+  font-size: 12px;
+}
+.vf-spec-label { color: #4A4A4A; letter-spacing: 0.05em; }
+.vf-spec-value { color: #0D0D0D; font-weight: 400; }
+
+.vf-material__note {
+  font-family: var(--vf-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: #3D7A6B;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 989px) {
+  .vf-material {
+    grid-template-columns: 1fr;
+    padding: 6rem 1.5rem;
+    gap: 4rem;
+  }
+  .vf-material__visual { height: 320px; }
+}
+</style>
+
+<section class="vf-material" id="vf-material">
+
+  <div class="vf-material__visual vf-reveal">
+    <svg class="vf-material__grid-bg" viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="vf-iso-grid" x="0" y="0" width="40" height="23.1" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="11.5" x2="20" y2="0" stroke="#3D7A6B" stroke-width="0.4"/>
+          <line x1="20" y1="0" x2="40" y2="11.5" stroke="#3D7A6B" stroke-width="0.4"/>
+          <line x1="0" y1="11.5" x2="20" y2="23.1" stroke="#3D7A6B" stroke-width="0.4"/>
+          <line x1="20" y1="23.1" x2="40" y2="11.5" stroke="#3D7A6B" stroke-width="0.4"/>
+        </pattern>
+      </defs>
+      <rect width="400" height="560" fill="url(#vf-iso-grid)"/>
+    </svg>
+    {%- if section.settings.material_image != blank -%}
+      {{ section.settings.material_image | image_url: width: 600 | image_tag: loading: 'lazy', style: 'max-width:80%;max-height:80%;object-fit:contain;position:relative;z-index:1;' }}
+    {%- else -%}
+      <svg viewBox="0 0 280 340" fill="none" width="220" height="266" style="position:relative;z-index:1;">
+        <polygon points="140,30 250,90 250,220 140,280 30,220 30,90" fill="rgba(61,122,107,0.08)" stroke="#3D7A6B" stroke-width="1"/>
+        <polygon points="140,30 250,90 140,150 30,90" fill="rgba(61,122,107,0.06)" stroke="#3D7A6B" stroke-width="1"/>
+        <line x1="140" y1="150" x2="140" y2="280" stroke="#3D7A6B" stroke-width="0.8" opacity="0.5"/>
+        <polygon points="250,90 250,220 140,280 140,150" fill="rgba(61,122,107,0.04)" stroke="rgba(61,122,107,0.5)" stroke-width="0.8"/>
+        <polygon points="30,90 30,220 140,280 140,150" fill="rgba(61,122,107,0.02)" stroke="rgba(61,122,107,0.3)" stroke-width="0.8"/>
+        <!-- Layer lines -->
+        <line x1="56" y1="121" x2="224" y2="121" stroke="rgba(61,122,107,0.08)" stroke-width="0.3"/>
+        <line x1="56" y1="137" x2="224" y2="137" stroke="rgba(61,122,107,0.08)" stroke-width="0.3"/>
+        <line x1="56" y1="153" x2="224" y2="153" stroke="rgba(61,122,107,0.08)" stroke-width="0.3"/>
+        <line x1="56" y1="169" x2="224" y2="169" stroke="rgba(61,122,107,0.08)" stroke-width="0.3"/>
+        <line x1="56" y1="185" x2="224" y2="185" stroke="rgba(61,122,107,0.08)" stroke-width="0.3"/>
+        <!-- Gold dots -->
+        <circle cx="140" cy="30" r="3.5" fill="#C9A96E"/>
+        <circle cx="250" cy="90" r="3.5" fill="#C9A96E" opacity="0.7"/>
+        <circle cx="30" cy="90" r="3.5" fill="#C9A96E" opacity="0.5"/>
+      </svg>
+    {%- endif -%}
+  </div>
+
+  <div class="vf-material__content">
+    <div class="vf-section-label vf-reveal" style="color:#3D7A6B;">
+      {{ section.settings.eyebrow | default: 'The material truth' }}
+    </div>
+
+    <h2 class="vf-material__title vf-reveal vf-reveal-delay-1">
+      {{ section.settings.title_line1 | default: 'PLA Carbon Fibre.' }}<br>
+      <em>{{ section.settings.title_line2 | default: '0.08mm resolution.' }}</em><br>
+      {{ section.settings.title_line3 | default: 'No compromise.' }}
+    </h2>
+
+    <ul class="vf-material__specs vf-reveal vf-reveal-delay-2">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'spec_row' -%}
+          <li {{ block.shopify_attributes }}>
+            <span class="vf-spec-label">{{ block.settings.label }}</span>
+            <span class="vf-spec-value">{{ block.settings.value }}</span>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+    <p class="vf-material__note vf-reveal vf-reveal-delay-3">
+      {{ section.settings.note | default: '"The layer is not a limitation. It is the signature of the process."' }}
+    </p>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "VF — Material",
+  "tag": "div",
+  "class": "shopify-section--vf-material",
+  "settings": [
+    { "type": "image_picker", "id": "material_image", "label": "Material Visual Image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The material truth" },
+    { "type": "text", "id": "title_line1", "label": "Title Line 1", "default": "PLA Carbon Fibre." },
+    { "type": "text", "id": "title_line2", "label": "Title Line 2 (italic)", "default": "0.08mm resolution." },
+    { "type": "text", "id": "title_line3", "label": "Title Line 3", "default": "No compromise." },
+    { "type": "textarea", "id": "note", "label": "Closing Quote", "default": "\"The layer is not a limitation. It is the signature of the process.\"" }
+  ],
+  "blocks": [
+    {
+      "type": "spec_row",
+      "name": "Specification Row",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Spec Label", "default": "Layer height" },
+        { "type": "text", "id": "value", "label": "Spec Value", "default": "0.08 mm" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF — Material",
+      "blocks": [
+        { "type": "spec_row", "settings": { "label": "Layer height", "value": "0.08 mm" } },
+        { "type": "spec_row", "settings": { "label": "Infill structure", "value": "40% Gyroid" } },
+        { "type": "spec_row", "settings": { "label": "Tensile strength", "value": "52 MPa" } },
+        { "type": "spec_row", "settings": { "label": "Surface finish", "value": "400-grit, matte lacquer" } },
+        { "type": "spec_row", "settings": { "label": "Dimensional tolerance", "value": "± 0.2 mm" } },
+        { "type": "spec_row", "settings": { "label": "Production time", "value": "72 – 196 hours" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -374,5 +374,21 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+    <script>
+      /* VF Reveal Observer — drives .vf-reveal scroll animations */
+      (function() {
+        var vfReveals = document.querySelectorAll('.vf-reveal');
+        if (!vfReveals.length) return;
+        var vfObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('vf-visible');
+              vfObserver.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        vfReveals.forEach(function(el) { vfObserver.observe(el); });
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,292 @@
+<style>
+/* ─── VF COLLECTION SHOWCASE ───────────────────────────── */
+.vf-collection {
+  background: #0D0D0D;
+  padding: 10rem 3rem;
+}
+
+.vf-collection__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 5rem;
+}
+
+.vf-collection__link {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.35);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.vf-collection__link:hover { color: #C9A96E; }
+
+.vf-products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5px;
+}
+
+.vf-product-card {
+  position: relative;
+  background: #1C1C1C;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+}
+.vf-product-card:hover .vf-product-card__img { transform: scale(1.03); }
+.vf-product-card:hover .vf-product-card__reveal { opacity: 1; }
+
+.vf-product-card__img {
+  height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+  position: relative;
+}
+
+.vf-product-card__reveal {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,13,13,0.7) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.vf-product-card__info {
+  padding: 2rem 2rem 2.5rem;
+  border-top: 0.5px solid rgba(242,237,228,0.06);
+}
+
+.vf-product-card__tier {
+  font-family: var(--vf-sans);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+.vf-tier--standard { color: #3D7A6B; }
+.vf-tier--edition { color: #C9A96E; }
+.vf-tier--atelier { color: #C4614A; }
+
+.vf-product-card__name {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: #F2EDE4;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.vf-product-card__spec {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  color: rgba(242,237,228,0.3);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+
+.vf-product-card__price {
+  font-family: var(--vf-serif);
+  font-size: 1rem;
+  color: rgba(242,237,228,0.5);
+}
+
+@media screen and (max-width: 989px) {
+  .vf-collection { padding: 6rem 1.5rem; }
+  .vf-collection__header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .vf-products-grid { grid-template-columns: 1fr; }
+  .vf-product-card__img { height: 320px; }
+}
+</style>
+
+<section class="vf-collection" id="vf-collection">
+  <div class="vf-collection__header">
+    <div>
+      <div class="vf-section-label vf-reveal">{{ section.settings.eyebrow | default: 'Current collection' }}</div>
+      <h2 class="vf-section-title vf-reveal vf-reveal-delay-1">{{ section.settings.title | default: 'Selected objects.' }}</h2>
+    </div>
+    <a href="{{ section.settings.view_all_link | default: '/collections/all' }}" class="vf-collection__link vf-reveal">
+      {{ section.settings.view_all_label | default: 'View all pieces' }} →
+    </a>
+  </div>
+
+  <div class="vf-products-grid">
+
+    <!-- CARD 1 -->
+    {%- assign card1 = section.blocks | where: 'type', 'product_card' | first -%}
+    {%- if card1 -%}
+      <a href="{{ card1.settings.product_link | default: '/collections/all' }}" class="vf-product-card vf-reveal">
+        <div class="vf-product-card__img" style="background: linear-gradient(145deg, #1C1C1C 0%, #141414 100%);">
+          <div class="vf-product-card__reveal"></div>
+          {%- if card1.settings.product_image != blank -%}
+            {{ card1.settings.product_image | image_url: width: 600 | image_tag: loading: 'lazy', class: '', width: 200, height: 200, style: 'max-width:200px;max-height:280px;object-fit:contain;' }}
+          {%- else -%}
+            <svg viewBox="0 0 280 280" fill="none" width="200" height="200">
+              <polygon points="140,40 230,90 230,190 140,240 50,190 50,90" fill="rgba(61,122,107,0.06)" stroke="#3D7A6B" stroke-width="0.7"/>
+              <polygon points="140,40 230,90 140,140 50,90" fill="rgba(61,122,107,0.04)" stroke="#3D7A6B" stroke-width="0.7"/>
+              <line x1="140" y1="140" x2="140" y2="240" stroke="rgba(61,122,107,0.35)" stroke-width="0.7"/>
+              <polygon points="230,90 230,190 140,240 140,140" fill="rgba(61,122,107,0.03)" stroke="rgba(61,122,107,0.4)" stroke-width="0.6"/>
+              <polygon points="50,90 50,190 140,240 140,140" fill="rgba(61,122,107,0.01)" stroke="rgba(61,122,107,0.25)" stroke-width="0.6"/>
+              <circle cx="140" cy="140" r="18" fill="rgba(201,169,110,0.04)" stroke="rgba(201,169,110,0.3)" stroke-width="0.6"/>
+              <circle cx="140" cy="140" r="6" fill="#C9A96E" opacity="0.5"/>
+            </svg>
+          {%- endif -%}
+        </div>
+        <div class="vf-product-card__info">
+          <div class="vf-product-card__tier vf-tier--standard">{{ card1.settings.tier | default: 'Standard' }}</div>
+          <div class="vf-product-card__name">{{ card1.settings.name | default: 'Monolith No. 7' }}</div>
+          <div class="vf-product-card__spec">{{ card1.settings.spec | default: 'PLA Carbon Fibre — 248 × 82 × 82 mm' }}</div>
+          <div class="vf-product-card__price">{{ card1.settings.price | default: '₹12,400' }}</div>
+        </div>
+      </a>
+    {%- else -%}
+      <a href="/collections/all" class="vf-product-card vf-reveal">
+        <div class="vf-product-card__img" style="background: linear-gradient(145deg, #1C1C1C 0%, #141414 100%);">
+          <div class="vf-product-card__reveal"></div>
+          <svg viewBox="0 0 280 280" fill="none" width="200" height="200">
+            <polygon points="140,40 230,90 230,190 140,240 50,190 50,90" fill="rgba(61,122,107,0.06)" stroke="#3D7A6B" stroke-width="0.7"/>
+            <polygon points="140,40 230,90 140,140 50,90" fill="rgba(61,122,107,0.04)" stroke="#3D7A6B" stroke-width="0.7"/>
+            <line x1="140" y1="140" x2="140" y2="240" stroke="rgba(61,122,107,0.35)" stroke-width="0.7"/>
+            <circle cx="140" cy="140" r="6" fill="#C9A96E" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="vf-product-card__info">
+          <div class="vf-product-card__tier vf-tier--standard">Standard</div>
+          <div class="vf-product-card__name">Monolith No. 7</div>
+          <div class="vf-product-card__spec">PLA Carbon Fibre — 248 × 82 × 82 mm</div>
+          <div class="vf-product-card__price">₹12,400</div>
+        </div>
+      </a>
+    {%- endif -%}
+
+    <!-- CARD 2 -->
+    {%- assign all_cards = section.blocks | where: 'type', 'product_card' -%}
+    {%- assign card2 = all_cards[1] -%}
+    {%- if card2 -%}
+      <a href="{{ card2.settings.product_link | default: '/collections/all' }}" class="vf-product-card vf-reveal vf-reveal-delay-1">
+        <div class="vf-product-card__img" style="background: linear-gradient(145deg, #201E1B 0%, #161412 100%);">
+          <div class="vf-product-card__reveal"></div>
+          {%- if card2.settings.product_image != blank -%}
+            {{ card2.settings.product_image | image_url: width: 600 | image_tag: loading: 'lazy', class: '', width: 200, height: 200, style: 'max-width:200px;max-height:280px;object-fit:contain;' }}
+          {%- else -%}
+            <svg viewBox="0 0 280 280" fill="none" width="200" height="200">
+              <polygon points="140,30 210,72 210,158 140,200 70,158 70,72" fill="rgba(201,169,110,0.04)" stroke="#C9A96E" stroke-width="0.7"/>
+              <polygon points="140,30 210,72 140,115 70,72" fill="rgba(201,169,110,0.05)" stroke="#C9A96E" stroke-width="0.7"/>
+              <line x1="140" y1="115" x2="140" y2="200" stroke="rgba(201,169,110,0.3)" stroke-width="0.7"/>
+              <circle cx="140" cy="105" r="3" fill="#C9A96E" opacity="0.8"/>
+            </svg>
+          {%- endif -%}
+        </div>
+        <div class="vf-product-card__info">
+          <div class="vf-product-card__tier vf-tier--edition">{{ card2.settings.tier | default: 'Limited Edition' }}</div>
+          <div class="vf-product-card__name">{{ card2.settings.name | default: 'Apex Series III' }}</div>
+          <div class="vf-product-card__spec">{{ card2.settings.spec | default: 'PETG Gold Filament — 310 × 110 × 110 mm' }}</div>
+          <div class="vf-product-card__price">{{ card2.settings.price | default: '₹38,000' }}</div>
+        </div>
+      </a>
+    {%- else -%}
+      <a href="/collections/all" class="vf-product-card vf-reveal vf-reveal-delay-1">
+        <div class="vf-product-card__img" style="background: linear-gradient(145deg, #201E1B 0%, #161412 100%);">
+          <div class="vf-product-card__reveal"></div>
+          <svg viewBox="0 0 280 280" fill="none" width="200" height="200">
+            <polygon points="140,30 210,72 210,158 140,200 70,158 70,72" fill="rgba(201,169,110,0.04)" stroke="#C9A96E" stroke-width="0.7"/>
+            <polygon points="140,30 210,72 140,115 70,72" fill="rgba(201,169,110,0.05)" stroke="#C9A96E" stroke-width="0.7"/>
+            <line x1="140" y1="115" x2="140" y2="200" stroke="rgba(201,169,110,0.3)" stroke-width="0.7"/>
+            <circle cx="140" cy="105" r="3" fill="#C9A96E" opacity="0.8"/>
+          </svg>
+        </div>
+        <div class="vf-product-card__info">
+          <div class="vf-product-card__tier vf-tier--edition">Limited Edition</div>
+          <div class="vf-product-card__name">Apex Series III</div>
+          <div class="vf-product-card__spec">PETG Gold Filament — 310 × 110 × 110 mm</div>
+          <div class="vf-product-card__price">₹38,000</div>
+        </div>
+      </a>
+    {%- endif -%}
+
+    <!-- CARD 3 -->
+    {%- assign card3 = all_cards[2] -%}
+    {%- if card3 -%}
+      <a href="{{ card3.settings.product_link | default: '/pages/atelier' }}" class="vf-product-card vf-reveal vf-reveal-delay-2">
+        <div class="vf-product-card__img" style="background: linear-gradient(145deg, #1A1310 0%, #120F0D 100%);">
+          <div class="vf-product-card__reveal"></div>
+          {%- if card3.settings.product_image != blank -%}
+            {{ card3.settings.product_image | image_url: width: 600 | image_tag: loading: 'lazy', class: '', width: 200, height: 200, style: 'max-width:200px;max-height:280px;object-fit:contain;' }}
+          {%- else -%}
+            <svg viewBox="0 0 280 280" fill="none" width="200" height="200">
+              <polygon points="140,25 250,85 250,200 140,260 30,200 30,85" fill="rgba(196,97,74,0.04)" stroke="#C4614A" stroke-width="0.7"/>
+              <polygon points="140,25 250,85 140,145 30,85" fill="rgba(196,97,74,0.06)" stroke="#C4614A" stroke-width="0.7"/>
+              <line x1="140" y1="145" x2="140" y2="260" stroke="rgba(196,97,74,0.3)" stroke-width="0.7"/>
+              <circle cx="140" cy="120" r="4" fill="#C4614A" opacity="0.7"/>
+              <circle cx="250" cy="85" r="3" fill="#C9A96E" opacity="0.9"/>
+            </svg>
+          {%- endif -%}
+        </div>
+        <div class="vf-product-card__info">
+          <div class="vf-product-card__tier vf-tier--atelier">{{ card3.settings.tier | default: 'Atelier' }}</div>
+          <div class="vf-product-card__name">{{ card3.settings.name | default: 'Vortex — Commission' }}</div>
+          <div class="vf-product-card__spec">{{ card3.settings.spec | default: 'Resin-Polymer Composite — Bespoke dimensions' }}</div>
+          <div class="vf-product-card__price">{{ card3.settings.price | default: 'From ₹1,20,000' }}</div>
+        </div>
+      </a>
+    {%- else -%}
+      <a href="/pages/atelier" class="vf-product-card vf-reveal vf-reveal-delay-2">
+        <div class="vf-product-card__img" style="background: linear-gradient(145deg, #1A1310 0%, #120F0D 100%);">
+          <div class="vf-product-card__reveal"></div>
+          <svg viewBox="0 0 280 280" fill="none" width="200" height="200">
+            <polygon points="140,25 250,85 250,200 140,260 30,200 30,85" fill="rgba(196,97,74,0.04)" stroke="#C4614A" stroke-width="0.7"/>
+            <polygon points="140,25 250,85 140,145 30,85" fill="rgba(196,97,74,0.06)" stroke="#C4614A" stroke-width="0.7"/>
+            <line x1="140" y1="145" x2="140" y2="260" stroke="rgba(196,97,74,0.3)" stroke-width="0.7"/>
+            <circle cx="140" cy="120" r="4" fill="#C4614A" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="vf-product-card__info">
+          <div class="vf-product-card__tier vf-tier--atelier">Atelier</div>
+          <div class="vf-product-card__name">Vortex — Commission</div>
+          <div class="vf-product-card__spec">Resin-Polymer Composite — Bespoke dimensions</div>
+          <div class="vf-product-card__price">From ₹1,20,000</div>
+        </div>
+      </a>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VF — Collection",
+  "tag": "div",
+  "class": "shopify-section--vf-collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Current collection" },
+    { "type": "text", "id": "title", "label": "Section Title", "default": "Selected objects." },
+    { "type": "text", "id": "view_all_label", "label": "View All Label", "default": "View all pieces" },
+    { "type": "url", "id": "view_all_link", "label": "View All Link" }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "limit": 3,
+      "settings": [
+        { "type": "image_picker", "id": "product_image", "label": "Product Image" },
+        { "type": "url", "id": "product_link", "label": "Product Link" },
+        { "type": "select", "id": "tier", "label": "Tier Badge", "options": [
+          { "value": "Standard", "label": "Standard" },
+          { "value": "Limited Edition", "label": "Limited Edition" },
+          { "value": "Atelier", "label": "Atelier" }
+        ], "default": "Standard" },
+        { "type": "text", "id": "name", "label": "Product Name", "default": "Monolith No. 7" },
+        { "type": "text", "id": "spec", "label": "Specification", "default": "PLA Carbon Fibre — 248 × 82 × 82 mm" },
+        { "type": "text", "id": "price", "label": "Price Display", "default": "₹12,400" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "VF — Collection" }]
+}
+{% endschema %}

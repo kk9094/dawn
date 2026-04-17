@@ -1,0 +1,214 @@
+<style>
+/* ─── VF METRICS ───────────────────────────────────────── */
+.vf-metrics {
+  background: #1C1C1C;
+  padding: 6rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 0.5px solid rgba(242,237,228,0.06);
+}
+
+.vf-metric {
+  padding: 2rem;
+  border-left: 0.5px solid rgba(242,237,228,0.06);
+  text-align: center;
+}
+.vf-metric:first-child { border-left: none; }
+
+.vf-metric__num {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: 3rem;
+  color: #F2EDE4;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.vf-metric__unit { font-size: 1.2rem; color: #3D7A6B; }
+
+.vf-metric__label {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.3);
+}
+
+@media screen and (max-width: 749px) {
+  .vf-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 4rem 1.5rem;
+  }
+  .vf-metric {
+    border-left: none;
+    border-top: 0.5px solid rgba(242,237,228,0.06);
+  }
+  .vf-metric:nth-child(1),
+  .vf-metric:nth-child(2) { border-top: none; }
+}
+
+/* ─── VF ATELIER ───────────────────────────────────────── */
+.vf-atelier {
+  background: #0D0D0D;
+  padding: 10rem 3rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.vf-atelier::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(196,97,74,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.vf-atelier__label {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #C4614A;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.vf-atelier__label::before,
+.vf-atelier__label::after {
+  content: '';
+  width: 32px;
+  height: 0.5px;
+  background: #C4614A;
+}
+
+.vf-atelier__title {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: clamp(2.8rem, 5vw, 5.5rem);
+  line-height: 1.1;
+  color: #F2EDE4;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.vf-atelier__title em {
+  font-style: italic;
+  color: #C4614A;
+}
+
+.vf-atelier__sub {
+  font-family: var(--vf-sans);
+  font-size: 13px;
+  color: rgba(242,237,228,0.35);
+  margin-bottom: 4rem;
+  line-height: 1.8;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vf-btn-ember {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: transparent;
+  color: #C4614A;
+  border: 0.5px solid rgba(196,97,74,0.5);
+  padding: 16px 40px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+.vf-btn-ember:hover { background: #C4614A; color: #F2EDE4; }
+
+.vf-atelier__footnote {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(242,237,228,0.18);
+  margin-top: 2rem;
+}
+
+@media screen and (max-width: 749px) {
+  .vf-atelier { padding: 6rem 1.5rem; }
+}
+</style>
+
+<!-- METRICS -->
+<div class="vf-metrics" id="vf-metrics">
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'metric' -%}
+      <div class="vf-metric vf-reveal" {{ block.shopify_attributes }}>
+        <div class="vf-metric__num">
+          {{ block.settings.number }}<span class="vf-metric__unit">{{ block.settings.unit }}</span>
+        </div>
+        <div class="vf-metric__label">{{ block.settings.label }}</div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+<!-- ATELIER -->
+<section class="vf-atelier" id="vf-atelier">
+  <div class="vf-atelier__label">{{ section.settings.atelier_eyebrow | default: 'Atelier tier' }}</div>
+  <h2 class="vf-atelier__title vf-reveal">
+    {{ section.settings.atelier_title_line1 | default: 'One object.' }}<br>
+    <em>{{ section.settings.atelier_title_line2 | default: 'Entirely yours.' }}</em>
+  </h2>
+  <p class="vf-atelier__sub vf-reveal vf-reveal-delay-1">
+    {{ section.settings.atelier_body | default: 'The Atelier commission begins with a conversation. Dimensions, material, geometry — everything is negotiated. Nothing is drawn from stock. The object that arrives has never existed before.' }}
+  </p>
+  <a href="{{ section.settings.atelier_cta_link | default: '/pages/atelier' }}" class="vf-btn-ember vf-reveal vf-reveal-delay-2">
+    {{ section.settings.atelier_cta_label | default: 'Begin a Commission' }}
+  </a>
+  <p class="vf-atelier__footnote vf-reveal vf-reveal-delay-3">
+    {{ section.settings.atelier_footnote | default: 'Three commissions accepted per quarter. By application only.' }}
+  </p>
+</section>
+
+{% schema %}
+{
+  "name": "VF — Metrics + Atelier",
+  "tag": "div",
+  "class": "shopify-section--vf-atelier",
+  "settings": [
+    { "type": "header", "content": "Atelier Section" },
+    { "type": "text", "id": "atelier_eyebrow", "label": "Eyebrow", "default": "Atelier tier" },
+    { "type": "text", "id": "atelier_title_line1", "label": "Title Line 1", "default": "One object." },
+    { "type": "text", "id": "atelier_title_line2", "label": "Title Line 2 (italic/ember)", "default": "Entirely yours." },
+    { "type": "textarea", "id": "atelier_body", "label": "Body Text", "default": "The Atelier commission begins with a conversation. Dimensions, material, geometry — everything is negotiated. Nothing is drawn from stock. The object that arrives has never existed before." },
+    { "type": "text", "id": "atelier_cta_label", "label": "CTA Label", "default": "Begin a Commission" },
+    { "type": "url", "id": "atelier_cta_link", "label": "CTA Link" },
+    { "type": "textarea", "id": "atelier_footnote", "label": "Footnote", "default": "Three commissions accepted per quarter. By application only." }
+  ],
+  "blocks": [
+    {
+      "type": "metric",
+      "name": "Metric",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "0.08" },
+        { "type": "text", "id": "unit", "label": "Unit", "default": "mm" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Layer precision" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF — Metrics + Atelier",
+      "blocks": [
+        { "type": "metric", "settings": { "number": "0.08", "unit": "mm", "label": "Layer precision" } },
+        { "type": "metric", "settings": { "number": "196", "unit": "hr", "label": "Max print duration" } },
+        { "type": "metric", "settings": { "number": "7", "unit": "", "label": "Material grades" } },
+        { "type": "metric", "settings": { "number": "∞", "unit": "", "label": "Configurations" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

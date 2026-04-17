@@ -1,0 +1,170 @@
+<style>
+/* ─── VF PROCESS ───────────────────────────────────────── */
+.vf-process {
+  background: #1C1C1C;
+  padding: 10rem 3rem;
+}
+
+.vf-process__header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 7rem;
+  align-items: end;
+}
+
+.vf-section-label {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #3D7A6B;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.vf-section-label::before {
+  content: '';
+  width: 32px;
+  height: 0.5px;
+  background: #3D7A6B;
+  flex-shrink: 0;
+}
+
+.vf-section-title {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+  line-height: 1.15;
+  color: #F2EDE4;
+}
+.vf-section-title em {
+  font-style: italic;
+  color: rgba(242,237,228,0.45);
+}
+
+.vf-process__desc {
+  font-family: var(--vf-sans);
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(242,237,228,0.4);
+  align-self: end;
+}
+
+.vf-process__steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.vf-process__step {
+  padding: 3rem 2.5rem;
+  border-left: 0.5px solid rgba(242,237,228,0.08);
+}
+.vf-process__step:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.vf-step__num {
+  font-family: var(--vf-serif);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #3D7A6B;
+  margin-bottom: 1.5rem;
+}
+
+.vf-step__title {
+  font-family: var(--vf-serif);
+  font-weight: 400;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: #F2EDE4;
+  margin-bottom: 1rem;
+}
+
+.vf-step__body {
+  font-family: var(--vf-sans);
+  font-size: 12px;
+  line-height: 1.8;
+  color: rgba(242,237,228,0.38);
+}
+
+@media screen and (max-width: 989px) {
+  .vf-process { padding: 6rem 1.5rem; }
+  .vf-process__header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .vf-process__steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .vf-process__step {
+    border-left: none;
+    padding-left: 0;
+    border-top: 0.5px solid rgba(242,237,228,0.08);
+    padding-top: 2rem;
+  }
+  .vf-process__step:nth-child(1),
+  .vf-process__step:nth-child(2) { border-top: none; padding-top: 0; }
+}
+</style>
+
+<section class="vf-process" id="vf-process">
+  <div class="vf-process__header">
+    <div>
+      <div class="vf-section-label vf-reveal">{{ section.settings.eyebrow | default: 'How we build' }}</div>
+      <h2 class="vf-section-title vf-reveal vf-reveal-delay-1">
+        {{ section.settings.title_line1 | default: 'From coordinate' }}<br>
+        to <em>{{ section.settings.title_line2 | default: 'object.' }}</em>
+      </h2>
+    </div>
+    <p class="vf-process__desc vf-reveal vf-reveal-delay-2">
+      {{ section.settings.description | default: 'Four irreducible stages. No shortcuts. No approximations. The process is the product — every decision made at the resolution of the material itself.' }}
+    </p>
+  </div>
+
+  <div class="vf-process__steps">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'step' -%}
+        <div class="vf-process__step vf-reveal vf-reveal-delay-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="vf-step__num">0{{ forloop.index }}</div>
+          <div class="vf-step__title">{{ block.settings.title }}</div>
+          <p class="vf-step__body">{{ block.settings.body }}</p>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VF — Process",
+  "tag": "div",
+  "class": "shopify-section--vf-process",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How we build" },
+    { "type": "text", "id": "title_line1", "label": "Title Line 1", "default": "From coordinate" },
+    { "type": "text", "id": "title_line2", "label": "Title Line 2 (italic)", "default": "object." },
+    { "type": "textarea", "id": "description", "label": "Description (right column)", "default": "Four irreducible stages. No shortcuts. No approximations. The process is the product — every decision made at the resolution of the material itself." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Process Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Step Title", "default": "Mathematical Origin" },
+        { "type": "textarea", "id": "body", "label": "Step Body", "default": "Every object begins as a parametric equation. Dimensions are computed, not drawn. The geometry is exact before a single layer is laid." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF — Process",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Mathematical Origin", "body": "Every object begins as a parametric equation. Dimensions are computed, not drawn. The geometry is exact before a single layer is laid." } },
+        { "type": "step", "settings": { "title": "Material Selection", "body": "PLA Carbon Fibre. PETG. Resin-infused polymer. The material is chosen for the object's structural reality — not its appearance." } },
+        { "type": "step", "settings": { "title": "Layer Calibration", "body": "0.08mm layer height. 40% gyroid infill. Each print is calibrated to the specific geometry, not set to a universal default." } },
+        { "type": "step", "settings": { "title": "Surface Resolution", "body": "Post-processing at 400-grit. Matte lacquer sealed. The final surface holds the same precision as the internal structure." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

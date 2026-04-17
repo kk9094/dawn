@@ -1,0 +1,311 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+
+<style>
+/* ─── VF HERO ─────────────────────────────────────────── */
+.vf-hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 0 3rem;
+  position: relative;
+  overflow: hidden;
+  background: #0D0D0D;
+}
+
+.vf-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 55%;
+  height: 100%;
+  background: #1C1C1C;
+  z-index: 0;
+}
+
+.vf-hero__left {
+  position: relative;
+  z-index: 1;
+  padding-right: 4rem;
+  padding-top: 6rem;
+}
+
+.vf-hero__label {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #3D7A6B;
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: vf-fadeUp 0.8s 0.2s forwards;
+}
+.vf-hero__label::before {
+  content: '';
+  width: 32px;
+  height: 0.5px;
+  background: #3D7A6B;
+  flex-shrink: 0;
+}
+
+.vf-hero__title {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  font-size: clamp(3.2rem, 5.5vw, 5.8rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: #F2EDE4;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(18px);
+  animation: vf-fadeUp 0.9s 0.35s forwards;
+}
+.vf-hero__title em {
+  font-style: italic;
+  color: rgba(242,237,228,0.55);
+}
+
+.vf-hero__body {
+  font-family: var(--vf-sans);
+  font-size: 13px;
+  line-height: 1.9;
+  color: rgba(242,237,228,0.45);
+  max-width: 340px;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: vf-fadeUp 0.8s 0.5s forwards;
+}
+
+.vf-hero__actions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: vf-fadeUp 0.8s 0.65s forwards;
+}
+
+.vf-btn-teal {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: #3D7A6B;
+  color: #F2EDE4;
+  border: none;
+  padding: 16px 36px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s;
+  display: inline-block;
+}
+.vf-btn-teal:hover { background: #4E9B8A; color: #F2EDE4; }
+
+.vf-btn-ghost-hero {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.5);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.3s;
+}
+.vf-btn-ghost-hero:hover { color: #F2EDE4; }
+.vf-btn-ghost-hero svg { transition: transform 0.3s; }
+.vf-btn-ghost-hero:hover svg { transform: translateX(4px); }
+
+.vf-hero__right {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.vf-hero__cube {
+  position: relative;
+  width: 340px;
+  height: 340px;
+  opacity: 0;
+  animation: vf-fadeIn 1.2s 0.8s forwards;
+}
+.vf-hero__cube svg {
+  animation: vf-float 6s ease-in-out infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.vf-hero__scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.25);
+  opacity: 0;
+  animation: vf-fadeIn 1s 1.2s forwards;
+}
+.vf-hero__scroll-line {
+  width: 0.5px;
+  height: 32px;
+  background: rgba(242,237,228,0.2);
+  animation: vf-scrollPulse 2s 1.5s infinite;
+}
+
+@keyframes vf-fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes vf-fadeIn {
+  to { opacity: 1; }
+}
+@keyframes vf-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes vf-scrollPulse {
+  0%, 100% { opacity: 0.2; transform: scaleY(1); }
+  50% { opacity: 0.7; transform: scaleY(1.3); }
+}
+
+@media screen and (max-width: 989px) {
+  .vf-hero {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem;
+    min-height: auto;
+    padding-bottom: 4rem;
+  }
+  .vf-hero::before { display: none; }
+  .vf-hero__left { padding-right: 0; padding-top: 8rem; }
+  .vf-hero__right {
+    height: 300px;
+    background: #1C1C1C;
+    margin: 2rem -1.5rem 0;
+  }
+  .vf-hero__cube { width: 220px; height: 220px; }
+  .vf-hero__scroll-hint { display: none; }
+}
+</style>
+
+<section class="vf-hero" id="vf-hero">
+
+  <div class="vf-hero__left">
+    <div class="vf-hero__label">{{ section.settings.label | default: 'Precision 3D Printed Decor' }}</div>
+
+    <h1 class="vf-hero__title">
+      {{ section.settings.title_line1 | default: 'Where mathematics' }}<br>
+      <em>{{ section.settings.title_line2 | default: 'becomes' }}</em><br>
+      {{ section.settings.title_line3 | default: 'matter.' }}
+    </h1>
+
+    <p class="vf-hero__body">
+      {{ section.settings.body_text | default: 'Each object begins as a pure geometric equation. It ends as a weighted, textured, perfectly dimensioned presence in your space. Nothing is approximated. Nothing is reconsidered.' }}
+    </p>
+
+    <div class="vf-hero__actions">
+      <a href="{{ section.settings.cta_primary_link | default: '/collections/all' }}" class="vf-btn-teal">
+        {{ section.settings.cta_primary_label | default: 'View Collection' }}
+      </a>
+      <a href="{{ section.settings.cta_secondary_link | default: '#vf-process' }}" class="vf-btn-ghost-hero">
+        {{ section.settings.cta_secondary_label | default: 'Our Process' }}
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <line x1="1" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="0.8"/>
+          <polyline points="9,3 14,8 9,13" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="vf-hero__right">
+    <div class="vf-hero__cube">
+      <svg viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="vf-glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Top face -->
+        <polygon points="170,60 280,120 170,180 60,120" fill="rgba(61,122,107,0.07)" stroke="#3D7A6B" stroke-width="0.8" filter="url(#vf-glow)"/>
+        <!-- Right face -->
+        <polygon points="280,120 280,220 170,280 170,180" fill="rgba(61,122,107,0.04)" stroke="rgba(61,122,107,0.5)" stroke-width="0.8"/>
+        <!-- Left face -->
+        <polygon points="60,120 60,220 170,280 170,180" fill="rgba(61,122,107,0.02)" stroke="rgba(61,122,107,0.3)" stroke-width="0.8"/>
+        <!-- Vertical edge -->
+        <line x1="170" y1="180" x2="170" y2="280" stroke="rgba(61,122,107,0.4)" stroke-width="0.8"/>
+
+        <!-- Inner wireframe grid -->
+        <line x1="170" y1="60" x2="170" y2="180" stroke="rgba(61,122,107,0.15)" stroke-width="0.5"/>
+        <line x1="115" y1="90" x2="225" y2="150" stroke="rgba(61,122,107,0.15)" stroke-width="0.5"/>
+        <line x1="225" y1="90" x2="115" y2="150" stroke="rgba(61,122,107,0.15)" stroke-width="0.5"/>
+
+        <!-- Gold accent corners -->
+        <circle cx="280" cy="120" r="3" fill="#C9A96E" opacity="0.7"/>
+        <circle cx="60" cy="120" r="3" fill="#C9A96E" opacity="0.4"/>
+        <circle cx="170" cy="60" r="3" fill="#C9A96E" opacity="0.9" filter="url(#vf-glow)"/>
+
+        <!-- Floating small cubes -->
+        <g opacity="0.25" transform="translate(290,70)">
+          <polygon points="15,0 26,7 15,14 4,7" fill="none" stroke="#3D7A6B" stroke-width="0.6"/>
+          <polygon points="26,7 26,17 15,24 15,14" fill="none" stroke="#3D7A6B" stroke-width="0.6"/>
+          <polygon points="4,7 4,17 15,24 15,14" fill="none" stroke="#3D7A6B" stroke-width="0.6"/>
+        </g>
+        <g opacity="0.18" transform="translate(20,210)">
+          <polygon points="12,0 21,5 12,10 3,5" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+          <polygon points="21,5 21,13 12,18 12,10" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+          <polygon points="3,5 3,13 12,18 12,10" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+        </g>
+        <g opacity="0.15" transform="translate(270,220)">
+          <polygon points="10,0 18,4 10,8 2,4" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+          <polygon points="18,4 18,11 10,15 10,8" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+          <polygon points="2,4 2,11 10,15 10,8" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+        </g>
+
+        <!-- Dimension lines -->
+        <line x1="300" y1="110" x2="300" y2="230" stroke="rgba(201,169,110,0.2)" stroke-width="0.5" stroke-dasharray="3,4"/>
+        <text x="308" y="172" fill="rgba(201,169,110,0.35)" font-family="DM Sans, sans-serif" font-size="8" letter-spacing="0.1em">248mm</text>
+        <line x1="50" y1="100" x2="290" y2="100" stroke="rgba(201,169,110,0.12)" stroke-width="0.5" stroke-dasharray="3,4"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="vf-hero__scroll-hint">
+    <div class="vf-hero__scroll-line"></div>
+    Scroll
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "VF — Hero",
+  "tag": "div",
+  "class": "shopify-section--vf-hero",
+  "settings": [
+    { "type": "text", "id": "label", "label": "Eyebrow Label", "default": "Precision 3D Printed Decor" },
+    { "type": "text", "id": "title_line1", "label": "Title Line 1", "default": "Where mathematics" },
+    { "type": "text", "id": "title_line2", "label": "Title Line 2 (italic)", "default": "becomes" },
+    { "type": "text", "id": "title_line3", "label": "Title Line 3", "default": "matter." },
+    { "type": "textarea", "id": "body_text", "label": "Body Text", "default": "Each object begins as a pure geometric equation. It ends as a weighted, textured, perfectly dimensioned presence in your space. Nothing is approximated. Nothing is reconsidered." },
+    { "type": "text", "id": "cta_primary_label", "label": "Primary CTA Label", "default": "View Collection" },
+    { "type": "url", "id": "cta_primary_link", "label": "Primary CTA Link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Secondary CTA Label", "default": "Our Process" },
+    { "type": "url", "id": "cta_secondary_link", "label": "Secondary CTA Link" }
+  ],
+  "presets": [{ "name": "VF — Hero" }]
+}
+{% endschema %}

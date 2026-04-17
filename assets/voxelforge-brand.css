@@ -97,6 +97,7 @@ body {
   color: var(--vf-bone);
   font-family: var(--vf-sans);
   font-weight: 300;
+  overflow-x: hidden; /* prevent horizontal scroll from announcement bar full-width hack */
 }
 
 h1,
@@ -218,18 +219,18 @@ h6 {
   justify-content: center;
 }
 
-.announcement-bar__message {
+.announcement-bar__message,
+.announcement-bar__message.h5 {
   font-family: var(--vf-sans);
   font-weight: 400;
-  font-size: 10px;
+  font-size: 10px !important;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--vf-gold);
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   line-height: 1;
   max-width: 1320px;
-  margin: 0 auto;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -1104,12 +1105,6 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   padding-bottom: 0 !important;
 }
 
-/* Keep spacing for all other sections */
-.shopify-section:not(#shopify-section-header):not(#shopify-section-announcement-bar)>* {
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-
 /* Kill any hidden top gap */
 body,
 #MainContent {
@@ -1299,19 +1294,57 @@ body,
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   FIX: FULL-WIDTH ANNOUNCEMENT BAR (REMOVE BOXED LOOK)
+   FIX: FULL-WIDTH UTILITY BAR + ANNOUNCEMENT BAR
    ═══════════════════════════════════════════════════════════════ */
 
-#shopify-section-announcement-bar .page-width,
-#shopify-section-announcement-bar .utility-bar__grid {
-  max-width: 100% !important;
-  width: 100% !important;
+/* Make the utility-bar wrapper edge-to-edge instead of constraining inner elements */
+.utility-bar {
+  width: 100%;
+  max-width: 100%;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
 
-/* Make bar truly edge-to-edge */
-.announcement-bar {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
+#shopify-section-announcement-bar .utility-bar__grid {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+  justify-content: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FIX: SAFARI STICKY HEADER — requires top: 0
+   ═══════════════════════════════════════════════════════════════ */
+
+.section-header {
+  top: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FIX: LIST MENU ITEM PADDING (too tall for 50px header)
+   ═══════════════════════════════════════════════════════════════ */
+
+@media screen and (min-width: 990px) {
+  .header .list-menu__item--link {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FIX: HIDE POWERED-BY SHOPIFY (Premium Brand)
+   ═══════════════════════════════════════════════════════════════ */
+
+.footer .powered-by-link,
+.powered-by {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FIX: BOX SIZING ON UTILITY BAR (prevent announcement overflow)
+   ═══════════════════════════════════════════════════════════════ */
+
+.announcement-bar-section .utility-bar {
+  overflow: hidden;
 }

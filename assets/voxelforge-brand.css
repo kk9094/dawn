@@ -1,13 +1,18 @@
-/* ═══════════════════════════════════════════════════════════════
-   VOXEL FORGE — Brand CSS Override for Shopify Dawn Theme
-   Brand Identity v1.0 · Chennai, Tamil Nadu
-   Drop this file into /assets/ and link it in layout/theme.liquid
-   ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════════════════
+   VOXEL FORGE — Brand Design System for Shopify Dawn Theme
+   Architecture: Tokens → Base → Layout → Components → Utilities
+   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ─── TOKENS ─── */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LAYER 1: DESIGN TOKENS
+   Single source of truth for all brand values.
+   ───────────────────────────────────────────────────────────────────────── */
+
 :root {
+  /* Color Palette */
   --vf-obsidian: #0A0A0A;
-  --vf-charcoal: #1A1A1A;
+  --vf-charcoal: #0B0B0B;
   --vf-graphite: #2C2C2C;
   --vf-slate: #4A4A4A;
   --vf-silver: #9A9585;
@@ -22,40 +27,25 @@
 
   /* Motion */
   --vf-ease: cubic-bezier(0.25, 0, 0, 1);
-  --vf-duration: 600ms;
+  --vf-duration: 200ms;
 
   /* Typography */
   --vf-serif: 'Cormorant Garamond', Georgia, serif;
   --vf-sans: 'DM Sans', system-ui, sans-serif;
-}
 
-/* ─── GLOBAL RESET OVERRIDES ─── */
-*,
-*::before,
-*::after {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  /* Layout */
+  --vf-max-width: 1320px;
+  --vf-side-padding: 64px;
+  --vf-col-gap: 24px;
+  --vf-navbar-height: 60px;
+  --vf-bar-height: 28px;
 
-body {
-  background-color: var(--vf-obsidian);
-  color: var(--vf-bone);
-  font-family: var(--vf-sans);
-  font-weight: 300;
-}
-
-/* Dawn CSS variable overrides */
-:root {
+  /* Dawn variable overrides — map brand tokens to Dawn's CSS custom props */
   --color-base-background-1: 10, 10, 10;
-  /* Obsidian */
   --color-base-background-2: 26, 26, 26;
-  /* Charcoal */
   --color-base-text: 232, 226, 214;
-  /* Bone */
   --color-base-accent-1: 201, 169, 110;
-  /* Gold */
   --color-base-accent-2: 61, 122, 107;
-  /* Forge Teal */
   --color-base-outline-button-labels: 201, 169, 110;
   --color-base-solid-button-labels: 10, 10, 10;
   --payment-terms-background-color: rgb(10, 10, 10);
@@ -67,7 +57,6 @@ body {
   --font-body-style: normal;
   --font-body-weight: 300;
   --font-body-weight-bold: 400;
-
   --font-heading-scale: 1.1;
   --font-body-scale: 1.0;
 
@@ -78,47 +67,262 @@ body {
   --variant-pills-radius: 0px;
   --badge-corner-radius: 0px;
 
-  --page-width: 1200px;
+  --page-width: 1320px;
   --grid-desktop-horizontal-spacing: 2px;
   --grid-desktop-vertical-spacing: 2px;
   --grid-mobile-horizontal-spacing: 2px;
   --grid-mobile-vertical-spacing: 2px;
 }
 
-/* ─── ANNOUNCEMENT BAR ─── */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LAYER 2: BASE
+   Global element styles, font smoothing, typography scale.
+   ───────────────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--vf-obsidian);
+  color: var(--vf-bone);
+  font-family: var(--vf-sans);
+  font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  color: var(--vf-bone);
+  letter-spacing: 0.04em;
+}
+
+::selection {
+  background-color: var(--vf-gold);
+  color: var(--vf-obsidian);
+}
+
+*:focus-visible {
+  outline: 1px solid var(--vf-gold);
+  outline-offset: 3px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--vf-obsidian);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vf-graphite);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vf-gold-dim);
+}
+
+/* Page section fade-in */
+@media (prefers-reduced-motion: no-preference) {
+  .shopify-section {
+    animation: vf-fadein 400ms var(--vf-ease) both;
+  }
+
+  @keyframes vf-fadein {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LAYER 3: LAYOUT
+   Page width, grid, section spacing.
+   ───────────────────────────────────────────────────────────────────────── */
+
+.page-width {
+  max-width: var(--vf-max-width);
+  margin: 0 auto;
+  padding-left: var(--vf-side-padding);
+  padding-right: var(--vf-side-padding);
+}
+
+@media screen and (max-width: 749px) {
+  .page-width {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* Consistent vertical section rhythm */
+.shopify-section>* {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+@media screen and (max-width: 749px) {
+  .shopify-section>* {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LAYER 4: COMPONENTS
+   ───────────────────────────────────────────────────────────────────────── */
+
+
+/* ── 4.1 ANNOUNCEMENT BAR ─────────────────────────────────────────────── */
+
 .announcement-bar {
-  background-color: var(--vf-charcoal);
+  height: var(--vf-bar-height);
+  background-color: #0E0E0E;
   border-bottom: 0.5px solid var(--vf-graphite);
+  display: flex;
+  align-items: center;
+  animation: vf-fadein 600ms var(--vf-ease) both;
 }
 
 .announcement-bar__message {
-  color: var(--vf-gold);
   font-family: var(--vf-sans);
-  font-size: 16px;
-  font-weight: 300;
-  letter-spacing: 0.24em;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  color: var(--vf-gold);
+  padding: 0;
+  margin: 0 auto;
+  min-height: auto;
 }
 
-/* ─── HEADER ─── */
+@media screen and (max-width: 749px) {
+  .announcement-bar {
+    height: auto;
+    padding: 4px 0;
+  }
+
+  .announcement-bar__message {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+    padding: 3px 12px;
+  }
+}
+
+
+/* ── 4.2 HEADER ───────────────────────────────────────────────────────── */
+
 .header-wrapper {
   background-color: var(--vf-charcoal);
   border-bottom: 0.5px solid var(--vf-graphite);
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 }
 
-.header {
-  padding: 16px 24px;
+/* Desktop: strict 12-column grid */
+@media screen and (min-width: 990px) {
+  .header {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas: 'nav nav nav nav logo logo logo logo icons icons icons icons';
+    column-gap: var(--vf-col-gap);
+    align-items: center;
+    height: var(--vf-navbar-height);
+    max-width: var(--vf-max-width);
+    margin: 0 auto;
+    padding: 0 var(--vf-side-padding);
+    transition: height var(--vf-duration) ease;
+  }
+
+  .header__inline-menu {
+    grid-area: nav;
+    justify-self: start;
+  }
+
+  .header__heading,
+  .header__heading-link {
+    grid-area: logo;
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .header__icons {
+    grid-area: icons;
+    justify-self: end;
+  }
 }
 
+/* Mobile */
+@media screen and (max-width: 989px) {
+  .header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'left heading icons';
+    align-items: center;
+    height: 56px;
+    padding: 0 16px;
+  }
+}
+
+/* Sticky header: glass effect + compact height */
+.scrolled-past-header .header-wrapper {
+  background: rgba(11, 11, 11, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--vf-graphite);
+  box-shadow: none;
+}
+
+@media screen and (min-width: 990px) {
+  .scrolled-past-header .header {
+    height: 52px;
+  }
+}
+
+.scrolled-past-header .header__heading-logo {
+  transform: scale(0.9);
+}
+
+/* Logo */
 .header__heading-link {
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header__heading-logo {
-  max-width: 140px;
+  height: 30px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  transition: transform var(--vf-duration) ease;
 }
 
-/* Wordmark fallback if no logo image */
+/* Wordmark fallback */
 .header__heading {
   font-family: var(--vf-serif);
   font-weight: 300;
@@ -126,35 +330,10 @@ body {
   letter-spacing: 0.18em;
   color: var(--vf-bone);
   text-transform: uppercase;
+  margin: 0;
 }
 
-/* Nav links */
-.header__menu-item,
-.header__menu-item span {
-  font-family: var(--vf-sans);
-  font-size: 16px;
-  font-weight: 300;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--vf-silver);
-  transition: color var(--vf-duration) var(--vf-ease);
-}
-
-.header__menu-item:hover span,
-.header__active-menu-item span {
-  color: var(--vf-gold);
-}
-
-.header__icon svg {
-  fill: none;
-  stroke: var(--vf-silver);
-}
-
-.header__icon:hover svg {
-  stroke: var(--vf-gold);
-}
-
-/* Dropdown menus */
+/* Dropdown panels */
 .disclosure__panel,
 .header__submenu {
   background-color: var(--vf-charcoal);
@@ -166,7 +345,147 @@ body {
   color: var(--vf-silver);
 }
 
-/* ─── HERO / IMAGE BANNER ─── */
+
+/* ── 4.3 NAVIGATION ───────────────────────────────────────────────────── */
+
+.header__inline-menu .list-menu {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header__menu-item {
+  position: relative;
+  font-family: var(--vf-sans);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color var(--vf-duration) ease;
+}
+
+.header__menu-item span {
+  color: inherit;
+  transition: color var(--vf-duration) ease;
+}
+
+/* Animated gold underline */
+.header__menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--vf-gold);
+  transition: width var(--vf-duration) ease;
+}
+
+.header__menu-item:hover,
+.header__menu-item:hover span,
+.header__active-menu-item span {
+  color: var(--vf-gold);
+}
+
+.header__menu-item:hover::after {
+  width: 100%;
+}
+
+
+/* ── 4.4 HEADER ICONS ─────────────────────────────────────────────────── */
+
+/*
+  Icon color strategy:
+  - We scope to .header-wrapper to beat Dawn's specificity
+    without needing !important on most rules.
+  - SVGs use stroke="currentColor" so we only set `color` on the container.
+  - We never force `display` on `.svg-wrapper` to preserve Dawn's
+    details[open] toggle for the search modal.
+*/
+
+.header-wrapper .header__icons {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.header-wrapper .header__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  border: none;
+  transition: color var(--vf-duration) ease, transform var(--vf-duration) ease;
+  cursor: pointer;
+}
+
+.header-wrapper .header__icon svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.5;
+  fill: none;
+  stroke: currentColor;
+  overflow: visible;
+}
+
+.header-wrapper .header__icon:hover,
+.header-wrapper .header__icon:focus-visible {
+  color: var(--vf-gold);
+  transform: scale(1.05);
+}
+
+/* Cart bubble */
+.cart-count-bubble {
+  background-color: var(--vf-gold);
+  color: var(--vf-obsidian);
+  font-size: 9px;
+  border-radius: 50%;
+}
+
+/* Account icon: Dawn hides it on mobile with .small-hide when menu exists.
+   We override to keep it visible at all breakpoints. */
+@media screen and (max-width: 749px) {
+  .header-wrapper .header__icon--account {
+    display: inline-flex;
+  }
+}
+
+/* Search toggle: preserve Dawn's native details/summary show-hide.
+   ONLY hide the close icon when details is closed; show it when open.
+   Do NOT set display on the search icon's svg-wrapper — let Dawn handle it. */
+details:not([open]) .header__icon-close {
+  display: none;
+}
+
+details[open] .header__icon-close {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+}
+
+/* Hide search magnifier when modal is open so only X shows */
+details[open] summary.header__icon--search>span>.svg-wrapper:not(.header__icon-close) {
+  display: none;
+}
+
+details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__icon-close) {
+  display: inline-flex;
+  width: 18px;
+  height: 18px;
+}
+
+
+/* ── 4.5 HERO / BANNER ────────────────────────────────────────────────── */
+
 .banner {
   position: relative;
 }
@@ -175,9 +494,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom,
-      rgba(10, 10, 10, 0.3) 0%,
-      rgba(10, 10, 10, 0.55) 100%);
+  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.55) 100%);
   pointer-events: none;
 }
 
@@ -198,27 +515,36 @@ body {
 .banner__text {
   font-family: var(--vf-sans);
   font-weight: 200;
-  font-size: 16px;
+  font-size: 15px;
   letter-spacing: 0.12em;
   color: var(--vf-silver);
   text-transform: uppercase;
 }
 
-/* ─── BUTTONS ─── */
+@media screen and (max-width: 749px) {
+  .banner__heading {
+    font-size: clamp(28px, 8vw, 48px);
+  }
+}
+
+
+/* ── 4.6 BUTTONS ──────────────────────────────────────────────────────── */
+
 .button,
 .shopify-challenge__button,
 .customer button {
   font-family: var(--vf-sans);
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 300;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   border-radius: 0;
   padding: 14px 28px;
-  transition: all var(--vf-duration) var(--vf-ease);
+  transition: background-color var(--vf-duration) ease, color var(--vf-duration) ease, border-color var(--vf-duration) ease;
+  cursor: pointer;
 }
 
-/* Primary button — Gold outline */
+/* Gold outline — primary */
 .button--primary,
 .button:not(.button--secondary):not(.button--tertiary) {
   background-color: transparent;
@@ -226,12 +552,13 @@ body {
   border: 1px solid var(--vf-gold);
 }
 
-.button--primary:hover {
+.button--primary:hover,
+.button:not(.button--secondary):not(.button--tertiary):hover {
   background-color: var(--vf-gold);
   color: var(--vf-obsidian);
 }
 
-/* Secondary button — Bone outline */
+/* Bone outline — secondary */
 .button--secondary {
   background-color: transparent;
   color: var(--vf-bone);
@@ -242,7 +569,7 @@ body {
   border-color: var(--vf-bone);
 }
 
-/* Add to cart — Gold filled */
+/* Add to cart — gold filled */
 .product-form__submit {
   background-color: var(--vf-gold);
   color: var(--vf-obsidian);
@@ -255,7 +582,9 @@ body {
   color: var(--vf-gold);
 }
 
-/* ─── PRODUCT CARDS ─── */
+
+/* ── 4.7 PRODUCT CARDS ────────────────────────────────────────────────── */
+
 .card-wrapper {
   transition: transform var(--vf-duration) var(--vf-ease);
 }
@@ -276,6 +605,11 @@ body {
   border-color: var(--vf-gold-dim);
 }
 
+.card__content,
+.card__information {
+  padding: 16px 20px;
+}
+
 .card__heading {
   font-family: var(--vf-serif);
   font-weight: 300;
@@ -287,12 +621,35 @@ body {
 .card__heading a {
   color: var(--vf-bone);
   text-decoration: none;
-  transition: color var(--vf-duration) var(--vf-ease);
+  transition: color var(--vf-duration) ease;
 }
 
 .card__heading a:hover {
   color: var(--vf-gold);
 }
+
+/* Multicolumn cards */
+.multicolumn-card {
+  background-color: var(--vf-obsidian);
+  border: 0.5px solid var(--vf-graphite);
+}
+
+.multicolumn-card__info {
+  background-color: transparent;
+  color: var(--vf-silver);
+}
+
+.multicolumn-card__info h3,
+.multicolumn-card__info .inline-richtext {
+  color: var(--vf-bone);
+}
+
+.multicolumn-card__info .rte {
+  color: var(--vf-silver);
+}
+
+
+/* ── 4.8 PRICE & BADGES ───────────────────────────────────────────────── */
 
 .price {
   font-family: var(--vf-sans);
@@ -301,16 +658,26 @@ body {
   letter-spacing: 0.08em;
 }
 
-.price--large {
-  color: var(--vf-bone);
+.price--large,
+.product__text-container .price--large {
+  font-family: var(--vf-sans);
+  font-weight: 300;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--vf-gold);
+}
+
+.price-item--sale,
+.price--on-sale .price-item--sale {
+  color: var(--vf-gold);
 }
 
 .badge {
   background-color: var(--vf-gold);
   color: var(--vf-obsidian);
   font-family: var(--vf-sans);
-  font-size: 16px;
-  letter-spacing: 0.24em;
+  font-size: 9px;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 400;
   border-radius: 0;
@@ -322,72 +689,9 @@ body {
   color: var(--vf-warm-white);
 }
 
-/* ─── COLLECTION HEADERS ─── */
-.collection-hero__title,
-.section-header .title {
-  font-family: var(--vf-serif);
-  font-weight: 300;
-  letter-spacing: 0.06em;
-  color: var(--vf-bone);
-}
 
-/* Section headings */
-.rich-text__heading,
-.featured-collection .title,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--vf-serif);
-  font-weight: 300;
-  color: var(--vf-bone);
-  letter-spacing: 0.04em;
-}
+/* ── 4.9 PRODUCT PAGE ─────────────────────────────────────────────────── */
 
-/* ─── SECTION LABELS (decorative) ─── */
-.vf-section-label {
-  font-family: var(--vf-sans);
-  font-size: 15px;
-  font-weight: 400;
-  letter-spacing: 0.36em;
-  text-transform: uppercase;
-  color: var(--vf-gold);
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.vf-section-label::after {
-  content: '';
-  flex: 1;
-  height: 0.5px;
-  background-color: var(--vf-graphite);
-}
-
-/* ─── RICH TEXT SECTIONS ─── */
-.rich-text {
-  background-color: var(--vf-obsidian);
-  border-top: 0.5px solid var(--vf-graphite);
-  border-bottom: 0.5px solid var(--vf-graphite);
-  padding: 80px 40px;
-}
-
-.rich-text__text,
-.rich-text p {
-  font-family: var(--vf-sans);
-  font-weight: 200;
-  font-size: 16px;
-  letter-spacing: 0.06em;
-  color: var(--vf-silver);
-  line-height: 1.9;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* ─── FEATURED PRODUCT ─── */
 .product__title {
   font-family: var(--vf-serif);
   font-weight: 300;
@@ -405,19 +709,10 @@ h6 {
   line-height: 1.9;
 }
 
-.product__text-container .price--large {
-  font-family: var(--vf-sans);
-  font-weight: 300;
-  font-size: 20px;
-  letter-spacing: 0.1em;
-  color: var(--vf-gold);
-}
-
-/* Variant selectors */
 .variant-selects fieldset legend,
 .product-form__input label {
   font-family: var(--vf-sans);
-  font-size: 16px;
+  font-size: 11px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--vf-silver);
@@ -434,7 +729,6 @@ h6 {
   outline: none;
 }
 
-/* ─── PRODUCT MEDIA / GALLERY ─── */
 .product-media-container {
   background-color: var(--vf-charcoal);
 }
@@ -447,7 +741,9 @@ h6 {
   border-color: var(--vf-gold-dim);
 }
 
-/* ─── FORMS & INPUTS ─── */
+
+/* ── 4.10 FORMS ───────────────────────────────────────────────────────── */
+
 .field__input,
 .select__select,
 .customer .field__input {
@@ -459,11 +755,12 @@ h6 {
   font-weight: 300;
   font-size: 15px;
   letter-spacing: 0.06em;
-  transition: border-color var(--vf-duration) var(--vf-ease);
+  transition: border-color var(--vf-duration) ease;
 }
 
 .field__input:focus,
-.select__select:focus {
+.select__select:focus,
+.customer .field__input:focus {
   border-color: var(--vf-gold);
   outline: none;
   box-shadow: none;
@@ -472,14 +769,16 @@ h6 {
 .field__label,
 .select__label {
   font-family: var(--vf-sans);
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 300;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--vf-silver);
 }
 
-/* ─── CART ─── */
+
+/* ── 4.11 CART ────────────────────────────────────────────────────────── */
+
 .cart-drawer {
   background-color: var(--vf-charcoal);
   border-left: 0.5px solid var(--vf-graphite);
@@ -505,7 +804,106 @@ h6 {
   color: var(--vf-gold);
 }
 
-/* ─── FOOTER ─── */
+
+/* ── 4.12 COLLECTION SECTION ──────────────────────────────────────────── */
+
+.collection-hero__title,
+.section-header .title {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--vf-bone);
+}
+
+.rich-text__heading,
+.featured-collection .title {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  color: var(--vf-bone);
+  letter-spacing: 0.04em;
+}
+
+/* Tier-specific collection card accents */
+.collection-card[data-collection="serie-i"] {
+  border-color: var(--vf-graphite);
+}
+
+.collection-card[data-collection="serie-ii"],
+.collection-list .card:nth-child(2) {
+  border-color: var(--vf-gold-dim);
+}
+
+.collection-list .card:nth-child(2) .card__heading {
+  color: var(--vf-gold);
+}
+
+.collection-card[data-collection="atelier"],
+.collection-list .card:nth-child(3) {
+  border-color: var(--vf-teal);
+}
+
+.collection-list .card:nth-child(3) .card__heading {
+  color: var(--vf-teal-bright);
+}
+
+
+/* ── 4.13 RICH TEXT ───────────────────────────────────────────────────── */
+
+.rich-text {
+  background-color: var(--vf-obsidian);
+  border-top: 0.5px solid var(--vf-graphite);
+  border-bottom: 0.5px solid var(--vf-graphite);
+  padding: 80px 40px;
+}
+
+.rich-text__text,
+.rich-text p {
+  font-family: var(--vf-sans);
+  font-weight: 200;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  color: var(--vf-silver);
+  line-height: 1.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+
+/* ── 4.14 FILTERS ─────────────────────────────────────────────────────── */
+
+.facets__summary {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--vf-silver);
+}
+
+.facets__checkbox:checked+.facets__label::before {
+  background-color: var(--vf-gold);
+  border-color: var(--vf-gold);
+}
+
+
+/* ── 4.15 PAGINATION ──────────────────────────────────────────────────── */
+
+.pagination__item {
+  color: var(--vf-silver);
+  border: 0.5px solid var(--vf-graphite);
+  border-radius: 0;
+  transition: all var(--vf-duration) ease;
+}
+
+.pagination__item--current,
+.pagination__item:hover {
+  color: var(--vf-gold);
+  border-color: var(--vf-gold-dim);
+  background-color: transparent;
+}
+
+
+/* ── 4.16 FOOTER ──────────────────────────────────────────────────────── */
+
 .footer {
   background-color: var(--vf-obsidian);
   border-top: 0.5px solid var(--vf-graphite);
@@ -518,7 +916,7 @@ h6 {
 
 .footer__heading {
   font-family: var(--vf-sans);
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -527,32 +925,34 @@ h6 {
 }
 
 .footer-block__list-item a,
-.footer__list-item a,
-.link {
+.footer__list-item a {
   font-family: var(--vf-sans);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 200;
   letter-spacing: 0.1em;
   color: var(--vf-silver);
   text-decoration: none;
-  transition: color var(--vf-duration) var(--vf-ease);
+  transition: color var(--vf-duration) ease;
 }
 
 .footer-block__list-item a:hover,
-.footer__list-item a:hover {
+.footer__list-item a:hover,
+.list-social__link:hover {
   color: var(--vf-gold);
 }
 
 .copyright__content {
   font-family: var(--vf-sans);
-  font-size: 15px;
+  font-size: 11px;
   font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--vf-slate);
 }
 
-/* ─── NEWSLETTER / EMAIL SIGNUP ─── */
+
+/* ── 4.17 NEWSLETTER ──────────────────────────────────────────────────── */
+
 .email-signup {
   background-color: var(--vf-charcoal);
   border: 0.5px solid var(--vf-graphite);
@@ -574,10 +974,12 @@ h6 {
   letter-spacing: 0.08em;
 }
 
-/* ─── BREADCRUMBS ─── */
+
+/* ── 4.18 BREADCRUMBS ─────────────────────────────────────────────────── */
+
 .breadcrumbs {
   font-family: var(--vf-sans);
-  font-size: 15px;
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--vf-slate);
@@ -586,28 +988,16 @@ h6 {
 .breadcrumbs a {
   color: var(--vf-silver);
   text-decoration: none;
+  transition: color var(--vf-duration) ease;
 }
 
 .breadcrumbs a:hover {
   color: var(--vf-gold);
 }
 
-/* ─── PAGINATION ─── */
-.pagination__item {
-  color: var(--vf-silver);
-  border: 0.5px solid var(--vf-graphite);
-  border-radius: 0;
-  transition: all var(--vf-duration) var(--vf-ease);
-}
 
-.pagination__item--current,
-.pagination__item:hover {
-  color: var(--vf-gold);
-  border-color: var(--vf-gold-dim);
-  background-color: transparent;
-}
+/* ── 4.19 MODALS ──────────────────────────────────────────────────────── */
 
-/* ─── MODALS & POPUPS ─── */
 .modal {
   background-color: var(--vf-charcoal);
   border: 0.5px solid var(--vf-graphite);
@@ -618,78 +1008,12 @@ h6 {
   background-color: rgba(10, 10, 10, 0.85);
 }
 
-/* ─── COLLECTION FILTERS ─── */
-.facets__summary {
-  font-family: var(--vf-sans);
-  font-size: 16px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--vf-silver);
-}
 
-.facets__checkbox:checked+.facets__label::before {
-  background-color: var(--vf-gold);
-  border-color: var(--vf-gold);
-}
+/* ─────────────────────────────────────────────────────────────────────────
+   LAYER 5: UTILITIES
+   Helper classes only — no visual overrides here.
+   ───────────────────────────────────────────────────────────────────────── */
 
-/* ─── TIER-SPECIFIC COLLECTION CARDS ─── */
-/* Série I — standard */
-.collection-card[data-collection="serie-i"] {
-  border-color: var(--vf-graphite);
-}
-
-/* Série II — gold accent */
-.collection-card[data-collection="serie-ii"],
-.collection-list .card:nth-child(2) {
-  border-color: var(--vf-gold-dim);
-}
-
-.collection-list .card:nth-child(2) .card__heading {
-  color: var(--vf-gold);
-}
-
-/* Atelier — teal accent */
-.collection-card[data-collection="atelier"],
-.collection-list .card:nth-child(3) {
-  border-color: var(--vf-teal);
-}
-
-.collection-list .card:nth-child(3) .card__heading {
-  color: var(--vf-teal-bright);
-}
-
-/* ─── SCROLLBAR ─── */
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--vf-obsidian);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--vf-graphite);
-  border-radius: 0;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--vf-gold-dim);
-}
-
-/* ─── SELECTION ─── */
-::selection {
-  background-color: var(--vf-gold);
-  color: var(--vf-obsidian);
-}
-
-/* ─── FOCUS STATES ─── */
-*:focus-visible {
-  outline: 1px solid var(--vf-gold);
-  outline-offset: 3px;
-}
-
-/* ─── UTILITY CLASSES ─── */
 .vf-gold {
   color: var(--vf-gold);
 }
@@ -709,736 +1033,25 @@ h6 {
 .vf-tracked {
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  font-size: 15px;
+  font-size: 11px;
 }
 
-/* ─── MOTION ─── */
-@media (prefers-reduced-motion: no-preference) {
-
-  .card-wrapper,
-  .button,
-  .header__menu-item span,
-  .link,
-  a {
-    transition-duration: var(--vf-duration);
-    transition-timing-function: var(--vf-ease);
-  }
-
-  /* Page fade-in */
-  .shopify-section {
-    animation: vf-fadein 600ms var(--vf-ease) both;
-  }
-
-  @keyframes vf-fadein {
-    from {
-      opacity: 0;
-      transform: translateY(12px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.vf-section-label {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--vf-gold);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-/* ─── RESPONSIVE ─── */
-@media screen and (max-width: 749px) {
-  .banner__heading {
-    font-size: clamp(28px, 8vw, 48px);
-  }
-
-  .header {
-    padding: 12px 16px;
-  }
-
-  .header__heading {
-    font-size: 18px;
-  }
-}
-
-
-/* --- MULTICOLUMN FIX --- */
-.multicolumn-card {
-  background-color: var(--vf-obsidian) !important;
-  border: 0.5px solid var(--vf-graphite);
-}
-
-.multicolumn-card__info {
-  background-color: transparent !important;
-  color: var(--vf-silver);
-}
-
-.multicolumn-card__info h3,
-.multicolumn-card__info .inline-richtext {
-  color: var(--vf-bone);
-}
-
-.multicolumn-card__info .rte {
-  color: var(--vf-silver);
-}
-
-/* --- EDGE-TO-EDGE HEADER FIX --- */
-.utility-bar,
-.header-wrapper {
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  background-color: var(--vf-charcoal) !important;
-  border-bottom: 0.5px solid var(--vf-graphite);
-}
-
-.header,
-.utility-bar__grid {
-  max-width: var(--page-width, 1200px);
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.header__heading-logo {
-  width: 200px !important;
-  /* Adjust this number up or down */
-  max-width: 100%;
-  height: auto;
-}
-
-/* --- CUSTOM DESKTOP LOGO SIZING --- */
-.header__heading-logo {
-  width: 200px !important;
-  /* Adjust this number up or down */
-  max-width: 100%;
-  height: auto;
-}
-
-/* --- 1. ANNOUNCEMENT BAR (WELCOME HEADER) --- */
-.announcement-bar__message {
-  font-family: var(--vf-sans) !important;
-  font-weight: 300 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
-}
-
-@keyframes mechanicalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.announcement-bar {
-  animation: mechanicalFadeIn 600ms cubic-bezier(0.25, 0, 0, 1) forwards !important;
-  opacity: 0;
-  /* Pre-animation state */
-}
-
-/* --- 2. NAVIGATION MICRO-INTERACTIONS --- */
-.header__menu-item,
-.header__menu-item span {
-  text-decoration: none !important;
-  font-family: var(--vf-sans) !important;
-  font-weight: 300 !important;
-  letter-spacing: 0.08em !important;
-  color: var(--vf-bone) !important;
-  position: relative;
-}
-
-.header__menu-item::after {
+.vf-section-label::after {
   content: '';
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: var(--vf-forge-teal) !important;
-  transition: width 600ms cubic-bezier(0.25, 0, 0, 1) !important;
-}
-
-.header__menu-item:hover::after {
-  width: 100%;
-}
-
-/* --- 3. OPTICAL ALIGNMENT & ICONS --- */
-.header {
-  align-items: center !important;
-}
-
-.header__icon {
-  color: var(--vf-bone) !important;
-  transition: color 600ms cubic-bezier(0.25, 0, 0, 1);
-}
-
-.header__icon:hover,
-.header__icon:focus,
-.header__icon:hover .icon,
-.header__icon:focus .icon {
-  color: var(--vf-forge-teal) !important;
-  stroke: var(--vf-forge-teal) !important;
-}
-
-/* --- 4. STICKY HEADER BEHAVIOR --- */
-.shopify-section-header-sticky.scrolled-past-header,
-.scrolled-past-header {
-  box-shadow: none !important;
-  border-bottom: 0.5px solid var(--vf-graphite) !important;
-}
-
-/* --- REFACTORED HEADER & ANNOUNCEMENT BAR STRUCTURE --- */
-
-/* Announcement Bar Slimming */
-.announcement-bar__message {
-  font-size: 1.2rem !important;
-  /* Reduced font size */
-  padding-top: 0.5rem !important;
-  /* Decreased vertical padding */
-  padding-bottom: 0.5rem !important;
-  min-height: auto !important;
-  /* Override dawn default minimum heights */
-}
-
-/* Header Grid Reconfiguration (Absolute Center Logo, Left Nav, Right Icons) */
-.header {
-  display: grid !important;
-  grid-template-columns: 1fr auto 1fr !important;
-  grid-template-areas: 'navigation heading icons' !important;
-  align-items: center !important;
-  padding-top: 1.2rem !important;
-  /* Shrink vertical padding */
-  padding-bottom: 1.2rem !important;
-}
-
-/* Ensure Nav anchors left */
-.header__inline-menu {
-  grid-area: navigation;
-  justify-self: start;
-}
-
-/* Ensure Logo centers */
-.header__heading,
-.header__heading-link {
-  grid-area: heading;
-  justify-self: center;
-}
-
-/* Ensure Icons anchor right */
-.header__icons {
-  grid-area: icons;
-  justify-self: end;
-}
-
-/* Icon Standardization (Equal widths & heights for all action SVG icons) */
-.header__icon .svg-wrapper,
-.header__icon svg.icon,
-.header__icon svg {
-  width: 24px !important;
-  /* Exact width constraint */
-  height: 24px !important;
-  /* Exact height constraint */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.header__icon {
-  width: auto !important;
-  height: auto !important;
-  padding-left: 1rem !important;
-  padding-right: 0 !important;
-  /* Re-balance the click targets */
-}
-
-/* =========================================================================
-   VOXEL FORGE � PREMIUM HEADER SPEC (12-COLUMN ARCHITECTURE)
-   ========================================================================= */
-
-/* 1. Overall Structure (12-Column Layout) */
-@media screen and (min-width: 990px) {
-  .header {
-    display: grid !important;
-    max-width: 1320px !important;
-    margin: 0 auto !important;
-    padding-left: 64px !important;
-    padding-right: 64px !important;
-    grid-template-columns: repeat(12, 1fr) !important;
-    column-gap: 24px !important;
-    align-items: center !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    height: 60px !important;
-    /* 2. Header Dimensions */
-    transition: height 200ms ease !important;
-    /* For scrolling */
-  }
-
-  /* Left (Cols 1-4): Nav */
-  .header__inline-menu {
-    grid-column: 1 / 5 !important;
-    grid-row: 1 !important;
-    justify-self: start !important;
-  }
-
-  /* Center (Cols 5-8): Logo */
-  .header__heading,
-  .header__heading-link {
-    grid-column: 5 / 9 !important;
-    grid-row: 1 !important;
-    justify-self: center !important;
-    width: 100% !important;
-    text-align: center !important;
-  }
-
-  /* Right (Cols 9-12): Actions */
-  .header__icons {
-    grid-column: 9 / -1 !important;
-    grid-row: 1 !important;
-    justify-self: end !important;
-  }
-}
-
-/* 3. Top Announcement Bar */
-#shopify-section-announcement-bar,
-.announcement-bar {
-  background-color: #0E0E0E !important;
-  height: 28px !important;
-  display: flex !important;
-  align-items: center !important;
-}
-
-.announcement-bar__message {
-  font-family: var(--vf-sans) !important;
-  font-weight: 400 !important;
-  font-size: 11px !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-  color: #C6A96B !important;
-  padding: 0 !important;
-  margin: 0 auto !important;
-}
-
-/* 4. Logo Placement */
-.header__heading-logo {
-  height: 30px !important;
-  /* 28-32px requested */
-  width: auto !important;
-  max-height: 100% !important;
-  transition: transform 200ms ease, height 200ms ease !important;
-  object-fit: contain !important;
-}
-
-/* 5. Navigation (Left Section) */
-.header__inline-menu .list-menu {
-  gap: 28px !important;
-  /* Nav item gap */
-}
-
-.header__menu-item,
-.header__menu-item span {
-  font-size: 13px !important;
-  letter-spacing: 0.08em !important;
-  font-weight: 400 !important;
-  color: rgba(255, 255, 255, 0.75) !important;
-  text-decoration: none !important;
-  position: relative !important;
-  transition: color 200ms ease !important;
-}
-
-/* 8. Micro-Interactions (Nav) */
-.header__menu-item:hover,
-.header__menu-item:hover span {
-  color: #FFFFFF !important;
-}
-
-.header__menu-item::after {
-  content: '' !important;
-  position: absolute !important;
-  bottom: -4px !important;
-  left: 0 !important;
-  width: 0 !important;
-  height: 1px !important;
-  background-color: #FFFFFF !important;
-  transition: width 200ms ease !important;
-}
-
-.header__menu-item:hover::after {
-  width: 100% !important;
-}
-
-/* 6. Right Actions (Icons) */
-.header__icons {
-  gap: 24px !important;
-  /* Icon gap */
-}
-
-.header__icon,
-.header__icon--cart,
-.header__icon--search,
-.header__icon--account {
-  padding: 0 !important;
-  margin: 0 !important;
-  width: 18px !important;
-  height: 18px !important;
-  color: rgba(255, 255, 255, 0.8) !important;
-  transition: opacity 200ms ease, transform 200ms ease !important;
-}
-
-.header__icon .svg-wrapper,
-.header__icon svg {
-  width: 18px !important;
-  height: 18px !important;
-  stroke-width: 1.5px !important;
-}
-
-/* 8. Micro-Interactions (Icons Hover) */
-.header__icon:hover {
-  color: #FFFFFF !important;
-  transform: scale(1.05) !important;
-}
-
-.header__icon:hover svg {
-  stroke: #FFFFFF !important;
-}
-
-/* 10. Color System (Header Base) */
-.header-wrapper {
-  background-color: #0B0B0B !important;
-}
-
-/* 11. Premium Enhancements (Scroll & Glass) */
-.shopify-section-header-sticky,
-.scrolled-past-header {
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.05) !important;
-  box-shadow: none !important;
-}
-
-/* Glass Effect when scrolling */
-.shopify-section-header-sticky .header-wrapper,
-.scrolled-past-header .header-wrapper {
-  background: rgba(11, 11, 11, 0.85) !important;
-  backdrop-filter: blur(10px) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-}
-
-/* Height reduction on scroll */
-@media screen and (min-width: 990px) {
-
-  .shopify-section-header-sticky .header,
-  .scrolled-past-header .header {
-    height: 52px !important;
-  }
-}
-
-/* Logo scales slightly down */
-.shopify-section-header-sticky .header__heading-logo,
-.scrolled-past-header .header__heading-logo {
-  transform: scale(0.9) !important;
-}
-
-
-/* --- FIX: Search Close (X) Icon Visibility --- */
-/* Counteract the .svg-wrapper display:flex override that was breaking
-   Dawn's native show/hide logic for the search toggle X icon */
-details:not([open]) .header__icon-close,
-details:not([open]) .svg-wrapper.header__icon-close {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: hidden !important;
-}
-
-details[open] .header__icon-close,
-details[open] .svg-wrapper.header__icon-close {
-  display: inline-flex !important;
-  width: 18px !important;
-  height: 18px !important;
-}
-
-/* --- FIX: Mobile Menu (Drawer) Icon Visibility --- */
-/* Ensure the hamburger icon is visible on mobile */
-details:not([open]) .header__icon-menu,
-details:not([open]) .svg-wrapper.header__icon-menu {
-  display: inline-flex !important;
-  width: 24px !important;
-  height: 24px !important;
-}
-
-/* Ensure the X icon is visible when the menu is open */
-details[open] .header__icon-menu,
-details[open] .svg-wrapper.header__icon-menu {
-  display: inline-flex !important;
-  width: 24px !important;
-  height: 24px !important;
-}
-
-/* =========================================================================
-   FIX v2: SEARCH ICON TOGGLE + HOVER COLOR UNIFICATION
-   ========================================================================= */
-
-/* --- FIX 1: Double-X (hide search magnifier when modal is open) ---
-   When details[open], the search summary shows BOTH svg-wrappers.
-   We must explicitly hide the first (magnifier) when open,
-   and ensure it's visible when closed. */
-details[open] summary.header__icon--search>span>.svg-wrapper:not(.header__icon-close) {
-  display: none !important;
-}
-
-details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__icon-close) {
-  display: inline-flex !important;
-  width: 18px !important;
-  height: 18px !important;
-}
-
-/* --- FIX 2: Second close button inside the search modal panel ---
-   The search-modal__close-button is a SEPARATE button inside the modal overlay.
-   When the modal is open, it was creating the second duplicate X.
-   This button should stay visible only inside the expanded modal panel�
-   but default Dawn CSS already handles this; our SVG sizing was breaking it. */
-.search-modal__close-button .svg-wrapper {
-  display: flex !important;
-  width: 18px !important;
-  height: 18px !important;
-}
-
-/* --- FIX 3: Icon & Nav hover color ? Brand Gold (#c9a96e) --- */
-.header__icon:hover,
-.header__icon:focus {
-  color: #C9A96E !important;
-  transform: scale(1.05) !important;
-}
-
-.header__icon:hover svg,
-.header__icon:focus svg {
-  stroke: #C9A96E !important;
-}
-
-/* Nav items on hover */
-.header__menu-item:hover,
-.header__menu-item:hover span {
-  color: #C9A96E !important;
-}
-
-.header__menu-item::after {
-  background-color: #C9A96E !important;
-}
-
-/* =========================================================================
-   VOXEL FORGE � COMPREHENSIVE PATCH v3
-   Fixes: icon hover (all devices), mobile account icon, mobile bar sizing,
-   brand accent consistency across all pages.
-   ========================================================================= */
-
-/* -- SECTION 1: ICON COLOR SYSTEM ------------------------------------------
-   Root cause of hover black: base.css sets color:rgb(var(--color-foreground))
-   on .header__icon. We must override both the default AND hover states with
-   full specificity, targeting the SVG stroke/fill directly.                  */
-
-/* Default icon appearance */
-.header-wrapper .header__icon,
-.header-wrapper .header__icon--search,
-.header-wrapper .header__icon--account,
-.header-wrapper .header__icon--cart {
-  color: rgba(255, 255, 255, 0.8) !important;
-  transition: color 200ms ease, transform 200ms ease !important;
-}
-
-/* Inline svg inherits currentColor via stroke="currentColor" */
-.header-wrapper .header__icon svg,
-.header-wrapper .header__icon svg * {
-  stroke: rgba(255, 255, 255, 0.8) !important;
-  fill: none !important;
-  transition: stroke 200ms ease !important;
-}
-
-/* Gold hover state � aggressive multi-target */
-.header-wrapper .header__icon:hover,
-.header-wrapper .header__icon:focus,
-.header-wrapper a.header__icon:hover,
-.header-wrapper a.header__icon:focus {
-  color: #C9A96E !important;
-  transform: scale(1.05) !important;
-  opacity: 1 !important;
-}
-
-.header-wrapper .header__icon:hover svg,
-.header-wrapper .header__icon:hover svg *,
-.header-wrapper .header__icon:focus svg,
-.header-wrapper .header__icon:focus svg * {
-  stroke: #C9A96E !important;
-  fill: none !important;
-}
-
-/* -- SECTION 2: ICON SIZING (Fix 4.4rem Dawn default) ----------------------
-   Dawn sets .header__icon to 4.4rem�4.4rem. We override to a compact 40px
-   clickable target with an 18px visual SVG, keeping touch area large.        */
-
-.header-wrapper .header__icon {
-  width: 40px !important;
-  height: 40px !important;
-  padding: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.header-wrapper .header__icon .svg-wrapper {
-  width: 18px !important;
-  height: 18px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.header-wrapper .header__icon svg {
-  width: 18px !important;
-  height: 18px !important;
-  stroke-width: 1.5 !important;
-}
-
-.header__icons {
-  gap: 0 !important;
-  /* Gaps come from icon padding, not flex gap */
-  display: flex !important;
-  align-items: center !important;
-}
-
-/* -- SECTION 3: MOBILE � SHOW ACCOUNT ICON ---------------------------------
-   Dawn hides the account icon on mobile via .small-hide when menu is set.
-   We restore it at viewport = 749px.                                         */
-
-@media screen and (max-width: 749px) {
-  .header__icon--account {
-    display: inline-flex !important;
-  }
-}
-
-/* -- SECTION 4: MOBILE ANNOUNCEMENT BAR ------------------------------------
-   Text must be smaller on mobile � reduce font size and compress bar height. */
-
-@media screen and (max-width: 749px) {
-
-  .announcement-bar,
-  #shopify-section-announcement-bar {
-    height: auto !important;
-    min-height: 22px !important;
-    padding: 4px 0 !important;
-  }
-
-  .announcement-bar__message {
-    font-size: 9px !important;
-    letter-spacing: 0.06em !important;
-    line-height: 1.3 !important;
-    padding: 3px 12px !important;
-    min-height: auto !important;
-  }
-}
-
-/* -- SECTION 5: BRAND ACCENT CONSISTENCY (GLOBAL) ---------------------------
-   Apply #C9A96E gold systematically across price, links, badges,
-   buttons, form focus, and section accents.                                   */
-
-/* 5a. Price � highlight sale & regular price with accent */
-.price__sale,
-.price-item--sale,
-.price--on-sale .price-item--sale {
-  color: #C9A96E !important;
-}
-
-/* 5b. Primary button � gold background, obsidian label */
-.button,
-.button--primary,
-.shopify-challenge__button,
-.customer button {
-  background-color: transparent !important;
-  border: 1px solid #C9A96E !important;
-  color: #C9A96E !important;
-  letter-spacing: 0.16em !important;
-  font-size: 12px !important;
-  transition: background-color 200ms ease, color 200ms ease !important;
-}
-
-.button:hover,
-.button--primary:hover {
-  background-color: #C9A96E !important;
-  color: #0A0A0A !important;
-}
-
-/* 5c. Global link accent on hover */
-a:hover {
-  color: #C9A96E !important;
-}
-
-/* 5d. Form inputs � gold focus ring */
-.field__input:focus,
-.select__select:focus,
-.customer .field input:focus,
-textarea:focus {
-  border-color: #C9A96E !important;
-  outline: none !important;
-  box-shadow: 0 0 0 1px #C9A96E !important;
-}
-
-/* 5e. Cart count bubble � gold */
-.cart-count-bubble {
-  background-color: #C9A96E !important;
-  color: #0A0A0A !important;
-  font-size: 9px !important;
-}
-
-/* 5f. Badge / sale tag */
-.badge--sale,
-.badge {
-  background-color: #C9A96E !important;
-  color: #0A0A0A !important;
-  font-size: 9px !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-}
-
-/* 5g. Pagination active state */
-.pagination__item--current {
-  background-color: #C9A96E !important;
-  color: #0A0A0A !important;
-  border-color: #C9A96E !important;
-}
-
-/* 5h. Section dividers */
-.section-header,
-.featured-collection {
-  padding-top: 60px !important;
-  padding-bottom: 60px !important;
-}
-
-@media screen and (max-width: 749px) {
-
-  .section-header,
-  .featured-collection {
-    padding-top: 40px !important;
-    padding-bottom: 40px !important;
-  }
-}
-
-/* 5i. Card consistent spacing */
-.card__content,
-.card__information {
-  padding: 16px 20px !important;
-}
-
-/* 5j. Nav underline � gold */
-.header__menu-item::after {
-  background-color: #C9A96E !important;
-}
-
-.header__menu-item:hover,
-.header__menu-item:hover span {
-  color: #C9A96E !important;
-}
-
-/* 5k. Footer links hover */
-.footer__list-item a:hover,
-.list-social__link:hover {
-  color: #C9A96E !important;
+  flex: 1;
+  height: 0.5px;
+  background-color: var(--vf-graphite);
 }

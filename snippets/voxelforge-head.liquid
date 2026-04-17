@@ -28,80 +28,218 @@
 <meta property="og:description" content="{{ page_description | default: 'Precision cast in shadow and glow. Architectural lighting designed and forged in Chennai.' | escape }}">
 <meta property="og:site_name" content="Voxel Forge">
 
-{%- comment -%} Critical inline CSS — header appearance has to beat Dawn color schemes {%- endcomment -%}
+{%- comment -%} Critical inline CSS — must be in <head> to beat Dawn's external color-scheme CSS {%- endcomment -%}
 <style>
-  /* ── CRITICAL HEADER OVERRIDES ─────────────────────── */
-  /* Dawn outputs color scheme CSS that sets white backgrounds.
-     These rules must win. inline <style> in <head> beats external CSS. */
 
-  .header-wrapper,
-  sticky-header .header-wrapper,
-  .header-wrapper[class*="color-scheme"],
-  .header-wrapper.gradient {
-    background-color: #0A0A0A !important;
-    background-image: none !important;
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.06) !important;
-  }
+/* ════════════════════════════════════════════════════
+   VOXEL FORGE — CRITICAL HEADER OVERRIDES
+   Inline <style> wins over external stylesheets.
+   These rules fix: white header bg, oversized logo,
+   announcement bar white gaps, header height.
+   ════════════════════════════════════════════════════ */
 
-  /* White text in dark header */
-  .header-wrapper .header__menu-item,
-  .header-wrapper .header__menu-item span,
-  .header-wrapper .list-menu__item--link {
-    color: rgba(255, 255, 255, 0.65) !important;
-  }
-  .header-wrapper .header__menu-item:hover,
-  .header-wrapper .header__menu-item:hover span,
-  .header-wrapper .list-menu__item--link:hover {
-    color: #C9A96E !important;
-  }
+/* ── 1. ANNOUNCEMENT BAR — FULL WIDTH, NO GAPS ─────── */
 
-  /* Logo: hard-constrained 28px height */
-  .header__heading-logo {
-    height: 28px !important;
-    max-height: 28px !important;
-    width: auto !important;
-    max-width: 160px !important;
-    display: block !important;
-    object-fit: contain !important;
-  }
+/* The Shopify header group wrapper */
+.shopify-section-group-header-group {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  display: block !important;
+}
 
-  /* Logo wrapper clips anything larger */
-  .header__heading-logo-wrapper {
-    height: 28px !important;
-    max-height: 28px !important;
-    overflow: hidden !important;
+/* The announcement bar section */
+#shopify-section-announcement-bar {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+/* The utility-bar outer div — force true edge-to-edge */
+#shopify-section-announcement-bar .utility-bar {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: #0A0A0A !important;
+  background-image: none !important;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+/* The page-width grid inside the utility bar */
+#shopify-section-announcement-bar .utility-bar__grid,
+#shopify-section-announcement-bar .page-width {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* The announcement bar itself — slim strip */
+#shopify-section-announcement-bar .announcement-bar {
+  width: 100% !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #0A0A0A !important;
+}
+
+/* Announcement text — slim */
+#shopify-section-announcement-bar .announcement-bar__message,
+#shopify-section-announcement-bar .announcement-bar__message.h5,
+#shopify-section-announcement-bar p {
+  font-size: 10px !important;
+  letter-spacing: 0.18em !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #C9A96E !important;
+}
+
+/* ── 2. HEADER SECTION — NO GAP ABOVE/BELOW ─────────── */
+
+#shopify-section-header {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+/* ── 3. HEADER WRAPPER — DARK BACKGROUND ────────────── */
+
+.header-wrapper,
+sticky-header > .header-wrapper,
+.header-wrapper[class*="color-"],
+.header-wrapper.gradient,
+.color-scheme-1.header-wrapper,
+.color-scheme-2.header-wrapper {
+  background-color: #0A0A0A !important;
+  background-image: none !important;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07) !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ── 4. HEADER INNER — SLIM 52px HEIGHT ─────────────── */
+
+@media screen and (min-width: 990px) {
+  .header {
     display: flex !important;
+    flex-direction: row !important;
     align-items: center !important;
-    line-height: 0 !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+    padding: 0 3rem !important;
+    gap: 2rem !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
   }
 
-  /* Desktop: flexbox layout — logo left, nav expands, icons right */
-  @media screen and (min-width: 990px) {
-    .header {
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      height: 56px !important;
-      max-height: 56px !important;
-      padding: 0 3rem !important;
-      gap: 2.5rem !important;
-      overflow: hidden !important;
-      box-sizing: border-box !important;
-    }
-    .header__heading {
-      flex: 0 0 auto !important;
-      line-height: 0 !important;
-      margin: 0 !important;
-    }
-    .header__inline-menu {
-      flex: 1 1 auto !important;
-      display: flex !important;
-      align-items: center !important;
-    }
-    .header__icons {
-      flex: 0 0 auto !important;
-      margin-left: auto !important;
-    }
+  /* Logo — flex left */
+  .header__heading {
+    flex: 0 0 auto !important;
+    line-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    order: 1 !important;
   }
+
+  /* Nav — takes remaining space */
+  .header__inline-menu {
+    flex: 1 1 auto !important;
+    order: 2 !important;
+  }
+
+  /* Icons — pushed to right */
+  .header__icons {
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    order: 3 !important;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 989px) {
+  .header {
+    height: 52px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ── 5. LOGO — HARD SIZE CLAMP ───────────────────────── */
+
+.header__heading-logo {
+  height: 24px !important;
+  max-height: 24px !important;
+  width: auto !important;
+  max-width: 140px !important;
+  display: block !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+}
+
+.header__heading-logo-wrapper {
+  height: 24px !important;
+  max-height: 24px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  line-height: 0 !important;
+}
+
+/* Heading link — no extra space */
+.header__heading-link {
+  display: flex !important;
+  align-items: center !important;
+  line-height: 0 !important;
+  padding: 0 !important;
+}
+
+/* ── 6. NAV LINK COLOURS ────────────────────────────── */
+
+.header-wrapper .list-menu__item--link,
+.header-wrapper .header__menu-item {
+  color: rgba(255, 255, 255, 0.6) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.header-wrapper .list-menu__item--link:hover,
+.header-wrapper .header__menu-item:hover {
+  color: #C9A96E !important;
+}
+
+/* Active link */
+.header-wrapper .list-menu__item--active {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* ── 7. KILL GLOBAL SECTION PADDING ON HEADER WRAPPERS ─ */
+
+.shopify-section-group-header-group > *,
+#shopify-section-announcement-bar > *,
+#shopify-section-header > * {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 </style>
 

@@ -232,22 +232,22 @@ h6 {
 }
 
 
-/* ── 4.2 HEADER ───────────────────────────────────────────────────────── */
+/* ── 4.2 HEADER (REVISED) ───────────────────────────────────────────────────────── */
 
 .header-wrapper {
   background-color: var(--vf-charcoal);
   border-bottom: 0.5px solid var(--vf-graphite);
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  /* Replaced the 100vw hack with a safer 100% to prevent horizontal scroll */
+  width: 100%;
 }
 
-/* Desktop: strict 12-column grid */
+/* Desktop: Fluid 3-column grid for absolute optical centering */
 @media screen and (min-width: 990px) {
   .header {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-areas: 'nav nav nav nav logo logo logo logo icons icons icons icons';
-    column-gap: var(--vf-col-gap);
+    grid-template-columns: 1fr auto 1fr;
+    /* The structural fix */
+    grid-template-areas: 'nav logo icons';
     align-items: center;
     height: var(--vf-navbar-height);
     max-width: var(--vf-max-width);
@@ -266,7 +266,6 @@ h6 {
     grid-area: logo;
     justify-self: center;
     text-align: center;
-    width: 100%;
   }
 
   .header__icons {
@@ -275,15 +274,40 @@ h6 {
   }
 }
 
-/* Mobile */
+/* Mobile: Ensure true centering even with unequal icon counts */
 @media screen and (max-width: 989px) {
   .header {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
+    /* Forces symmetrical boundaries */
     grid-template-areas: 'left heading icons';
     align-items: center;
-    height: 56px;
-    padding: 0 16px;
+    height: 64px;
+    /* Increased slightly for better mobile touch targets */
+    padding: 0 20px;
+    /* Improved side breathing room */
+  }
+
+  /* Anchor the hamburger menu to the absolute left */
+  .header__icon--menu {
+    grid-area: left;
+    justify-self: start;
+  }
+
+  /* Lock the logo to the exact center of the screen */
+  .header__heading {
+    grid-area: heading;
+    justify-self: center;
+  }
+
+  /* Group right icons, align to the edge, and add spacing */
+  .header__icons {
+    grid-area: icons;
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    /* Prevents icons from feeling crowded */
   }
 }
 

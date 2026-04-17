@@ -1224,3 +1224,221 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 .header__menu-item::after {
   background-color: #C9A96E !important;
 }
+
+/* =========================================================================
+   VOXEL FORGE � COMPREHENSIVE PATCH v3
+   Fixes: icon hover (all devices), mobile account icon, mobile bar sizing,
+   brand accent consistency across all pages.
+   ========================================================================= */
+
+/* -- SECTION 1: ICON COLOR SYSTEM ------------------------------------------
+   Root cause of hover black: base.css sets color:rgb(var(--color-foreground))
+   on .header__icon. We must override both the default AND hover states with
+   full specificity, targeting the SVG stroke/fill directly.                  */
+
+/* Default icon appearance */
+.header-wrapper .header__icon,
+.header-wrapper .header__icon--search,
+.header-wrapper .header__icon--account,
+.header-wrapper .header__icon--cart {
+  color: rgba(255, 255, 255, 0.8) !important;
+  transition: color 200ms ease, transform 200ms ease !important;
+}
+
+/* Inline svg inherits currentColor via stroke="currentColor" */
+.header-wrapper .header__icon svg,
+.header-wrapper .header__icon svg * {
+  stroke: rgba(255, 255, 255, 0.8) !important;
+  fill: none !important;
+  transition: stroke 200ms ease !important;
+}
+
+/* Gold hover state � aggressive multi-target */
+.header-wrapper .header__icon:hover,
+.header-wrapper .header__icon:focus,
+.header-wrapper a.header__icon:hover,
+.header-wrapper a.header__icon:focus {
+  color: #C9A96E !important;
+  transform: scale(1.05) !important;
+  opacity: 1 !important;
+}
+
+.header-wrapper .header__icon:hover svg,
+.header-wrapper .header__icon:hover svg *,
+.header-wrapper .header__icon:focus svg,
+.header-wrapper .header__icon:focus svg * {
+  stroke: #C9A96E !important;
+  fill: none !important;
+}
+
+/* -- SECTION 2: ICON SIZING (Fix 4.4rem Dawn default) ----------------------
+   Dawn sets .header__icon to 4.4rem�4.4rem. We override to a compact 40px
+   clickable target with an 18px visual SVG, keeping touch area large.        */
+
+.header-wrapper .header__icon {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.header-wrapper .header__icon .svg-wrapper {
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.header-wrapper .header__icon svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke-width: 1.5 !important;
+}
+
+.header__icons {
+  gap: 0 !important;
+  /* Gaps come from icon padding, not flex gap */
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* -- SECTION 3: MOBILE � SHOW ACCOUNT ICON ---------------------------------
+   Dawn hides the account icon on mobile via .small-hide when menu is set.
+   We restore it at viewport = 749px.                                         */
+
+@media screen and (max-width: 749px) {
+  .header__icon--account {
+    display: inline-flex !important;
+  }
+}
+
+/* -- SECTION 4: MOBILE ANNOUNCEMENT BAR ------------------------------------
+   Text must be smaller on mobile � reduce font size and compress bar height. */
+
+@media screen and (max-width: 749px) {
+
+  .announcement-bar,
+  #shopify-section-announcement-bar {
+    height: auto !important;
+    min-height: 22px !important;
+    padding: 4px 0 !important;
+  }
+
+  .announcement-bar__message {
+    font-size: 9px !important;
+    letter-spacing: 0.06em !important;
+    line-height: 1.3 !important;
+    padding: 3px 12px !important;
+    min-height: auto !important;
+  }
+}
+
+/* -- SECTION 5: BRAND ACCENT CONSISTENCY (GLOBAL) ---------------------------
+   Apply #C9A96E gold systematically across price, links, badges,
+   buttons, form focus, and section accents.                                   */
+
+/* 5a. Price � highlight sale & regular price with accent */
+.price__sale,
+.price-item--sale,
+.price--on-sale .price-item--sale {
+  color: #C9A96E !important;
+}
+
+/* 5b. Primary button � gold background, obsidian label */
+.button,
+.button--primary,
+.shopify-challenge__button,
+.customer button {
+  background-color: transparent !important;
+  border: 1px solid #C9A96E !important;
+  color: #C9A96E !important;
+  letter-spacing: 0.16em !important;
+  font-size: 12px !important;
+  transition: background-color 200ms ease, color 200ms ease !important;
+}
+
+.button:hover,
+.button--primary:hover {
+  background-color: #C9A96E !important;
+  color: #0A0A0A !important;
+}
+
+/* 5c. Global link accent on hover */
+a:hover {
+  color: #C9A96E !important;
+}
+
+/* 5d. Form inputs � gold focus ring */
+.field__input:focus,
+.select__select:focus,
+.customer .field input:focus,
+textarea:focus {
+  border-color: #C9A96E !important;
+  outline: none !important;
+  box-shadow: 0 0 0 1px #C9A96E !important;
+}
+
+/* 5e. Cart count bubble � gold */
+.cart-count-bubble {
+  background-color: #C9A96E !important;
+  color: #0A0A0A !important;
+  font-size: 9px !important;
+}
+
+/* 5f. Badge / sale tag */
+.badge--sale,
+.badge {
+  background-color: #C9A96E !important;
+  color: #0A0A0A !important;
+  font-size: 9px !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+/* 5g. Pagination active state */
+.pagination__item--current {
+  background-color: #C9A96E !important;
+  color: #0A0A0A !important;
+  border-color: #C9A96E !important;
+}
+
+/* 5h. Section dividers */
+.section-header,
+.featured-collection {
+  padding-top: 60px !important;
+  padding-bottom: 60px !important;
+}
+
+@media screen and (max-width: 749px) {
+
+  .section-header,
+  .featured-collection {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
+/* 5i. Card consistent spacing */
+.card__content,
+.card__information {
+  padding: 16px 20px !important;
+}
+
+/* 5j. Nav underline � gold */
+.header__menu-item::after {
+  background-color: #C9A96E !important;
+}
+
+.header__menu-item:hover,
+.header__menu-item:hover span {
+  color: #C9A96E !important;
+}
+
+/* 5k. Footer links hover */
+.footer__list-item a:hover,
+.list-social__link:hover {
+  color: #C9A96E !important;
+}

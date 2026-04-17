@@ -27,3 +27,81 @@
 {% endif %}
 <meta property="og:description" content="{{ page_description | default: 'Precision cast in shadow and glow. Architectural lighting designed and forged in Chennai.' | escape }}">
 <meta property="og:site_name" content="Voxel Forge">
+
+{%- comment -%} Critical inline CSS — header appearance has to beat Dawn color schemes {%- endcomment -%}
+<style>
+  /* ── CRITICAL HEADER OVERRIDES ─────────────────────── */
+  /* Dawn outputs color scheme CSS that sets white backgrounds.
+     These rules must win. inline <style> in <head> beats external CSS. */
+
+  .header-wrapper,
+  sticky-header .header-wrapper,
+  .header-wrapper[class*="color-scheme"],
+  .header-wrapper.gradient {
+    background-color: #0A0A0A !important;
+    background-image: none !important;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.06) !important;
+  }
+
+  /* White text in dark header */
+  .header-wrapper .header__menu-item,
+  .header-wrapper .header__menu-item span,
+  .header-wrapper .list-menu__item--link {
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+  .header-wrapper .header__menu-item:hover,
+  .header-wrapper .header__menu-item:hover span,
+  .header-wrapper .list-menu__item--link:hover {
+    color: #C9A96E !important;
+  }
+
+  /* Logo: hard-constrained 28px height */
+  .header__heading-logo {
+    height: 28px !important;
+    max-height: 28px !important;
+    width: auto !important;
+    max-width: 160px !important;
+    display: block !important;
+    object-fit: contain !important;
+  }
+
+  /* Logo wrapper clips anything larger */
+  .header__heading-logo-wrapper {
+    height: 28px !important;
+    max-height: 28px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: center !important;
+    line-height: 0 !important;
+  }
+
+  /* Desktop: flexbox layout — logo left, nav expands, icons right */
+  @media screen and (min-width: 990px) {
+    .header {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      height: 56px !important;
+      max-height: 56px !important;
+      padding: 0 3rem !important;
+      gap: 2.5rem !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+    .header__heading {
+      flex: 0 0 auto !important;
+      line-height: 0 !important;
+      margin: 0 !important;
+    }
+    .header__inline-menu {
+      flex: 1 1 auto !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+    .header__icons {
+      flex: 0 0 auto !important;
+      margin-left: auto !important;
+    }
+  }
+</style>
+

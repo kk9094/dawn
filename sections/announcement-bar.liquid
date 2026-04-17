@@ -31,6 +31,7 @@
         class="announcement-bar{% if section.settings.show_social %} announcement-bar--one-announcement{% endif %}"
         role="region"
         aria-label="{{ 'sections.header.announcement' | t }}"
+        style="width:100%;display:flex;align-items:center;justify-content:center;text-align:center;"
         {{ section.blocks.first.shopify_attributes }}
       >
         {%- if section.blocks.first.settings.text != blank -%}
@@ -40,12 +41,13 @@
               class="announcement-bar__link link link--text focus-inset animate-arrow"
             >
           {%- endif -%}
-          <p class="announcement-bar__message h5">
+          <p class="announcement-bar__message h5" style="text-align:center;width:100%;margin:0;">
             <span>{{ section.blocks.first.settings.text | escape }}</span>
             {%- if section.blocks.first.settings.link != blank -%}
               {{- 'icon-arrow.svg' | inline_asset_content -}}
             {%- endif -%}
           </p>
+
           {%- if section.blocks.first.settings.link != blank -%}
             </a>
           {%- endif -%}

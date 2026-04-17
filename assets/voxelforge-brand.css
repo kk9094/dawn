@@ -1119,3 +1119,21 @@ h6 {
   transform: scale(0.9) !important;
 }
 
+
+/* --- FIX: Search Close (X) Icon Visibility --- */
+/* Counteract the .svg-wrapper display:flex override that was breaking
+   Dawn's native show/hide logic for the search toggle X icon */
+details:not([open]) .header__icon-close,
+details:not([open]) .svg-wrapper.header__icon-close {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+details[open] .header__icon-close,
+details[open] .svg-wrapper.header__icon-close {
+  display: inline-flex !important;
+  width: 18px !important;
+  height: 18px !important;
+}

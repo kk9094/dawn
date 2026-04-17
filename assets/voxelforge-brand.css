@@ -37,8 +37,12 @@
   --vf-max-width: 1320px;
   --vf-side-padding: 40px;
   --vf-col-gap: 24px;
-  --vf-navbar-height: 52px;
-  --vf-bar-height: 26px;
+  --vf-navbar-height: 50px;
+  /* Desktop */
+  --vf-navbar-height-mobile: 54px;
+  /* Mobile */
+  --vf-bar-height: 20px;
+  /* Slim announcement */
 
   /* Dawn variable overrides — map brand tokens to Dawn's CSS custom props */
   --color-base-background-1: 10, 10, 10;
@@ -228,8 +232,8 @@ h6 {
 .announcement-bar__message {
   font-family: var(--vf-sans);
   font-weight: 400;
-  font-size: 11px;
-  letter-spacing: 0.12em;
+  font-size: 10px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--vf-gold);
   padding: 0;
@@ -237,6 +241,12 @@ h6 {
   min-height: auto;
   text-align: center;
   width: 100%;
+}
+
+.header__heading,
+.header__icons,
+.header__inline-menu {
+  transform: translateY(-1px);
 }
 
 @media screen and (max-width: 749px) {
@@ -275,7 +285,7 @@ h6 {
     max-width: var(--vf-max-width);
     margin: 0 auto;
     padding: 0 var(--vf-side-padding);
-    transition: height var(--vf-duration) ease;
+    padding: 0 32px transition: height var(--vf-duration) ease;
   }
 
   .header__inline-menu {
@@ -304,9 +314,9 @@ h6 {
     /* Forces symmetrical boundaries */
     grid-template-areas: 'left heading icons';
     align-items: center;
-    height: 64px;
+    height: var(--vf-navbar-height-mobile);
     /* Increased slightly for better mobile touch targets */
-    padding: 0 20px;
+    padding: 0 16px;
     /* Improved side breathing room */
   }
 
@@ -335,8 +345,8 @@ h6 {
 
 /* Sticky header: glass effect + compact height */
 .scrolled-past-header .header-wrapper {
-  background: rgba(11, 11, 11, 0.88);
-  backdrop-filter: blur(12px);
+  background: rgba(11, 11, 11, 0.82);
+  backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 0.5px solid var(--vf-graphite);
   box-shadow: none;
@@ -344,12 +354,12 @@ h6 {
 
 @media screen and (min-width: 990px) {
   .scrolled-past-header .header {
-    height: 52px;
+    height: 46px;
   }
 }
 
 .scrolled-past-header .header__heading-logo {
-  transform: scale(0.9);
+  transform: scale(0.88);
 }
 
 /* Logo */
@@ -361,7 +371,7 @@ h6 {
 }
 
 .header__heading-logo {
-  height: 30px;
+  height: 24px;
   width: auto;
   max-width: 200px;
   object-fit: contain;
@@ -397,7 +407,7 @@ h6 {
 .header__inline-menu .list-menu {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 20px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -406,9 +416,9 @@ h6 {
 .header__menu-item {
   position: relative;
   font-family: var(--vf-sans);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
@@ -464,8 +474,8 @@ h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   color: rgba(255, 255, 255, 0.8);
   background: transparent;
@@ -475,9 +485,9 @@ h6 {
 }
 
 .header-wrapper .header__icon svg {
-  width: 18px;
-  height: 18px;
-  stroke-width: 1.5;
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.4;
   fill: none;
   stroke: currentColor;
   overflow: visible;

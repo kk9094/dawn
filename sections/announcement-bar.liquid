@@ -20,18 +20,18 @@
 
 <div
   class="utility-bar{% if section.settings.show_line_separator and section.blocks.size > 0 %} utility-bar--bottom-border{% elsif section.settings.show_line_separator and section.settings.show_social and social_icons%} utility-bar--bottom-border-social-only{% endif %}{% if section.settings.enable_country_selector or section.settings.enable_language_selector %} header-localization{% endif %}"
-  style="width:100%;background-color:#0A0A0A;border-bottom:0.5px solid rgba(255,255,255,0.07);"
+  style="position:relative;width:100%;height:32px;background-color:#0A0A0A;border-bottom:0.5px solid rgba(255,255,255,0.07);display:flex;align-items:center;"
 >
-  <div class="utility-bar__grid{% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--3-col{% elsif language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--2-col{% endif %}" style="width:100%;max-width:100%;padding:0;margin:0;display:flex;align-items:center;justify-content:center;">
+  <div class="utility-bar__grid" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;">
     {%- if section.settings.show_social and social_icons -%}
       {%- render 'social-icons' -%}
     {%- endif -%}
     {%- if section.blocks.size == 1 -%}
       <div
-        class="announcement-bar{% if section.settings.show_social %} announcement-bar--one-announcement{% endif %}"
+        class="announcement-bar"
         role="region"
         aria-label="{{ 'sections.header.announcement' | t }}"
-        style="width:100%;display:flex;align-items:center;justify-content:center;text-align:center;"
+        style="pointer-events:auto;text-align:center;"
         {{ section.blocks.first.shopify_attributes }}
       >
         {%- if section.blocks.first.settings.text != blank -%}

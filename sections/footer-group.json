@@ -5,45 +5,52 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "footer-0": {
-          "type": "link_list",
+        "brand": {
+          "type": "brand_information",
           "settings": {
-            "heading": "Quick links",
-            "menu": "footer"
+            "show_social": true
           }
         },
-        "footer-1": {
+        "col_collection": {
           "type": "link_list",
           "settings": {
-            "heading": "Info",
-            "menu": "footer"
+            "heading": "Collection",
+            "menu": "vf-collection"
           }
         },
-        "footer-2": {
-          "type": "text",
+        "col_studio": {
+          "type": "link_list",
           "settings": {
-            "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+            "heading": "Studio",
+            "menu": "vf-studio"
+          }
+        },
+        "col_service": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Service",
+            "menu": "vf-service"
           }
         }
       },
       "block_order": [
-        "footer-0",
-        "footer-1",
-        "footer-2"
+        "brand",
+        "col_collection",
+        "col_studio",
+        "col_service"
       ],
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
+        "newsletter_heading": "Notes from the studio.",
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
-        "payment_enable": true,
-        "show_policy": false,
-        "margin_top": 48,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "payment_enable": false,
+        "show_policy": true,
+        "margin_top": 0,
+        "padding_top": 60,
+        "padding_bottom": 40
       }
     }
   },

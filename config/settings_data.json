@@ -94,13 +94,17 @@
       "page_width": 1200,
       "spacing_grid_horizontal": 2,
       "spacing_grid_vertical": 2,
+      "brand_headline": "Voxel Forge",
+      "brand_description": "<p>Architectural lighting, precision forged in Chennai.<\/p>",
+      "brand_image_width": 120,
       "social_twitter_link": "",
       "social_facebook_link": "",
       "social_pinterest_link": "",
       "social_instagram_link": "",
       "social_youtube_link": "",
       "social_tiktok_link": "",
-      "social_linkedin_link": ""
+      "social_linkedin_link": "",
+      "page_width": 1320
     }
   }
 }

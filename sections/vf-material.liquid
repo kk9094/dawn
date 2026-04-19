@@ -1,7 +1,7 @@
 <style>
 /* ─── VF MATERIAL ──────────────────────────────────────── */
 .vf-material {
-  background: #F2EDE4;
+  background: var(--vf-warm-white);
   padding: 10rem 3rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -12,7 +12,7 @@
 .vf-material__visual {
   position: relative;
   height: 560px;
-  background: #1C1C1C;
+  background: var(--vf-graphite);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,12 +30,12 @@
   font-weight: 300;
   font-size: clamp(2rem, 3vw, 3rem);
   line-height: 1.2;
-  color: #0D0D0D;
+  color: var(--vf-obsidian);
   margin-bottom: 2.5rem;
 }
 .vf-material__title em {
   font-style: italic;
-  color: #4A4A4A;
+  color: var(--vf-slate);
 }
 
 .vf-material__specs {
@@ -51,14 +51,14 @@
   font-family: var(--vf-sans);
   font-size: 12px;
 }
-.vf-spec-label { color: #4A4A4A; letter-spacing: 0.05em; }
-.vf-spec-value { color: #0D0D0D; font-weight: 400; }
+.vf-spec-label { color: var(--vf-slate); letter-spacing: 0.05em; }
+.vf-spec-value { color: var(--vf-obsidian); font-weight: 400; }
 
 .vf-material__note {
   font-family: var(--vf-serif);
   font-style: italic;
   font-size: 1.1rem;
-  color: #3D7A6B;
+  color: var(--vf-teal);
   line-height: 1.6;
 }
 

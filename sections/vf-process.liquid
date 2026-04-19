@@ -1,7 +1,7 @@
 <style>
 /* ─── VF PROCESS ───────────────────────────────────────── */
 .vf-process {
-  background: #1C1C1C;
+  background: var(--vf-graphite);
   padding: 10rem 3rem;
 }
 
@@ -13,36 +13,7 @@
   align-items: end;
 }
 
-.vf-section-label {
-  font-family: var(--vf-sans);
-  font-size: 10px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: #3D7A6B;
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.vf-section-label::before {
-  content: '';
-  width: 32px;
-  height: 0.5px;
-  background: #3D7A6B;
-  flex-shrink: 0;
-}
-
-.vf-section-title {
-  font-family: var(--vf-serif);
-  font-weight: 300;
-  font-size: clamp(2.2rem, 3.2vw, 3.4rem);
-  line-height: 1.15;
-  color: #F2EDE4;
-}
-.vf-section-title em {
-  font-style: italic;
-  color: rgba(242,237,228,0.45);
-}
+/* .vf-section-label and .vf-section-title — defined globally in voxelforge-brand.css */
 
 .vf-process__desc {
   font-family: var(--vf-sans);
@@ -71,7 +42,7 @@
   font-family: var(--vf-serif);
   font-size: 11px;
   letter-spacing: 0.15em;
-  color: #3D7A6B;
+  color: var(--vf-teal);
   margin-bottom: 1.5rem;
 }
 
@@ -80,7 +51,7 @@
   font-weight: 400;
   font-size: 1.4rem;
   line-height: 1.25;
-  color: #F2EDE4;
+  color: var(--vf-bone);
   margin-bottom: 1rem;
 }
 

@@ -1,154 +1,249 @@
 {
   "sections": {
-    "vf_hero": {
-      "type": "vf-hero",
-      "settings": {
-        "label": "Precision 3D Printed Decor",
-        "title_line1": "Where mathematics",
-        "title_line2": "becomes",
-        "title_line3": "matter.",
-        "body_text": "Each object begins as a pure geometric equation. It ends as a weighted, textured, perfectly dimensioned presence in your space. Nothing is approximated. Nothing is reconsidered.",
-        "cta_primary_label": "View Collection",
-        "cta_primary_link": "shopify://collections/all",
-        "cta_secondary_label": "Our Process",
-        "cta_secondary_link": ""
-      }
-    },
-    "vf_statement": {
-      "type": "vf-statement",
-      "settings": {
-        "eyebrow": "The philosophy",
-        "statement_text": "<p>Luxury is not a surface treatment.<br>It is <em>the refusal to approximate.<\/em><br>Every Voxel Forge object is designed at the resolution of its material.<\/p>",
-        "caption": "We build objects that justify space. Not objects that fill it. Each piece is computed, calibrated, and produced at tolerances that conventional manufacturing cannot approach."
-      }
-    },
-    "vf_process": {
-      "type": "vf-process",
+    "image_banner": {
+      "type": "image-banner",
       "blocks": {
-        "step1": {
-          "type": "step",
+        "hero_heading": {
+          "type": "heading",
           "settings": {
-            "title": "Mathematical Origin",
-            "body": "Every object begins as a parametric equation. Dimensions are computed, not drawn. The geometry is exact before a single layer is laid."
+            "heading": "Sculpted light.",
+            "heading_size": "h0"
           }
         },
-        "step2": {
-          "type": "step",
+        "hero_text": {
+          "type": "text",
           "settings": {
-            "title": "Material Selection",
-            "body": "PLA Carbon Fibre. PETG. Resin-infused polymer. The material is chosen for the objects structural reality — not its appearance."
+            "text": "Precision-printed décor, made in editions.",
+            "text_style": "subtitle"
           }
         },
-        "step3": {
-          "type": "step",
+        "hero_buttons": {
+          "type": "buttons",
           "settings": {
-            "title": "Layer Calibration",
-            "body": "0.08mm layer height. 40% gyroid infill. Each print is calibrated to the specific geometry, not set to a universal default."
-          }
-        },
-        "step4": {
-          "type": "step",
-          "settings": {
-            "title": "Surface Resolution",
-            "body": "Post-processing at 400-grit. Matte lacquer sealed. The final surface holds the same precision as the internal structure."
+            "button_label_1": "Série II",
+            "button_link_1": "shopify://collections/serie-2",
+            "button_style_secondary_1": false,
+            "button_label_2": "Série I",
+            "button_link_2": "shopify://collections/serie-1",
+            "button_style_secondary_2": true
           }
         }
       },
-      "block_order": ["step1", "step2", "step3", "step4"],
+      "block_order": ["hero_heading", "hero_text", "hero_buttons"],
       "settings": {
-        "eyebrow": "How we build",
-        "title_line1": "From coordinate",
-        "title_line2": "object.",
-        "description": "Four irreducible stages. No shortcuts. No approximations. The process is the product — every decision made at the resolution of the material itself."
+        "image_overlay_opacity": 25,
+        "adapt_height_ratio": false,
+        "desktop_content_position": "bottom-left",
+        "desktop_content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "show_text_below": false,
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
-    "vf_collection": {
-      "type": "vf-collection",
+    "brand_statement": {
+      "type": "rich-text",
       "blocks": {
-        "card1": {
-          "type": "product_card",
+        "statement_heading": {
+          "type": "heading",
           "settings": {
-            "product_link": "shopify://collections/all",
-            "tier": "Standard",
-            "name": "Monolith No. 7",
-            "spec": "PLA Carbon Fibre — 248 × 82 × 82 mm",
-            "price": "₹12,400"
+            "heading": "A studio in two disciplines.",
+            "heading_size": "h2"
           }
         },
-        "card2": {
-          "type": "product_card",
+        "statement_text": {
+          "type": "text",
           "settings": {
-            "product_link": "shopify://collections/serie-ii",
-            "tier": "Limited Edition",
-            "name": "Apex Series III",
-            "spec": "PETG Gold Filament — 310 × 110 × 110 mm",
-            "price": "₹38,000"
-          }
-        },
-        "card3": {
-          "type": "product_card",
-          "settings": {
-            "product_link": "shopify://pages/atelier",
-            "tier": "Atelier",
-            "name": "Vortex — Commission",
-            "spec": "Resin-Polymer Composite — Bespoke dimensions",
-            "price": "From ₹1,20,000"
+            "text": "<p>Tectonic — objects built from horizontal logic. Stratified, gridded, load-bearing in form if not in function. Geometry as architecture.</p><p>Biomorphic — objects built from organic mathematics. Spirals, vortices, the curve of a wave arrested mid-motion. Precision applied to what appears imprecise.</p><p>Both disciplines. One standard. Nothing approximated.</p>"
           }
         }
       },
-      "block_order": ["card1", "card2", "card3"],
+      "block_order": ["statement_heading", "statement_text"],
       "settings": {
-        "eyebrow": "Current collection",
-        "title": "Selected objects.",
-        "view_all_label": "View all pieces",
-        "view_all_link": "shopify://collections/all"
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "padding_top": 80,
+        "padding_bottom": 80
       }
     },
-    "vf_material": {
-      "type": "vf-material",
+    "form_categories": {
+      "type": "multicolumn",
       "blocks": {
-        "spec1": { "type": "spec_row", "settings": { "label": "Layer height", "value": "0.08 mm" } },
-        "spec2": { "type": "spec_row", "settings": { "label": "Infill structure", "value": "40% Gyroid" } },
-        "spec3": { "type": "spec_row", "settings": { "label": "Tensile strength", "value": "52 MPa" } },
-        "spec4": { "type": "spec_row", "settings": { "label": "Surface finish", "value": "400-grit, matte lacquer" } },
-        "spec5": { "type": "spec_row", "settings": { "label": "Dimensional tolerance", "value": "± 0.2 mm" } },
-        "spec6": { "type": "spec_row", "settings": { "label": "Production time", "value": "72 – 196 hours" } }
+        "col_tectonic": {
+          "type": "column",
+          "settings": {
+            "title": "Tectonic",
+            "text": "Stratified geometry. Objects built from horizontal logic — structured, architectural, load-bearing in form.",
+            "link_label": "Explore Tectonic",
+            "link": "shopify://collections/tectonic"
+          }
+        },
+        "col_biomorphic": {
+          "type": "column",
+          "settings": {
+            "title": "Biomorphic",
+            "text": "Organic mathematics. Spirals, vortices, the curve of a wave arrested mid-motion. Precision applied to what appears imprecise.",
+            "link_label": "Explore Biomorphic",
+            "link": "shopify://collections/biomorphic"
+          }
+        }
       },
-      "block_order": ["spec1", "spec2", "spec3", "spec4", "spec5", "spec6"],
+      "block_order": ["col_tectonic", "col_biomorphic"],
       "settings": {
-        "eyebrow": "The material truth",
-        "title_line1": "PLA Carbon Fibre.",
-        "title_line2": "0.08mm resolution.",
-        "title_line3": "No compromise.",
-        "note": "\"The layer is not a limitation. It is the signature of the process.\""
+        "title": "",
+        "heading_size": "h2",
+        "columns_desktop": 2,
+        "column_alignment": "left",
+        "background_style": "none",
+        "button_style": "link",
+        "swipe_on_mobile": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 0
       }
     },
-    "vf_atelier": {
-      "type": "vf-atelier",
-      "blocks": {
-        "metric1": { "type": "metric", "settings": { "number": "0.08", "unit": "mm", "label": "Layer precision" } },
-        "metric2": { "type": "metric", "settings": { "number": "196", "unit": "hr", "label": "Max print duration" } },
-        "metric3": { "type": "metric", "settings": { "number": "7", "unit": "", "label": "Material grades" } },
-        "metric4": { "type": "metric", "settings": { "number": "∞", "unit": "", "label": "Configurations" } }
-      },
-      "block_order": ["metric1", "metric2", "metric3", "metric4"],
+    "featured_serie2": {
+      "type": "featured-collection",
       "settings": {
-        "atelier_eyebrow": "Atelier tier",
-        "atelier_title_line1": "One object.",
-        "atelier_title_line2": "Entirely yours.",
-        "atelier_body": "The Atelier commission begins with a conversation. Dimensions, material, geometry — everything is negotiated. Nothing is drawn from stock. The object that arrives has never existed before.",
-        "atelier_cta_label": "Begin a Commission",
-        "atelier_cta_link": "shopify://pages/atelier",
-        "atelier_footnote": "Three commissions accepted per quarter. By application only."
+        "title": "Série II — Prestige",
+        "heading_size": "h2",
+        "description": "Numbered within a 200-unit annual edition.",
+        "show_description": true,
+        "description_style": "italic",
+        "collection": "serie-2",
+        "products_to_show": 6,
+        "columns_desktop": 3,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "heading_alignment": "left",
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "false",
+        "color_scheme": "scheme-1",
+        "enable_desktop_slider": false,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "atelier_callout": {
+      "type": "image-with-text",
+      "blocks": {
+        "atelier_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Atelier — Commission",
+            "heading_size": "h2"
+          }
+        },
+        "atelier_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Material, geometry, light distribution — specified with the client and their architect. The commission begins with a conversation. The object that arrives has never existed before.</p><p>Three commissions accepted per quarter. By application only.</p>"
+          }
+        },
+        "atelier_button": {
+          "type": "button",
+          "settings": {
+            "button_label": "Begin a commission",
+            "button_link": "shopify://pages/atelier",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": ["atelier_heading", "atelier_text", "atelier_button"],
+      "settings": {
+        "layout": "image_first",
+        "desktop_image_width": "medium",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "full_width": true,
+        "color_scheme": "scheme-1",
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "featured_serie1": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Série I — Collection",
+        "heading_size": "h2",
+        "description": "A considered entry into the studio.",
+        "show_description": true,
+        "description_style": "italic",
+        "collection": "serie-1",
+        "products_to_show": 6,
+        "columns_desktop": 3,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "link",
+        "heading_alignment": "left",
+        "image_ratio": "portrait",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "false",
+        "color_scheme": "scheme-1",
+        "enable_desktop_slider": false,
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    },
+    "journal_preview": {
+      "type": "featured-blog",
+      "settings": {
+        "heading": "Journal",
+        "heading_size": "h2",
+        "blog": "news",
+        "post_limit": 3,
+        "columns_desktop": 3,
+        "color_scheme": "scheme-1",
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "show_excerpt": true,
+        "padding_top": 60,
+        "padding_bottom": 60
+      }
+    },
+    "newsletter": {
+      "type": "email-signup-banner",
+      "blocks": {
+        "newsletter_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Notes from the studio."
+          }
+        },
+        "newsletter_text": {
+          "type": "text",
+          "settings": {
+            "text": "Edition releases and commission openings. No marketing."
+          }
+        }
+      },
+      "block_order": ["newsletter_heading", "newsletter_text"],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 60
       }
     }
   },
   "order": [
-    "vf_hero",
-    "vf_statement",
-    "vf_process",
-    "vf_collection",
-    "vf_material",
-    "vf_atelier"
+    "image_banner",
+    "brand_statement",
+    "form_categories",
+    "featured_serie2",
+    "atelier_callout",
+    "featured_serie1",
+    "journal_preview",
+    "newsletter"
   ]
 }

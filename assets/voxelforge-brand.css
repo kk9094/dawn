@@ -97,7 +97,8 @@ body {
   color: var(--vf-bone);
   font-family: var(--vf-sans);
   font-weight: 300;
-  overflow-x: hidden; /* prevent horizontal scroll from announcement bar full-width hack */
+  overflow-x: hidden;
+  /* prevent horizontal scroll from announcement bar full-width hack */
 }
 
 h1,
@@ -245,7 +246,7 @@ h6 {
 
 .header-wrapper {
   background-color: #0A0A0A !important;
-  border-bottom: 0.5px solid rgba(255,255,255,0.06) !important;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.06) !important;
   width: 100%;
 }
 
@@ -290,7 +291,8 @@ h6 {
     flex: 0 0 auto;
     margin: 0;
     padding: 0;
-    line-height: 0; /* kills extra vertical space from line-height */
+    line-height: 0;
+    /* kills extra vertical space from line-height */
   }
 
   /* Nav expands to fill remaining space */
@@ -1388,14 +1390,27 @@ body,
   transform: translateY(24px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
 .vf-reveal.vf-visible {
   opacity: 1;
   transform: translateY(0);
 }
-.vf-reveal-delay-1 { transition-delay: 0.1s; }
-.vf-reveal-delay-2 { transition-delay: 0.2s; }
-.vf-reveal-delay-3 { transition-delay: 0.3s; }
-.vf-reveal-delay-4 { transition-delay: 0.4s; }
+
+.vf-reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+
+.vf-reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+
+.vf-reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+
+.vf-reveal-delay-4 {
+  transition-delay: 0.4s;
+}
 
 /* In Shopify design mode, show all reveals immediately so you can edit */
 body.shopify-design-mode .vf-reveal {
@@ -1426,12 +1441,13 @@ body.shopify-design-mode .vf-reveal {
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: #3D7A6B;
+  color: var(--vf-teal);
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
   gap: 16px;
 }
+
 .vf-section-label::before {
   content: '';
   width: 32px;
@@ -1446,9 +1462,195 @@ body.shopify-design-mode .vf-reveal {
   font-weight: 300;
   font-size: clamp(2.2rem, 3.2vw, 3.4rem);
   line-height: 1.15;
-  color: #F2EDE4;
+  color: var(--vf-bone);
 }
+
 .vf-section-title em {
   font-style: italic;
-  color: rgba(242,237,228,0.45);
+  color: rgba(232, 226, 214, 0.45);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PRODUCT CARD — TIER BADGES & FORM CATEGORY
+   ══════════════════════════════════════════════════════════════ */
+
+.vf-card-tier {
+  font-family: var(--vf-sans);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.vf-tier--serie-1 { color: var(--vf-silver); }
+.vf-tier--serie-2 { color: var(--vf-gold); }
+.vf-tier--atelier { color: var(--vf-coral); }
+
+.vf-card-form {
+  font-family: var(--vf-sans);
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--vf-slate);
+  display: block;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+/* Subtle border accent on atelier cards */
+[data-tier="atelier"] .card {
+  border-color: rgba(196, 97, 74, 0.25);
+}
+
+/* Quick-add button — VF treatment */
+.card-wrapper .quick-add__submit.button--secondary {
+  background: transparent;
+  color: var(--vf-bone);
+  border: 0.5px solid var(--vf-graphite);
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 0;
+}
+
+.card-wrapper .quick-add__submit.button--secondary:hover {
+  background: var(--vf-graphite);
+  color: var(--vf-bone);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   PRODUCT PAGE — GAPS & POLISH
+   ══════════════════════════════════════════════════════════════ */
+
+/* Form category / vendor text above title */
+.product__text.caption-with-letter-spacing {
+  color: var(--vf-teal) !important;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+}
+
+/* Collapsible tab titles */
+.product-page .accordion summary.accordion__title,
+.main-product .accordion summary.accordion__title {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--vf-silver);
+}
+
+/* Remove default marker, use CSS content */
+.accordion summary.accordion__title::marker,
+.accordion summary.accordion__title::-webkit-details-marker {
+  display: none;
+}
+
+/* Dynamic checkout button (Shopify Pay, PayPal, etc.) */
+.shopify-payment-button__button {
+  border-radius: 0 !important;
+}
+
+.shopify-payment-button__button--unbranded {
+  background: var(--vf-graphite) !important;
+  color: var(--vf-bone) !important;
+  font-family: var(--vf-sans) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   CART DRAWER — POLISH
+   ══════════════════════════════════════════════════════════════ */
+
+/* Cart item product name */
+.cart-item__name a,
+.cart-item__name {
+  font-family: var(--vf-serif);
+  font-weight: 300;
+  color: var(--vf-bone);
+}
+
+/* Variant / option text */
+.cart-item .product-option,
+.cart-item__details .cart-item__properties,
+.cart-item dt,
+.cart-item dd {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--vf-silver);
+}
+
+/* Quantity stepper */
+.cart-item__quantity .quantity {
+  border-color: var(--vf-graphite);
+}
+
+.cart-item__quantity .quantity__button:hover {
+  color: var(--vf-gold);
+}
+
+.cart-item__quantity .quantity__input {
+  color: var(--vf-bone);
+  background: transparent;
+}
+
+/* Cart table headers (full-page cart) */
+.cart-items .caption-with-letter-spacing {
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--vf-slate);
+  text-transform: uppercase;
+}
+
+/* Craftsmanship notice above checkout */
+.cart__craftsmanship-notice {
+  padding: 1.2rem 0;
+  border-top: 0.5px solid var(--vf-graphite);
+  margin-bottom: 1.2rem;
+  font-family: var(--vf-sans);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--vf-silver);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   COLLECTION PAGE — FILTER REFINEMENTS
+   ══════════════════════════════════════════════════════════════ */
+
+@media screen and (min-width: 990px) {
+  .facets__form .facets-wrap {
+    border-right: 0.5px solid var(--vf-graphite);
+    padding-right: 2rem;
+  }
+}
+
+/* Applied filter pills */
+.active-facets__button {
+  background: var(--vf-graphite) !important;
+  color: var(--vf-bone) !important;
+  border-radius: 0 !important;
+  font-family: var(--vf-sans) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.16em !important;
+}
+
+/* Sort dropdown arrow — gold caret */
+.facet-filters__sort .select__select,
+.facets .select__select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23C9A96E' stroke-width='1.2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
 }

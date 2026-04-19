@@ -1,7 +1,7 @@
 <style>
 /* ─── VF COLLECTION SHOWCASE ───────────────────────────── */
 .vf-collection {
-  background: #0D0D0D;
+  background: var(--vf-obsidian);
   padding: 10rem 3rem;
 }
 
@@ -21,7 +21,7 @@
   text-decoration: none;
   transition: color 0.3s;
 }
-.vf-collection__link:hover { color: #C9A96E; }
+.vf-collection__link:hover { color: var(--vf-gold); }
 
 .vf-products-grid {
   display: grid;
@@ -31,7 +31,7 @@
 
 .vf-product-card {
   position: relative;
-  background: #1C1C1C;
+  background: var(--vf-graphite);
   overflow: hidden;
   cursor: pointer;
   text-decoration: none;
@@ -69,15 +69,15 @@
   text-transform: uppercase;
   margin-bottom: 0.6rem;
 }
-.vf-tier--standard { color: #3D7A6B; }
-.vf-tier--edition { color: #C9A96E; }
-.vf-tier--atelier { color: #C4614A; }
+.vf-tier--serie-1 { color: var(--vf-silver); }
+.vf-tier--serie-2 { color: var(--vf-gold); }
+.vf-tier--atelier { color: var(--vf-coral); }
 
 .vf-product-card__name {
   font-family: var(--vf-serif);
   font-weight: 300;
   font-size: 1.5rem;
-  color: #F2EDE4;
+  color: var(--vf-bone);
   margin-bottom: 0.5rem;
   line-height: 1.2;
 }

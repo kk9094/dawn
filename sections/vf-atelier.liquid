@@ -1,7 +1,7 @@
 <style>
 /* ─── VF METRICS ───────────────────────────────────────── */
 .vf-metrics {
-  background: #1C1C1C;
+  background: var(--vf-graphite);
   padding: 6rem 3rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -19,11 +19,11 @@
   font-family: var(--vf-serif);
   font-weight: 300;
   font-size: 3rem;
-  color: #F2EDE4;
+  color: var(--vf-bone);
   line-height: 1;
   margin-bottom: 0.5rem;
 }
-.vf-metric__unit { font-size: 1.2rem; color: #3D7A6B; }
+.vf-metric__unit { font-size: 1.2rem; color: var(--vf-teal); }
 
 .vf-metric__label {
   font-family: var(--vf-sans);
@@ -48,7 +48,7 @@
 
 /* ─── VF ATELIER ───────────────────────────────────────── */
 .vf-atelier {
-  background: #0D0D0D;
+  background: var(--vf-obsidian);
   padding: 10rem 3rem;
   position: relative;
   overflow: hidden;
@@ -70,7 +70,7 @@
   font-size: 10px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: #C4614A;
+  color: var(--vf-coral);
   margin-bottom: 2.5rem;
   display: flex;
   align-items: center;
@@ -82,7 +82,7 @@
   content: '';
   width: 32px;
   height: 0.5px;
-  background: #C4614A;
+  background: var(--vf-coral);
 }
 
 .vf-atelier__title {
@@ -90,7 +90,7 @@
   font-weight: 300;
   font-size: clamp(2.8rem, 5vw, 5.5rem);
   line-height: 1.1;
-  color: #F2EDE4;
+  color: var(--vf-bone);
   margin-bottom: 1.5rem;
   max-width: 700px;
   margin-left: auto;
@@ -98,7 +98,7 @@
 }
 .vf-atelier__title em {
   font-style: italic;
-  color: #C4614A;
+  color: var(--vf-coral);
 }
 
 .vf-atelier__sub {
@@ -118,7 +118,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   background: transparent;
-  color: #C4614A;
+  color: var(--vf-coral);
   border: 0.5px solid rgba(196,97,74,0.5);
   padding: 16px 40px;
   cursor: pointer;
@@ -126,7 +126,7 @@
   transition: all 0.3s;
   display: inline-block;
 }
-.vf-btn-ember:hover { background: #C4614A; color: #F2EDE4; }
+.vf-btn-ember:hover { background: var(--vf-coral); color: var(--vf-bone); }
 
 .vf-atelier__footnote {
   font-family: var(--vf-sans);

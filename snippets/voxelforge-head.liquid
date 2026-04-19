@@ -131,16 +131,16 @@ sticky-header > .header-wrapper,
   padding: 0 !important;
 }
 
-/* ── 4. HEADER INNER — SLIM 52px HEIGHT ─────────────── */
+/* ── 4. HEADER INNER — SLIM HEIGHT ─────────────── */
 
 @media screen and (min-width: 990px) {
   .header {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    height: 52px !important;
-    min-height: 52px !important;
-    max-height: 52px !important;
+    height: var(--vf-navbar-height) !important;
+    min-height: var(--vf-navbar-height) !important;
+    max-height: var(--vf-navbar-height) !important;
     padding: 0 3rem !important;
     gap: 2rem !important;
     overflow: hidden !important;
@@ -174,9 +174,9 @@ sticky-header > .header-wrapper,
 /* Mobile */
 @media screen and (max-width: 989px) {
   .header {
-    height: 52px !important;
-    min-height: 52px !important;
-    max-height: 52px !important;
+    height: var(--vf-navbar-height) !important;
+    min-height: var(--vf-navbar-height) !important;
+    max-height: var(--vf-navbar-height) !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
   }

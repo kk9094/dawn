@@ -1,0 +1,195 @@
+<style>
+/* ─── VF PRODUCT SPECS ──────────────────────────────────── */
+.vf-product-specs {
+  padding: 4rem 0 3rem;
+  border-top: 0.5px solid var(--vf-graphite);
+  margin-top: 2rem;
+}
+
+.vf-product-specs__eyebrow {
+  font-family: var(--vf-sans);
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--vf-teal);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.vf-product-specs__eyebrow::after {
+  content: '';
+  display: block;
+  height: 0.5px;
+  width: 40px;
+  background: var(--vf-teal);
+  opacity: 0.5;
+}
+
+.vf-product-specs__table {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vf-product-specs__table li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 0;
+  border-bottom: 0.5px solid var(--vf-graphite);
+  font-family: var(--vf-sans);
+  font-size: 12px;
+  gap: 2rem;
+}
+
+.vf-product-specs__table li:first-child {
+  border-top: 0.5px solid var(--vf-graphite);
+}
+
+.vf-spec-label {
+  color: var(--vf-silver);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+.vf-spec-value {
+  color: var(--vf-bone);
+  text-align: right;
+  line-height: 1.5;
+}
+
+.vf-product-specs__origin {
+  margin-top: 2rem;
+  font-family: var(--vf-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--vf-silver);
+  line-height: 1.7;
+}
+
+@media screen and (max-width: 749px) {
+  .vf-product-specs {
+    padding: 3rem 0 2rem;
+  }
+}
+</style>
+
+{%- liquid
+  assign eyebrow = section.settings.eyebrow | default: 'Specifications'
+  assign show_metafields = section.settings.show_metafields
+-%}
+
+<div class="vf-product-specs" id="vf-product-specs-{{ section.id }}">
+
+  <div class="vf-product-specs__eyebrow">{{ eyebrow }}</div>
+
+  <ul class="vf-product-specs__table">
+
+    {%- comment -%} Auto-render from voxel metafields when enabled {%- endcomment -%}
+    {%- if show_metafields -%}
+      {%- if product.metafields.voxel.form_category != blank -%}
+        <li>
+          <span class="vf-spec-label">Form</span>
+          <span class="vf-spec-value">{{ product.metafields.voxel.form_category }}</span>
+        </li>
+      {%- endif -%}
+      {%- if product.metafields.voxel.dimensions_mm != blank -%}
+        <li>
+          <span class="vf-spec-label">Dimensions</span>
+          <span class="vf-spec-value">{{ product.metafields.voxel.dimensions_mm }}</span>
+        </li>
+      {%- endif -%}
+      {%- if product.metafields.voxel.weight_kg != blank -%}
+        <li>
+          <span class="vf-spec-label">Weight</span>
+          <span class="vf-spec-value">{{ product.metafields.voxel.weight_kg }} kg</span>
+        </li>
+      {%- endif -%}
+      {%- if product.metafields.voxel.material != blank -%}
+        <li>
+          <span class="vf-spec-label">Material</span>
+          <span class="vf-spec-value">{{ product.metafields.voxel.material }}</span>
+        </li>
+      {%- endif -%}
+      {%- if product.metafields.voxel.light_source != blank -%}
+        <li>
+          <span class="vf-spec-label">Light source</span>
+          <span class="vf-spec-value">{{ product.metafields.voxel.light_source }}</span>
+        </li>
+      {%- endif -%}
+      {%- if product.metafields.voxel.edition_number != blank and product.metafields.voxel.edition_total != blank -%}
+        <li>
+          <span class="vf-spec-label">Edition</span>
+          <span class="vf-spec-value">{{ product.metafields.voxel.edition_number }} of {{ product.metafields.voxel.edition_total }}</span>
+        </li>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%} Manual spec blocks (always rendered, supplement metafields) {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'spec' -%}
+        <li {{ block.shopify_attributes }}>
+          <span class="vf-spec-label">{{ block.settings.label }}</span>
+          <span class="vf-spec-value">{{ block.settings.value }}</span>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+
+  </ul>
+
+  {%- if show_metafields and product.metafields.voxel.origin_note != blank -%}
+    <p class="vf-product-specs__origin">{{ product.metafields.voxel.origin_note }}</p>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "VF — Product Specs",
+  "tag": "div",
+  "class": "shopify-section--vf-product-specs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Section label",
+      "default": "Specifications"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_metafields",
+      "label": "Auto-display from product metafields",
+      "info": "Reads from the 'voxel' metafield namespace (form_category, dimensions_mm, weight_kg, material, light_source, edition_number, edition_total, origin_note)",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Label"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Value"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF — Product Specs"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,27 @@
+{%- liquid
+  assign tier = ''
+  assign tier_label = ''
+  assign tier_class = ''
+
+  if product.metafields.voxel.series_tier != blank
+    assign tier = product.metafields.voxel.series_tier | downcase | replace: ' ', '-'
+  elsif product.tags contains 'atelier'
+    assign tier = 'atelier'
+  elsif product.tags contains 'serie-2'
+    assign tier = 'serie-2'
+  elsif product.tags contains 'serie-1'
+    assign tier = 'serie-1'
+  endif
+
+  case tier
+    when 'serie-1'
+      assign tier_label = 'Série I'
+      assign tier_class = 'vf-tier--serie-1'
+    when 'serie-2'
+      assign tier_label = 'Série II'
+      assign tier_class = 'vf-tier--serie-2'
+    when 'atelier'
+      assign tier_label = 'Atelier'
+      assign tier_class = 'vf-tier--atelier'
+  endcase
+-%}

@@ -29,6 +29,7 @@
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
 {%- if card_product and card_product != empty -%}
+  {%- render 'vf-tier', product: card_product -%}
   {%- liquid
     assign ratio = 1
     if card_product.featured_media and media_aspect_ratio == 'portrait'
@@ -40,7 +41,7 @@
       assign ratio = 1
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-tier="{{ tier }}">
     <div
       class="
         card card--{{ settings.card_style }}
@@ -145,6 +146,12 @@
       </div>
       <div class="card__content">
         <div class="card__information">
+          {%- if tier_label != blank -%}
+            <span class="vf-card-tier {{ tier_class }}">{{ tier_label }}</span>
+          {%- endif -%}
+          {%- if card_product.metafields.voxel.form_category != blank -%}
+            <span class="vf-card-form">{{ card_product.metafields.voxel.form_category }}</span>
+          {%- endif -%}
           <h3
             class="card__heading{% if card_product.featured_media or settings.card_style == 'standard' %} h5{% endif %}"
             {% if card_product.featured_media or settings.card_style == 'card' %}
@@ -576,7 +583,7 @@
       assign ratio = 0.8
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">
+  <div class="card-wrapper product-card-wrapper underline-links-hover" data-tier="{{ tier }}">
     <div
       class="
         card card--{{ settings.card_style }}

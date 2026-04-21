@@ -1,14 +1,15 @@
 {%- liquid
-  assign hero_image_url = ''
   if section.settings.hero_image != blank
     assign hero_image_url = section.settings.hero_image | image_url: width: 2754
+  else
+    assign hero_image_url = 'product-hero.svg' | asset_url
   endif
 -%}
 
 <section
   class="vf-hero-composite"
   id="vf-hero-composite-{{ section.id }}"
-  {% if hero_image_url != blank %}style="background-image:url('{{ hero_image_url }}');background-size:cover;background-position:center right;"{% endif %}
+  style="background-image:url('{{ hero_image_url }}');background-size:cover;background-position:center right;"
 >
   <div class="vf-hero-composite__overlay"></div>
 
@@ -63,8 +64,8 @@
     {
       "type": "image_picker",
       "id": "hero_image",
-      "label": "Hero image",
-      "info": "Recommended: 2754×1536 landscape composite (product_hero.svg)"
+      "label": "Hero image (optional override)",
+      "info": "Leave empty to use assets/product-hero.svg. To swap the hero, replace that file in the theme's assets folder."
     },
     {
       "type": "text",

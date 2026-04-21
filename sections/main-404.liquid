@@ -1,23 +1,51 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
+<section class="vf-404">
+  <div class="vf-404__inner">
+    <div class="vf-eyebrow vf-eyebrow--dark">
+      <span class="vf-eyebrow__text">404 · Not found</span>
+      <span class="vf-eyebrow__rule" aria-hidden="true"></span>
+    </div>
+    <h1 class="vf-404__title">The page has been <em>unmade.</em></h1>
+    <p class="vf-404__sub">
+      Either the object was retired, the edition closed, or the path was never forged. Both routes below remain.
+    </p>
+    <div class="vf-404__actions">
+      <a href="{{ routes.all_products_collection_url }}" class="vf-btn">All objects</a>
+      <a href="{{ routes.root_url }}pages/atelier" class="vf-btn vf-btn--gold">The Atelier</a>
+    </div>
+    <div class="vf-404__mark">{% render 'vf-icon', name: 'forge', size: 24 %}</div>
+  </div>
+</section>
 
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
+<style>
+  .vf-404 {
+    background: var(--vf-obsidian);
+    color: var(--vf-bone);
+    padding: 12rem 3rem;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vf-404__inner { max-width: 640px; text-align: left; }
+  .vf-404__title {
+    font-family: var(--vf-serif);
+    font-weight: 300;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.1;
+    color: var(--vf-bone);
+    margin: 1.5rem 0 1.5rem;
+  }
+  .vf-404__title em { font-style: italic; color: var(--vf-gold); }
+  .vf-404__sub {
+    font-family: var(--vf-sans);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: rgba(232,226,214,0.55);
+    margin-bottom: 2.5rem;
+  }
+  .vf-404__actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .vf-404__mark { display: inline-flex; }
+  @media (max-width: 749px) {
+    .vf-404 { padding: 6rem 1.5rem; }
   }
 </style>
-
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
-</div>

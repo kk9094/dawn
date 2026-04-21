@@ -1,48 +1,98 @@
 {%- comment -%}
   VOXEL FORGE — Atelier Commission Page
   Template: templates/page.atelier.liquid
-  Go to Online Store → Pages → Atelier → Template → select "page.atelier"
+  Atelier is the only page that breaks from dark surface — intentionally.
+  Gold is used heavily here to signal exclusivity.
 {%- endcomment -%}
 
-<div class="vf-atelier-page">
-
-  {%- comment -%} Decorative rule {%- endcomment -%}
-  <div class="vf-atelier-rule"></div>
-
-  <div class="vf-atelier-header">
-    <p class="vf-section-label">Bespoke · Commission</p>
-    <h1 class="vf-atelier-title">Atelier</h1>
-    <p class="vf-atelier-sub">No catalogue. Each piece designed from first principles for a specific space.</p>
-  </div>
-
-  <div class="vf-atelier-body">
-    <div class="vf-atelier-text">
-      <p>The Atelier programme is for clients who require something that does not yet exist. Working directly with Voxel Forge, each commission begins with a spatial brief — a photograph, a drawing, a description of light at a specific time of day.</p>
-      <p>Material, geometry, and light distribution are specified in collaboration with you and, where applicable, your architect or interior designer.</p>
-      <p>Commissions are accepted on a rolling basis. Lead time is typically 8 — 14 weeks from brief to delivery.</p>
+<section class="vf-atelier vf-atelier--light">
+  <div class="vf-atelier__inner">
+    <div class="vf-eyebrow vf-eyebrow--light">
+      <span class="vf-eyebrow__text">Commission · 3 per quarter</span>
+      <span class="vf-eyebrow__rule" aria-hidden="true"></span>
     </div>
+    <h1 class="vf-atelier__h1">An object that has never <em>existed before.</em></h1>
+    <p class="vf-atelier__sub">
+      The Atelier programme is reserved for clients who require something singular — designed for a specific volume, a specific quality of light, a specific intention. Three commissions per quarter. By application only.
+    </p>
+    <div class="vf-atelier__mark">
+      {% render 'vf-icon', name: 'atelier', size: 48, surface: 'light' %}
+    </div>
+  </div>
+</section>
 
-    <div class="vf-atelier-form">
-      <p class="vf-form-label">Begin a conversation</p>
-      {% form 'contact', class: 'vf-contact-form' %}
-        {% if form.posted_successfully? %}
-          <p class="vf-form-success">Your enquiry has been received. We will be in contact within 48 hours.</p>
-        {% else %}
-          <div class="vf-field">
-            <label for="atelier-name">Full name</label>
-            <input type="text" id="atelier-name" name="contact[name]" autocomplete="name" required>
-          </div>
+<section class="vf-atelier vf-atelier--dark vf-atelier--quote">
+  <div class="vf-atelier__inner vf-atelier__inner--narrow">
+    {% render 'vf-quote',
+       text: 'The brief is never a sketch. It is a description of the light at a particular hour, a measurement of the room, a reading of the materials already present.',
+       attribution: 'Voxel Forge — Studio Notes' %}
+  </div>
+</section>
 
-          <div class="vf-field">
-            <label for="atelier-email">Email address</label>
-            <input type="email" id="atelier-email" name="contact[email]" autocomplete="email" required>
-          </div>
+<section class="vf-atelier vf-atelier--light vf-atelier--process">
+  <div class="vf-atelier__inner">
+    <div class="vf-eyebrow vf-eyebrow--light">
+      <span class="vf-eyebrow__text">The process</span>
+      <span class="vf-eyebrow__rule" aria-hidden="true"></span>
+    </div>
+    <h2 class="vf-atelier__h2">Four conversations, eight to fourteen weeks.</h2>
 
+    <div class="vf-atelier__steps">
+      <div class="vf-atelier__step">
+        <div class="vf-atelier__step-icon">{% render 'vf-icon', name: 'atelier', size: 28, surface: 'light' %}</div>
+        <div class="vf-atelier__step-num">01</div>
+        <div class="vf-atelier__step-title">Application</div>
+        <p class="vf-atelier__step-body">A short brief describing the room, the intent, and the material context. Reviewed within five days.</p>
+      </div>
+      <div class="vf-atelier__step">
+        <div class="vf-atelier__step-icon">{% render 'vf-icon', name: 'precision', size: 28, surface: 'light' %}</div>
+        <div class="vf-atelier__step-num">02</div>
+        <div class="vf-atelier__step-title">Specification</div>
+        <p class="vf-atelier__step-body">Geometry, material, and light distribution defined in collaboration with you and your architect.</p>
+      </div>
+      <div class="vf-atelier__step">
+        <div class="vf-atelier__step-icon">{% render 'vf-icon', name: 'forge', size: 28, surface: 'light' %}</div>
+        <div class="vf-atelier__step-num">03</div>
+        <div class="vf-atelier__step-title">Forge</div>
+        <p class="vf-atelier__step-body">Calibration, print, finish. A single object — built to the specification, photographed at every stage.</p>
+      </div>
+      <div class="vf-atelier__step">
+        <div class="vf-atelier__step-icon">{% render 'vf-icon', name: 'prestige', size: 28, surface: 'light' %}</div>
+        <div class="vf-atelier__step-num">04</div>
+        <div class="vf-atelier__step-title">Delivery</div>
+        <p class="vf-atelier__step-body">Hand-finished, sealed, delivered with a signed certificate of origin and care record.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="vf-atelier vf-atelier--dark" id="apply">
+  <div class="vf-atelier__inner vf-atelier__inner--narrow">
+    <div class="vf-eyebrow vf-eyebrow--dark">
+      <span class="vf-eyebrow__text">Begin a conversation</span>
+      <span class="vf-eyebrow__rule" aria-hidden="true"></span>
+    </div>
+    <h2 class="vf-atelier__h2 vf-atelier__h2--dark">Submit a brief.</h2>
+    <p class="vf-atelier__sub vf-atelier__sub--dark">
+      Atelier enquiries are reviewed personally. Expect a reply within 48 hours.
+    </p>
+
+    {% form 'contact', class: 'vf-atelier__form' %}
+      {% if form.posted_successfully? %}
+        <p class="vf-form-success">Your enquiry has been received. We will be in contact within 48 hours.</p>
+      {% else %}
+        {% if form.errors %}
+          <p class="vf-form-success" style="color:var(--vf-coral);border-color:var(--vf-coral);">
+            {{ form.errors | default_errors }}
+          </p>
+        {% endif %}
+
+        <fieldset class="vf-form-fieldset">
+          <legend>Project</legend>
           <div class="vf-field">
             <label for="atelier-space">Describe your space</label>
-            <textarea id="atelier-space" name="contact[body]" rows="6" placeholder="Room dimensions, existing materials, the quality of light you are working with..."></textarea>
+            <textarea id="atelier-space" name="contact[body]" rows="6" placeholder="Room dimensions, existing materials, the quality of light you are working with..." required></textarea>
           </div>
-
           <div class="vf-field">
             <label for="atelier-budget">Approximate budget (₹)</label>
             <select id="atelier-budget" name="contact[budget]">
@@ -52,165 +102,133 @@
               <option value="500000+">₹5,00,000+</option>
             </select>
           </div>
+          <div class="vf-field">
+            <label for="atelier-timeline">Desired timeline</label>
+            <input type="text" id="atelier-timeline" name="contact[timeline]" placeholder="e.g. installation by Q3 2026">
+          </div>
+        </fieldset>
 
-          <button type="submit" class="vf-atelier-submit">Submit enquiry</button>
-        {% endif %}
-      {% endform %}
-    </div>
+        <fieldset class="vf-form-fieldset">
+          <legend>You</legend>
+          <div class="vf-field">
+            <label for="atelier-name">Full name</label>
+            <input type="text" id="atelier-name" name="contact[name]" autocomplete="name" required>
+          </div>
+          <div class="vf-field">
+            <label for="atelier-email">Email address</label>
+            <input type="email" id="atelier-email" name="contact[email]" autocomplete="email" required>
+          </div>
+          <div class="vf-field">
+            <label for="atelier-architect">Architect or designer (optional)</label>
+            <input type="text" id="atelier-architect" name="contact[architect]" autocomplete="off">
+          </div>
+        </fieldset>
+
+        <button type="submit" class="vf-btn vf-btn--atelier vf-atelier__submit">Submit enquiry</button>
+      {% endif %}
+    {% endform %}
   </div>
+</section>
 
-</div>
+<section class="vf-atelier vf-atelier--dark vf-atelier--closing">
+  <div class="vf-atelier__inner vf-atelier__inner--narrow vf-atelier__closing">
+    <p class="vf-atelier__closing-line">By application only.</p>
+    <div class="vf-atelier__closing-mark">{% render 'vf-icon', name: 'forge', size: 20 %}</div>
+  </div>
+</section>
 
 <style>
-  .vf-atelier-page {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 80px 40px;
-  }
+  .vf-atelier { padding: 8rem 3rem; }
+  .vf-atelier--light { background: var(--vf-warm-white); color: var(--vf-obsidian); }
+  .vf-atelier--dark  { background: var(--vf-obsidian);   color: var(--vf-bone); }
+  .vf-atelier__inner { max-width: 1320px; margin: 0 auto; }
+  .vf-atelier__inner--narrow { max-width: 720px; }
 
-  .vf-atelier-rule {
-    width: 32px;
-    height: 1px;
-    background-color: #3D7A6B;
-    margin-bottom: 40px;
-  }
-
-  .vf-atelier-header {
-    margin-bottom: 64px;
-  }
-
-  .vf-section-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
+  .vf-atelier__h1 {
+    font-family: var(--vf-serif);
     font-weight: 300;
-    letter-spacing: 0.36em;
-    text-transform: uppercase;
-    color: #C9A96E;
-    margin-bottom: 16px;
+    font-size: clamp(3rem, 5.5vw, 5rem);
+    line-height: 1.05;
+    letter-spacing: 0.005em;
+    color: var(--vf-teal-deep);
+    margin: 1.5rem 0 1.5rem;
+    max-width: 900px;
   }
+  .vf-atelier__h1 em { font-style: italic; color: var(--vf-gold-dark); }
 
-  .vf-atelier-title {
-    font-family: 'Cormorant Garamond', serif;
+  .vf-atelier__h2 {
+    font-family: var(--vf-serif);
     font-weight: 300;
-    font-size: clamp(48px, 6vw, 80px);
-    letter-spacing: 0.04em;
-    color: #E8E2D6;
-    line-height: 1;
-    margin-bottom: 16px;
+    font-size: clamp(2rem, 3.4vw, 2.8rem);
+    line-height: 1.15;
+    color: var(--vf-teal-deep);
+    margin: 1.5rem 0 3rem;
   }
+  .vf-atelier__h2--dark { color: var(--vf-bone); }
 
-  .vf-atelier-sub {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 200;
-    font-size: 14px;
-    letter-spacing: 0.08em;
-    color: #9A9585;
-    max-width: 480px;
-    line-height: 1.8;
+  .vf-atelier__sub {
+    font-family: var(--vf-sans);
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: rgba(10,10,10,0.62);
+    max-width: 560px;
   }
+  .vf-atelier__sub--dark { color: rgba(232,226,214,0.55); }
 
-  .vf-atelier-body {
+  .vf-atelier__mark { margin-top: 3rem; }
+
+  .vf-atelier--quote { padding: 6rem 3rem; }
+
+  .vf-atelier__steps {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 2.5rem;
   }
-
-  .vf-atelier-text p {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 200;
-    font-size: 14px;
-    line-height: 1.9;
-    color: #9A9585;
-    margin-bottom: 20px;
-    letter-spacing: 0.04em;
+  .vf-atelier__step {
+    padding: 2.5rem 2rem;
+    border-left: 0.5px solid rgba(10,10,10,0.12);
   }
-
-  .vf-form-label {
-    font-family: 'DM Sans', sans-serif;
+  .vf-atelier__step:first-child { border-left: none; padding-left: 0; }
+  .vf-atelier__step-icon { margin-bottom: 1.5rem; }
+  .vf-atelier__step-num {
+    font-family: var(--vf-mono);
     font-size: 10px;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: #C9A96E;
-    margin-bottom: 28px;
+    letter-spacing: 0.24em;
+    color: var(--vf-gold-dark);
+    margin-bottom: 0.85rem;
+  }
+  .vf-atelier__step-title {
+    font-family: var(--vf-serif);
+    font-size: 1.35rem;
+    color: var(--vf-obsidian);
+    margin-bottom: 0.85rem;
+  }
+  .vf-atelier__step-body {
+    font-family: var(--vf-sans);
+    font-size: 0.78rem;
+    line-height: 1.85;
+    color: rgba(10,10,10,0.55);
   }
 
-  .vf-field {
-    margin-bottom: 20px;
-  }
+  .vf-atelier__form { margin-top: 2.5rem; }
+  .vf-atelier__submit { width: 100%; margin-top: 1rem; }
 
-  .vf-field label {
-    display: block;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: #4A4A4A;
-    margin-bottom: 8px;
-  }
-
-  .vf-field input,
-  .vf-field textarea,
-  .vf-field select {
-    width: 100%;
-    background-color: #1A1A1A;
-    border: 0.5px solid #2C2C2C;
-    border-radius: 0;
-    color: #E8E2D6;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    padding: 12px 14px;
-    transition: border-color 600ms cubic-bezier(0.25,0,0,1);
-    outline: none;
-  }
-
-  .vf-field input:focus,
-  .vf-field textarea:focus,
-  .vf-field select:focus {
-    border-color: #C9A96E;
-  }
-
-  .vf-field textarea {
-    resize: vertical;
-    min-height: 120px;
-  }
-
-  .vf-atelier-submit {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    font-weight: 300;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: #C9A96E;
-    background: transparent;
-    border: 1px solid #C9A96E;
-    padding: 14px 28px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 8px;
-    transition: all 600ms cubic-bezier(0.25,0,0,1);
-  }
-
-  .vf-atelier-submit:hover {
-    background-color: #C9A96E;
-    color: #0A0A0A;
-  }
-
-  .vf-form-success {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 18px;
-    color: #3D7A6B;
+  .vf-atelier__closing { text-align: center; }
+  .vf-atelier__closing-line {
+    font-family: var(--vf-serif);
     font-style: italic;
-    padding: 24px;
-    border: 0.5px solid #3D7A6B;
-    line-height: 1.6;
+    font-size: 1.4rem;
+    color: var(--vf-gold);
+    margin-bottom: 1.5rem;
   }
+  .vf-atelier__closing-mark { display: inline-flex; }
 
-  @media screen and (max-width: 749px) {
-    .vf-atelier-page { padding: 48px 24px; }
-    .vf-atelier-body { grid-template-columns: 1fr; gap: 40px; }
+  @media screen and (max-width: 989px) {
+    .vf-atelier { padding: 5rem 1.5rem; }
+    .vf-atelier__steps { grid-template-columns: 1fr 1fr; }
+    .vf-atelier__step { border-left: none; border-top: 0.5px solid rgba(10,10,10,0.12); padding: 2rem 0; }
+    .vf-atelier__step:nth-child(1),
+    .vf-atelier__step:nth-child(2) { border-top: none; padding-top: 0; }
   }
 </style>

@@ -1,0 +1,83 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 80,
+        "padding_bottom": 40
+      }
+    },
+    "studio_pillars": {
+      "type": "vf-process",
+      "settings": {
+        "eyebrow": "The studio",
+        "title_line1": "Three commitments,",
+        "title_line2": "no exceptions.",
+        "description": "Voxel Forge operates from a single proposition — that an object should hold the same precision in its unseen surfaces as in its primary face. These are the disciplines that make that proposition true."
+      },
+      "blocks": {
+        "geometry": {
+          "type": "step",
+          "settings": {
+            "icon": "voxel",
+            "title": "Geometry first",
+            "body": "Every object originates as a parametric definition. Curvature, wall thickness, and tolerance are derived — never sketched."
+          }
+        },
+        "material": {
+          "type": "step",
+          "settings": {
+            "icon": "precision",
+            "title": "Material as decision",
+            "body": "PLA Carbon Fibre, PETG, resin-infused polymer. The material is selected for the object's structural reality, not its appearance."
+          }
+        },
+        "edition": {
+          "type": "step",
+          "settings": {
+            "icon": "quality",
+            "title": "Edition discipline",
+            "body": "Série I is open. Série II is sealed at 200 per design. Atelier exists only by application. Scarcity is recorded, not implied."
+          }
+        },
+        "origin": {
+          "type": "step",
+          "settings": {
+            "icon": "certificate",
+            "title": "Chennai origin",
+            "body": "Designed, printed, and finished within a single studio. Provenance is traceable to a layer height, not a country of origin."
+          }
+        }
+      },
+      "block_order": ["geometry", "material", "edition", "origin"]
+    },
+    "footer_group": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Notes from the studio."
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Quiet dispatches when a new edition opens, and the occasional process note. No promotions.</p>"
+          }
+        },
+        "email": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": ["heading", "paragraph", "email"],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": ["main", "studio_pillars", "footer_group"]
+}

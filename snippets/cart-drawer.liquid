@@ -154,6 +154,10 @@
                             {{- item.product.title | escape -}}
                           </a>
 
+                          {%- if item.sku != blank -%}
+                            <p class="vf-cart-item__sku vf-mono">{{ item.sku }}</p>
+                          {%- endif -%}
+
                           {%- if item.original_price != item.final_price -%}
                             <div class="cart-item__discounted-prices">
                               <span class="visually-hidden">
@@ -558,6 +562,15 @@
             {%- endif -%}
           </small>
         </div>
+
+        {%- unless cart == empty -%}
+          <div class="vf-cart-notice">
+            <span class="vf-cart-notice__icon">{% render 'vf-icon', name: 'package', size: 18 %}</span>
+            <span class="vf-cart-notice__text">
+              Each object is hand-finished and dispatched within 5–7 days. Lead time is recorded on every order.
+            </span>
+          </div>
+        {%- endunless -%}
 
         <!-- CTAs -->
 

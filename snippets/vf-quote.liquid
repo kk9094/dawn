@@ -1,0 +1,15 @@
+{% comment %}
+  Renders a VF pull quote — italic Cormorant + left gold border.
+  Accepts:
+  - text: {String} quote body
+  - attribution: {String} optional attribution line
+  - surface: {String} 'dark' (default) or 'light'
+  Usage: {% render 'vf-quote', text: 'The process is the product.', attribution: 'Voxel Forge — Studio Notes' %}
+{% endcomment %}
+{%- assign vf_quote_surface = surface | default: 'dark' -%}
+<figure class="vf-quote vf-quote--{{ vf_quote_surface }}">
+  <blockquote class="vf-quote__body">{{ text }}</blockquote>
+  {%- if attribution != blank -%}
+    <figcaption class="vf-quote__attr">— {{ attribution }}</figcaption>
+  {%- endif -%}
+</figure>

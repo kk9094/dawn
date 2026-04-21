@@ -22,6 +22,8 @@
       if block.settings.show_dynamic_checkout and gift_card_recipient_feature_active == false
         assign show_dynamic_checkout = true
       endif
+
+      assign vf_tier = product.metafields.voxel.series_tier | default: 'serie-1'
     -%}
 
     <product-form
@@ -74,6 +76,7 @@
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
+            data-tier="{{ vf_tier }}"
             class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
@@ -88,7 +91,7 @@
               {%- elsif product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
                 {{ 'products.product.sold_out' | t }}
               {%- else -%}
-                {{ 'products.product.add_to_cart' | t }}
+                Begin — {{ product.selected_or_first_available_variant.price | money }}
               {%- endif -%}
             </span>
             {%- render 'loading-spinner' -%}

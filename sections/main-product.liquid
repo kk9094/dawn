@@ -85,6 +85,39 @@
         >
           {%- assign product_form_id = 'product-form-' | append: section.id -%}
 
+          {%- comment -%} ── VF tier strip ─────────────────────────────── {%- endcomment -%}
+          {%- render 'vf-tier', product: product -%}
+          {%- if tier_label != blank -%}
+            <div class="vf-tier-strip {{ tier_class }}">
+              {%- if tier == 'serie-2' -%}
+                {% render 'vf-icon', name: 'edition', size: 16 %}
+              {%- elsif tier == 'atelier' -%}
+                {% render 'vf-icon', name: 'atelier', size: 16 %}
+              {%- endif -%}
+              <span class="vf-tier-strip__label">{{ tier_label }}</span>
+              {%- if product.metafields.voxel.edition_number != blank and product.metafields.voxel.edition_total != blank -%}
+                <span class="vf-tier-strip__edition">
+                  Nº {{ product.metafields.voxel.edition_number }} / {{ product.metafields.voxel.edition_total }}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} ── VF mono dimensions line ───────────────────── {%- endcomment -%}
+          {%- if product.metafields.voxel.dimensions_mm != blank or product.metafields.voxel.weight_kg != blank -%}
+            <span class="vf-mono-dimensions">
+              {%- if product.metafields.voxel.dimensions_mm != blank -%}
+                {{ product.metafields.voxel.dimensions_mm }}
+              {%- endif -%}
+              {%- if product.metafields.voxel.dimensions_mm != blank and product.metafields.voxel.weight_kg != blank -%}
+                {{ ' · ' }}
+              {%- endif -%}
+              {%- if product.metafields.voxel.weight_kg != blank -%}
+                {{ product.metafields.voxel.weight_kg }} kg
+              {%- endif -%}
+            </span>
+          {%- endif -%}
+
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when '@app' -%}

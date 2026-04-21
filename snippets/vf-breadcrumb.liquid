@@ -1,0 +1,22 @@
+{% comment %}
+  Renders a VF breadcrumb trail.
+  Accepts:
+  - product: {Object} optional product for product pages
+  - collection: {Object} optional collection for collection / product pages
+  - page_title: {String} optional fallback label for static pages
+  Usage: {% render 'vf-breadcrumb', product: product, collection: collection %}
+{% endcomment %}
+<nav class="vf-breadcrumb" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}" class="vf-breadcrumb__link">Home</a>
+  {%- if collection -%}
+    <span class="vf-breadcrumb__sep" aria-hidden="true">/</span>
+    <a href="{{ collection.url }}" class="vf-breadcrumb__link">{{ collection.title }}</a>
+  {%- endif -%}
+  {%- if product -%}
+    <span class="vf-breadcrumb__sep" aria-hidden="true">/</span>
+    <span class="vf-breadcrumb__current" aria-current="page">{{ product.title }}</span>
+  {%- elsif page_title -%}
+    <span class="vf-breadcrumb__sep" aria-hidden="true">/</span>
+    <span class="vf-breadcrumb__current" aria-current="page">{{ page_title }}</span>
+  {%- endif -%}
+</nav>

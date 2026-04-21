@@ -1,0 +1,12 @@
+{% comment %}
+  Renders a VF section eyebrow — micro-caps label + trailing hairline.
+  Accepts:
+  - text: {String} eyebrow text
+  - surface: {String} 'dark' (default) or 'light'
+  Usage: {% render 'vf-eyebrow', text: 'How we build' %}
+{% endcomment %}
+{%- assign vf_eyebrow_surface = surface | default: 'dark' -%}
+<div class="vf-eyebrow vf-eyebrow--{{ vf_eyebrow_surface }}">
+  <span class="vf-eyebrow__text">{{ text }}</span>
+  <span class="vf-eyebrow__rule" aria-hidden="true"></span>
+</div>

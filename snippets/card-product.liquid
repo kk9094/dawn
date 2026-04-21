@@ -147,7 +147,14 @@
       <div class="card__content">
         <div class="card__information">
           {%- if tier_label != blank -%}
-            <span class="vf-card-tier {{ tier_class }}">{{ tier_label }}</span>
+            <span class="vf-card-tier {{ tier_class }}">
+              {%- if tier == 'serie-2' -%}
+                {% render 'vf-icon', name: 'edition', size: 12 %}
+              {%- elsif tier == 'atelier' -%}
+                {% render 'vf-icon', name: 'atelier', size: 12 %}
+              {%- endif -%}
+              {{ tier_label }}
+            </span>
           {%- endif -%}
           {%- if card_product.metafields.voxel.form_category != blank -%}
             <span class="vf-card-form">{{ card_product.metafields.voxel.form_category }}</span>

@@ -1,45 +1,17 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "hero_heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Sculpted light.",
-            "heading_size": "h0"
-          }
-        },
-        "hero_text": {
-          "type": "text",
-          "settings": {
-            "text": "Precision-printed décor, made in editions.",
-            "text_style": "subtitle"
-          }
-        },
-        "hero_buttons": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Série II",
-            "button_link_1": "shopify://collections/serie-2",
-            "button_style_secondary_1": false,
-            "button_label_2": "Série I",
-            "button_link_2": "shopify://collections/serie-1",
-            "button_style_secondary_2": true
-          }
-        }
-      },
-      "block_order": ["hero_heading", "hero_text", "hero_buttons"],
+    "hero_composite": {
+      "type": "vf-hero-composite",
       "settings": {
-        "image_overlay_opacity": 25,
-        "adapt_height_ratio": false,
-        "desktop_content_position": "bottom-left",
-        "desktop_content_alignment": "left",
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "show_text_below": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "eyebrow": "Voxel Forge · Chennai",
+        "heading": "Sculpted light.",
+        "subheading": "Precision-printed objects, made in editions.",
+        "button_label_1": "Série II",
+        "button_link_1": "shopify://collections/serie-2",
+        "button_label_2": "Série I",
+        "button_link_2": "shopify://collections/serie-1",
+        "meta_text": "Nº 001 / EST. 2025",
+        "show_scroll_indicator": true
       }
     },
     "brand_statement": {
@@ -103,6 +75,50 @@
         "color_scheme": "scheme-1",
         "padding_top": 60,
         "padding_bottom": 0
+      }
+    },
+    "process_strip": {
+      "type": "vf-process",
+      "blocks": {
+        "step_voxel": {
+          "type": "step",
+          "settings": {
+            "icon": "voxel",
+            "title": "Mathematical Origin",
+            "body": "Every object begins as a parametric equation. Dimensions are computed, not drawn. The geometry is exact before a single layer is laid."
+          }
+        },
+        "step_precision": {
+          "type": "step",
+          "settings": {
+            "icon": "precision",
+            "title": "Material Selection",
+            "body": "PLA Carbon Fibre. PETG. Resin-infused polymer. The material is chosen for the object's structural reality — not its appearance."
+          }
+        },
+        "step_print": {
+          "type": "step",
+          "settings": {
+            "icon": "print",
+            "title": "Layer Calibration",
+            "body": "0.08mm layer height. 40% gyroid infill. Each print is calibrated to the specific geometry, not set to a universal default."
+          }
+        },
+        "step_prestige": {
+          "type": "step",
+          "settings": {
+            "icon": "prestige",
+            "title": "Surface Resolution",
+            "body": "Post-processing at 400-grit. Matte lacquer sealed. The final surface holds the same precision as the internal structure."
+          }
+        }
+      },
+      "block_order": ["step_voxel", "step_precision", "step_print", "step_prestige"],
+      "settings": {
+        "eyebrow": "How we build",
+        "title_line1": "From coordinate",
+        "title_line2": "object.",
+        "description": "Four irreducible stages. No shortcuts. No approximations. The process is the product — every decision made at the resolution of the material itself."
       }
     },
     "featured_serie2": {
@@ -237,9 +253,10 @@
     }
   },
   "order": [
-    "image_banner",
+    "hero_composite",
     "brand_statement",
     "form_categories",
+    "process_strip",
     "featured_serie2",
     "atelier_callout",
     "featured_serie1",

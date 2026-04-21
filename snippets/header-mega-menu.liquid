@@ -5,7 +5,51 @@
   {% render 'header-mega-menu' %}
 {% endcomment %}
 
+{%- liquid
+  assign vf_menu = section.settings.menu.links
+  assign vf_menu_count = vf_menu | size
+  assign vf_use_fallback = false
+  if vf_menu_count < 5
+    assign vf_use_fallback = true
+  endif
+-%}
+
 <nav class="header__inline-menu">
+  {%- if vf_use_fallback -%}
+    <ul class="list-menu list-menu--inline vf-fallback-menu" role="list">
+      {%- assign vf_path = request.path -%}
+      <li>
+        <a href="{{ routes.all_products_collection_url }}" class="header__menu-item list-menu__item link link--text focus-inset">
+          <span{% if vf_path contains '/collections/all' %} class="header__active-menu-item"{% endif %}>Objects</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ routes.root_url }}collections/serie-2" class="header__menu-item list-menu__item link link--text focus-inset">
+          <span{% if vf_path contains '/collections/serie-2' %} class="header__active-menu-item"{% endif %}>Editions</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ routes.root_url }}pages/atelier" class="header__menu-item list-menu__item link link--text focus-inset">
+          <span{% if vf_path contains '/pages/atelier' %} class="header__active-menu-item"{% endif %}>Atelier</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ routes.root_url }}pages/about" class="header__menu-item list-menu__item link link--text focus-inset">
+          <span{% if vf_path contains '/pages/about' %} class="header__active-menu-item"{% endif %}>Studio</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ routes.root_url }}blogs/journal" class="header__menu-item list-menu__item link link--text focus-inset">
+          <span{% if vf_path contains '/blogs/journal' %} class="header__active-menu-item"{% endif %}>Journal</span>
+        </a>
+      </li>
+      <li>
+        <a href="{{ routes.root_url }}pages/contact" class="header__menu-item list-menu__item link link--text focus-inset">
+          <span{% if vf_path contains '/pages/contact' %} class="header__active-menu-item"{% endif %}>Contact</span>
+        </a>
+      </li>
+    </ul>
+  {%- else -%}
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
       <li>
@@ -91,4 +135,5 @@
       </li>
     {%- endfor -%}
   </ul>
+  {%- endif -%}
 </nav>

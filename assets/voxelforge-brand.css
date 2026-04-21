@@ -2440,4 +2440,165 @@ body.shopify-design-mode .vf-reveal {
   border-radius: 0;
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   §4.34 — HEADER polish
+   Logo tagline · Account/Bag labels · gold pill cart count · active dot
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Logo + tagline lockup */
+.vf-logo-link {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+.vf-logo-tagline {
+  font-family: var(--vf-serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--vf-silver);
+  white-space: nowrap;
+  opacity: 0.75;
+}
+@media screen and (max-width: 989px) {
+  .vf-logo-tagline { display: none; }
+}
+
+/* Right-side icon labels (Account / Bag) */
+.header__icon .vf-icon-label {
+  display: inline-block;
+  margin-left: 8px;
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(232,226,214,0.78);
+  vertical-align: middle;
+  transition: color 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.header__icon:hover .vf-icon-label { color: var(--vf-gold); }
+@media screen and (max-width: 989px) {
+  .header__icon .vf-icon-label { display: none; }
+}
+
+/* Account / Bag link layout */
+.header__icon--account,
+.header__icon--cart {
+  display: inline-flex !important;
+  align-items: center;
+  padding: 8px 12px !important;
+  height: auto !important;
+  width: auto !important;
+}
+.header__icon--account .svg-wrapper,
+.header__icon--cart .svg-wrapper {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+}
+.header__icon--account svg,
+.header__icon--cart svg,
+.header__icon--search svg {
+  width: 18px;
+  height: 18px;
+  stroke: rgba(232,226,214,0.85) !important;
+  stroke-width: 1.5 !important;
+  fill: none !important;
+}
+
+/* Bag pill — wraps label + count in a gold-tinted hairline rule */
+.vf-bag-link {
+  position: relative;
+  border: 0.5px solid var(--vf-hairline-strong);
+  border-radius: 999px;
+  padding: 6px 14px 6px 12px !important;
+  margin-left: 4px;
+  transition: border-color 240ms cubic-bezier(0.2, 0.8, 0.2, 1), background 240ms;
+}
+.vf-bag-link:hover { border-color: var(--vf-gold); background: rgba(201,169,110,0.06); }
+
+/* Cart count — gold filled disc inside the pill */
+#cart-icon-bubble .cart-count-bubble {
+  position: static !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  width: 20px;
+  height: 20px;
+  background: var(--vf-gold) !important;
+  color: var(--vf-obsidian) !important;
+  border-radius: 999px;
+  font-family: var(--vf-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 0 !important;
+  border: none !important;
+}
+#cart-icon-bubble .cart-count-bubble span { color: var(--vf-obsidian) !important; }
+
+/* Search icon — strip Dawn's button chrome */
+.header__icon--search {
+  padding: 8px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+/* Spacing between right-side icons */
+.header__icons {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Active nav link — gold dot under */
+.header-wrapper .list-menu__item--active,
+.header-wrapper .header__active-menu-item {
+  position: relative;
+  color: var(--vf-bone) !important;
+}
+.header-wrapper .list-menu__item--active::after,
+.header-wrapper .header__active-menu-item::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--vf-gold);
+  border-radius: 50%;
+}
+
+/* Nav link hover — teal underline whisper */
+.header-wrapper .list-menu__item--link {
+  position: relative;
+  font-family: var(--vf-sans);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  font-weight: 400;
+  text-transform: none;
+  padding: 0 18px !important;
+}
+.header-wrapper .list-menu__item--link::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: -6px;
+  height: 1px;
+  background: var(--vf-teal);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.header-wrapper .list-menu__item--link:hover::before { transform: scaleX(1); }
+
+
 

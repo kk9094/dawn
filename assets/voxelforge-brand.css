@@ -2644,9 +2644,14 @@ details[open] > .header__icon--search .vf-raster-icon {
 
 /* 2. Brand the Search Modal environment to match VoxelForge dark aesthetics */
 .search-modal {
+  position: absolute !important;
+  left: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
   background-color: var(--vf-obsidian) !important;
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--vf-gold-dark) !important;
+  z-index: 10 !important;
 }
 
 .search-modal__content {

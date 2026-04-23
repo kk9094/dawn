@@ -37,7 +37,7 @@
       class="announcement-bar"
       role="region"
       aria-label="{{ 'sections.header.announcement' | t }}"
-      style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"
+      style="display:flex;align-items:center;justify-content:center;pointer-events:none;width:100%;height:100%;"
       {{ section.blocks.first.shopify_attributes }}
     >
       {%- if section.blocks.first.settings.text != blank -%}
@@ -63,7 +63,7 @@
       role="region"
       aria-roledescription="{{ 'sections.announcements.carousel' | t }}"
       aria-label="{{ 'sections.announcements.announcement_bar' | t }}"
-      style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;"
+      style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;"
     >
       <div class="announcement-bar-slider slider-buttons" style="width:100%;display:flex;align-items:center;justify-content:center;">
         <button type="button" class="slider-button slider-button--prev" name="previous"

@@ -2515,7 +2515,8 @@ body.shopify-design-mode .vf-reveal {
   transition: all 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .header__icon:hover .vf-raster-icon {
-  filter: brightness(0) invert(0.9) sepia(0.4) saturate(2.5) hue-rotate(5deg) opacity(1);
+  /* Mathematically calculated filter to convert black to exact VoxelForge Gold #C9A96E */
+  filter: brightness(0) invert(79%) sepia(18%) saturate(1113%) hue-rotate(352deg) brightness(88%) contrast(87%) opacity(1);
 }
 
 /* Hide ghost elements natively */

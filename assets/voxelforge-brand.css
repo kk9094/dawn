@@ -2479,46 +2479,57 @@ body.shopify-design-mode .vf-reveal {
 .header__icons {
   display: inline-flex !important;
   align-items: center;
-  gap: 0 !important;
+  justify-content: flex-end;
+  gap: 12px !important; /* Strict fixed gap spacing between active nodes */
 }
 
-/* All header icons — shared baseline */
+/* Base icon sizing */
 .header__icon,
 .header__search {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  padding: 4px !important; /* Cut down internal padding to bring icons physically closer */
-  margin: 0 0 0 2px !important; /* Extremely minimal external push */
+  margin: 0 !important;
+  padding: 0 !important; /* Remove wrapper padding so gaps are mathematically perfect */
   width: auto !important;
   height: auto !important;
   color: rgba(232,226,214,0.7);
   transition: color 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .header__icon:hover { color: var(--vf-bone); }
-.header__search { padding: 0 !important; } /* Only the summary inside needs padding */
 
-/* Consistent SVG size for all header icons */
+/* Ensure the SVG itself acts as the exact hitbox */
 .header__icon svg,
 .header__icon .svg-wrapper svg {
-  width: 20px !important;
-  height: 20px !important;
+  width: 22px !important;
+  height: 22px !important;
+  padding: 0 !important;
+  margin: 0 !important;
   stroke: currentColor !important;
   stroke-width: 1.5 !important;
   fill: none !important;
   display: block;
 }
 
+/* Hide ghost elements natively */
+.header__icons > *:not(.header__search):not(.header__icon--account):not(.header__icon--cart) {
+  display: none !important;
+}
+
 /* Account — icon only, hide text label */
 .header__icon--account .vf-icon-label { display: none !important; }
 .header__icon--account .svg-wrapper,
-.header__icon--account account-icon { display: inline-flex !important; }
+.header__icon--account account-icon { 
+  display: inline-flex !important; 
+  padding: 0 !important;
+  margin: 0 !important; 
+}
 
 /* Cart — icon with small gold count badge (top-right corner) */
 .header__icon--cart {
   position: relative !important;
-  padding: 4px !important;
-  margin: 0 0 0 2px !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 .header__icon--cart .cart-count-bubble {
   position: absolute !important;

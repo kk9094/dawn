@@ -59,31 +59,26 @@
   display: block !important;
 }
 
-/* The utility-bar outer div — force true edge-to-edge */
+/* The utility-bar outer div — flex container for centering */
 #shopify-section-announcement-bar .utility-bar {
   width: 100% !important;
   max-width: 100% !important;
+  height: 32px !important;
+  min-height: 32px !important;
+  max-height: 32px !important;
   margin: 0 !important;
   padding: 0 !important;
-  background-color: #0A0A0A !important;
-  background-image: none !important;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07) !important;
-}
-
-/* The page-width grid inside the utility bar */
-#shopify-section-announcement-bar .utility-bar__grid,
-#shopify-section-announcement-bar .page-width {
-  max-width: 100% !important;
-  width: 100% !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin: 0 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  position: relative !important;
+  background-color: #0A0A0A !important;
+  background-image: none !important;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07) !important;
+  box-sizing: border-box !important;
 }
 
-/* The announcement bar itself — slim strip */
+/* The announcement bar itself — fills parent flex cell */
 #shopify-section-announcement-bar .announcement-bar {
   width: 100% !important;
   height: 32px !important;

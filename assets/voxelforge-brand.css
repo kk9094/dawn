@@ -2479,7 +2479,7 @@ body.shopify-design-mode .vf-reveal {
 .header__icons {
   display: inline-flex !important;
   align-items: center;
-  gap: 8px !important;
+  gap: 0 !important; /* Disabled gap to prevent invisible Shopify App Blocks from rendering double-spaces */
 }
 
 /* All header icons — shared baseline */
@@ -2489,7 +2489,7 @@ body.shopify-design-mode .vf-reveal {
   align-items: center;
   justify-content: center;
   padding: 8px !important;
-  margin: 0 !important; /* Cancel any Dawn margins (-1.2rem on cart, etc) */
+  margin: 0 0 0 8px !important; /* Explicitly spaces icons 8px apart precisely, bypassing hidden DOM elements */
   width: auto !important;
   height: auto !important;
   color: rgba(232,226,214,0.7);

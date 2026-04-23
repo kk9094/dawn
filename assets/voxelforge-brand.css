@@ -2479,7 +2479,7 @@ body.shopify-design-mode .vf-reveal {
 .header__icons {
   display: inline-flex !important;
   align-items: center;
-  gap: 0 !important; /* Disabled gap to prevent invisible Shopify App Blocks from rendering double-spaces */
+  gap: 0 !important;
 }
 
 /* All header icons — shared baseline */
@@ -2488,8 +2488,8 @@ body.shopify-design-mode .vf-reveal {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  padding: 8px !important;
-  margin: 0 0 0 8px !important; /* Explicitly spaces icons 8px apart precisely, bypassing hidden DOM elements */
+  padding: 4px !important; /* Cut down internal padding to bring icons physically closer */
+  margin: 0 0 0 2px !important; /* Extremely minimal external push */
   width: auto !important;
   height: auto !important;
   color: rgba(232,226,214,0.7);
@@ -2517,8 +2517,8 @@ body.shopify-design-mode .vf-reveal {
 /* Cart — icon with small gold count badge (top-right corner) */
 .header__icon--cart {
   position: relative !important;
-  padding: 8px !important;
-  margin: 0 !important;
+  padding: 4px !important;
+  margin: 0 0 0 2px !important;
 }
 .header__icon--cart .cart-count-bubble {
   position: absolute !important;

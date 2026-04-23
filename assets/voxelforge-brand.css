@@ -2633,5 +2633,41 @@ details[open] > .header__icon--search .vf-raster-icon {
   margin-bottom: 0 !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   FIX: SEARCH MODAL VISIBILITY AND OPULENT BRANDING
+   ═══════════════════════════════════════════════════════════════ */
 
+/* 1. Release the modal from the header's strict cropping bounds so it can drop down */
+.header {
+  overflow: visible !important;
+}
 
+/* 2. Brand the Search Modal environment to match VoxelForge dark aesthetics */
+.search-modal {
+  background-color: var(--vf-obsidian) !important;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--vf-gold-dark) !important;
+}
+
+.search-modal__content {
+  background-color: transparent !important;
+}
+
+.search-modal__form .search__input {
+  color: var(--vf-bone) !important;
+  font-family: var(--vf-sans) !important;
+  font-size: 16px !important;
+  border: 1px solid var(--vf-teal) !important;
+  border-radius: 0;
+}
+.search-modal__form .search__input:focus {
+  border-color: var(--vf-gold) !important;
+}
+
+/* Format the Search and Reset/Close SVGs inside the modal */
+.search__button svg,
+.reset__button svg,
+.search-modal__close-button svg {
+  stroke: var(--vf-gold) !important;
+  stroke-width: 1.5 !important;
+}

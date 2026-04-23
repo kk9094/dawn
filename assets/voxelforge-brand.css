@@ -2642,6 +2642,12 @@ details[open] > .header__icon--search .vf-raster-icon {
   overflow: visible !important;
 }
 
+/* 1b. Neutralize Dawn's internal relative positioning traps so the absolute modal breaks out to the full header width */
+details-modal.header__search,
+details-modal.header__search > details {
+  position: static !important;
+}
+
 /* 2. Brand the Search Modal environment to match VoxelForge dark aesthetics */
 .search-modal {
   position: absolute !important;

@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-accordion icon-dryer" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18.47 1.53H1.53v16.94h16.94zM1.53.5A1.03 1.03 0 0 0 .5 1.53v16.94c0 .569.461 1.03 1.03 1.03h16.94a1.03 1.03 0 0 0 1.03-1.03V1.53A1.03 1.03 0 0 0 18.47.5z"/><path fill-rule="evenodd" d="M10 15.224a5.224 5.224 0 1 0 0-10.448 5.224 5.224 0 0 0 0 10.448m0 1.03a6.254 6.254 0 1 0 0-12.508 6.254 6.254 0 0 0 0 12.508"/></svg>
+<!-- @license lucide-static v1.8.0 - ISC -->
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-dryer" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+  <path d="M12.8 19.6A2 2 0 1 0 14 16H2" />
+  <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2" />
+  <path d="M9.8 4.4A2 2 0 1 1 11 8H2" />
+</svg>

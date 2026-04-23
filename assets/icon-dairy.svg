@@ -1,1 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-accordion icon-dairy" viewBox="0 0 20 20"><path d="M6.468 3.065 4.297 6.088l-.812-.583 2.17-3.023zm8.662.087-1.65 3.084-.882-.472 1.65-3.083z"/><path d="M14.522 2.583h.58l1.379 3.165a1 1 0 0 1 .083.4v9.954a1 1 0 0 1-.302.716l-2.46 2.398a1 1 0 0 1-.698.284H11v-1h2.104l2.46-2.398V6.147l-1.249-2.864.207-.09z"/><path d="M3.5 5.5h10v13a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1zm1 1v12h8v-12zm1-5a1 1 0 0 1 1-1h7.602a1 1 0 0 1 1 1v1.123h-1V1.5H6.5V3h-1z"/><path d="M15.013 3.089H5.876v-.5h9.137z"/></svg>
+<!-- @license lucide-static v1.8.0 - ISC -->
+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" role="presentation" class="icon icon-dairy" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+  <path d="M8 2h8" />
+  <path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2" />
+  <path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0" />
+</svg>

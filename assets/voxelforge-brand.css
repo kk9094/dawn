@@ -2532,11 +2532,12 @@ body.shopify-design-mode .vf-reveal {
   margin: 0 !important; 
 }
 
-/* Cart — icon with small gold count badge (top-right corner) */
+/* Cart — icon with small gold count badge (top-right corner).
+   Applying an optical negative margin to pull the cart much closer, combating any invisible transparent padding baked into the custom PNG asset. */
 .header__icon--cart {
   position: relative !important;
   padding: 0 !important;
-  margin: 0 !important;
+  margin: 0 0 0 -10px !important; 
 }
 .header__icon--cart .cart-count-bubble {
   position: absolute !important;

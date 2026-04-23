@@ -2476,23 +2476,10 @@ body.shopify-design-mode .vf-reveal {
   display: block;
 }
 
-/* Account — text only, no icon (matches brand spec) */
+/* Account — icon only, hide text label */
+.header__icon--account .vf-icon-label { display: none !important; }
 .header__icon--account .svg-wrapper,
-.header__icon--account account-icon { display: none !important; }
-.header__icon--account .vf-icon-label {
-  font-family: var(--vf-sans);
-  font-size: 11px;
-  font-weight: 400;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(232,226,214,0.7);
-  transition: color 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  white-space: nowrap;
-}
-.header__icon--account:hover .vf-icon-label { color: var(--vf-bone); }
-@media screen and (max-width: 989px) {
-  .header__icon--account { display: none !important; }
-}
+.header__icon--account account-icon { display: inline-flex !important; }
 
 /* Cart — icon with small gold count badge (top-right corner) */
 .header__icon--cart {
@@ -2525,24 +2512,7 @@ body.shopify-design-mode .vf-reveal {
   font-size: 8px !important;
 }
 
-/* Active nav link — gold dot underneath */
-.header-wrapper .header__active-menu-item {
-  position: relative;
-  color: var(--vf-bone) !important;
-}
-.header-wrapper .header__active-menu-item::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  transform: translateX(-50%);
-  width: 3px;
-  height: 3px;
-  background: var(--vf-gold);
-  border-radius: 50%;
-}
-
-/* Nav links — clean type, color-shift only */
+/* Nav links — clean type, color-shift only, zero underlines */
 .header-wrapper .list-menu__item--link,
 .header-wrapper .header__menu-item {
   font-family: var(--vf-sans);
@@ -2552,12 +2522,46 @@ body.shopify-design-mode .vf-reveal {
   text-transform: none;
   padding: 0 16px !important;
   color: rgba(232,226,214,0.62) !important;
+  text-decoration: none !important;
   transition: color 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .header-wrapper .list-menu__item--link:hover,
-.header-wrapper .header__menu-item:hover { color: var(--vf-bone) !important; }
+.header-wrapper .header__menu-item:hover {
+  color: var(--vf-bone) !important;
+  text-decoration: none !important;
+}
+/* Kill Dawn base.css hover/active/open underlines on header nav */
+.header-wrapper .header__menu-item span,
+.header-wrapper .header__menu-item:hover span,
+.header-wrapper details[open] > .header__menu-item,
+.header-wrapper details[open]:hover > .header__menu-item {
+  text-decoration: none !important;
+}
 .header-wrapper .list-menu__item--link::before,
 .header-wrapper .header__menu-item::before { display: none !important; }
+
+/* Active page — gold dot only, no underline */
+.header-wrapper .header__active-menu-item {
+  position: relative;
+  color: var(--vf-bone) !important;
+  text-decoration: none !important;
+}
+.header-wrapper .header__menu-item:hover .header__active-menu-item,
+.header-wrapper .header__active-menu-item:hover {
+  text-decoration: none !important;
+  text-decoration-thickness: 0 !important;
+}
+.header-wrapper .header__active-menu-item::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -9px;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 3px;
+  background: var(--vf-gold);
+  border-radius: 50%;
+}
 
 /* ─────────────────────────────────────────────────────────────────────────
    §4.35 — HERO section — exempt from global section padding

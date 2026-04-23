@@ -265,9 +265,13 @@ h6 {
   text-transform: uppercase;
   color: var(--vf-gold);
   margin: 0 auto;
-  padding: 0;
+  padding: 0 !important;
   line-height: 1;
   max-width: 1320px;
+  min-height: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ─────────────────────────────────────────────────────────────────────────

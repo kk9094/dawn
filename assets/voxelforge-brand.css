@@ -73,9 +73,9 @@
   --vf-max-width: 1320px;
   --vf-side-padding: 40px;
   --vf-col-gap: 24px;
-  --vf-navbar-height: 50px;
+  --vf-navbar-height: 64px;
   /* Desktop */
-  --vf-navbar-height-mobile: 54px;
+  --vf-navbar-height-mobile: 56px;
   /* Mobile */
   --vf-bar-height: 20px;
   /* Slim announcement */
@@ -2444,6 +2444,21 @@ body.shopify-design-mode .vf-reveal {
 /* ─────────────────────────────────────────────────────────────────────────
    §4.34 — HEADER icons & nav
    ───────────────────────────────────────────────────────────────────────── */
+
+/* Nav — remove Dawn's negative margin offset and center list items */
+@media screen and (min-width: 990px) {
+  .header__inline-menu {
+    margin-left: 0 !important;
+  }
+  .header__inline-menu .list-menu--inline {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
 
 /* Right-side icon group */
 .header__icons {

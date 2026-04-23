@@ -2485,7 +2485,7 @@ body.shopify-design-mode .vf-reveal {
 
 /* Base icon sizing */
 .header__icon,
-.header__search {
+.header__search summary {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
@@ -2517,6 +2517,11 @@ body.shopify-design-mode .vf-reveal {
 .header__icon:hover .vf-raster-icon {
   /* Mathematically calculated filter to convert black to exact VoxelForge Gold #C9A96E */
   filter: brightness(0) invert(79%) sepia(18%) saturate(1113%) hue-rotate(352deg) brightness(88%) contrast(87%) opacity(1);
+}
+
+/* Hide the custom Search magnifying glass icon when the modal is open, to only show the Close 'X' icon */
+details[open] > .header__icon--search .vf-raster-icon {
+  display: none !important;
 }
 
 /* Hide ghost elements natively */

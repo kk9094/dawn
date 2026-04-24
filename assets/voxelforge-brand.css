@@ -21,9 +21,7 @@
   --vf-gold: #C9A96E;
   --vf-gold-light: #E8C98A;
   --vf-gold-dim: #8A6E3A;
-  --vf-teal: #3D7A6B;
-  --vf-teal-bright: #5BA89A;
-  --vf-teal-deep: #2A5A4E;
+
   --vf-gold-dark: #8A6E3A;
   --vf-coral: #C4614A;
 
@@ -85,7 +83,7 @@
   --color-base-background-2: 26, 26, 26;
   --color-base-text: 232, 226, 214;
   --color-base-accent-1: 201, 169, 110;
-  --color-base-accent-2: 61, 122, 107;
+  --color-base-accent-2: 44, 44, 44;
   --color-base-outline-button-labels: 201, 169, 110;
   --color-base-solid-button-labels: 10, 10, 10;
   --payment-terms-background-color: rgb(10, 10, 10);
@@ -953,11 +951,11 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 
 .collection-card[data-collection="atelier"],
 .collection-list .card:nth-child(3) {
-  border-color: var(--vf-teal);
+  border-color: var(--vf-graphite);
 }
 
 .collection-list .card:nth-child(3) .card__heading {
-  color: var(--vf-teal-bright);
+  color: var(--vf-slate);
 }
 
 
@@ -1133,7 +1131,7 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 }
 
 .vf-teal {
-  color: var(--vf-teal-bright);
+  color: var(--vf-slate);
 }
 
 .vf-bone {
@@ -1493,7 +1491,7 @@ body.shopify-design-mode .vf-reveal {
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   margin-bottom: 2rem;
   display: flex;
   align-items: center;
@@ -1584,7 +1582,7 @@ body.shopify-design-mode .vf-reveal {
 
 /* Form category / vendor text above title */
 .product__text.caption-with-letter-spacing {
-  color: var(--vf-teal) !important;
+  color: var(--vf-graphite) !important;
   font-size: 10px;
   letter-spacing: 0.32em;
 }
@@ -1731,7 +1729,7 @@ body.shopify-design-mode .vf-reveal {
 }
 .vf-field:focus {
   outline: none;
-  border-color: var(--vf-teal);
+  border-color: var(--vf-graphite);
 }
 .vf-field--light {
   background: #FFFFFF;
@@ -1739,7 +1737,7 @@ body.shopify-design-mode .vf-reveal {
   color: var(--vf-obsidian);
 }
 .vf-field--light:focus {
-  border-color: var(--vf-teal-deep);
+  border-color: var(--vf-charcoal);
 }
 
 .vf-form-label {
@@ -1753,7 +1751,7 @@ body.shopify-design-mode .vf-reveal {
   margin-bottom: var(--vf-s-2);
 }
 .vf-form-label--light {
-  color: var(--vf-teal-deep);
+  color: var(--vf-charcoal);
 }
 
 .vf-form-fieldset {
@@ -1773,7 +1771,7 @@ body.shopify-design-mode .vf-reveal {
 }
 
 .vf-form-success {
-  border: 0.5px solid var(--vf-teal);
+  border: 0.5px solid var(--vf-graphite);
   background: rgba(61, 122, 107, 0.08);
   padding: var(--vf-s-4);
   color: var(--vf-bone);
@@ -1794,7 +1792,7 @@ body.shopify-design-mode .vf-reveal {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   text-decoration: none;
-  border: 1px solid var(--vf-teal);
+  border: 1px solid var(--vf-graphite);
   background: transparent;
   color: var(--vf-bone);
   border-radius: 0;
@@ -1802,7 +1800,7 @@ body.shopify-design-mode .vf-reveal {
   transition: background var(--vf-duration) var(--vf-ease), color var(--vf-duration) var(--vf-ease), border-color var(--vf-duration) var(--vf-ease);
 }
 .vf-btn:hover {
-  background: var(--vf-teal);
+  background: var(--vf-graphite);
   color: var(--vf-obsidian);
 }
 .vf-btn--gold {
@@ -1814,13 +1812,13 @@ body.shopify-design-mode .vf-reveal {
   color: var(--vf-obsidian);
 }
 .vf-btn--solid {
-  background: var(--vf-teal);
+  background: var(--vf-graphite);
   color: var(--vf-obsidian);
-  border-color: var(--vf-teal);
+  border-color: var(--vf-graphite);
 }
 .vf-btn--solid:hover {
-  background: var(--vf-teal-bright);
-  border-color: var(--vf-teal-bright);
+  background: var(--vf-slate);
+  border-color: var(--vf-slate);
 }
 .vf-btn--atelier {
   background: var(--vf-gold);
@@ -1842,11 +1840,11 @@ body.shopify-design-mode .vf-reveal {
   text-underline-offset: 6px;
 }
 .vf-btn--light {
-  border-color: var(--vf-teal-deep);
-  color: var(--vf-teal-deep);
+  border-color: var(--vf-charcoal);
+  color: var(--vf-charcoal);
 }
 .vf-btn--light:hover {
-  background: var(--vf-teal-deep);
+  background: var(--vf-charcoal);
   color: var(--vf-warm-white);
 }
 
@@ -1880,7 +1878,7 @@ body.shopify-design-mode .vf-reveal {
 .vf-accordion__caret {
   display: inline-block;
   transition: transform var(--vf-duration) var(--vf-ease);
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   font-size: 14px;
   line-height: 1;
 }
@@ -1903,7 +1901,7 @@ body.shopify-design-mode .vf-reveal {
   border: none;
 }
 .vf-rule--strong { background: var(--vf-hairline-strong); }
-.vf-rule--teal   { background: var(--vf-teal); }
+.vf-rule--teal   { background: var(--vf-graphite); }
 .vf-rule--gold   { background: var(--vf-gold); }
 .vf-rule--vertical {
   display: inline-block;
@@ -1919,7 +1917,7 @@ body.shopify-design-mode .vf-reveal {
   letter-spacing: 0.08em;
   color: var(--vf-silver);
 }
-.vf-mono--teal { color: var(--vf-teal); }
+.vf-mono--teal { color: var(--vf-graphite); }
 .vf-mono--gold { color: var(--vf-gold); }
 
 
@@ -1991,8 +1989,8 @@ body.shopify-design-mode .vf-reveal {
   stroke-linejoin: round;
   display: block;
 }
-.vf-icon--teal svg { stroke: var(--vf-teal); }
-.vf-icon--teal-deep svg { stroke: var(--vf-teal-deep); }
+.vf-icon--teal svg { stroke: var(--vf-graphite); }
+.vf-icon--teal-deep svg { stroke: var(--vf-charcoal); }
 .vf-icon--gold svg { stroke: var(--vf-gold); }
 .vf-icon--gold-dark svg { stroke: var(--vf-gold-dark); }
 .vf-icon--bone svg { stroke: var(--vf-bone); }
@@ -2003,12 +2001,12 @@ body.shopify-design-mode .vf-reveal {
 .header__icon--cart svg,
 .header__icon--summary svg,
 .header__icon--menu svg {
-  stroke: var(--vf-teal);
+  stroke: var(--vf-graphite);
   stroke-width: 1.5;
   fill: none;
 }
 .header__icon:hover svg {
-  stroke: var(--vf-teal-bright);
+  stroke: var(--vf-slate);
 }
 
 
@@ -2050,7 +2048,7 @@ body.shopify-design-mode .vf-reveal {
   font-weight: 400;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   margin-bottom: var(--vf-s-4);
 }
 .vf-eyebrow::after {
@@ -2071,7 +2069,7 @@ body.shopify-design-mode .vf-reveal {
   background: var(--vf-hairline);
 }
 .vf-eyebrow--gold { color: var(--vf-gold); }
-.vf-eyebrow--light { color: var(--vf-teal-deep); }
+.vf-eyebrow--light { color: var(--vf-charcoal); }
 .vf-eyebrow--light::after { background: rgba(10, 10, 10, 0.1); }
 
 
@@ -2093,7 +2091,7 @@ body.shopify-design-mode .vf-reveal {
   text-decoration: none;
   transition: color var(--vf-duration) var(--vf-ease);
 }
-.vf-breadcrumb a:hover { color: var(--vf-teal); }
+.vf-breadcrumb a:hover { color: var(--vf-graphite); }
 .vf-breadcrumb__sep {
   color: var(--vf-graphite);
 }
@@ -2134,7 +2132,7 @@ body.shopify-design-mode .vf-reveal {
   font-family: var(--vf-mono);
   font-size: var(--vf-t-mono);
   letter-spacing: 0.1em;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   margin: var(--vf-s-3) 0 var(--vf-s-5);
 }
 
@@ -2157,11 +2155,11 @@ body.shopify-design-mode .vf-reveal {
 }
 .product-form__submit[data-tier="serie-1"] {
   background: transparent;
-  color: var(--vf-teal);
-  border: 1px solid var(--vf-teal);
+  color: var(--vf-graphite);
+  border: 1px solid var(--vf-graphite);
 }
 .product-form__submit[data-tier="serie-1"]:hover {
-  background: var(--vf-teal);
+  background: var(--vf-graphite);
   color: var(--vf-obsidian);
 }
 
@@ -2174,7 +2172,7 @@ body.shopify-design-mode .vf-reveal {
   min-height: 600px;
   background: var(--vf-obsidian);
   overflow: hidden;
-  border-top: 0.5px solid var(--vf-teal);
+  border-top: 0.5px solid var(--vf-graphite);
 }
 .vf-hero-composite__visual {
   position: absolute;
@@ -2209,7 +2207,7 @@ body.shopify-design-mode .vf-reveal {
   font-weight: 400;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   margin-bottom: var(--vf-s-4);
 }
 .vf-hero-composite__heading {
@@ -2262,7 +2260,7 @@ body.shopify-design-mode .vf-reveal {
   content: '';
   width: 1px;
   height: 40px;
-  background: var(--vf-teal);
+  background: var(--vf-graphite);
   opacity: 0.5;
 }
 @media screen and (max-width: 989px) {
@@ -2312,7 +2310,7 @@ body.shopify-design-mode .vf-reveal {
 .shopify-policy__body h2 { font-size: 1.6rem; }
 .shopify-policy__body h3 { font-size: 1.25rem; }
 .shopify-policy__body p { margin: 0 0 var(--vf-s-4); }
-.shopify-policy__body a { color: var(--vf-teal-bright); text-decoration: underline; text-underline-offset: 3px; }
+.shopify-policy__body a { color: var(--vf-slate); text-decoration: underline; text-underline-offset: 3px; }
 .shopify-policy__body ul,
 .shopify-policy__body ol { padding-left: var(--vf-s-4); margin: 0 0 var(--vf-s-4); }
 .shopify-policy__body li { margin: 0 0 var(--vf-s-2); }
@@ -2324,7 +2322,7 @@ body.shopify-design-mode .vf-reveal {
   font-family: var(--vf-mono);
   font-size: 10px;
   letter-spacing: 0.16em;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   margin: 4px 0 8px;
   text-transform: uppercase;
 }
@@ -2340,7 +2338,7 @@ body.shopify-design-mode .vf-reveal {
 .vf-cart-notice__icon {
   display: inline-flex;
   flex: 0 0 auto;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
   margin-top: 2px;
 }
 .vf-cart-notice__text {
@@ -2393,7 +2391,7 @@ body.shopify-design-mode .vf-reveal {
   font-family: var(--vf-sans);
   padding: 14px 16px;
 }
-.customer .field input:focus { border-color: var(--vf-teal); outline: none; }
+.customer .field input:focus { border-color: var(--vf-graphite); outline: none; }
 
 .customer .button,
 .customer button[type="submit"] {
@@ -2403,7 +2401,7 @@ body.shopify-design-mode .vf-reveal {
   text-transform: uppercase;
   font-weight: 400;
   padding: 16px 40px;
-  border: 1px solid var(--vf-teal);
+  border: 1px solid var(--vf-graphite);
   background: transparent;
   color: var(--vf-bone);
   border-radius: 0;
@@ -2411,11 +2409,11 @@ body.shopify-design-mode .vf-reveal {
 }
 .customer .button:hover,
 .customer button[type="submit"]:hover {
-  background: var(--vf-teal);
+  background: var(--vf-graphite);
   color: var(--vf-obsidian);
 }
 
-.customer a { color: var(--vf-teal-bright); text-underline-offset: 3px; }
+.customer a { color: var(--vf-slate); text-underline-offset: 3px; }
 
 /* Order history table */
 .customer table.order-history,
@@ -2444,7 +2442,7 @@ body.shopify-design-mode .vf-reveal {
 .customer table .total {
   font-family: var(--vf-mono);
   letter-spacing: 0.06em;
-  color: var(--vf-teal);
+  color: var(--vf-graphite);
 }
 
 /* Address card */
@@ -2669,6 +2667,12 @@ body:has(.header__search details[open]) .shopify-section-group-header-group {
   justify-content: center !important;
   box-sizing: border-box !important;
   padding: 0 !important;
+}
+
+/* After JS teleportation to <body>, details[open] > .search-modal no longer
+   matches so Dawn resets opacity to 0. This rule restores visibility. */
+body > .search-modal {
+  opacity: 1 !important;
 }
 
 /* 3 — Kill Dawn's built-in overlay */

@@ -2823,14 +2823,19 @@ details-modal.header__search > details {
   height: 18px !important;
 }
 
-/* Close button — top-right of viewport */
+/* Close button — fixed top-right of viewport
+   Dawn base.css resets .search-modal__close-button to position:initial at >=990px.
+   We re-declare position:fixed in both the base rule and inside @media (>=990px)
+   so our !important wins at every breakpoint. */
 .search-modal__close-button {
   position: fixed !important;
   top: 24px !important;
   right: 32px !important;
-  left: auto !important;       /* fix: prevent flex-center from anchoring it left */
-  width: auto !important;      /* fix: don't stretch to flex parent width */
-  margin: 0 !important;        /* fix: remove any inherited flex margins */
+  left: auto !important;
+  bottom: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  align-self: auto !important;
   z-index: 10001 !important;
   background: none !important;
   border: none !important;
@@ -2838,6 +2843,18 @@ details-modal.header__search > details {
   opacity: 0.55 !important;
   transition: opacity 200ms ease !important;
   padding: 10px !important;
+}
+
+/* Explicitly counter Dawn's @media (min-width: 990px) reset */
+@media screen and (min-width: 990px) {
+  .search-modal__close-button {
+    position: fixed !important;
+    top: 24px !important;
+    right: 32px !important;
+    left: auto !important;
+    bottom: auto !important;
+    margin-left: 0 !important;
+  }
 }
 
 .search-modal__close-button:hover {

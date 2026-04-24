@@ -2650,19 +2650,32 @@ details[open] > .header__icon--search .vf-raster-icon {
       UI.
    ─────────────────────────────────────────────────────────────── */
 
-/* 1 — Full-viewport backdrop at ROOT stacking context */
+/* 1 — Full-viewport backdrop at ROOT stacking context
+   z-index: 102 — above the elevated header (z:100) so no header strip bleeds through */
 body:has(.header__search details[open])::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 10, 0.9);
+  background: rgba(10, 10, 10, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  z-index: 6;
+  z-index: 102;
   pointer-events: none;
 }
 
-/* 2 — Elevate the header so search content is above the backdrop */
+/* 1b — Belt-and-suspenders: also paint over the header-wrapper itself
+   The header is elevated to z:100; its background was bleeding through.
+   A ::before cover at z:103 sits above the header but below the modal. */
+body:has(.header__search details[open]) .header-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.92);
+  z-index: 103;
+  pointer-events: none;
+}
+
+/* 2 — Elevate the header so search content renders correctly */
 body:has(.header__search details[open]) .shopify-section-group-header-group,
 body:has(.header__search details[open]) .section-header {
   z-index: 100 !important;
@@ -2707,7 +2720,7 @@ details-modal.header__search > details {
   height: 100vh !important;
   background: transparent !important;
   border: none !important;
-  z-index: 9999 !important;
+  z-index: 200 !important;
   display: flex !important;
   align-items: flex-start !important;
   justify-content: center !important;

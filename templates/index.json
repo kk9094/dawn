@@ -7,9 +7,9 @@
         "heading": "Sculpted light.",
         "subheading": "Precision-printed objects, made in editions.",
         "button_label_1": "Série II",
-        "button_link_1": "shopify://collections/serie-2",
+        "button_link_1": "/collections/serie-2",
         "button_label_2": "Série I",
-        "button_link_2": "shopify://collections/serie-1",
+        "button_link_2": "/collections/serie-1",
         "meta_text": "Nº 001 / EST. 2025",
         "show_scroll_indicator": true
       }
@@ -50,7 +50,7 @@
             "title": "Tectonic",
             "text": "Stratified geometry. Objects built from horizontal logic — structured, architectural, load-bearing in form.",
             "link_label": "Explore Tectonic",
-            "link": "shopify://collections/tectonic"
+            "link": "/collections/tectonic"
           }
         },
         "col_biomorphic": {
@@ -59,7 +59,7 @@
             "title": "Biomorphic",
             "text": "Organic mathematics. Spirals, vortices, the curve of a wave arrested mid-motion. Precision applied to what appears imprecise.",
             "link_label": "Explore Biomorphic",
-            "link": "shopify://collections/biomorphic"
+            "link": "/collections/biomorphic"
           }
         }
       },
@@ -167,7 +167,7 @@
           "type": "button",
           "settings": {
             "button_label": "Begin a commission",
-            "button_link": "shopify://pages/atelier",
+            "button_link": "/pages/atelier",
             "button_style_secondary": false
           }
         }

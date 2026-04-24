@@ -2828,6 +2828,9 @@ details-modal.header__search > details {
   position: fixed !important;
   top: 24px !important;
   right: 32px !important;
+  left: auto !important;       /* fix: prevent flex-center from anchoring it left */
+  width: auto !important;      /* fix: don't stretch to flex parent width */
+  margin: 0 !important;        /* fix: remove any inherited flex margins */
   z-index: 10001 !important;
   background: none !important;
   border: none !important;

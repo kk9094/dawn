@@ -83,4 +83,63 @@
       }, 300);
     }, { passive: true });
   });
+
+  /* ── Search close button teleport ───────────────────────────────────
+   *
+   * PROBLEM: position:fixed is broken when an ancestor has a CSS transform.
+   * Dawn's .header__icons (or sticky-header) has a transform matrix applied,
+   * which creates a new containing block — so our fixed button ends up
+   * anchored to that element instead of the viewport.
+   *
+   * SOLUTION: When the search modal opens, move the close button to <body>
+   * so it is a direct child of the root stacking context. On close, return it.
+   * ─────────────────────────────────────────────────────────────────── */
+  (function () {
+    var searchDetails = document.querySelector('.header__search details');
+    if (!searchDetails) return;
+
+    var closeBtn = document.querySelector('.search-modal__close-button');
+    if (!closeBtn) return;
+
+    var originalParent = closeBtn.parentNode;
+    var originalNextSibling = closeBtn.nextSibling;
+    var isTeleported = false;
+
+    function teleportOut() {
+      if (isTeleported) return;
+      isTeleported = true;
+      document.body.appendChild(closeBtn);
+      closeBtn.setAttribute('data-vf-teleported', '1');
+    }
+
+    function teleportBack() {
+      if (!isTeleported) return;
+      isTeleported = false;
+      if (originalNextSibling) {
+        originalParent.insertBefore(closeBtn, originalNextSibling);
+      } else {
+        originalParent.appendChild(closeBtn);
+      }
+      closeBtn.removeAttribute('data-vf-teleported');
+    }
+
+    /* Watch the details[open] attribute */
+    var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (m) {
+        if (m.type === 'attributes' && m.attributeName === 'open') {
+          if (searchDetails.hasAttribute('open')) {
+            teleportOut();
+          } else {
+            teleportBack();
+          }
+        }
+      });
+    });
+
+    observer.observe(searchDetails, { attributes: true, attributeFilter: ['open'] });
+
+    /* Edge case: if already open on load */
+    if (searchDetails.hasAttribute('open')) teleportOut();
+  })();
+
 })();

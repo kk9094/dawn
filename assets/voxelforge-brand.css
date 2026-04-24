@@ -2637,7 +2637,59 @@ details[open] > .header__icon--search .vf-raster-icon {
    §4.36 — SEARCH — FULL-SCREEN PREMIUM OVERLAY
    ═══════════════════════════════════════════════════════════════ */
 
-/* Release header overflow so the fixed child escapes properly */
+/* ── Strategy ──────────────────────────────────────────────────
+   The header section creates a stacking context at z-index:4
+   (root level). Everything inside it — including our modal — is
+   painted within that layer. To overlay the FULL page:
+   1. body::before at root z-index:6 → dark backdrop above page
+      sections AND above the header's z-index:4 layer.
+   2. Elevate the header to z-index:100 when search is open so
+      the search content punches above the body backdrop.
+   3. Hide account / cart / hamburger via :has() — they would
+      otherwise appear in the elevated header on top of the search
+      UI.
+   ─────────────────────────────────────────────────────────────── */
+
+/* 1 — Full-viewport backdrop at ROOT stacking context */
+body:has(.header__search details[open])::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* 2 — Elevate the header so search content is above the backdrop */
+body:has(.header__search details[open]) .shopify-section-group-header-group,
+body:has(.header__search details[open]) .section-header {
+  z-index: 100 !important;
+}
+
+/* 3 — Hide non-search elements in the elevated header */
+body:has(.header__search details[open]) a.header__icon--account,
+body:has(.header__search details[open]) a.header__icon--cart,
+body:has(.header__search details[open]) #cart-icon-bubble,
+body:has(.header__search details[open]) .header__heading,
+body:has(.header__search details[open]) .header-drawer,
+body:has(.header__search details[open]) .header__inline-menu,
+body:has(.header__search details[open]) .header__menu-item,
+body:has(.header__search details[open]) .desktop-localization-wrapper {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide search summary toggle (the × that re-appears in the header) */
+.header__search details[open] > summary {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Release header overflow */
 .header {
   overflow: visible !important;
 }
@@ -2647,13 +2699,12 @@ details-modal.header__search > details {
   position: static !important;
 }
 
-/* The modal itself — fixed full-viewport overlay */
+/* The modal itself — fixed full-viewport, transparent container */
 .search-modal {
   position: fixed !important;
   inset: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  max-width: 100vw !important;
   background: transparent !important;
   border: none !important;
   z-index: 9999 !important;
@@ -2664,19 +2715,11 @@ details-modal.header__search > details {
   box-sizing: border-box !important;
 }
 
-/* Blurred dark backdrop */
+/* Kill Dawn's built-in overlay — body::before handles it */
 .search-modal .modal-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  background: rgba(10, 10, 10, 0.88) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
-  z-index: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  display: none !important;
 }
 
-/* Kill Dawn's ::after overlay that appears below header */
 .search-modal .modal-overlay::after {
   display: none !important;
   content: none !important;
@@ -2695,16 +2738,17 @@ details-modal.header__search > details {
   align-items: center !important;
 }
 
-/* Eyebrow above input */
+/* Eyebrow label above input */
 .search-modal__content::before {
   content: 'SEARCH THE COLLECTION' !important;
   display: block !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
-  font-size: 13px !important;
+  font-size: 11px !important;
   font-weight: 400 !important;
-  letter-spacing: 0.22em !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase !important;
   color: var(--vf-teal-bright, #5BA89A) !important;
-  margin-bottom: 36px !important;
+  margin-bottom: 40px !important;
   text-align: center !important;
   width: 100% !important;
 }
@@ -2724,13 +2768,13 @@ details-modal.header__search > details {
 .search-modal__form .search__input.field__input {
   height: 64px !important;
   font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: 26px !important;
+  font-size: 28px !important;
   font-weight: 300 !important;
   font-style: italic !important;
   color: var(--vf-bone) !important;
   background: transparent !important;
   border: none !important;
-  border-bottom: 0.5px solid rgba(232, 226, 214, 0.2) !important;
+  border-bottom: 0.5px solid rgba(232, 226, 214, 0.25) !important;
   border-radius: 0 !important;
   padding: 0 56px 0 0 !important;
   width: 100% !important;
@@ -2742,10 +2786,10 @@ details-modal.header__search > details {
 
 .search-modal__form .search__input::placeholder {
   font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: 26px !important;
+  font-size: 28px !important;
   font-weight: 300 !important;
   font-style: italic !important;
-  color: rgba(232, 226, 214, 0.2) !important;
+  color: rgba(232, 226, 214, 0.25) !important;
 }
 
 .search-modal__form .search__input:focus {
@@ -2754,12 +2798,12 @@ details-modal.header__search > details {
   outline: none !important;
 }
 
-/* Float label — hide it (placeholder does the work) */
+/* Float label — placeholder does the work */
 .search-modal__form .field__label {
   display: none !important;
 }
 
-/* Search submit button inside field */
+/* Search submit button */
 .search-modal__form .search__button {
   position: absolute !important;
   right: 0 !important;
@@ -2779,24 +2823,18 @@ details-modal.header__search > details {
   height: 18px !important;
 }
 
-/* Hide Dawn's summary toggle close icon — the overlay has its own close button */
-.header__search details[open] > summary {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
-/* Close button — fixed to viewport top-right (modal has no transform/filter to trap it) */
+/* Close button — top-right of viewport */
 .search-modal__close-button {
   position: fixed !important;
-  top: 28px !important;
-  right: 36px !important;
-  z-index: 10000 !important;
+  top: 24px !important;
+  right: 32px !important;
+  z-index: 10001 !important;
   background: none !important;
   border: none !important;
   cursor: pointer !important;
-  opacity: 0.5 !important;
+  opacity: 0.55 !important;
   transition: opacity 200ms ease !important;
-  padding: 8px !important;
+  padding: 10px !important;
 }
 
 .search-modal__close-button:hover {

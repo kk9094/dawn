@@ -2633,55 +2633,36 @@ details[open] > .header__icon--search .vf-raster-icon {
   margin-bottom: 0 !important;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   §4.36 — SEARCH — FULL-SCREEN PREMIUM OVERLAY
-   ═══════════════════════════════════════════════════════════════ */
+/* ── Strategy (revised) ─────────────────────────────────────────
+   PROBLEM with body::before:
+     body::before at z:102 (root) paints ABOVE the header stacking
+     context (z:100), covering the search modal inside it.
+     CSS spec: a fixed child's z-index is local to its stacking
+     context — so z:9999 inside z:100 loses to z:102 at root.
 
-/* ── Strategy ──────────────────────────────────────────────────
-   The header section creates a stacking context at z-index:4
-   (root level). Everything inside it — including our modal — is
-   painted within that layer. To overlay the FULL page:
-   1. body::before at root z-index:6 → dark backdrop above page
-      sections AND above the header's z-index:4 layer.
-   2. Elevate the header to z-index:100 when search is open so
-      the search content punches above the body backdrop.
-   3. Hide account / cart / hamburger via :has() — they would
-      otherwise appear in the elevated header on top of the search
-      UI.
+   SOLUTION:
+     1. Abandon body::before as the backdrop.
+     2. Give .search-modal its own dark background — it is already
+        position:fixed inset:0, so it covers the full viewport.
+     3. Elevate the header group to z:9000 so the search modal
+        (z:9999 inside z:9000 context) floats above all page content.
+     4. Hide the header-wrapper background so no strip bleeds through.
    ─────────────────────────────────────────────────────────────── */
 
-/* 1 — Full-viewport backdrop at ROOT stacking context
-   z-index: 102 — above the elevated header (z:100) so no header strip bleeds through */
-body:has(.header__search details[open])::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 10, 0.92);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  z-index: 102;
-  pointer-events: none;
-}
-
-/* 1b — Belt-and-suspenders: also paint over the header-wrapper itself
-   The header is elevated to z:100; its background was bleeding through.
-   A ::before cover at z:103 sits above the header but below the modal. */
-body:has(.header__search details[open]) .header-wrapper::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(10, 10, 10, 0.92);
-  z-index: 103;
-  pointer-events: none;
-}
-
-/* 2 — Elevate the header so search content renders correctly */
+/* 1 — Elevate header group so search modal clears all page layers */
 body:has(.header__search details[open]) .shopify-section-group-header-group,
 body:has(.header__search details[open]) .section-header {
-  z-index: 100 !important;
+  z-index: 9000 !important;
 }
 
-/* 3 — Hide non-search elements in the elevated header */
+/* 2 — Hide header background colour — eliminates the left strip */
+body:has(.header__search details[open]) .header-wrapper {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-bottom-color: transparent !important;
+}
+
+/* 3 — Hide non-search header elements */
 body:has(.header__search details[open]) a.header__icon--account,
 body:has(.header__search details[open]) a.header__icon--cart,
 body:has(.header__search details[open]) #cart-icon-bubble,
@@ -2695,7 +2676,7 @@ body:has(.header__search details[open]) .desktop-localization-wrapper {
   pointer-events: none !important;
 }
 
-/* Hide search summary toggle (the × that re-appears in the header) */
+/* Hide search summary toggle (× in header) */
 .header__search details[open] > summary {
   visibility: hidden !important;
   opacity: 0 !important;
@@ -2712,15 +2693,18 @@ details-modal.header__search > details {
   position: static !important;
 }
 
-/* The modal itself — fixed full-viewport, transparent container */
+/* The modal — full-screen dark backdrop + centered content
+   background + backdrop-filter live here (not on body::before) */
 .search-modal {
   position: fixed !important;
   inset: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  background: transparent !important;
+  background: rgba(10, 10, 10, 0.92) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
   border: none !important;
-  z-index: 200 !important;
+  z-index: 9999 !important;
   display: flex !important;
   align-items: flex-start !important;
   justify-content: center !important;

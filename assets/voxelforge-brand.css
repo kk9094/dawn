@@ -2700,11 +2700,11 @@ details-modal.header__search > details {
   content: 'SEARCH THE COLLECTION' !important;
   display: block !important;
   font-family: 'DM Sans', system-ui, sans-serif !important;
-  font-size: 10px !important;
+  font-size: 13px !important;
   font-weight: 400 !important;
-  letter-spacing: 0.3em !important;
-  color: var(--vf-teal) !important;
-  margin-bottom: 32px !important;
+  letter-spacing: 0.22em !important;
+  color: var(--vf-teal-bright, #5BA89A) !important;
+  margin-bottom: 36px !important;
   text-align: center !important;
   width: 100% !important;
 }
@@ -2779,12 +2779,18 @@ details-modal.header__search > details {
   height: 18px !important;
 }
 
-/* Close button — top-right of viewport */
+/* Hide Dawn's summary toggle close icon — the overlay has its own close button */
+.header__search details[open] > summary {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Close button — fixed to viewport top-right (modal has no transform/filter to trap it) */
 .search-modal__close-button {
   position: fixed !important;
   top: 28px !important;
   right: 36px !important;
-  z-index: 9999 !important;
+  z-index: 10000 !important;
   background: none !important;
   border: none !important;
   cursor: pointer !important;

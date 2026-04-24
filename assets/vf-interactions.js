@@ -84,49 +84,84 @@
     }, { passive: true });
   });
 
-  /* ── Search close button teleport ───────────────────────────────────
+  /* ── Search overlay teleport — Apple/Nike style full-screen ──────────
    *
-   * PROBLEM: position:fixed is broken when an ancestor has a CSS transform.
-   * Dawn's .header__icons (or sticky-header) has a transform matrix applied,
-   * which creates a new containing block — so our fixed button ends up
-   * anchored to that element instead of the viewport.
+   * PROBLEM: The .search-modal lives inside the Dawn header's stacking
+   * context. No CSS z-index trick can make a child of z:9000 header
+   * paint truly above everything at the root level (browser chrome,
+   * other fixed elements). Also, overflow/clip on ancestor elements
+   * prevents full-viewport coverage.
    *
-   * SOLUTION: When the search modal opens, move the close button to <body>
-   * so it is a direct child of the root stacking context. On close, return it.
+   * SOLUTION: When search opens, physically move the entire .search-modal
+   * div to document.body. At body level it is subject ONLY to the root
+   * stacking context — position:fixed; inset:0 then truly means 100vw×100vh.
+   * On close, return it to its original parent so Dawn's JS still owns it.
    * ─────────────────────────────────────────────────────────────────── */
   (function () {
-    var searchDetails = document.querySelector('.header__search details');
-    if (!searchDetails) return;
+    var detailsModal  = document.querySelector('details-modal.header__search');
+    var searchDetails = detailsModal && detailsModal.querySelector('details');
+    var searchModal   = document.querySelector('.search-modal');
 
-    var closeBtn = document.querySelector('.search-modal__close-button');
-    if (!closeBtn) return;
+    if (!detailsModal || !searchDetails || !searchModal) return;
 
-    var originalParent = closeBtn.parentNode;
-    var originalNextSibling = closeBtn.nextSibling;
-    var isTeleported = false;
+    /* Remember where the modal lives in the original DOM */
+    var originalParent      = searchModal.parentNode;
+    var originalNextSibling = searchModal.nextSibling;
+    var isTeleported        = false;
 
+    /* ── Teleport OUT to body ── */
     function teleportOut() {
       if (isTeleported) return;
       isTeleported = true;
-      document.body.appendChild(closeBtn);
-      closeBtn.setAttribute('data-vf-teleported', '1');
+      document.body.appendChild(searchModal);
+
+      /* Focus the search input after the modal lands on body */
+      var input = searchModal.querySelector('input[type="search"], .search__input');
+      if (input) {
+        requestAnimationFrame(function () { input.focus(); });
+      }
     }
 
+    /* ── Teleport BACK to original position ── */
     function teleportBack() {
       if (!isTeleported) return;
       isTeleported = false;
-      if (originalNextSibling) {
-        originalParent.insertBefore(closeBtn, originalNextSibling);
+      if (originalNextSibling && originalNextSibling.parentNode === originalParent) {
+        originalParent.insertBefore(searchModal, originalNextSibling);
       } else {
-        originalParent.appendChild(closeBtn);
+        originalParent.appendChild(searchModal);
       }
-      closeBtn.removeAttribute('data-vf-teleported');
     }
 
-    /* Watch the details[open] attribute */
+    /* ── Wire up the close button (now inside the teleported modal) ──
+       Dawn's original handler was bound to detailsModal at construction
+       via: this.querySelector('button[type="button"]').addEventListener(...)
+       That binding is still alive. After teleport the button is no longer
+       a descendant of detailsModal, so we add our own listener that calls
+       the same detailsModal.close() method directly. */
+    var closeBtn = searchModal.querySelector('.search-modal__close-button');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (typeof detailsModal.close === 'function') {
+          detailsModal.close(true);
+        }
+      });
+    }
+
+    /* Also close on backdrop click (clicking the dark area, not the form) */
+    searchModal.addEventListener('click', function (e) {
+      if (e.target === searchModal) {
+        if (typeof detailsModal.close === 'function') {
+          detailsModal.close(true);
+        }
+      }
+    });
+
+    /* ── MutationObserver: watch details[open] ── */
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (m) {
-        if (m.type === 'attributes' && m.attributeName === 'open') {
+        if (m.attributeName === 'open') {
           if (searchDetails.hasAttribute('open')) {
             teleportOut();
           } else {
@@ -138,7 +173,7 @@
 
     observer.observe(searchDetails, { attributes: true, attributeFilter: ['open'] });
 
-    /* Edge case: if already open on load */
+    /* Edge case: already open on load */
     if (searchDetails.hasAttribute('open')) teleportOut();
   })();
 

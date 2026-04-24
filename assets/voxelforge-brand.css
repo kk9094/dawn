@@ -2633,86 +2633,45 @@ details[open] > .header__icon--search .vf-raster-icon {
   margin-bottom: 0 !important;
 }
 
-/* ── Strategy (revised) ─────────────────────────────────────────
-   PROBLEM with body::before:
-     body::before at z:102 (root) paints ABOVE the header stacking
-     context (z:100), covering the search modal inside it.
-     CSS spec: a fixed child's z-index is local to its stacking
-     context — so z:9999 inside z:100 loses to z:102 at root.
-
-   SOLUTION:
-     1. Abandon body::before as the backdrop.
-     2. Give .search-modal its own dark background — it is already
-        position:fixed inset:0, so it covers the full viewport.
-     3. Elevate the header group to z:9000 so the search modal
-        (z:9999 inside z:9000 context) floats above all page content.
-     4. Hide the header-wrapper background so no strip bleeds through.
+/* ═══════════════════════════════════════════════════════════════
+   §4.36 — SEARCH — LUXURY FULL-SCREEN OVERLAY
+   ═══════════════════════════════════════════════════════════════
+   ARCHITECTURE:
+   - JS in vf-interactions.js teleports .search-modal to <body>.
+   - This allows us to hide the ENTIRE header group without losing
+     the search modal, completely removing all layout interference.
    ─────────────────────────────────────────────────────────────── */
 
-/* 1 — Elevate header group so search modal clears all page layers */
-body:has(.header__search details[open]) .shopify-section-group-header-group,
-body:has(.header__search details[open]) .section-header {
-  z-index: 9000 !important;
-}
-
-/* 2 — Hide header background colour — eliminates the left strip */
-body:has(.header__search details[open]) .header-wrapper {
-  background-color: transparent !important;
-  background-image: none !important;
-  border-bottom-color: transparent !important;
-}
-
-/* 3 — Hide non-search header elements */
-body:has(.header__search details[open]) a.header__icon--account,
-body:has(.header__search details[open]) a.header__icon--cart,
-body:has(.header__search details[open]) #cart-icon-bubble,
-body:has(.header__search details[open]) .header__heading,
-body:has(.header__search details[open]) .header-drawer,
-body:has(.header__search details[open]) .header__inline-menu,
-body:has(.header__search details[open]) .header__menu-item,
-body:has(.header__search details[open]) .desktop-localization-wrapper {
-  visibility: hidden !important;
+/* 1 — Hide the entire header group when search is open
+   This removes all strips, white bars, and z-index issues. */
+body:has(.header__search details[open]) .shopify-section-group-header-group {
   opacity: 0 !important;
   pointer-events: none !important;
-}
-
-/* Hide search summary toggle (× in header) */
-.header__search details[open] > summary {
   visibility: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
 }
 
-/* Release header overflow */
-.header {
-  overflow: visible !important;
-}
-
-details-modal.header__search,
-details-modal.header__search > details {
-  position: static !important;
-}
-
-/* The modal — full-screen dark backdrop + centered content
-   background + backdrop-filter live here (not on body::before) */
+/* 2 — The modal — truly full-screen at the root <body> level */
 .search-modal {
   position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(10, 10, 10, 0.92) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(10, 10, 10, 0.98) !important; /* Slightly darker for premium feel */
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
   border: none !important;
-  z-index: 9999 !important;
+  z-index: 999999 !important; /* Extremely high to cover everything */
   display: flex !important;
-  align-items: flex-start !important;
+  align-items: center !important;
   justify-content: center !important;
-  padding-top: 22vh !important;
   box-sizing: border-box !important;
+  padding: 0 !important;
 }
 
-/* Kill Dawn's built-in overlay — body::before handles it */
+/* 3 — Kill Dawn's built-in overlay */
 .search-modal .modal-overlay {
   display: none !important;
 }
@@ -2720,6 +2679,116 @@ details-modal.header__search > details {
 .search-modal .modal-overlay::after {
   display: none !important;
   content: none !important;
+}
+
+/* 4 — Centered search content container */
+.search-modal__content {
+  position: relative !important;
+  z-index: 10 !important;
+  width: 100% !important;
+  max-width: 800px !important; /* Slightly wider for modern feel */
+  padding: 40px !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* Eyebrow label */
+.search-modal__content::before {
+  content: 'SEARCH THE COLLECTION' !important;
+  display: block !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3em !important;
+  text-transform: uppercase !important;
+  color: var(--vf-gold, #C5A16B) !important;
+  margin-bottom: 50px !important;
+  text-align: center !important;
+  opacity: 0.8 !important;
+}
+
+.search-modal__form {
+  width: 100% !important;
+}
+
+.search-modal__form .field {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* The actual Input Field */
+.search-modal__form .search__input.field__input {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(197, 161, 107, 0.3) !important; /* Subtle gold line */
+  border-radius: 0 !important;
+  padding: 12px 0 !important;
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 42px !important; /* Large premium typography */
+  line-height: 1.2 !important;
+  color: var(--vf-bone, #F5F5F0) !important;
+  text-align: center !important;
+  width: 100% !important;
+  transition: border-color 0.4s ease !important;
+  height: auto !important;
+  outline: none !important;
+}
+
+.search-modal__form .search__input.field__input:focus {
+  border-bottom-color: var(--vf-gold, #C5A16B) !important;
+  box-shadow: none !important;
+}
+
+/* Placeholder visibility fix */
+.search-modal__form .search__input.field__input::placeholder {
+  color: rgba(245, 245, 240, 0.25) !important; /* Bone color at low opacity */
+  font-family: 'DM Serif Display', serif !important;
+  opacity: 1 !important;
+}
+
+/* Hide Dawn's search labels/buttons inside the input */
+.search-modal__form .field__label,
+.search-modal__form .search__button {
+  display: none !important;
+}
+
+/* 5 — Close button (fixed top-right) */
+.search-modal__close-button {
+  position: fixed !important;
+  top: 40px !important;
+  right: 40px !important;
+  width: 44px !important;
+  height: 44px !important;
+  z-index: 1000000 !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0.6 !important;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+  color: var(--vf-bone, #F5F5F0) !important;
+  padding: 0 !important;
+}
+
+.search-modal__close-button:hover {
+  opacity: 1 !important;
+  transform: scale(1.1) !important;
+}
+
+.search-modal__close-button .icon-close {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+/* 6 — Hide vertical scrollbar on body when search is open */
+body:has(.header__search details[open]) {
+  overflow: hidden !important;
 }
 
 /* Centered content panel */

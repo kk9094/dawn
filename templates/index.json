@@ -239,7 +239,7 @@
         "newsletter_paragraph": {
           "type": "paragraph",
           "settings": {
-            "text": "Edition releases and commission openings. No marketing."
+            "text": "<p>Edition releases and commission openings. No marketing.</p>"
           }
         }
       },

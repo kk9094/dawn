@@ -6,7 +6,7 @@
         "form_category": {
           "type": "text",
           "settings": {
-            "text": "{{ product.metafields.voxel.form_category | default: product.type }}",
+            "text": "{{ product.metafields.voxel.form_category }}",
             "text_style": "uppercase"
           }
         },

@@ -48,7 +48,7 @@
           "type": "column",
           "settings": {
             "title": "Tectonic",
-            "text": "Stratified geometry. Objects built from horizontal logic — structured, architectural, load-bearing in form.",
+            "text": "<p>Stratified geometry. Objects built from horizontal logic — structured, architectural, load-bearing in form.</p>",
             "link_label": "Explore Tectonic",
             "link": "/collections/tectonic"
           }
@@ -57,7 +57,7 @@
           "type": "column",
           "settings": {
             "title": "Biomorphic",
-            "text": "Organic mathematics. Spirals, vortices, the curve of a wave arrested mid-motion. Precision applied to what appears imprecise.",
+            "text": "<p>Organic mathematics. Spirals, vortices, the curve of a wave arrested mid-motion. Precision applied to what appears imprecise.</p>",
             "link_label": "Explore Biomorphic",
             "link": "/collections/biomorphic"
           }
@@ -126,7 +126,7 @@
       "settings": {
         "title": "Série II — Prestige",
         "heading_size": "h2",
-        "description": "Numbered within a 200-unit annual edition.",
+        "description": "<p>Numbered within a 200-unit annual edition.</p>",
         "show_description": true,
         "description_style": "italic",
         "collection": "serie-2",
@@ -189,7 +189,7 @@
       "settings": {
         "title": "Série I — Collection",
         "heading_size": "h2",
-        "description": "A considered entry into the studio.",
+        "description": "<p>A considered entry into the studio.</p>",
         "show_description": true,
         "description_style": "italic",
         "collection": "serie-1",
@@ -236,14 +236,14 @@
             "heading": "Notes from the studio."
           }
         },
-        "newsletter_text": {
-          "type": "text",
+        "newsletter_paragraph": {
+          "type": "paragraph",
           "settings": {
             "text": "Edition releases and commission openings. No marketing."
           }
         }
       },
-      "block_order": ["newsletter_heading", "newsletter_text"],
+      "block_order": ["newsletter_heading", "newsletter_paragraph"],
       "settings": {
         "color_scheme": "scheme-1",
         "full_width": true,

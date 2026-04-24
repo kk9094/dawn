@@ -84,21 +84,9 @@
     }, { passive: true });
   });
 
-  /* ── Search overlay teleport — Apple/Nike style full-screen ──────────
-   *
-   * PROBLEM: The .search-modal lives inside the Dawn header's stacking
-   * context. No CSS z-index trick can make a child of z:9000 header
-   * paint truly above everything at the root level (browser chrome,
-   * other fixed elements). Also, overflow/clip on ancestor elements
-   * prevents full-viewport coverage.
-   *
-   * SOLUTION: When search opens, physically move the entire .search-modal
-   * div to document.body. At body level it is subject ONLY to the root
-   * stacking context — position:fixed; inset:0 then truly means 100vw×100vh.
-   * On close, return it to its original parent so Dawn's JS still owns it.
-   * ─────────────────────────────────────────────────────────────────── */
-  (function () {
-    var detailsModal  = document.querySelector('details-modal.header__search');
+  /* ── Search overlay teleport — Apple/Nike style full-screen ────────── */
+  document.addEventListener('DOMContentLoaded', function() {
+    var detailsModal  = document.querySelector('details-modal.header__search, .header__search details-modal');
     var searchDetails = detailsModal && detailsModal.querySelector('details');
     var searchModal   = document.querySelector('.search-modal');
 
@@ -109,20 +97,16 @@
     var originalNextSibling = searchModal.nextSibling;
     var isTeleported        = false;
 
-    /* ── Teleport OUT to body ── */
     function teleportOut() {
       if (isTeleported) return;
       isTeleported = true;
       document.body.appendChild(searchModal);
-
-      /* Focus the search input after the modal lands on body */
       var input = searchModal.querySelector('input[type="search"], .search__input');
       if (input) {
         requestAnimationFrame(function () { input.focus(); });
       }
     }
 
-    /* ── Teleport BACK to original position ── */
     function teleportBack() {
       if (!isTeleported) return;
       isTeleported = false;
@@ -133,12 +117,6 @@
       }
     }
 
-    /* ── Wire up the close button (now inside the teleported modal) ──
-       Dawn's original handler was bound to detailsModal at construction
-       via: this.querySelector('button[type="button"]').addEventListener(...)
-       That binding is still alive. After teleport the button is no longer
-       a descendant of detailsModal, so we add our own listener that calls
-       the same detailsModal.close() method directly. */
     var closeBtn = searchModal.querySelector('.search-modal__close-button');
     if (closeBtn) {
       closeBtn.addEventListener('click', function (e) {
@@ -149,7 +127,6 @@
       });
     }
 
-    /* Also close on backdrop click (clicking the dark area, not the form) */
     searchModal.addEventListener('click', function (e) {
       if (e.target === searchModal) {
         if (typeof detailsModal.close === 'function') {
@@ -158,7 +135,6 @@
       }
     });
 
-    /* ── MutationObserver: watch details[open] ── */
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (m) {
         if (m.attributeName === 'open') {
@@ -172,9 +148,7 @@
     });
 
     observer.observe(searchDetails, { attributes: true, attributeFilter: ['open'] });
-
-    /* Edge case: already open on load */
     if (searchDetails.hasAttribute('open')) teleportOut();
-  })();
+  });
 
 })();

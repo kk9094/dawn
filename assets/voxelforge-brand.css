@@ -2634,51 +2634,199 @@ details[open] > .header__icon--search .vf-raster-icon {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   FIX: SEARCH MODAL VISIBILITY AND OPULENT BRANDING
+   §4.36 — SEARCH — FULL-SCREEN PREMIUM OVERLAY
    ═══════════════════════════════════════════════════════════════ */
 
-/* 1. Release the modal from the header's strict cropping bounds so it can drop down */
+/* Release header overflow so the fixed child escapes properly */
 .header {
   overflow: visible !important;
 }
 
-/* 1b. Neutralize Dawn's internal relative positioning traps so the absolute modal breaks out to the full header width */
 details-modal.header__search,
 details-modal.header__search > details {
   position: static !important;
 }
 
-/* 2. Brand the Search Modal environment to match VoxelForge dark aesthetics */
+/* The modal itself — fixed full-viewport overlay */
 .search-modal {
-  position: absolute !important;
-  left: 0 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  background-color: var(--vf-obsidian) !important;
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--vf-gold-dark) !important;
-  z-index: 10 !important;
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  background: transparent !important;
+  border: none !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding-top: 22vh !important;
+  box-sizing: border-box !important;
 }
 
+/* Blurred dark backdrop */
+.search-modal .modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(10, 10, 10, 0.88) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  z-index: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+/* Kill Dawn's ::after overlay that appears below header */
+.search-modal .modal-overlay::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Centered content panel */
 .search-modal__content {
-  background-color: transparent !important;
+  position: relative !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  max-width: 600px !important;
+  padding: 0 24px !important;
+  background: transparent !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
 }
 
-.search-modal__form .search__input {
+/* Eyebrow above input */
+.search-modal__content::before {
+  content: 'SEARCH THE COLLECTION' !important;
+  display: block !important;
+  font-family: 'DM Sans', system-ui, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.3em !important;
+  color: var(--vf-teal) !important;
+  margin-bottom: 32px !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+
+.search-modal__form {
+  width: 100% !important;
+}
+
+.search-modal__form .field {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Large serif input */
+.search-modal__form .search__input,
+.search-modal__form .search__input.field__input {
+  height: 64px !important;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 26px !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
   color: var(--vf-bone) !important;
-  font-family: var(--vf-sans) !important;
-  font-size: 16px !important;
-  border: 1px solid var(--vf-teal) !important;
-  border-radius: 0;
-}
-.search-modal__form .search__input:focus {
-  border-color: var(--vf-gold) !important;
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 0.5px solid rgba(232, 226, 214, 0.2) !important;
+  border-radius: 0 !important;
+  padding: 0 56px 0 0 !important;
+  width: 100% !important;
+  caret-color: var(--vf-gold) !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: border-color 300ms ease !important;
 }
 
-/* Format the Search and Reset/Close SVGs inside the modal */
+.search-modal__form .search__input::placeholder {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 26px !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  color: rgba(232, 226, 214, 0.2) !important;
+}
+
+.search-modal__form .search__input:focus {
+  border-bottom-color: var(--vf-gold) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Float label — hide it (placeholder does the work) */
+.search-modal__form .field__label {
+  display: none !important;
+}
+
+/* Search submit button inside field */
+.search-modal__form .search__button {
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+}
+
 .search__button svg,
-.reset__button svg,
-.search-modal__close-button svg {
-  stroke: var(--vf-gold) !important;
+.reset__button svg {
+  stroke: var(--vf-teal) !important;
   stroke-width: 1.5 !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* Close button — top-right of viewport */
+.search-modal__close-button {
+  position: fixed !important;
+  top: 28px !important;
+  right: 36px !important;
+  z-index: 9999 !important;
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  opacity: 0.5 !important;
+  transition: opacity 200ms ease !important;
+  padding: 8px !important;
+}
+
+.search-modal__close-button:hover {
+  opacity: 1 !important;
+}
+
+.search-modal__close-button svg {
+  stroke: var(--vf-bone) !important;
+  stroke-width: 1.5 !important;
+  width: 20px !important;
+  height: 20px !important;
+  display: block !important;
+}
+
+/* Predictive results dropdown */
+.predictive-search {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: #111111 !important;
+  border-top: 0.5px solid rgba(232, 226, 214, 0.06) !important;
+  z-index: 2 !important;
+}
+
+.predictive-search__item {
+  border-bottom: 0.5px solid rgba(232, 226, 214, 0.06) !important;
+  color: var(--vf-bone) !important;
+}
+
+/* Entrance animation */
+details[open] > .search-modal {
+  animation: vf-search-open 350ms cubic-bezier(0.2, 0.8, 0.2, 1) both !important;
+}
+
+@keyframes vf-search-open {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

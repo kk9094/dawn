@@ -1032,7 +1032,7 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 /* Brand block spans full grid width on tablet+ */
 @media screen and (min-width: 750px) {
   .footer__blocks-wrapper {
-    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-columns: repeat(4, 1fr) !important;
     row-gap: 40px;
   }
   .footer-block:first-child {
@@ -1171,12 +1171,29 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   }
 }
 
+/* Newsletter left block: heading + subtext grouped */
+.footer-newsletter__lead {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
 /* Newsletter heading */
 .footer-block__newsletter .footer-block__heading {
   color: var(--vf-bone) !important;
   margin-bottom: 0 !important;
   white-space: nowrap;
-  flex-shrink: 0;
+}
+
+/* Newsletter subtext */
+.footer-newsletter__sub {
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  font-weight: 200;
+  letter-spacing: 0.08em;
+  color: var(--vf-silver);
+  margin: 0;
 }
 
 /* Newsletter form */

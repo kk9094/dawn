@@ -25,10 +25,17 @@
             "menu": "vf-studio"
           }
         },
-        "col_service": {
+        "col_company": {
           "type": "link_list",
           "settings": {
             "heading": "Company",
+            "menu": "vf-company"
+          }
+        },
+        "col_service": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Service",
             "menu": "vf-service"
           }
         }
@@ -37,12 +44,14 @@
         "brand",
         "col_collection",
         "col_studio",
+        "col_company",
         "col_service"
       ],
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
         "newsletter_heading": "Notes from the studio.",
+        "newsletter_subheading": "Edition releases & commission openings. No marketing.",
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,

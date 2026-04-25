@@ -21,14 +21,14 @@
         "col_studio": {
           "type": "link_list",
           "settings": {
-            "heading": "Studio",
+            "heading": "Atelier",
             "menu": "vf-studio"
           }
         },
         "col_service": {
           "type": "link_list",
           "settings": {
-            "heading": "Service",
+            "heading": "Company",
             "menu": "vf-service"
           }
         }

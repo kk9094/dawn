@@ -1022,13 +1022,79 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   margin-top: 0;
 }
 
-.footer__content-bottom {
-  border-top: 0.5px solid var(--vf-graphite);
+/* Brand block spans full grid width on tablet+ */
+@media screen and (min-width: 750px) {
+  .footer__blocks-wrapper {
+    grid-template-columns: repeat(3, 1fr) !important;
+    row-gap: 40px;
+  }
+  .footer-block:first-child {
+    grid-column: 1 / -1;
+    padding-bottom: 40px;
+    border-bottom: 0.5px solid var(--vf-graphite);
+  }
 }
 
-.footer__heading {
+/* Brand block: flex row — brand text left, social icons right */
+.footer-block__brand-info {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.footer-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Brand name (Voxel Forge) */
+.footer-block__brand-info .footer-block__heading.rte {
+  font-family: var(--vf-serif);
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--vf-bone);
+  margin-bottom: 0;
+}
+
+/* Brand tagline */
+.footer-block__brand-info .rte p {
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 200;
+  letter-spacing: 0.1em;
+  color: var(--vf-slate);
+  margin: 0;
+}
+
+/* Social icons in brand block */
+.footer-block__brand-info .footer__list-social {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-block__brand-info .footer__list-social .svg-wrapper svg {
+  width: 18px;
+  height: 18px;
+  fill: var(--vf-slate);
+  transition: fill var(--vf-duration) ease;
+}
+
+.footer-block__brand-info .footer__list-social a:hover .svg-wrapper svg {
+  fill: var(--vf-gold);
+}
+
+/* Nav column headings (Collection, Atelier, Company) */
+.footer-block__heading {
+  font-family: var(--vf-sans);
+  font-size: 10px;
   font-weight: 400;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -1036,12 +1102,14 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   margin-bottom: 20px;
 }
 
+/* Nav links */
 .footer-block__list-item a,
-.footer__list-item a {
+.footer__list-item a,
+.footer-block__details-content a {
   font-family: var(--vf-sans);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 200;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--vf-silver);
   text-decoration: none;
   transition: color var(--vf-duration) ease;
@@ -1049,17 +1117,90 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 
 .footer-block__list-item a:hover,
 .footer__list-item a:hover,
+.footer-block__details-content a:hover,
 .list-social__link:hover {
   color: var(--vf-gold);
 }
 
+.footer-block__details-content.list-unstyled li {
+  margin-bottom: 14px;
+}
+
+/* Newsletter row */
+.footer-block--newsletter {
+  width: 100%;
+}
+
+.footer-block__newsletter {
+  border-top: 0.5px solid var(--vf-graphite);
+  border-bottom: 0.5px solid var(--vf-graphite);
+  padding: 28px 0;
+  margin-top: 48px;
+}
+
+@media screen and (min-width: 750px) {
+  .footer-block__newsletter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+}
+
+/* Newsletter heading ("NOTES FROM THE STUDIO.") */
+.footer-block__newsletter .footer-block__heading {
+  color: var(--vf-bone);
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+/* Newsletter form aligned right */
+.footer__newsletter.newsletter-form {
+  flex: 1;
+  max-width: 420px;
+  margin-left: auto;
+}
+
+/* Copyright / bottom bar */
+.footer__content-bottom {
+  border-top: 0.5px solid var(--vf-graphite);
+}
+
+.footer__copyright {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 16px 0;
+}
+
 .copyright__content {
   font-family: var(--vf-sans);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--vf-slate);
+}
+
+.copyright__content a {
+  color: var(--vf-slate);
+  text-decoration: none;
+  transition: color var(--vf-duration) ease;
+}
+
+.copyright__content a:hover {
+  color: var(--vf-bone);
+}
+
+.policies.list-unstyled {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 

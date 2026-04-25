@@ -1016,10 +1016,17 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 
 /* ── 4.16 FOOTER ──────────────────────────────────────────────────────── */
 
-.footer {
-  background-color: var(--vf-obsidian);
-  border-top: 0.5px solid var(--vf-graphite);
+/* Force obsidian — beats Dawn's .gradient class */
+.footer,
+.footer.gradient {
+  background: var(--vf-obsidian) !important;
+  border-top: 0.5px solid var(--vf-graphite) !important;
   margin-top: 0;
+}
+
+.footer__content-bottom,
+.footer__content-bottom.gradient {
+  background: var(--vf-obsidian) !important;
 }
 
 /* Brand block spans full grid width on tablet+ */
@@ -1035,11 +1042,12 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   }
 }
 
-/* Brand block: flex row — brand text left, social icons right */
+/* Brand block: flex row — text left, social right */
 .footer-block__brand-info {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  text-align: left !important;
   gap: 24px;
 }
 
@@ -1049,7 +1057,7 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   gap: 8px;
 }
 
-/* Brand name (Voxel Forge) */
+/* Brand name */
 .footer-block__brand-info .footer-block__heading.rte {
   font-family: var(--vf-serif);
   font-size: 20px;
@@ -1060,17 +1068,17 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   margin-bottom: 0;
 }
 
-/* Brand tagline */
+/* Brand tagline — silver reads on obsidian; slate (#4A4A4A) does not */
 .footer-block__brand-info .rte p {
   font-family: var(--vf-sans);
   font-size: 12px;
   font-weight: 200;
   letter-spacing: 0.1em;
-  color: var(--vf-slate);
+  color: var(--vf-silver);
   margin: 0;
 }
 
-/* Social icons in brand block */
+/* Social icons — silver fill, gold on hover */
 .footer-block__brand-info .footer__list-social {
   display: flex;
   align-items: center;
@@ -1078,48 +1086,59 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-shrink: 0;
+  justify-content: flex-end !important;
 }
 
-.footer-block__brand-info .footer__list-social .svg-wrapper svg {
+.footer-block__brand-info .footer__list-social .svg-wrapper svg,
+.footer-block__brand-info .footer__list-social .icon {
   width: 18px;
   height: 18px;
-  fill: var(--vf-slate);
-  transition: fill var(--vf-duration) ease;
+  fill: var(--vf-silver);
+  color: var(--vf-silver);
+  transition: fill var(--vf-duration) ease, color var(--vf-duration) ease;
 }
 
-.footer-block__brand-info .footer__list-social a:hover .svg-wrapper svg {
+.footer-block__brand-info .footer__list-social a:hover .svg-wrapper svg,
+.footer-block__brand-info .footer__list-social a:hover .icon {
   fill: var(--vf-gold);
+  color: var(--vf-gold);
 }
 
 /* Nav column headings (Collection, Atelier, Company) */
 .footer-block__heading {
-  font-family: var(--vf-sans);
-  font-size: 10px;
-  font-weight: 400;
+  font-family: var(--vf-sans) !important;
+  font-size: 10px !important;
+  font-weight: 400 !important;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--vf-gold);
-  margin-bottom: 20px;
+  margin-bottom: 20px !important;
 }
 
-/* Nav links */
+/* Nav links — override Dawn's rgba(foreground) color */
 .footer-block__list-item a,
 .footer__list-item a,
-.footer-block__details-content a {
+.footer-block__details-content a,
+.footer-block__details-content .list-menu__item--link {
   font-family: var(--vf-sans);
-  font-size: 13px;
+  font-size: 13px !important;
   font-weight: 200;
   letter-spacing: 0.08em;
-  color: var(--vf-silver);
-  text-decoration: none;
+  color: var(--vf-silver) !important;
+  text-decoration: none !important;
   transition: color var(--vf-duration) ease;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .footer-block__list-item a:hover,
 .footer__list-item a:hover,
 .footer-block__details-content a:hover,
+.footer-block__details-content .list-menu__item--link:hover,
 .list-social__link:hover {
-  color: var(--vf-gold);
+  color: var(--vf-gold) !important;
+  text-decoration: none !important;
 }
 
 .footer-block__details-content.list-unstyled li {
@@ -1129,6 +1148,9 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
 /* Newsletter row */
 .footer-block--newsletter {
   width: 100%;
+  margin-top: 0 !important;
+  align-items: stretch !important;
+  justify-content: flex-start !important;
 }
 
 .footer-block__newsletter {
@@ -1136,64 +1158,135 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   border-bottom: 0.5px solid var(--vf-graphite);
   padding: 28px 0;
   margin-top: 48px;
+  text-align: left !important;
+  flex-grow: 0 !important;
 }
 
 @media screen and (min-width: 750px) {
   .footer-block__newsletter {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
   }
 }
 
-/* Newsletter heading ("NOTES FROM THE STUDIO.") */
+/* Newsletter heading */
 .footer-block__newsletter .footer-block__heading {
-  color: var(--vf-bone);
-  margin-bottom: 0;
+  color: var(--vf-bone) !important;
+  margin-bottom: 0 !important;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
-/* Newsletter form aligned right */
+/* Newsletter form */
 .footer__newsletter.newsletter-form {
   flex: 1;
   max-width: 420px;
   margin-left: auto;
 }
 
+/* Newsletter input — transparent bg, single bottom border on dark bg */
+.footer .field__input,
+.footer .newsletter-form .field__input {
+  background: transparent !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 0.5px solid var(--vf-silver) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--vf-bone) !important;
+  font-family: var(--vf-sans);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  padding: 10px 0 !important;
+}
+
+.footer .field__input:focus,
+.footer .newsletter-form .field__input:focus {
+  border-bottom-color: var(--vf-gold) !important;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.footer .field__input::placeholder,
+.footer .newsletter-form .field__input::placeholder {
+  color: rgba(154, 149, 133, 0.45) !important;
+  font-family: var(--vf-sans);
+  letter-spacing: 0.1em;
+}
+
+.footer .field__label {
+  color: rgba(154, 149, 133, 0.5) !important;
+  font-family: var(--vf-sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Newsletter submit button — gold arrow */
+.footer .newsletter-form__button,
+.footer .field__button {
+  background: transparent !important;
+  border: none !important;
+  padding-right: 0 !important;
+}
+
+.footer .newsletter-form__button .svg-wrapper svg,
+.footer .field__button .svg-wrapper svg {
+  fill: var(--vf-gold);
+  stroke: var(--vf-gold);
+  transition: fill var(--vf-duration) ease, stroke var(--vf-duration) ease;
+}
+
+.footer .newsletter-form__button:hover .svg-wrapper svg,
+.footer .field__button:hover .svg-wrapper svg {
+  fill: var(--vf-bone);
+  stroke: var(--vf-bone);
+}
+
 /* Copyright / bottom bar */
 .footer__content-bottom {
-  border-top: 0.5px solid var(--vf-graphite);
+  border-top: 0.5px solid var(--vf-graphite) !important;
+  padding-top: 0 !important;
 }
 
 .footer__copyright {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   flex-wrap: wrap;
   gap: 12px;
   padding: 16px 0;
+  margin-top: 0 !important;
+  text-align: left !important;
 }
 
+/* Copyright text — silver (readable on obsidian; slate #4A4A4A is not) */
 .copyright__content {
   font-family: var(--vf-sans);
   font-size: 10px;
   font-weight: 300;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--vf-slate);
+  color: var(--vf-silver);
 }
 
-.copyright__content a {
-  color: var(--vf-slate);
-  text-decoration: none;
+.copyright__content a,
+.footer__copyright a {
+  color: var(--vf-silver) !important;
+  text-decoration: none !important;
   transition: color var(--vf-duration) ease;
 }
 
-.copyright__content a:hover {
-  color: var(--vf-bone);
+.copyright__content a:hover,
+.footer__copyright a:hover {
+  color: var(--vf-bone) !important;
+  text-decoration: none !important;
 }
 
+/* Policies list */
 .policies.list-unstyled {
   display: flex;
   align-items: center;
@@ -1201,6 +1294,16 @@ details:not([open]) summary.header__icon--search>span>.svg-wrapper:not(.header__
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.policies.list-unstyled li::before {
+  content: '\00B7';
+  padding: 0 0 0 24px;
+  color: var(--vf-graphite);
+}
+
+.policies.list-unstyled li:first-child::before {
+  display: none;
 }
 
 

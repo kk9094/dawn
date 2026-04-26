@@ -514,8 +514,8 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .vf-footer-bar {
-  border-top: 1px solid rgba(232, 226, 214, 0.10);
-  background-color: #080808;
+  border-top: 1px solid var(--vf-hairline);        /* brand token: rgba(bone, 0.09) */
+  background-color: var(--vf-obsidian);             /* brand token: #0A0A0A          */
   padding: 0;
 }
 
@@ -544,7 +544,7 @@
   text-decoration: none;
   line-height: 0;
   opacity: 0.82;
-  transition: opacity 280ms ease;
+  transition: opacity var(--vf-duration) var(--vf-ease);
 }
 
 .vf-footer-bar__logo-link:hover {
@@ -557,8 +557,6 @@
   max-width: 90px;
   object-fit: contain;
   display: block;
-  /* Force the image to render in bone/off-white — the SVG is already bone-colored */
-  filter: brightness(1);
 }
 
 /* Thin vertical divider between logo and © */
@@ -567,17 +565,17 @@
   display: block;
   width: 1px;
   height: 14px;
-  background: rgba(232, 226, 214, 0.18);
+  background: var(--vf-hairline-strong);           /* brand token: rgba(bone, 0.18) */
   flex-shrink: 0;
 }
 
 .vf-footer-bar__copy {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--vf-sans);                     /* brand token: 'DM Sans'        */
   font-size: 10px;
   font-weight: 300;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(232, 226, 214, 0.45);
+  color: var(--vf-silver);                         /* brand token: #9A9585          */
   white-space: nowrap;
 }
 
@@ -596,25 +594,25 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  color: rgba(232, 226, 214, 0.45);
+  color: var(--vf-silver);                         /* brand token: #9A9585          */
   text-decoration: none;
   border-radius: 50%;
   transition:
-    color 260ms ease,
-    background-color 260ms ease,
-    transform 260ms ease;
+    color var(--vf-duration) var(--vf-ease),
+    background-color var(--vf-duration) var(--vf-ease),
+    transform var(--vf-duration) var(--vf-ease);
 }
 
 .vf-footer-bar__social-link:hover,
 .vf-footer-bar__social-link:focus-visible {
-  color: #C9A96E;
-  background-color: rgba(201, 169, 110, 0.08);
+  color: var(--vf-gold);                           /* brand token: #C9A96E          */
+  background-color: rgba(201, 169, 110, 0.08);     /* vf-gold at 8% opacity         */
   transform: translateY(-1px);
   outline: none;
 }
 
 .vf-footer-bar__social-link:focus-visible {
-  outline: 1px solid #C9A96E;
+  outline: 1px solid var(--vf-gold);              /* brand token: #C9A96E          */
   outline-offset: 2px;
 }
 

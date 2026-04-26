@@ -506,3 +506,147 @@
     }
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VF FOOTER BAR — Premium bottom strip
+   Layout: Logo + © left  |  YouTube + Instagram right
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.vf-footer-bar {
+  border-top: 1px solid rgba(232, 226, 214, 0.10);
+  background-color: #080808;
+  padding: 0;
+}
+
+.vf-footer-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.6rem;
+  min-height: 48px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+/* ── LEFT: logo + copyright ─────────────────────────────────────────────── */
+
+.vf-footer-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.vf-footer-bar__logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 0;
+  opacity: 0.82;
+  transition: opacity 280ms ease;
+}
+
+.vf-footer-bar__logo-link:hover {
+  opacity: 1;
+}
+
+.vf-footer-bar__logo {
+  height: 22px;
+  width: auto;
+  max-width: 90px;
+  object-fit: contain;
+  display: block;
+  /* Force the image to render in bone/off-white — the SVG is already bone-colored */
+  filter: brightness(1);
+}
+
+/* Thin vertical divider between logo and © */
+.vf-footer-bar__left::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 14px;
+  background: rgba(232, 226, 214, 0.18);
+  flex-shrink: 0;
+}
+
+.vf-footer-bar__copy {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(232, 226, 214, 0.45);
+  white-space: nowrap;
+}
+
+/* ── RIGHT: social icon links ───────────────────────────────────────────── */
+
+.vf-footer-bar__social {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.vf-footer-bar__social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: rgba(232, 226, 214, 0.45);
+  text-decoration: none;
+  border-radius: 50%;
+  transition:
+    color 260ms ease,
+    background-color 260ms ease,
+    transform 260ms ease;
+}
+
+.vf-footer-bar__social-link:hover,
+.vf-footer-bar__social-link:focus-visible {
+  color: #C9A96E;
+  background-color: rgba(201, 169, 110, 0.08);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.vf-footer-bar__social-link:focus-visible {
+  outline: 1px solid #C9A96E;
+  outline-offset: 2px;
+}
+
+.vf-footer-bar__social-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 749px) {
+  .vf-footer-bar__inner {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    text-align: center;
+  }
+
+  .vf-footer-bar__left {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .vf-footer-bar__social {
+    width: 100%;
+    justify-content: center;
+    gap: 8px;
+  }
+}
+

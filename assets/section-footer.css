@@ -515,7 +515,10 @@
 
 .vf-footer-bar {
   border-top: 1px solid var(--vf-hairline);        /* brand token: rgba(bone, 0.09) */
-  background-color: var(--vf-obsidian);             /* brand token: #0A0A0A          */
+  /* !important beats Dawn's .footer.color-scheme-1 color cascade */
+  background-color: var(--vf-obsidian) !important; /* brand token: #0A0A0A          */
+  background-image: none !important;               /* strip any gradient from scheme */
+  color: var(--vf-silver) !important;              /* prevent invisible text inherit */
   padding: 0;
 }
 
@@ -575,7 +578,7 @@
   font-weight: 300;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--vf-silver);                         /* brand token: #9A9585          */
+  color: var(--vf-silver) !important;              /* beat color-scheme inherit     */
   white-space: nowrap;
 }
 

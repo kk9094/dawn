@@ -1,0 +1,385 @@
+/* ============================================================
+   VF Tokens — Voxel Forge
+   ============================================================
+   Loaded AFTER assets/base.css. Two layers:
+
+   1) Dawn variable overrides — re-base Dawn's own --color-*,
+      --page-width, --inputs-*, --buttons-* to VF values.
+      Default Dawn sections (collection grids, product cards,
+      etc.) inherit brand without modification.
+
+   2) The --vf-* token set — full Voxel Forge system. ALL .vf-*
+      components MUST use --vf-* exclusively. Mixing Dawn tokens
+      and VF tokens inside a single component is a bug.
+
+   See AGENTS.md §3 for the rules on token usage.
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1 · Dawn 15.x variable overrides
+   Dawn declares --color-* as RGB triplets, intentionally without
+   the rgb() wrapper, so they can be composed with alpha:
+     color: rgb(var(--color-foreground));
+     background: rgba(var(--color-background), 0.5);
+   We follow the same convention.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* Foreground / background */
+  --color-foreground:        232, 226, 214;   /* Bone */
+  --color-background:        10, 10, 10;      /* Obsidian */
+
+  /* Buttons */
+  --color-button:            61, 122, 107;    /* Forge Teal */
+  --color-button-text:       232, 226, 214;   /* Bone */
+
+  /* Accents — used by some Dawn sections */
+  --color-base-accent-1:     201, 169, 110;   /* Gold */
+  --color-base-accent-2:     196, 97, 74;     /* Ember */
+
+  /* Links and outline */
+  --color-link:              232, 226, 214;
+  --color-base-outline-button-labels: 232, 226, 214;
+
+  /* Layout */
+  --page-width:              140rem;          /* 1400px @ 10px root, matches --vf-grid-max */
+  --page-width-margin:       4.8rem;          /* 48px, matches --vf-grid-margin-d */
+
+  /* Inputs */
+  --inputs-radius:           4px;
+  --inputs-radius-outset:    0;
+  --inputs-border-color:     232, 226, 214;
+  --inputs-border-opacity:   0.18;
+  --inputs-border-width:     0.5px;
+  --inputs-shadow-horizontal-offset: 0;
+  --inputs-shadow-vertical-offset:   0;
+  --inputs-shadow-blur-radius:        0;
+
+  /* Media */
+  --media-radius:            0;               /* VF is square-cornered */
+  --media-border-color:      232, 226, 214;
+  --media-border-opacity:    0.08;
+  --media-shadow-horizontal-offset:  0;
+  --media-shadow-vertical-offset:    0;
+  --media-shadow-blur-radius:        0;
+
+  /* Cards */
+  --card-corner-radius:      0;
+  --card-image-padding:      0;
+  --card-border-width:       0.5px;
+  --card-border-opacity:     0.08;
+
+  /* Variant pills */
+  --variant-pills-radius:    4px;             /* Closest to VF's 4px max for input-class surfaces */
+  --variant-pills-border-width: 0.5px;
+  --variant-pills-border-opacity: 0.18;
+
+  /* Type — Dawn pulls these from theme settings; we lock to VF */
+  --font-body-family:        'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body-style:         normal;
+  --font-body-weight:        300;
+  --font-body-weight-bold:   500;             /* "Bold" is 500 in VF — never 600+ */
+  --font-heading-family:     'Cormorant Garamond', Georgia, serif;
+  --font-heading-style:      normal;
+  --font-heading-weight:     300;
+  --font-heading-scale:      1;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2 · The --vf-* token system
+   Source of truth: colors_and_type.css in the design kit.
+   This file mirrors that source and stays in sync version-by-version.
+   When the kit's colors_and_type.css changes, this file updates.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── PALETTE · Field ── */
+  --vf-obsidian:        #0A0A0A;
+  --vf-jet:             #111111;
+  --vf-graphite:        #1A1A1A;
+  --vf-charcoal:        #2C2C2C;
+  --vf-iron:            #3A3A3A;
+  --vf-bone:            #E8E2D6;
+
+  /* ── PALETTE · Brand ── */
+  --vf-teal:            #3D7A6B;
+  --vf-teal-bright:     #5BA89A;
+  --vf-teal-deep:       #2A5A50;
+
+  /* ── PALETTE · Prestige ── */
+  --vf-gold:            #C9A96E;
+  --vf-gold-warm:       #B89856;
+  --vf-gold-pale:       #DBC089;
+
+  /* ── PALETTE · Atelier ── */
+  --vf-ember:           #C4614A;
+  --vf-ember-deep:      #A04A35;
+
+  /* ── PALETTE · Signal (system, not brand) ── */
+  --vf-signal-success:  #4A8B6F;
+  --vf-signal-error:    #A8443A;
+  --vf-signal-warn:     #D4A656;
+
+  /* ── SEMANTIC · text on dark ── */
+  --vf-fg-1:            #E8E2D6;
+  --vf-fg-2:            rgba(232,226,214,0.70);
+  --vf-fg-3:            rgba(232,226,214,0.45);
+  --vf-fg-4:            rgba(232,226,214,0.28);
+
+  /* ── SEMANTIC · text on bone (parity set) ── */
+  --vf-fg-on-bone-1:    rgba(10,10,10,0.95);
+  --vf-fg-on-bone-2:    rgba(10,10,10,0.65);
+  --vf-fg-on-bone-3:    rgba(10,10,10,0.40);
+
+  /* ── SEMANTIC · borders ── */
+  --vf-border-1:        rgba(232,226,214,0.18);
+  --vf-border-2:        rgba(232,226,214,0.08);
+  --vf-border-on-bone-1: rgba(10,10,10,0.18);
+  --vf-border-on-bone-2: rgba(10,10,10,0.08);
+
+  /* ── TYPE · families ── */
+  --vf-ff-display:      'Cormorant Garamond', Georgia, serif;
+  --vf-ff-body:         'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --vf-ff-mono:         'DM Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* ── TYPE · weights (300, italic, 500-max — never bold) ── */
+  --vf-w-light:         300;
+  --vf-w-regular:       400;
+  --vf-w-medium:        500;
+
+  /* ── TYPE · sizes ── */
+  --vf-fs-display-1:    clamp(3.5rem, 6vw, 5.5rem);
+  --vf-fs-display-2:    clamp(2.5rem, 4vw, 3.75rem);
+  --vf-fs-h-section:    clamp(2.2rem, 3.4vw, 3.4rem);
+  --vf-fs-h1:           clamp(2rem, 3vw, 3rem);
+  --vf-fs-h2:           clamp(1.625rem, 2.4vw, 2.25rem);
+  --vf-fs-h3:           clamp(1.25rem, 1.6vw, 1.5rem);
+  --vf-fs-body:         14px;
+  --vf-fs-body-large:   16px;
+  --vf-fs-meta:         12px;
+  --vf-fs-mono-1:       11px;
+  --vf-fs-mono-2:       10px;
+  --vf-fs-eyebrow:      11px;
+  --vf-fs-label:        10px;
+
+  /* ── TYPE · letter-spacing ── */
+  --vf-track-tight:     -0.01em;
+  --vf-track-body:      0;
+  --vf-track-label:     0.18em;
+  --vf-track-eyebrow:   0.28em;
+  --vf-track-wordmark:  0.18em;
+  --vf-track-forge:     0.52em;
+
+  /* ── TYPE · line-heights ── */
+  --vf-lh-display:      1.08;
+  --vf-lh-h:            1.1;
+  --vf-lh-body:         1.65;
+  --vf-lh-tight:        1.3;
+
+  /* ── SPACING · 8px baseline ── */
+  --vf-s-0:             4px;
+  --vf-s-1:             8px;
+  --vf-s-2:             12px;
+  --vf-s-3:             16px;
+  --vf-s-4:             24px;
+  --vf-s-5:             32px;
+  --vf-s-6:             48px;
+  --vf-s-7:             64px;
+  --vf-s-8:             96px;
+  --vf-s-9:             160px;
+
+  /* ── GRID ── */
+  --vf-grid-cols-d:     12;
+  --vf-grid-cols-m:     4;
+  --vf-grid-gutter-d:   24px;
+  --vf-grid-gutter-m:   16px;
+  --vf-grid-margin-d:   48px;
+  --vf-grid-margin-m:   24px;
+  --vf-grid-max:        1400px;
+  --vf-baseline:        8px;
+
+  /* ── ASPECT RATIOS ── */
+  --vf-ratio-square:    1 / 1;
+  --vf-ratio-portrait:  4 / 5;
+  --vf-ratio-landscape: 16 / 10;
+  --vf-ratio-cinema:    21 / 9;
+  --vf-ratio-process:   3 / 2;
+
+  /* ── HIT TARGETS ── */
+  --vf-hit-min:         48px;
+
+  /* ── RADII ── */
+  --vf-radius-0:        0;
+  --vf-radius-1:        2px;
+  --vf-radius-2:        4px;
+
+  /* ── BORDERS ── */
+  --vf-hairline:        0.5px;
+  --vf-rule:            1px;
+
+  /* ── SHADOWS ── */
+  --vf-shadow-0:        none;
+  --vf-shadow-1:        0 1px 0 rgba(0,0,0,0.4);
+  --vf-shadow-2:        0 12px 32px rgba(0,0,0,0.45);
+  --vf-shadow-3:        0 32px 80px rgba(0,0,0,0.55);
+  --vf-shadow-inset:    inset 0 0 0 0.5px rgba(232,226,214,0.06);
+
+  /* ── MOTION ── */
+  --vf-dur-focus:       200ms;
+  --vf-dur-fast:        300ms;
+  --vf-dur-base:        600ms;
+  --vf-dur-slow:        900ms;
+  --vf-dur-hero:        1200ms;
+  --vf-ease:            cubic-bezier(0.25, 0, 0, 1);
+  --vf-ease-soft:       cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3 · Bone-mode parity flip
+   Surfaces that need to render on bone (#E8E2D6) get
+   data-mode="bone" on the section element. Foreground and
+   border tokens flip; everything else (type, spacing, motion)
+   is identical.
+   ───────────────────────────────────────────────────────────── */
+
+[data-mode="bone"] {
+  --vf-fg-1:        var(--vf-fg-on-bone-1);
+  --vf-fg-2:        var(--vf-fg-on-bone-2);
+  --vf-fg-3:        var(--vf-fg-on-bone-3);
+  --vf-border-1:    var(--vf-border-on-bone-1);
+  --vf-border-2:    var(--vf-border-on-bone-2);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   4 · :focus-visible global ring
+   200ms exception to the 600ms motion floor — focus needs to
+   feel responsive. Suppress Dawn's box-shadow ring on .vf-* only.
+   ───────────────────────────────────────────────────────────── */
+
+.vf-btn:focus-visible,
+.vf-link:focus-visible,
+.vf-input:focus-visible,
+[class^="vf-"]:focus-visible,
+[class*=" vf-"]:focus-visible {
+  outline: 2px solid var(--vf-teal);
+  outline-offset: 2px;
+  box-shadow: none;                    /* override Dawn's ring */
+  transition: outline-color var(--vf-dur-focus) var(--vf-ease);
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   5 · prefers-reduced-motion baseline
+   Required for .vf-* surfaces. Disables every transition,
+   transform-on-scroll, and keyframe animation when the user
+   has reduced motion enabled.
+   ───────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  [class^="vf-"],
+  [class*=" vf-"] {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Reveal-on-scroll surfaces snap to final state */
+  .vf-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Float keyframes (IsoCube, etc.) stop entirely */
+  .vf-cube,
+  .vf-cube__inner {
+    animation: none !important;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   6 · Self-hosted fonts
+   All three families subset to weight 200–500 to keep payload
+   tight (≥600 is off-brand and won't render anyway).
+   ───────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('{{ "CormorantGaramond-VariableFont_wght.woff2" | asset_url }}') format('woff2-variations'),
+       url('{{ "CormorantGaramond-VariableFont_wght.ttf"   | asset_url }}') format('truetype-variations');
+  font-weight: 300 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('{{ "CormorantGaramond-Italic-VariableFont_wght.woff2" | asset_url }}') format('woff2-variations'),
+       url('{{ "CormorantGaramond-Italic-VariableFont_wght.ttf"   | asset_url }}') format('truetype-variations');
+  font-weight: 300 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('{{ "DMSans-VariableFont_opsz,wght.woff2" | asset_url }}') format('woff2-variations'),
+       url('{{ "DMSans-VariableFont_opsz,wght.ttf"   | asset_url }}') format('truetype-variations');
+  font-weight: 200 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  src: url('{{ "DMSans-Italic-VariableFont_opsz,wght.woff2" | asset_url }}') format('woff2-variations'),
+       url('{{ "DMSans-Italic-VariableFont_opsz,wght.ttf"   | asset_url }}') format('truetype-variations');
+  font-weight: 200 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  src: url('{{ "DMMono-Light.woff2"   | asset_url }}') format('woff2'),
+       url('{{ "DMMono-Light.ttf"     | asset_url }}') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  src: url('{{ "DMMono-Regular.woff2" | asset_url }}') format('woff2'),
+       url('{{ "DMMono-Regular.ttf"   | asset_url }}') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   7 · Body baseline
+   Locks body type and background colour for the whole theme.
+   Default Dawn sections continue to read --color-foreground
+   and --color-background (which we re-based above), so they
+   render in VF colours without modification.
+   ───────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--vf-ff-body);
+  font-weight: var(--vf-w-light);
+  font-size: var(--vf-fs-body);
+  line-height: var(--vf-lh-body);
+  color: var(--vf-fg-1);
+  background: var(--vf-obsidian);
+  letter-spacing: var(--vf-track-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}

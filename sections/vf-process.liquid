@@ -1,0 +1,364 @@
+{%- comment -%}
+  vf-process.liquid
+
+  Four-stage numbered strip on Obsidian. Step numbers in Gold Mono,
+  hairline column dividers between steps, single text-link CTA right.
+
+  Schema contract: docs/section-schemas.md §3
+  Visual reference: ui_kits/website/Process.jsx
+
+  Judgement calls
+  ───────────────
+  1. Step numbers use block.settings.number per schema doc §3.
+     vf-mono rendered with size: 'base' (11px = --vf-fs-mono-1).
+     Schema doc §3 hardcoded entry says "Mono, 9px" (micro) which falls
+     below the CLAUDE.md §3 accessibility floor of 11px. Base wins.
+
+  2. schema doc §3 lists a 'body' richtext section setting. The JSX has
+     no body copy placement in Process. Setting is included in schema for
+     contract compliance but not rendered. Add a placement here if the
+     design is ever revised to include it.
+
+  3. 'method_label' and 'method_url' are present in the JSX (Button
+     variant="text") but absent from schema doc §3. Added as settings;
+     schema doc §3 should be updated to include them.
+
+  4. Column dividers are border-left on steps 2–4 (none on :first-child).
+     These are structural grid separators, not left-border accent cards.
+     CLAUDE.md §4 ban on left-border accent cards does not apply here.
+     On mobile they rotate to border-top separators between stacked rows.
+
+  5. vf-process__link styles scoped to this section's {% style %} block.
+     vf-tokens.css already sets :focus-visible for [class^="vf-"] so the
+     focus ring is inherited without duplication. Extract to a global
+     .vf-link rule in vf-tokens.css if a second section needs this pattern.
+
+  6. Tablet 3-col stage omitted per session instruction (match the JSX
+     kit, one breakpoint only). Schema doc §3 hardcoded entry says
+     "3-col tablet" — schema doc needs updating to match.
+
+  7. Headline uses --vf-fs-h-section (added to vf-tokens.css in same
+     release). JSX value was clamp(2.2rem, 3.4vw, 3.4rem).
+
+  8. Step title letter-spacing: JSX uses -0.005em; no exact token exists.
+     --vf-track-tight (-0.01em) is the closest and is used here.
+{%- endcomment -%}
+
+<section
+  class="vf-process"
+  aria-labelledby="vf-process-title"
+  data-section-id="{{ section.id }}"
+>
+  <div class="vf-process__inner">
+
+    <div class="vf-process__header">
+      <div class="vf-process__header-left">
+        {%- if section.settings.eyebrow != blank -%}
+          {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+        {%- endif -%}
+        <h2 id="vf-process-title" class="vf-process__headline">
+          {{- section.settings.headline_part_1 | escape -}}<br>
+          <em>{{- section.settings.headline_part_2 | escape -}}</em>
+        </h2>
+      </div>
+      {%- if section.settings.method_label != blank -%}
+        <a
+          class="vf-process__link"
+          href="{{ section.settings.method_url }}"
+        >
+          {{- section.settings.method_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="vf-process__grid" role="list">
+      {%- for block in section.blocks -%}
+        <div class="vf-process__step" role="listitem" {{ block.shopify_attributes }}>
+          {%- render 'vf-mono', text: block.settings.number, color: 'gold', size: 'base' -%}
+          <h3 class="vf-process__step-title">
+            {{- block.settings.title | escape -}}
+          </h3>
+          <div class="vf-process__step-body">
+            {{- block.settings.body -}}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% style %}
+  .vf-process {
+    background: var(--vf-obsidian);
+    padding: var(--vf-s-9) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-process__inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+  }
+
+  .vf-process__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--vf-s-7);
+  }
+
+  .vf-process__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-4);
+    max-width: 580px;
+  }
+
+  .vf-process__headline {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h-section);
+    line-height: var(--vf-lh-h);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+  }
+
+  .vf-process__headline em {
+    color: var(--vf-fg-3);
+    font-style: italic;
+  }
+
+  .vf-process__link {
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-body);
+    font-weight: var(--vf-w-light);
+    color: var(--vf-fg-2);
+    text-decoration: none;
+    letter-spacing: var(--vf-track-label);
+    text-transform: uppercase;
+    min-height: var(--vf-hit-min);
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: color var(--vf-dur-fast) var(--vf-ease);
+  }
+
+  .vf-process__link:hover {
+    color: var(--vf-fg-1);
+  }
+
+  .vf-process__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .vf-process__step {
+    padding: 0 var(--vf-s-5);
+    border-left: var(--vf-hairline) solid var(--vf-border-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-3);
+  }
+
+  .vf-process__step:first-child {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .vf-process__step-title {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-regular);
+    font-size: var(--vf-fs-h3);
+    line-height: var(--vf-lh-h);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+  }
+
+  .vf-process__step-body {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    line-height: var(--vf-lh-body);
+    color: var(--vf-fg-3);
+    margin: 0;
+  }
+
+  .vf-process__step-body p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .vf-process {
+      padding: var(--vf-s-8) var(--vf-grid-margin-m);
+    }
+
+    .vf-process__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--vf-s-5);
+      margin-bottom: var(--vf-s-6);
+    }
+
+    .vf-process__headline {
+      max-width: none;
+    }
+
+    .vf-process__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .vf-process__step {
+      border-left: none;
+      padding: var(--vf-s-4) 0;
+      border-top: var(--vf-hairline) solid var(--vf-border-2);
+    }
+
+    .vf-process__step:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Process",
+  "tag": "section",
+  "class": "shopify-section--vf-process",
+  "enabled_on": {
+    "templates": ["index", "page"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Method · 04 stages"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_1",
+      "label": "Headline (first half)",
+      "default": "Four stages."
+    },
+    {
+      "type": "text",
+      "id": "headline_part_2",
+      "label": "Headline (italic, second half)",
+      "default": "One object."
+    },
+    {
+      "type": "header",
+      "content": "Method link"
+    },
+    {
+      "type": "text",
+      "id": "method_label",
+      "label": "Link label",
+      "default": "Read the full method"
+    },
+    {
+      "type": "url",
+      "id": "method_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "header",
+      "content": "Body copy"
+    },
+    {
+      "type": "paragraph",
+      "content": "Not rendered — present for schema doc §3 compliance. Add a placement in the section HTML when needed."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>Each piece moves through four disciplined stages before it leaves the workshop.</p>"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step (4 required)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Step number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Design"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body",
+          "default": "<p>Geometry developed in CAD. Each form modelled around a single light source — never lit from inside.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Voxel Forge · Process",
+      "category": "Voxel Forge",
+      "settings": {
+        "eyebrow": "Method · 04 stages",
+        "headline_part_1": "Four stages.",
+        "headline_part_2": "One object.",
+        "method_label": "Read the full method"
+      },
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Design",
+            "body": "<p>Geometry developed in CAD. Each form modelled around a single light source — never lit from inside.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "title": "Forge",
+            "body": "<p>Printed once at 0.08mm resolution. 196 hours per object. No second pulls, no reprints.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Finish",
+            "body": "<p>Hand-sanded across nine grits. Layer lines remain visible — they are the proof of method.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "title": "Number",
+            "body": "<p>Wax-sealed and numbered against the edition. A signed certificate ships with the piece.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,341 @@
+{%- comment -%}
+  vf-atelier.liquid
+
+  Atelier CTA on Obsidian. Ember-only colour discipline — no Teal, no Gold
+  on this section or any of its descendants.
+  Corner glow via ::before pseudo-element (radial, top-right, 6% Ember).
+  Two-column 1fr/auto grid: copy left, metrics right.
+
+  Schema contract: docs/section-schemas.md §6
+  Visual reference: ui_kits/website/Atelier.jsx
+
+  Judgement calls
+  ───────────────
+  1. Headline <em> uses --vf-ember, NOT --vf-fg-3. JSX drift: the React kit
+     had the em in Teal — corrected to Ember at port per Atelier colour
+     discipline.
+
+  2. Metric values: vf-mono size 'display' (--vf-fs-mono-display: 26px),
+     color 'ember'. JSX had Gold — corrected to Ember at port.
+
+  3. Metric labels: 9px literal via section-scoped CSS. Same editorial
+     annotation register as vf-material's FIG. caption. CLAUDE.md 11px
+     floor applies to body copy; this is metadata chrome. Do not escalate.
+     vf-mono snippet letter-spacing is inappropriate here (too tight for
+     label context), so a raw <span> with section-scoped CSS is used.
+
+  4. CTA button: variant 'ember'. JSX had 'filled' (Teal) — corrected to
+     Ember at port.
+
+  5. Inner max-width: 1100px — deliberate literal. Atelier composition is
+     narrower than the site grid (1400px) to enforce the contained, intimate
+     feel. Same category as Statement's 880px and Material's 460px.
+     Not a layout grid value; do not replace with --vf-grid-max.
+
+  6. Body max-width: 480px — deliberate typographic measure literal.
+     Matches JSX. Same category as Material's 460px.
+
+  7. Corner glow position (top: -200px, right: -200px, 600×600px) is a
+     composition value derived from JSX. No token exists for glow offsets.
+     rgba(196,97,74) = --vf-ember; no alpha-composable token exists.
+
+  8. Mobile: metrics column rotates to border-top (same pattern as Process
+     steps). flex-direction stays column — vertical stacking preserved.
+
+  9. Reduced-motion: all transitions collapse under the global rule in
+     vf-tokens.css §5. No section-level override needed.
+{%- endcomment -%}
+
+<section
+  class="vf-atelier"
+  aria-labelledby="vf-atelier-title"
+  data-section-id="{{ section.id }}"
+>
+  <div class="vf-atelier__inner">
+
+    <div class="vf-atelier__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        {%- render 'vf-eyebrow', text: section.settings.eyebrow, color: 'ember' -%}
+      {%- endif -%}
+      <h2 id="vf-atelier-title" class="vf-atelier__headline">
+        {{- section.settings.headline_part_1 | escape -}}<br>
+        <em>{{- section.settings.headline_part_2 | escape -}}</em>
+      </h2>
+      {%- if section.settings.body != blank -%}
+        <div class="vf-atelier__body">
+          {{- section.settings.body -}}
+        </div>
+      {%- endif -%}
+      <div class="vf-atelier__cta-row">
+        {%- render 'vf-button',
+            label: section.settings.cta_label,
+            href: section.settings.cta_href,
+            variant: 'ember' -%}
+        {%- if section.settings.next_intake != blank -%}
+          {%- render 'vf-mono', text: section.settings.next_intake, size: 'small', color: 'fg-3' -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="vf-atelier__metrics">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'metric' -%}
+            <div class="vf-atelier__metric" {{ block.shopify_attributes }}>
+              {%- render 'vf-mono', text: block.settings.value, size: 'display', color: 'ember' -%}
+              {%- comment -%}Editorial annotation chrome — deliberate 9px exception. Not body copy; do not escalate.{%- endcomment -%}
+              <span class="vf-atelier__metric-label">{{- block.settings.label | escape -}}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% style %}
+  .vf-atelier {
+    position: relative;
+    overflow: hidden;
+    background: var(--vf-obsidian);
+    padding: var(--vf-s-9) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  /* Corner glow — rgba(196,97,74) = --vf-ember; no alpha-composable token */
+  .vf-atelier::before {
+    content: "";
+    position: absolute;
+    top: -200px;
+    right: -200px;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(196, 97, 74, 0.06), transparent 60%);
+    pointer-events: none;
+  }
+
+  .vf-atelier__inner {
+    /* Deliberately narrower than --vf-grid-max (1400px) — Atelier is an
+       intimate composition. Typographic measure, same category as
+       Statement's 880px. Not a layout grid value. */
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--vf-s-8);
+    align-items: center;
+    position: relative;
+  }
+
+  .vf-atelier__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-5);
+  }
+
+  .vf-atelier__headline {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h-section);
+    line-height: var(--vf-lh-h);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+  }
+
+  /* Ember-only — NOT fg-3 or teal. JSX drift corrected at port. */
+  .vf-atelier__headline em {
+    color: var(--vf-ember);
+    font-style: italic;
+  }
+
+  .vf-atelier__body {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    line-height: var(--vf-lh-body);
+    color: var(--vf-fg-2);
+    /* Typographic measure (matches JSX). Same category as Material's 460px. */
+    max-width: 480px;
+  }
+
+  .vf-atelier__body p { margin: 0 0 var(--vf-s-2); }
+  .vf-atelier__body p:last-child { margin-bottom: 0; }
+
+  .vf-atelier__cta-row {
+    display: flex;
+    align-items: center;
+    gap: var(--vf-s-4);
+    flex-wrap: wrap;
+  }
+
+  .vf-atelier__metrics {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-4);
+    padding-left: var(--vf-s-7);
+    border-left: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-atelier__metric {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-0);
+  }
+
+  /* Editorial annotation chrome — deliberate 9px exception.
+     Not body copy; do not escalate to 11px. */
+  .vf-atelier__metric-label {
+    font-family: var(--vf-ff-mono);
+    font-size: 9px;
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-eyebrow);
+    text-transform: uppercase;
+    color: var(--vf-fg-3);
+  }
+
+  @media screen and (max-width: 749px) {
+    .vf-atelier {
+      padding: var(--vf-s-8) var(--vf-grid-margin-m);
+    }
+
+    .vf-atelier__inner {
+      grid-template-columns: 1fr;
+      gap: var(--vf-s-6);
+    }
+
+    .vf-atelier__body {
+      max-width: none;
+    }
+
+    /* Border-left rotates to border-top. flex-direction stays column. */
+    .vf-atelier__metrics {
+      border-left: none;
+      padding-left: 0;
+      border-top: var(--vf-hairline) solid var(--vf-border-2);
+      padding-top: var(--vf-s-5);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Atelier",
+  "tag": "section",
+  "class": "shopify-section--vf-atelier",
+  "enabled_on": {
+    "templates": ["index", "page"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Atelier · Commission"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_1",
+      "label": "Headline (first half)",
+      "default": "One object."
+    },
+    {
+      "type": "text",
+      "id": "headline_part_2",
+      "label": "Headline (italic, second half)",
+      "default": "Made for one room."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>Atelier commissions are designed alongside the architect or interior lead. One object, one brief, one room.</p>"
+    },
+    {
+      "type": "header",
+      "content": "CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Request a commission"
+    },
+    {
+      "type": "url",
+      "id": "cta_href",
+      "label": "CTA link",
+      "default": "/pages/atelier"
+    },
+    {
+      "type": "text",
+      "id": "next_intake",
+      "label": "Next intake line",
+      "info": "Mono metadata line displayed beside the CTA. Leave blank to hide.",
+      "default": "NEXT INTAKE · Q3 2026 · 4 OF 4 SLOTS REMAIN"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "metric",
+      "name": "Metric (3 required)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "04"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Per year"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Voxel Forge · Atelier",
+      "category": "Voxel Forge",
+      "settings": {
+        "eyebrow": "Atelier · Commission",
+        "headline_part_1": "One object.",
+        "headline_part_2": "Made for one room.",
+        "cta_label": "Request a commission",
+        "cta_href": "/pages/atelier",
+        "next_intake": "NEXT INTAKE · Q3 2026 · 4 OF 4 SLOTS REMAIN"
+      },
+      "blocks": [
+        {
+          "type": "metric",
+          "settings": { "value": "04",   "label": "Per year" }
+        },
+        {
+          "type": "metric",
+          "settings": { "value": "6 wk", "label": "Correspondence" }
+        },
+        {
+          "type": "metric",
+          "settings": { "value": "1 / 1", "label": "Edition" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

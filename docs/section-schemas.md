@@ -93,7 +93,6 @@ None. The statement is a single moment.
 | `headline_part_2` | text | Headline (italic, second half) | "One object." |
 | `method_label` | text | Link label | "Read the full method" |
 | `method_url` | url | Link URL | — |
-| `body` | richtext | Body copy | "Each piece moves through four disciplined stages…" |
 
 ### Editable (blocks)
 Block type `step` — required exactly 4. Lower or higher counts will read wrong against the headline.

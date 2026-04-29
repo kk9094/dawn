@@ -1,0 +1,48 @@
+{%- comment -%}
+  vf-mono — DM Mono utility text
+
+  Required:
+    text     — the text to render
+
+  Optional:
+    size     — 'micro' (9px) | 'small' (10px, default) | 'base' (11px) | 'large' (12px) | 'display' (26px)
+    color    — 'fg-1' (default) | 'fg-2' | 'fg-3' | 'gold' | 'teal' | 'ember'
+    as       — HTML element (default 'span')
+    class    — extra class names
+
+  Usage:
+    {% render 'vf-mono', text: 'FIG. 04 · INTERNAL GEOMETRY · GYROID 40%', size: 'micro' %}
+    {% render 'vf-mono', text: '04 / 30', color: 'gold' %}
+
+  Rules:
+    - Mono is for metadata, edition marks, technical labels.
+      Never for body copy or headlines.
+{%- endcomment -%}
+
+{%- liquid
+  assign tag = as | default: 'span'
+  assign size = size | default: 'small'
+  assign color = color | default: 'fg-1'
+-%}
+
+<{{ tag }} class="vf-mono vf-mono--{{ size }} vf-mono--{{ color }} {{ class }}">{{ text | escape }}</{{ tag }}>
+
+{% style %}
+  .vf-mono {
+    font-family: var(--vf-ff-mono);
+    font-weight: var(--vf-w-light);
+    letter-spacing: 0.02em;
+  }
+  .vf-mono--micro   { font-size: 9px; }
+  .vf-mono--small   { font-size: var(--vf-fs-mono-2); }
+  .vf-mono--base    { font-size: var(--vf-fs-mono-1); }
+  .vf-mono--large   { font-size: var(--vf-fs-meta); }
+  .vf-mono--display { font-size: var(--vf-fs-mono-display); }
+
+  .vf-mono--fg-1  { color: var(--vf-fg-1); }
+  .vf-mono--fg-2  { color: var(--vf-fg-2); }
+  .vf-mono--fg-3  { color: var(--vf-fg-3); }
+  .vf-mono--gold  { color: var(--vf-gold); }
+  .vf-mono--teal  { color: var(--vf-teal); }
+  .vf-mono--ember { color: var(--vf-ember); }
+{% endstyle %}

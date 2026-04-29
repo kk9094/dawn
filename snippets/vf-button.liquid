@@ -1,0 +1,159 @@
+{%- comment -%}
+  vf-button — all Voxel Forge CTAs
+
+  Required:
+    label    — the visible text (string)
+    href     — destination URL (string)
+    variant  — 'filled' | 'ghost' | 'ember'
+
+  Optional:
+    size     — 'default' (48px) | 'large' (56px)
+    icon     — name of vf-icon glyph to render after label (e.g. 'arrow-right')
+    target   — '_blank' for external links
+    aria_label — overrides the visible label for screen readers
+    class    — extra class names appended to the button
+
+  Usage:
+    {% render 'vf-button',
+        label: 'See the editions',
+        href: '/collections/all',
+        variant: 'filled' %}
+
+    {% render 'vf-button',
+        label: 'Request an Atelier commission',
+        href: '/pages/atelier',
+        variant: 'ghost',
+        icon: 'arrow-up-right' %}
+
+  Rules (see AGENTS.md §3 and §4):
+    - min-height 48px floor
+    - hover lightens to teal-bright; no transform, no scale
+    - focus-visible: 2px Teal outline (handled globally in vf-tokens.css)
+    - transition: explicit property list; never `all`
+    - No emoji. No exclamation marks.
+{%- endcomment -%}
+
+{%- liquid
+  assign size = size | default: 'default'
+  assign variant = variant | default: 'filled'
+  assign target_attr = ''
+  if target == '_blank'
+    assign target_attr = 'target="_blank" rel="noopener"'
+  endif
+-%}
+
+<a
+  href="{{ href }}"
+  class="vf-btn vf-btn--{{ variant }} vf-btn--{{ size }} {{ class }}"
+  {% if aria_label %}aria-label="{{ aria_label | escape }}"{% endif %}
+  {{ target_attr }}
+>
+  <span class="vf-btn__label">{{ label | escape }}</span>
+  {%- if icon -%}
+    <span class="vf-btn__icon" aria-hidden="true">
+      {%- render 'vf-icon', name: icon, size: 14 -%}
+    </span>
+  {%- endif -%}
+</a>
+
+{%- comment -%}
+  Component CSS scoped to .vf-btn. Loaded once per page even if the
+  snippet renders multiple times — Shopify deduplicates {% style %}.
+{%- endcomment -%}
+{% style %}
+  .vf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--vf-s-1);
+    min-height: var(--vf-hit-min);
+    padding: 0 var(--vf-s-4);
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-label);
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-label);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: var(--vf-radius-0);
+    border: var(--vf-hairline) solid transparent;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--vf-dur-base) var(--vf-ease),
+      color            var(--vf-dur-base) var(--vf-ease),
+      border-color     var(--vf-dur-base) var(--vf-ease);
+  }
+
+  .vf-btn--large {
+    min-height: 56px;
+    padding: 0 var(--vf-s-5);
+  }
+
+  /* Filled — primary CTA. Teal on Obsidian. */
+  .vf-btn--filled {
+    background: var(--vf-teal);
+    color: var(--vf-bone);
+    border-color: var(--vf-teal);
+  }
+  .vf-btn--filled:hover {
+    background: var(--vf-teal-bright);
+    border-color: var(--vf-teal-bright);
+  }
+
+  /* Ghost — secondary CTA. Hairline outline. */
+  .vf-btn--ghost {
+    background: transparent;
+    color: var(--vf-fg-1);
+    border-color: var(--vf-border-1);
+  }
+  .vf-btn--ghost:hover {
+    color: var(--vf-bone);
+    border-color: var(--vf-fg-1);
+    background: rgba(232, 226, 214, 0.04);
+  }
+
+  /* Ember — Atelier and commission surfaces. No bone-mode parity (Atelier is Obsidian-only). */
+  .vf-btn--ember {
+    background: var(--vf-ember);
+    color: var(--vf-bone);
+    border-color: var(--vf-ember);
+  }
+  .vf-btn--ember:hover {
+    background: var(--vf-ember-deep);
+    border-color: var(--vf-ember-deep);
+  }
+
+  /* Bone-mode parity */
+  [data-mode="bone"] .vf-btn--filled {
+    background: var(--vf-teal-deep);
+    color: var(--vf-bone);
+    border-color: var(--vf-teal-deep);
+  }
+  [data-mode="bone"] .vf-btn--filled:hover {
+    background: var(--vf-teal);
+    border-color: var(--vf-teal);
+  }
+  [data-mode="bone"] .vf-btn--ghost {
+    color: var(--vf-fg-on-bone-1);
+    border-color: var(--vf-border-on-bone-1);
+  }
+  [data-mode="bone"] .vf-btn--ghost:hover {
+    background: rgba(10, 10, 10, 0.04);
+    border-color: var(--vf-fg-on-bone-1);
+  }
+
+  /* Press state — no flinch, no shrink */
+  .vf-btn:active { transform: none; }
+
+  .vf-btn__icon {
+    display: inline-flex;
+    align-items: center;
+    transition: transform var(--vf-dur-base) var(--vf-ease);
+  }
+  .vf-btn:hover .vf-btn__icon {
+    transform: translateX(2px);
+  }
+
+  /* Reduced-motion: handled globally in vf-tokens.css §5,
+     but this :hover transform also stops there. */
+{% endstyle %}

@@ -192,8 +192,15 @@ Block type `spec_row` — repeating. Maximum 8.
 | --- | --- |
 | Ember accent throughout (eyebrow, glow, hover) | Atelier-only colour discipline |
 | Radial corner glow at 6% opacity | Atelier surface signature |
-| Centred composition with hairline frame | Brand-locked composition |
-| Three metric pairs in a row (mono) | Type system |
+| Two-column 1fr/auto layout with hairline left-divider on metrics column (rotates to top-divider on mobile) | Brand-locked composition |
+| Three metric pairs stacked vertically (mono) | Type system |
+| Inner max-width 1100px (deliberate typographic literal — Atelier is intentionally narrower than the site grid; same category as Statement's 880px) | Composition |
+| Body max-width 480px (deliberate typographic literal, same category as Material's 460px) | Readability |
+| Headline em renders in `--vf-ember`, NOT `--vf-fg-3` (Atelier-specific; the JSX in the kit had drift here that was corrected at port) | Ember-only colour discipline |
+| Metric values render in Ember at `--vf-fs-mono-display` (26px). Metric labels render at 9px — editorial annotation exception, same register as Material's FIG. caption | Type system |
+| CTA button uses `variant: 'ember'`. Filled (Teal) and ghost variants are banned on this surface | Ember-only colour discipline |
+| Corner glow: `::before` pseudo-element, radial-gradient at 6% Ember, top: -200px, right: -200px, 600×600px. README v1.3 fixed the opacity at 0.06 | Atelier surface signature |
+| Colour discipline: no Forge Teal, no Gold anywhere on this section or its descendants. Only Ember (with Bone for foreground text) | Atelier-only colour discipline |
 
 ### Editable (settings)
 | ID | Type | Label | Default |

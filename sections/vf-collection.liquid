@@ -1,0 +1,386 @@
+{%- comment -%}
+  vf-collection.liquid
+
+  Three-tile edition grid on Obsidian. Badge top-left, IsoCube
+  centred, gradient info overlay always-on at bottom.
+
+  Schema contract: docs/section-schemas.md §4
+  Visual reference: ui_kits/website/Collection.jsx
+
+  Tile rendering forks on source_collection:
+    — Collection path (source_collection set): iterates up to 3 products;
+      tier derived from product tags (tier:i, tier:ii, tier:atelier).
+    — Block path (source_collection blank): up to 3 manually configured
+      tile blocks; tier comes directly from block.settings.tier select.
+
+  Judgement calls
+  ───────────────
+  1. Aspect ratio: var(--vf-ratio-portrait) (4/5), not the JSX literal
+     "1/1.05". Tiles are taller than the JSX renders — deliberate per
+     V1.3 review fix.
+
+  2. Subtitle in the collection path falls back to product.product_type.
+     TODO: when custom.subtitle metafield is wired up, prefer it over
+     product_type.
+
+  3. "On request" is a property of Atelier tier, not a merchant setting.
+     If tile_tier == 'Atelier', price line shows the literal "On request".
+     Otherwise product.price | money. Applied identically in both paths.
+
+  4. Bottom gradient overlay is always-on, matching the JSX. Schema doc
+     §4 says "on hover" — that entry is incorrect; patch is deferred.
+
+  5. Cube wrapped in aria-hidden="true" div, matching vf-hero.liquid
+     pattern. The SVG's aria-label is suppressed — the product name
+     in the anchor text serves as the accessible tile description.
+
+  6. Hover scale 1.04 applied to .vf-cube-wrap inside each tile.
+     TODO: when product images replace the cube placeholder, move the
+     hover scale target to the image wrapper.
+
+  7. Tile count is capped at 3 on both paths (limit: 3 in the collection
+     path; max_blocks: 3 in schema). Matches the headline copy
+     ("Three editions. Open now.") — 2-row wrap reads as a layout
+     accident and is not supported.
+{%- endcomment -%}
+
+<section
+  class="vf-collection"
+  aria-labelledby="vf-collection-title"
+  data-section-id="{{ section.id }}"
+>
+  <div class="vf-collection__inner">
+
+    <div class="vf-collection__header">
+      {%- if section.settings.eyebrow != blank -%}
+        {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+      {%- endif -%}
+      <h2 id="vf-collection-title" class="vf-collection__headline">
+        {{- section.settings.headline_part_1 | escape -}}<br>
+        <em>{{- section.settings.headline_part_2 | escape -}}</em>
+      </h2>
+    </div>
+
+    <div class="vf-collection__grid">
+      {%- comment -%}
+        FORK: collection path when source_collection is set;
+        block path otherwise. See docs/section-schemas.md §4.
+      {%- endcomment -%}
+
+      {%- if section.settings.source_collection != blank -%}
+
+        {%- assign coll = collections[section.settings.source_collection] -%}
+        {%- for product in coll.products limit: 3 -%}
+
+          {%- comment -%} Derive tier from product tags. {%- endcomment -%}
+          {%- assign tile_tier = '' -%}
+          {%- for tag in product.tags -%}
+            {%- if tag == 'tier:i' -%}
+              {%- assign tile_tier = 'I' -%}
+            {%- elsif tag == 'tier:ii' -%}
+              {%- assign tile_tier = 'II' -%}
+            {%- elsif tag == 'tier:atelier' -%}
+              {%- assign tile_tier = 'Atelier' -%}
+            {%- endif -%}
+          {%- endfor -%}
+
+          {%- if tile_tier == 'Atelier' -%}
+            {%- assign tile_price = 'On request' -%}
+          {%- else -%}
+            {%- assign tile_price = product.price | money -%}
+          {%- endif -%}
+
+          <a class="vf-collection__tile" href="{{ product.url }}">
+            <div class="vf-collection__tile-badge">
+              {%- if tile_tier != blank -%}
+                {%- render 'vf-badge', tier: tile_tier -%}
+              {%- endif -%}
+            </div>
+            <div class="vf-collection__tile-cube" aria-hidden="true">
+              {%- render 'vf-cube', size: 180 -%}
+            </div>
+            <div class="vf-collection__tile-info">
+              <div class="vf-collection__tile-name">{{- product.title | escape -}}</div>
+              {%- comment -%}
+                TODO: when custom.subtitle metafield is wired up, prefer it over product_type.
+              {%- endcomment -%}
+              <div class="vf-collection__tile-subtitle">{{- product.product_type | escape -}}</div>
+              <div class="vf-collection__tile-price">
+                {%- render 'vf-mono', text: tile_price, color: 'gold', size: 'base' -%}
+              </div>
+            </div>
+          </a>
+
+        {%- endfor -%}
+
+      {%- else -%}
+
+        {%- for block in section.blocks -%}
+          {%- assign tile_product = all_products[block.settings.product] -%}
+          {%- if tile_product != blank -%}
+            {%- assign tile_name = block.settings.name_override | default: tile_product.title -%}
+            {%- if block.settings.tier == 'Atelier' -%}
+              {%- assign tile_price = 'On request' -%}
+            {%- else -%}
+              {%- assign tile_price = tile_product.price | money -%}
+            {%- endif -%}
+
+            <a class="vf-collection__tile" href="{{ tile_product.url }}" {{ block.shopify_attributes }}>
+              <div class="vf-collection__tile-badge">
+                {%- render 'vf-badge', tier: block.settings.tier -%}
+              </div>
+              <div class="vf-collection__tile-cube" aria-hidden="true">
+                {%- render 'vf-cube', size: 180 -%}
+              </div>
+              <div class="vf-collection__tile-info">
+                <div class="vf-collection__tile-name">{{- tile_name | escape -}}</div>
+                {%- if block.settings.subtitle != blank -%}
+                  <div class="vf-collection__tile-subtitle">{{- block.settings.subtitle | escape -}}</div>
+                {%- endif -%}
+                <div class="vf-collection__tile-price">
+                  {%- render 'vf-mono', text: tile_price, color: 'gold', size: 'base' -%}
+                </div>
+              </div>
+            </a>
+
+          {%- endif -%}
+        {%- endfor -%}
+
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% style %}
+  .vf-collection {
+    background: var(--vf-obsidian);
+    padding: var(--vf-s-9) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-collection__inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+  }
+
+  .vf-collection__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-3);
+    margin-bottom: var(--vf-s-7);
+  }
+
+  .vf-collection__headline {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h-section);
+    line-height: var(--vf-lh-h);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+    max-width: 580px;
+  }
+
+  .vf-collection__headline em {
+    color: var(--vf-fg-3);
+    font-style: italic;
+  }
+
+  .vf-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--vf-grid-gutter-d);
+  }
+
+  .vf-collection__tile {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: var(--vf-ratio-portrait);
+    border: var(--vf-hairline) solid var(--vf-border-2);
+    background: var(--vf-obsidian);
+    text-decoration: none;
+  }
+
+  .vf-collection__tile-badge {
+    position: absolute;
+    top: var(--vf-s-4);
+    left: var(--vf-s-4);
+    z-index: 2;
+  }
+
+  .vf-collection__tile-cube {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* TODO: when product images replace the cube placeholder,
+     move hover scale target to the image wrapper. */
+  .vf-collection__tile .vf-cube-wrap {
+    transition: transform var(--vf-dur-fast) var(--vf-ease);
+  }
+
+  .vf-collection__tile:hover .vf-cube-wrap {
+    transform: scale(1.04);
+  }
+
+  .vf-collection__tile-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: var(--vf-s-4);
+    /* rgba(10,10,10) = --vf-obsidian; no alpha-composable token exists */
+    background: linear-gradient(transparent, rgba(10, 10, 10, 0.9));
+  }
+
+  .vf-collection__tile-name {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h2);
+    line-height: var(--vf-lh-tight);
+    color: var(--vf-fg-1);
+  }
+
+  .vf-collection__tile-subtitle {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-meta);
+    line-height: var(--vf-lh-tight);
+    color: var(--vf-fg-3);
+    margin-top: var(--vf-s-0);
+  }
+
+  .vf-collection__tile-price {
+    margin-top: var(--vf-s-2);
+  }
+
+  @media screen and (max-width: 749px) {
+    .vf-collection {
+      padding: var(--vf-s-8) var(--vf-grid-margin-m);
+    }
+
+    .vf-collection__grid {
+      grid-template-columns: 1fr;
+      gap: var(--vf-grid-gutter-m);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Collection",
+  "tag": "section",
+  "class": "shopify-section--vf-collection",
+  "enabled_on": {
+    "templates": ["index", "page", "collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Editions · 2026"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_1",
+      "label": "Headline (first part)",
+      "default": "Three editions."
+    },
+    {
+      "type": "text",
+      "id": "headline_part_2",
+      "label": "Headline (italic, second part)",
+      "default": "Open now."
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "paragraph",
+      "content": "When a collection is selected, up to 3 products render automatically. Tier is derived from product tags: tier:i, tier:ii, tier:atelier. Leave blank to configure tiles manually using the blocks below."
+    },
+    {
+      "type": "collection",
+      "id": "source_collection",
+      "label": "Source collection"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "select",
+          "id": "tier",
+          "label": "Tier",
+          "options": [
+            { "value": "I",       "label": "Série I" },
+            { "value": "II",      "label": "Série II" },
+            { "value": "Atelier", "label": "Atelier" }
+          ],
+          "default": "I"
+        },
+        {
+          "type": "text",
+          "id": "name_override",
+          "label": "Display name",
+          "info": "Optional — overrides the product title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "placeholder": "Lamp"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Voxel Forge · Collection",
+      "category": "Voxel Forge",
+      "settings": {
+        "eyebrow": "Editions · 2026",
+        "headline_part_1": "Three editions.",
+        "headline_part_2": "Open now."
+      },
+      "blocks": [
+        {
+          "type": "tile",
+          "settings": { "tier": "I",       "subtitle": "Lamp" }
+        },
+        {
+          "type": "tile",
+          "settings": { "tier": "II",      "subtitle": "Pendant · gold" }
+        },
+        {
+          "type": "tile",
+          "settings": { "tier": "Atelier", "subtitle": "Commission · 1 of 1" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

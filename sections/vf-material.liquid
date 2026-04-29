@@ -1,0 +1,375 @@
+{%- comment -%}
+  vf-material.liquid
+
+  60/40 figure-plus-copy split on Graphite (#1A1A1A = --vf-graphite).
+  This is the only homepage section that does NOT run on Obsidian.
+  Figure (left column): Obsidian bg, both top and bottom hairlines,
+  iso-grid at 6%, cube at 340, editorial FIG. caption bottom-left.
+  Copy (right column): eyebrow, h2, body, spec table, pull-quote.
+
+  Schema contract: docs/section-schemas.md §5
+  Visual reference: ui_kits/website/Material.jsx
+
+  Judgement calls
+  ───────────────
+  1. Figure caption rendered with size: 'micro' (9px).
+     CLAUDE.md 11px floor applies to body copy; this is editorial
+     annotation chrome (museum-label register). Deliberate exception.
+
+  2. Figure caption positioned at --vf-s-3 (16px). JSX uses 20px —
+     no exact token. --vf-s-3 (16px) is the nearest value below 20px.
+
+  3. Figure caption color: 'fg-3' (Bone @ 45%). JSX uses 0.40 opacity;
+     --vf-fg-3 at 0.45 is the closest semantic token.
+
+  4. Headline uses --vf-fs-h1: clamp(2rem,3vw,3rem) — exact token match
+     for the JSX value. No --vf-fs-h-section needed here.
+
+  5. Body copy color: --vf-fg-2 (Bone @ 70%). JSX uses 0.60 — token wins
+     per CLAUDE.md rule. Delta is sub-perceptual.
+
+  6. Body max-width: 460px (deliberate literal — typographic measure,
+     not a layout grid value). Same category as vf-statement's 880px.
+     See docs/section-schemas.md §5 hardcoded table note.
+
+  7. vf-cube rendered WITHOUT the label param to avoid the snippet's
+     internal 'micro' figcaption. Caption is rendered here directly
+     so its size is controlled at section level.
+
+  8. Spec value color: fg-1 (Bone) by default; gold when
+     block.settings.accent == 'gold'. Teal is never applied to spec
+     values (V1.3 review fix — see schema doc §5 note).
+
+  9. Grid column ratio minmax(0,1.1fr) minmax(0,1fr) is a layout
+     proportion, not a spacing measurement — exempt from the
+     hardcoded-value rule.
+
+ 10. Pull-quote text uses schema doc default (no quotation marks).
+     JSX drift ("...") corrected at port per vf-pull snippet rules.
+{%- endcomment -%}
+
+<section
+  class="vf-material"
+  aria-labelledby="vf-material-title"
+  data-section-id="{{ section.id }}"
+>
+  <div class="vf-material__inner">
+
+    <div class="vf-material__figure">
+      <div class="vf-material__figure-cube" aria-hidden="true">
+        {%- render 'vf-cube', size: 340 -%}
+      </div>
+      {%- if section.settings.figure_caption != blank -%}
+        <div class="vf-material__figure-caption">
+          {%- comment -%}Editorial caption — deliberate 9px exception. Not body copy; do not escalate.{%- endcomment -%}
+          {%- render 'vf-mono', text: section.settings.figure_caption, size: 'micro', color: 'fg-3' -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="vf-material__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+      {%- endif -%}
+      <h2 id="vf-material-title" class="vf-material__headline">
+        {{- section.settings.headline_part_1 | escape -}}<br>
+        <em>{{- section.settings.headline_part_2 | escape -}}</em>
+      </h2>
+      {%- if section.settings.body != blank -%}
+        <div class="vf-material__body">
+          {{- section.settings.body -}}
+        </div>
+      {%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <table class="vf-material__spec">
+          <tbody>
+            {%- for block in section.blocks -%}
+              {%- if block.type == 'spec_row' -%}
+                {%- if block.settings.accent == 'gold' -%}
+                  {%- assign value_color = 'gold' -%}
+                {%- else -%}
+                  {%- assign value_color = 'fg-1' -%}
+                {%- endif -%}
+                <tr class="vf-material__spec-row" {{ block.shopify_attributes }}>
+                  <td class="vf-material__spec-key">
+                    {%- render 'vf-mono', text: block.settings.key, size: 'base', color: 'fg-3' -%}
+                  </td>
+                  <td class="vf-material__spec-value">
+                    {%- render 'vf-mono', text: block.settings.value, size: 'base', color: value_color -%}
+                  </td>
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+          </tbody>
+        </table>
+      {%- endif -%}
+      {%- if section.settings.pull_text != blank -%}
+        {%- render 'vf-pull',
+            text: section.settings.pull_text,
+            attribution: section.settings.pull_attribution -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% style %}
+  .vf-material {
+    background: var(--vf-graphite);
+    padding: var(--vf-s-9) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-material__inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--vf-s-8);
+    align-items: center;
+  }
+
+  .vf-material__figure {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: var(--vf-ratio-process);
+    background: var(--vf-obsidian);
+    border-top: var(--vf-hairline) solid var(--vf-border-2);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-material__figure::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('{{ "pattern-iso-grid.svg" | asset_url }}');
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .vf-material__figure-cube {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .vf-material__figure-caption {
+    position: absolute;
+    bottom: var(--vf-s-3);
+    left: var(--vf-s-3);
+    z-index: 2;
+  }
+
+  .vf-material__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-5);
+  }
+
+  .vf-material__headline {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h1);
+    line-height: var(--vf-lh-h);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+  }
+
+  .vf-material__headline em {
+    color: var(--vf-fg-3);
+    font-style: italic;
+  }
+
+  .vf-material__body {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    line-height: var(--vf-lh-body);
+    color: var(--vf-fg-2);
+    /* Typographic measure (matches JSX). Like Statement's 880px, this is a deliberate literal — not a layout grid value. */
+    max-width: 460px;
+  }
+
+  .vf-material__body p { margin: 0 0 var(--vf-s-2); }
+  .vf-material__body p:last-child { margin-bottom: 0; }
+
+  .vf-material__spec {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .vf-material__spec-row {
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-material__spec-key,
+  .vf-material__spec-value {
+    padding: var(--vf-s-2) 0;
+  }
+
+  .vf-material__spec-value {
+    text-align: right;
+  }
+
+  @media screen and (max-width: 749px) {
+    .vf-material {
+      padding: var(--vf-s-8) var(--vf-grid-margin-m);
+    }
+
+    .vf-material__inner {
+      grid-template-columns: 1fr;
+      gap: var(--vf-s-6);
+    }
+
+    .vf-material__body {
+      max-width: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Material",
+  "tag": "section",
+  "class": "shopify-section--vf-material",
+  "enabled_on": {
+    "templates": ["index", "page"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Material · Method"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_1",
+      "label": "Headline (first half)",
+      "default": "Engineered"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_2",
+      "label": "Headline (italic, second half)",
+      "default": "from the inside."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>A gyroid lattice carries the load. Light scatters through it.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Figure"
+    },
+    {
+      "type": "text",
+      "id": "figure_caption",
+      "label": "Figure caption",
+      "default": "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%"
+    },
+    {
+      "type": "header",
+      "content": "Pull-quote"
+    },
+    {
+      "type": "text",
+      "id": "pull_text",
+      "label": "Pull-quote text",
+      "default": "Lighter than aluminium. Stronger than ABS."
+    },
+    {
+      "type": "text",
+      "id": "pull_attribution",
+      "label": "Attribution",
+      "default": "Engineering note · 2026"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec_row",
+      "name": "Spec row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "key",
+          "label": "Key",
+          "default": "Polymer"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "PETG-CF · matte"
+        },
+        {
+          "type": "select",
+          "id": "accent",
+          "label": "Accent",
+          "info": "Gold for prestige rows (print time, edition limit). Never use for body-level copy.",
+          "options": [
+            { "value": "none",  "label": "None" },
+            { "value": "gold",  "label": "Gold" }
+          ],
+          "default": "none"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Voxel Forge · Material",
+      "category": "Voxel Forge",
+      "settings": {
+        "eyebrow": "Material · Method",
+        "headline_part_1": "Engineered",
+        "headline_part_2": "from the inside.",
+        "figure_caption": "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%",
+        "pull_text": "Lighter than aluminium. Stronger than ABS.",
+        "pull_attribution": "Engineering note · 2026"
+      },
+      "blocks": [
+        {
+          "type": "spec_row",
+          "settings": { "key": "Polymer",          "value": "PETG-CF · matte", "accent": "none" }
+        },
+        {
+          "type": "spec_row",
+          "settings": { "key": "Layer height",     "value": "0.08 mm",         "accent": "none" }
+        },
+        {
+          "type": "spec_row",
+          "settings": { "key": "Infill",           "value": "40% gyroid",      "accent": "none" }
+        },
+        {
+          "type": "spec_row",
+          "settings": { "key": "Tensile strength", "value": "52 MPa",          "accent": "none" }
+        },
+        {
+          "type": "spec_row",
+          "settings": { "key": "Tolerance",        "value": "± 0.2 mm",        "accent": "none" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

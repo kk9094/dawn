@@ -113,7 +113,7 @@ Block type `step` — required exactly 4. Lower or higher counts will read wrong
 | Tile aspect ratio: `var(--vf-ratio-portrait)` (4/5) | Aspect-ratio token enforcement |
 | Tier badge on tile (Série I/II/Atelier) | Identity element |
 | Hover scale 1.04 on lamp image | Motion system |
-| Bottom gradient overlay on hover | Motion system |
+| Bottom gradient overlay always-on | Motion system |
 
 ### Editable (settings)
 | ID | Type | Label | Default |
@@ -124,7 +124,7 @@ Block type `step` — required exactly 4. Lower or higher counts will read wrong
 | `source_collection` | collection | Source collection | (unset — uses blocks if empty) |
 
 ### Editable (blocks)
-Block type `tile` — used when `source_collection` is unset. Maximum 6, recommended 3.
+Block type `tile` — used when `source_collection` is unset. Maximum 3 (matches the headline copy).
 | ID | Type | Label |
 | --- | --- | --- |
 | `product` | product | Product |
@@ -135,6 +135,14 @@ Block type `tile` — used when `source_collection` is unset. Maximum 6, recomme
 > **Note:** When `source_collection` is set, tier is derived from product
 > tags (`tier:i`, `tier:ii`, `tier:atelier`). Tag-based tier dispatch is the
 > preferred mechanism — block fallback is for catalogue bring-up only.
+>
+> **Note:** "On request" is hardcoded for `tier:atelier` tiles in both paths.
+> There is no merchant price-override setting. This prevents "On request" from
+> being misused as promotional copy in violation of voice rules.
+>
+> **Note:** In the collection path, subtitle falls back to `product.product_type`
+> until a `custom.subtitle` metafield is wired up. Block path subtitle is
+> editable per tile via `block.settings.subtitle`.
 
 ---
 

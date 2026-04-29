@@ -152,10 +152,14 @@ Block type `tile` — used when `source_collection` is unset. Maximum 3 (matches
 | What | Why |
 | --- | --- |
 | 60/40 image+text split (column-stacked mobile) | Brand-locked composition |
+| Section background: `--vf-graphite` — the only homepage section that does not run on Obsidian | Brand-locked surface |
+| Figure background: `--vf-obsidian` inside the Graphite section | Material contrast rule |
 | Figure aspect ratio: `var(--vf-ratio-process)` (3/2) | Aspect-ratio token enforcement |
-| FIG. caption (Mono, bottom-left of figure) | Editorial framing |
+| Figure caption: 9px micro — editorial annotation chrome, deliberate exception to the 11px accessibility floor | Editorial framing |
 | Iso-grid pattern at 6% opacity behind cube | Brand texture rule |
 | Spec table layout (key/value rows, hairline dividers) | Type system |
+| Spec row value default: Bone (`--vf-fg-1`). Forge Teal at 11px violates the display-only-on-dark rule (V1.3 review fix) | Type system |
+| Body copy `max-width: 460px` — deliberate typographic measure, same category as Statement's 880px. Not a layout grid value. | Readability |
 
 ### Editable (settings)
 | ID | Type | Label | Default |

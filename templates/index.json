@@ -225,57 +225,45 @@
         "pull_attribution": "Engineering note · 2026"
       }
     },
-    "vf_atelier_FKWfXp": {
+    "vf_atelier_yMNdjm": {
       "type": "vf-atelier",
       "blocks": {
-        "metric_nLkPHP": {
+        "metric_ibpYPP": {
           "type": "metric",
           "settings": {
-            "number": "0.08",
-            "unit": "mm",
-            "label": "Layer precision"
+            "value": "04",
+            "label": "Per year"
           }
         },
-        "metric_LpjFTt": {
+        "metric_rdYCxm": {
           "type": "metric",
           "settings": {
-            "number": "196",
-            "unit": "hr",
-            "label": "Max print duration"
+            "value": "6 wk",
+            "label": "Correspondence"
           }
         },
-        "metric_EzdYLr": {
+        "metric_9XEU3g": {
           "type": "metric",
           "settings": {
-            "number": "7",
-            "unit": "mm",
-            "label": "Material grades"
-          }
-        },
-        "metric_pPDX9K": {
-          "type": "metric",
-          "settings": {
-            "number": "∞",
-            "unit": "mm",
-            "label": "Configurations"
+            "value": "1 / 1",
+            "label": "Edition"
           }
         }
       },
       "block_order": [
-        "metric_nLkPHP",
-        "metric_LpjFTt",
-        "metric_EzdYLr",
-        "metric_pPDX9K"
+        "metric_ibpYPP",
+        "metric_rdYCxm",
+        "metric_9XEU3g"
       ],
-      "name": "VF — Metrics + Atelier",
+      "name": "Voxel Forge · Atelier",
       "settings": {
-        "atelier_eyebrow": "Atelier tier",
-        "atelier_title_line1": "One object.",
-        "atelier_title_line2": "Entirely yours.",
-        "atelier_body": "The Atelier commission begins with a conversation. Dimensions, material, geometry — everything is negotiated. Nothing is drawn from stock. The object that arrives has never existed before.",
-        "atelier_cta_label": "Begin a Commission",
-        "atelier_cta_link": "",
-        "atelier_footnote": "Three commissions accepted per quarter. By application only."
+        "eyebrow": "Atelier · Commission",
+        "headline_part_1": "One object.",
+        "headline_part_2": "Made for one room.",
+        "body": "<p>Atelier commissions are designed alongside the architect or interior lead. One object, one brief, one room.</p>",
+        "cta_label": "Request a commission",
+        "cta_href": "/pages/atelier",
+        "next_intake": "NEXT INTAKE · Q3 2026 · 4 OF 4 SLOTS REMAIN"
       }
     }
   },
@@ -285,6 +273,6 @@
     "vf_process_VTj7Wy",
     "vf_collection_APxWcN",
     "vf_material_agY3cd",
-    "vf_atelier_FKWfXp"
+    "vf_atelier_yMNdjm"
   ]
 }

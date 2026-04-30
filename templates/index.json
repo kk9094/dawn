@@ -1,210 +1,290 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "vf_hero_phxBVw": {
+      "type": "vf-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "metric_D9RBqc": {
+          "type": "metric",
           "settings": {
-            "heading": "Image banner",
-            "heading_size": "h0"
+            "value": "0.08 mm",
+            "label": "Wall thickness"
           }
         },
-        "text": {
-          "type": "text",
+        "metric_TMqYwH": {
+          "type": "metric",
           "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
+            "value": "196 hr",
+            "label": "Print time"
           }
         },
-        "button": {
-          "type": "buttons",
+        "metric_7pWqn9": {
+          "type": "metric",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "value": "200 / yr",
+            "label": "Production cap"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text",
-        "button"
+        "metric_D9RBqc",
+        "metric_TMqYwH",
+        "metric_7pWqn9"
       ],
+      "name": "Voxel Forge · Hero",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "eyebrow": "Voxel Forge · Chennai · Edition 2026",
+        "headline_part_1": "Form follows",
+        "headline_part_2": "light.",
+        "body": "<p>Precision 3D-printed sculptural lighting in numbered editions. Engineered in Chennai.</p>",
+        "cta_primary_label": "See the editions",
+        "cta_primary_href": "",
+        "cta_secondary_label": "Read the brief",
+        "cta_secondary_href": ""
       }
     },
-    "rich_text": {
-      "type": "rich-text",
+    "vf_statement_iiqMkf": {
+      "type": "vf-statement",
+      "name": "Voxel Forge · Statement",
+      "settings": {
+        "quote_html": "<p>Light defines its <em>geometry</em>; geometry defines the <em>object</em>.</p>",
+        "attribution": "Studio note · 2026"
+      }
+    },
+    "vf_process_VTj7Wy": {
+      "type": "vf-process",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "step_C3piQj": {
+          "type": "step",
           "settings": {
-            "heading": "Talk about your brand",
-            "heading_size": "h1"
+            "number": "01",
+            "title": "Design",
+            "body": "<p>Geometry developed in CAD. Each form modelled around a single light source — never lit from inside.</p>"
           }
         },
-        "text": {
-          "type": "text",
+        "step_qUkChE": {
+          "type": "step",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<\/p>"
+            "number": "02",
+            "title": "Forge",
+            "body": "<p>Printed once at 0.08mm resolution. 196 hours per object. No second pulls, no reprints.</p>"
+          }
+        },
+        "step_Np7hDn": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Finish",
+            "body": "<p>Hand-sanded across nine grits. Layer lines remain visible — they are the proof of method.</p>"
+          }
+        },
+        "step_Xewraj": {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "title": "Number",
+            "body": "<p>Wax-sealed and numbered against the edition. A signed certificate ships with the piece.</p>"
           }
         }
       },
       "block_order": [
-        "heading",
-        "text"
+        "step_C3piQj",
+        "step_qUkChE",
+        "step_Np7hDn",
+        "step_Xewraj"
       ],
+      "name": "Voxel Forge · Process",
       "settings": {
-        "color_scheme": "scheme-1",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 0
+        "eyebrow": "Method · 04 stages",
+        "headline_part_1": "Four stages.",
+        "headline_part_2": "One object.",
+        "method_label": "Read the full method",
+        "method_url": ""
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_view_all": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 28,
-        "padding_bottom": 36
-      }
-    },
-    "collage": {
-      "type": "collage",
+    "vf_collection_APxWcN": {
+      "type": "vf-collection",
       "blocks": {
-        "collection-0": {
-          "type": "collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "product": {
-          "type": "product",
+        "tile_zcKefb": {
+          "type": "tile",
           "settings": {
             "product": "",
-            "second_image": false
+            "tier": "I",
+            "name_override": "",
+            "subtitle": "Lamp"
           }
         },
-        "collection-1": {
-          "type": "collection",
+        "tile_NpQKUN": {
+          "type": "tile",
           "settings": {
-            "collection": ""
+            "product": "",
+            "tier": "II",
+            "name_override": "",
+            "subtitle": "Pendant · gold"
+          }
+        },
+        "tile_m9cz66": {
+          "type": "tile",
+          "settings": {
+            "product": "",
+            "tier": "Atelier",
+            "name_override": "",
+            "subtitle": "Commission · 1 of 1"
           }
         }
       },
       "block_order": [
-        "collection-0",
-        "product",
-        "collection-1"
+        "tile_zcKefb",
+        "tile_NpQKUN",
+        "tile_m9cz66"
       ],
+      "name": "Voxel Forge · Collection",
       "settings": {
-        "heading": "Multimedia collage",
-        "heading_size": "h2",
-        "desktop_layout": "left",
-        "mobile_layout": "collage",
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "eyebrow": "Editions · 2026",
+        "headline_part_1": "Three editions.",
+        "headline_part_2": "Open now.",
+        "source_collection": ""
       }
     },
-    "video": {
-      "type": "video",
-      "settings": {
-        "heading": "",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "heading_size": "h1",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "multicolumn": {
-      "type": "multicolumn",
+    "vf_material_agY3cd": {
+      "type": "vf-material",
       "blocks": {
-        "column1": {
-          "type": "column",
+        "spec_row_pwyjRi": {
+          "type": "spec_row",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "key": "Polymer",
+            "value": "PETG-CF · matte",
+            "accent": "none"
           }
         },
-        "column2": {
-          "type": "column",
+        "spec_row_MeMAmH": {
+          "type": "spec_row",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "key": "Polymer",
+            "value": "PETG-CF · matte",
+            "accent": "none"
           }
         },
-        "column3": {
-          "type": "column",
+        "spec_row_kUREUK": {
+          "type": "spec_row",
           "settings": {
-            "title": "Column",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "link_label": "",
-            "link": ""
+            "key": "Layer height",
+            "value": "0.08 mm",
+            "accent": "none"
+          }
+        },
+        "spec_row_3ktw6F": {
+          "type": "spec_row",
+          "settings": {
+            "key": "Infill",
+            "value": "40% gyroid",
+            "accent": "none"
+          }
+        },
+        "spec_row_F3rgq7": {
+          "type": "spec_row",
+          "settings": {
+            "key": "Tensile strength",
+            "value": "52 MPa",
+            "accent": "none"
+          }
+        },
+        "spec_row_QXxQzG": {
+          "type": "spec_row",
+          "settings": {
+            "key": "Tolerance",
+            "value": "± 0.2 mm",
+            "accent": "none"
           }
         }
       },
       "block_order": [
-        "column1",
-        "column2",
-        "column3"
+        "spec_row_pwyjRi",
+        "spec_row_MeMAmH",
+        "spec_row_kUREUK",
+        "spec_row_3ktw6F",
+        "spec_row_F3rgq7",
+        "spec_row_QXxQzG"
       ],
+      "name": "Voxel Forge · Material",
       "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "swipe_on_mobile": false,
-        "color_scheme": "scheme-1",
-        "columns_mobile": "1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "eyebrow": "Material · Method",
+        "headline_part_1": "Engineered",
+        "headline_part_2": "from the inside.",
+        "body": "<p>A gyroid lattice carries the load. Light scatters through it.</p>",
+        "figure_caption": "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%",
+        "pull_text": "Lighter than aluminium. Stronger than ABS.",
+        "pull_attribution": "Engineering note · 2026"
+      }
+    },
+    "vf_atelier_FKWfXp": {
+      "type": "vf-atelier",
+      "blocks": {
+        "metric_nLkPHP": {
+          "type": "metric",
+          "settings": {
+            "number": "0.08",
+            "unit": "mm",
+            "label": "Layer precision"
+          }
+        },
+        "metric_LpjFTt": {
+          "type": "metric",
+          "settings": {
+            "number": "196",
+            "unit": "hr",
+            "label": "Max print duration"
+          }
+        },
+        "metric_EzdYLr": {
+          "type": "metric",
+          "settings": {
+            "number": "7",
+            "unit": "mm",
+            "label": "Material grades"
+          }
+        },
+        "metric_pPDX9K": {
+          "type": "metric",
+          "settings": {
+            "number": "∞",
+            "unit": "mm",
+            "label": "Configurations"
+          }
+        }
+      },
+      "block_order": [
+        "metric_nLkPHP",
+        "metric_LpjFTt",
+        "metric_EzdYLr",
+        "metric_pPDX9K"
+      ],
+      "name": "VF — Metrics + Atelier",
+      "settings": {
+        "atelier_eyebrow": "Atelier tier",
+        "atelier_title_line1": "One object.",
+        "atelier_title_line2": "Entirely yours.",
+        "atelier_body": "The Atelier commission begins with a conversation. Dimensions, material, geometry — everything is negotiated. Nothing is drawn from stock. The object that arrives has never existed before.",
+        "atelier_cta_label": "Begin a Commission",
+        "atelier_cta_link": "",
+        "atelier_footnote": "Three commissions accepted per quarter. By application only."
       }
     }
   },
   "order": [
-    "image_banner",
-    "rich_text",
-    "featured_collection",
-    "collage",
-    "video",
-    "multicolumn"
+    "vf_hero_phxBVw",
+    "vf_statement_iiqMkf",
+    "vf_process_VTj7Wy",
+    "vf_collection_APxWcN",
+    "vf_material_agY3cd",
+    "vf_atelier_FKWfXp"
   ]
 }

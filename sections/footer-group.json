@@ -1,7 +1,115 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "vf_footer_9A6pxF": {
+      "type": "vf-footer",
+      "blocks": {
+        "link_column_Yg6UAR": {
+          "type": "link_column",
+          "settings": {
+            "title": "Collections",
+            "link_1_label": "Série I",
+            "link_1_url": "",
+            "link_2_label": "Série II",
+            "link_2_url": "",
+            "link_3_label": "Atelier",
+            "link_3_url": "",
+            "link_4_label": "Archive",
+            "link_4_url": ""
+          }
+        },
+        "link_column_Th6yVg": {
+          "type": "link_column",
+          "settings": {
+            "title": "Studio",
+            "link_1_label": "The Process",
+            "link_1_url": "",
+            "link_2_label": "Materials",
+            "link_2_url": "",
+            "link_3_label": "Press · Notes",
+            "link_3_url": "",
+            "link_4_label": "Visit Chennai",
+            "link_4_url": ""
+          }
+        },
+        "link_column_d8YQTx": {
+          "type": "link_column",
+          "settings": {
+            "title": "Care",
+            "link_1_label": "Shipping",
+            "link_1_url": "",
+            "link_2_label": "Returns",
+            "link_2_url": "",
+            "link_3_label": "Care · Cleaning",
+            "link_3_url": "",
+            "link_4_label": "Contact",
+            "link_4_url": ""
+          }
+        },
+        "link_column_ktYmFA": {
+          "type": "link_column",
+          "settings": {
+            "title": "Legal",
+            "link_1_label": "Terms of Service",
+            "link_1_url": "",
+            "link_2_label": "Privacy Policy",
+            "link_2_url": "",
+            "link_3_label": "Refund Policy",
+            "link_3_url": "",
+            "link_4_label": "",
+            "link_4_url": ""
+          }
+        },
+        "social_link_Lt7xhT": {
+          "type": "social_link",
+          "settings": {
+            "label": "INSTAGRAM",
+            "url": ""
+          }
+        },
+        "social_link_RN4GR3": {
+          "type": "social_link",
+          "settings": {
+            "label": "BEHANCE",
+            "url": ""
+          }
+        },
+        "social_link_qdX6MA": {
+          "type": "social_link",
+          "settings": {
+            "label": "PINTEREST",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "link_column_Yg6UAR",
+        "link_column_Th6yVg",
+        "link_column_d8YQTx",
+        "link_column_ktYmFA",
+        "social_link_Lt7xhT",
+        "social_link_RN4GR3",
+        "social_link_qdX6MA"
+      ],
+      "name": "Voxel Forge · Footer",
+      "settings": {
+        "newsletter_headline_part_1": "A quarterly note from",
+        "newsletter_headline_part_2": "the workshop floor.",
+        "newsletter_body": "<p>Production updates, edition openings, and notes from the studio floor.</p>",
+        "newsletter_cta_label": "Subscribe",
+        "bottom_bar_text": "Voxel Forge · Chennai · 2026"
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -23,7 +131,7 @@
           "type": "text",
           "settings": {
             "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.<\/p>"
+            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
           }
         }
       },
@@ -32,10 +140,12 @@
         "footer-1",
         "footer-2"
       ],
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
@@ -48,6 +158,7 @@
     }
   },
   "order": [
+    "vf_footer_9A6pxF",
     "footer"
   ]
 }

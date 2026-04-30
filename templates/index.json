@@ -117,7 +117,7 @@
           "type": "tile",
           "settings": {
             "product": "",
-            "tier": "I",
+            "tier": "Atelier",
             "name_override": "",
             "subtitle": "Lamp"
           }
@@ -177,7 +177,7 @@
           "type": "spec_row",
           "settings": {
             "key": "Layer height",
-            "value": "0.08 mm",
+            "value": "0.16 mm",
             "accent": "none"
           }
         },

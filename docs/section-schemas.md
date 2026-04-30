@@ -265,7 +265,7 @@ The header is the one place where modifying a Dawn file is acceptable, because t
 ### Hardcoded changes to `header.liquid`
 | What | Why |
 | --- | --- |
-| Logo: hardcoded `shopify_logo.svg` asset (160×40 desktop, 128×32 mobile). Customiser logo settings disabled — see comment block in `sections/header.liquid` for the AGENTS.md §2 sanction. | Identity |
+| Logo: hardcoded `shopify_logo.svg` asset (160×40 desktop, 128×32 mobile). Customiser logo settings (`settings.logo`, `settings.logo_width`, etc.) are theme-level — they remain available in Theme settings but are no longer rendered. `logo_position` and `mobile_logo_position` section schema settings are preserved (layout-position, not logo-image). See comment block in `sections/header.liquid` for the AGENTS.md §2 sanction. | Identity |
 | Nav link tracking: `var(--vf-track-label)` (0.18em) | Type system |
 | Nav link colour: `var(--vf-fg-1)` | Type system |
 | Sticky on scroll, 0.5px hairline at bottom | Brand-locked behaviour |

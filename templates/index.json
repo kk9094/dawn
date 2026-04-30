@@ -15,14 +15,14 @@
         "metric_D9RBqc": {
           "type": "metric",
           "settings": {
-            "value": "0.08 mm",
+            "value": "0.16 mm",
             "label": "Wall thickness"
           }
         },
         "metric_TMqYwH": {
           "type": "metric",
           "settings": {
-            "value": "196 hr",
+            "value": "96 hr",
             "label": "Print time"
           }
         },
@@ -41,7 +41,7 @@
       ],
       "name": "Voxel Forge · Hero",
       "settings": {
-        "eyebrow": "Voxel Forge · Chennai · Edition 2026",
+        "eyebrow": "Voxel Forge · Edition 2026",
         "headline_part_1": "Form follows",
         "headline_part_2": "light.",
         "body": "<p>Precision 3D-printed sculptural lighting in numbered editions. Engineered in Chennai.</p>",

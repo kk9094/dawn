@@ -25,9 +25,9 @@
       hover). Form-submit exception — not a re-implementation.
 
   3.  Column title colour: JSX colTitle uses #C9A96E (Gold) — JSX DRIFT.
-      Corrected to --vf-fg-3. Gold is reserved for the wordmark and Série II
-      / certificate moments. Spreading Gold to column titles on every page
-      of the store violates the "sparingly" rule.
+      Corrected to --vf-fg-3. Gold is reserved for Série II / certificate
+      moments. Footer logo is a locked SVG asset — Gold: zero references
+      anywhere in this section.
 
   4.  Subscribe button colour: JSX has raw <button style={{ color: "#C9A96E" }}>
       — JSX DRIFT. Corrected to ghost (Bone text / Bone-bright hover).
@@ -41,8 +41,11 @@
   6.  Studio description max-width: 280px — deliberate typographic measure
       literal matching JSX. Same category as Material's 460px.
 
-  7.  Wordmark font-size: 26px — deliberate literal. Only use of this size
-      in the project; no token justified.
+  7.  Logo: shopify_logo.svg asset at 128×32 (height 32px, width auto via
+      CSS). Replaces the original span-based wordmark. SVG aspect ratio 4:1.
+      32px is lighter than the 40px header logo — correct footer register.
+      .vf-wordmark__* classes in vf-tokens.css are preserved as orphaned
+      tokens — reserved for potential future packaging or certificate surfaces.
 
   8.  Column title tracking: 0.28em (--vf-track-eyebrow). JSX uses 0.30em.
       Delta is 0.02em — sub-perceptual. Token wins.
@@ -139,10 +142,14 @@
 
       {%- comment -%}Studio column — hardcoded brand identity. Not merchant-editable.{%- endcomment -%}
       <div class="vf-footer__studio">
-        <div class="vf-footer__wordmark" aria-label="Voxel Forge">
-          <span class="vf-wordmark__voxel" aria-hidden="true">VOXEL</span>
-          <span class="vf-wordmark__forge" aria-hidden="true">FORGE</span>
-        </div>
+        <img
+          src="{{ 'shopify_logo.svg' | asset_url }}"
+          alt="Voxel Forge"
+          class="vf-footer__logo"
+          width="128"
+          height="32"
+          loading="lazy"
+        >
         <p class="vf-footer__studio-desc">Voxel Forge is a Chennai studio producing precision 3D-printed sculptural lighting in numbered editions.</p>
         {%- render 'vf-mono', text: 'EST. 2026 · CHENNAI · INDIA', size: 'small', color: 'fg-3' -%}
       </div>
@@ -386,32 +393,11 @@
     gap: var(--vf-s-4);
   }
 
-  /* Wordmark: 26px deliberate literal — only use of this size, no token justified. */
-  .vf-footer__wordmark {
-    display: flex;
-    flex-direction: column;
-    gap: var(--vf-s-0);
-    line-height: 1;
-  }
-
-  .vf-wordmark__voxel,
-  .vf-wordmark__forge {
-    font-family: var(--vf-ff-body);
-    font-size: 26px;
-    font-weight: var(--vf-w-light);
-    line-height: 1;
+  /* Logo asset: shopify_logo.svg at 32px height. SVG is 4:1; width follows automatically. */
+  .vf-footer__logo {
+    height: 32px;
+    width: auto;
     display: block;
-  }
-
-  .vf-wordmark__voxel {
-    color: var(--vf-fg-1);
-    letter-spacing: var(--vf-track-wordmark);
-  }
-
-  /* v1.2 carve-out: Gold on wordmark only. No other Gold reference in this section. */
-  .vf-wordmark__forge {
-    color: var(--vf-gold);
-    letter-spacing: var(--vf-track-forge);
   }
 
   .vf-footer__studio-desc {

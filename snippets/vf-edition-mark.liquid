@@ -1,0 +1,74 @@
+{%- comment -%}
+  vf-edition-mark — "04 / 30" numbered edition mark
+
+  Required:
+    current  — current edition number (e.g. 4)
+    total    — total in the edition (e.g. 30)
+
+  Optional:
+    label    — small caption above the numbers (e.g. 'Edition' or 'No.')
+    color    — 'gold' (default) | 'fg-1' | 'fg-2'
+    class    — extra class names
+
+  Usage:
+    {% render 'vf-edition-mark', current: 4, total: 30 %}
+    {% render 'vf-edition-mark', current: 12, total: 200, label: 'Edition' %}
+
+  Rules:
+    - Pad current to match total's digit count: "04 / 30", "012 / 200".
+    - Default colour is Gold — this is a prestige marker.
+{%- endcomment -%}
+
+{%- liquid
+  assign color = color | default: 'gold'
+  assign total_str = total | append: ''
+  assign total_digits = total_str | size
+  assign current_str = current | append: ''
+  assign current_digits = current_str | size
+  assign pad_count = total_digits | minus: current_digits
+  assign current_padded = current_str
+  if pad_count > 0
+    for i in (1..pad_count)
+      assign current_padded = '0' | append: current_padded
+    endfor
+  endif
+-%}
+
+<div class="vf-edition vf-edition--{{ color }} {{ class }}">
+  {%- if label -%}
+    <span class="vf-edition__label">{{ label | escape }}</span>
+  {%- endif -%}
+  <span class="vf-edition__numbers">
+    <span class="vf-edition__current">{{ current_padded }}</span>
+    <span class="vf-edition__sep" aria-hidden="true"> / </span>
+    <span class="vf-edition__total">{{ total }}</span>
+  </span>
+</div>
+
+{% style %}
+  .vf-edition {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--vf-s-0);
+    align-items: flex-start;
+  }
+  .vf-edition__label {
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-label);
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-label);
+    text-transform: uppercase;
+    color: var(--vf-fg-3);
+  }
+  .vf-edition__numbers {
+    font-family: var(--vf-ff-mono);
+    font-size: var(--vf-fs-mono-1);
+    font-weight: var(--vf-w-light);
+    letter-spacing: 0.04em;
+  }
+  .vf-edition__sep { color: var(--vf-fg-3); }
+
+  .vf-edition--gold  .vf-edition__numbers { color: var(--vf-gold); }
+  .vf-edition--fg-1  .vf-edition__numbers { color: var(--vf-fg-1); }
+  .vf-edition--fg-2  .vf-edition__numbers { color: var(--vf-fg-2); }
+{% endstyle %}

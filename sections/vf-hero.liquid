@@ -1,0 +1,289 @@
+{%- comment -%}
+  vf-hero.liquid — REFERENCE IMPLEMENTATION
+
+  This is the worked example for porting a React kit section to Dawn.
+  Every other section in the homepage follows the same structure:
+
+    1.  Section root with class `vf-<name>` and inline `--<custom-prop>`
+        for any per-instance values that vary with settings.
+    2.  Render snippets — never re-implement primitives inline.
+    3.  Use block.settings.* for editable content; literal values for
+        brand-locked surfaces.
+    4.  {% style %} block scoped to .vf-<name>. Never write to base.css
+        from a section.
+    5.  {% schema %} JSON at the bottom — see docs/section-schemas.md
+        for the contract.
+
+  Per the rules in AGENTS.md §3:
+    - All values reference --vf-* tokens
+    - Mobile breakpoint is 750px (Dawn's), not 768px
+    - No transition: all
+    - No emoji, exclamation, or question marks anywhere
+{%- endcomment -%}
+
+<section
+  class="vf-hero"
+  aria-labelledby="vf-hero-title"
+  data-section-id="{{ section.id }}"
+>
+  <div class="vf-hero__inner">
+    <div class="vf-hero__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+      {%- endif -%}
+
+      <h1 id="vf-hero-title" class="vf-hero__title">
+        {{ section.settings.headline_part_1 | escape }}<br/>
+        <em>{{ section.settings.headline_part_2 | escape }}</em>
+      </h1>
+
+      <div class="vf-hero__body">
+        {{ section.settings.body }}
+      </div>
+
+      <div class="vf-hero__ctas">
+        {%- if section.settings.cta_primary_label != blank -%}
+          {%- render 'vf-button',
+              label: section.settings.cta_primary_label,
+              href: section.settings.cta_primary_href,
+              variant: 'filled',
+              icon: 'arrow-right' -%}
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_label != blank -%}
+          {%- render 'vf-button',
+              label: section.settings.cta_secondary_label,
+              href: section.settings.cta_secondary_href,
+              variant: 'ghost' -%}
+        {%- endif -%}
+      </div>
+
+      {%- if section.blocks.size > 0 -%}
+        <dl class="vf-hero__metrics">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'metric' -%}
+              <div class="vf-hero__metric" {{ block.shopify_attributes }}>
+                <dt class="vf-hero__metric-label">{{ block.settings.label | escape }}</dt>
+                <dd class="vf-hero__metric-value">{{ block.settings.value | escape }}</dd>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </dl>
+      {%- endif -%}
+    </div>
+
+    <div class="vf-hero__figure" aria-hidden="true">
+      {%- render 'vf-cube', size: 420, glow: true -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .vf-hero {
+    position: relative;
+    background: var(--vf-obsidian);
+    padding: var(--vf-s-9) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+    overflow: hidden;
+  }
+  .vf-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('{{ "pattern-iso-grid.svg" | asset_url }}');
+    opacity: 0.06;
+    pointer-events: none;
+  }
+
+  .vf-hero__inner {
+    position: relative;
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--vf-s-7);
+    align-items: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vf-hero__inner {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: var(--vf-s-8);
+    }
+  }
+
+  .vf-hero__copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-5);
+  }
+
+  .vf-hero__title {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-display-1);
+    line-height: var(--vf-lh-display);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+  }
+  .vf-hero__title em {
+    font-style: italic;
+    color: var(--vf-fg-2);
+  }
+
+  .vf-hero__body {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    line-height: var(--vf-lh-body);
+    color: var(--vf-fg-2);
+    max-width: 48ch;
+  }
+  .vf-hero__body p { margin: 0 0 var(--vf-s-2); }
+  .vf-hero__body p:last-child { margin-bottom: 0; }
+
+  .vf-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--vf-s-2);
+  }
+
+  .vf-hero__metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--vf-s-4);
+    margin: var(--vf-s-4) 0 0;
+    padding-top: var(--vf-s-4);
+    border-top: var(--vf-hairline) solid var(--vf-border-2);
+  }
+  .vf-hero__metric { display: flex; flex-direction: column; gap: var(--vf-s-0); }
+  .vf-hero__metric-label {
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-label);
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-label);
+    text-transform: uppercase;
+    color: var(--vf-fg-3);
+    margin: 0;
+  }
+  .vf-hero__metric-value {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h3);
+    color: var(--vf-gold);
+    margin: 0;
+    letter-spacing: var(--vf-track-tight);
+  }
+
+  .vf-hero__figure {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Hero",
+  "tag": "section",
+  "class": "shopify-section--vf-hero",
+  "enabled_on": {
+    "templates": ["index", "page"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Eyebrow"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Voxel Forge · Chennai · Edition 2026"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_1",
+      "label": "Headline (first line, regular)",
+      "default": "Form follows"
+    },
+    {
+      "type": "text",
+      "id": "headline_part_2",
+      "label": "Headline (second line, italic)",
+      "default": "light."
+    },
+    {
+      "type": "header",
+      "content": "Body"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>Precision 3D-printed sculptural lighting in numbered editions. Engineered in Chennai.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Calls to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_primary_label",
+      "label": "Primary CTA label",
+      "default": "See the editions"
+    },
+    {
+      "type": "url",
+      "id": "cta_primary_href",
+      "label": "Primary CTA link"
+    },
+    {
+      "type": "text",
+      "id": "cta_secondary_label",
+      "label": "Secondary CTA label",
+      "default": "Read the brief"
+    },
+    {
+      "type": "url",
+      "id": "cta_secondary_href",
+      "label": "Secondary CTA link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "metric",
+      "name": "Metric",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value (e.g. 0.08 mm)"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label (e.g. Wall thickness)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "presets": [
+    {
+      "name": "Voxel Forge · Hero",
+      "category": "Voxel Forge",
+      "blocks": [
+        { "type": "metric", "settings": { "value": "0.08 mm",  "label": "Wall thickness" } },
+        { "type": "metric", "settings": { "value": "196 hr",   "label": "Print time" } },
+        { "type": "metric", "settings": { "value": "200 / yr", "label": "Production cap" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

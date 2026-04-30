@@ -1,0 +1,103 @@
+{%- comment -%}
+  vf-cube — the Voxel Forge IsoCube illustration
+
+  Optional:
+    size     — pixel size of the cube (default 280)
+    glow     — true/false (default false). Adds the radial corner glow.
+    label    — optional figure caption rendered below the cube
+    class    — extra class names
+
+  Usage:
+    {% render 'vf-cube', size: 420, glow: true %}
+    {% render 'vf-cube', size: 340, label: 'FIG. 04 · INTERNAL GEOMETRY · GYROID 40%' %}
+
+  Rules:
+    - The cube floats with a 4s ease loop. Reduced-motion stops it
+      (handled in vf-tokens.css §5).
+    - Always inline SVG — never an <img> — so stroke colours can
+      reference --vf-* tokens via currentColor or fill attributes.
+{%- endcomment -%}
+
+{%- liquid
+  assign size = size | default: 280
+  assign glow_enabled = glow | default: false
+-%}
+
+<figure class="vf-cube-wrap {{ class }}" style="--cube-size: {{ size }}px;">
+  {%- if glow_enabled -%}
+    <div class="vf-cube__glow" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="vf-cube" aria-hidden="true">
+    <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Voxel Forge isometric cube">
+      <defs>
+        <linearGradient id="vfCubeFaceR" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#1A1A1A"/>
+          <stop offset="1" stop-color="#0F0F0F"/>
+        </linearGradient>
+        <linearGradient id="vfCubeFaceL" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#141414"/>
+          <stop offset="1" stop-color="#0A0A0A"/>
+        </linearGradient>
+      </defs>
+
+      {%- comment -%} Right face {%- endcomment -%}
+      <polygon points="100,40 180,80 180,180 100,220" fill="url(#vfCubeFaceR)" stroke="#C9A96E" stroke-width="0.4" stroke-opacity="0.5"/>
+
+      {%- comment -%} Left face {%- endcomment -%}
+      <polygon points="100,40 20,80 20,180 100,220" fill="url(#vfCubeFaceL)" stroke="#C9A96E" stroke-width="0.4" stroke-opacity="0.4"/>
+
+      {%- comment -%} Top face {%- endcomment -%}
+      <polygon points="100,0 180,40 100,80 20,40" fill="#2C2C2C" stroke="#C9A96E" stroke-width="0.4" stroke-opacity="0.6"/>
+
+      {%- comment -%} Gold and teal accent slivers {%- endcomment -%}
+      <polygon points="140,20 180,40 160,50 120,30" fill="#C9A96E" opacity="0.85"/>
+      <polygon points="60,20 100,0 120,10 80,30" fill="#3D7A6B" opacity="0.85"/>
+
+      {%- comment -%} Inner edge highlights {%- endcomment -%}
+      <line x1="100" y1="80" x2="100" y2="220" stroke="#C9A96E" stroke-width="0.3" stroke-opacity="0.5"/>
+      <line x1="100" y1="40" x2="100" y2="80"  stroke="#C9A96E" stroke-width="0.3" stroke-opacity="0.3"/>
+    </svg>
+  </div>
+
+  {%- if label -%}
+    <figcaption class="vf-cube__caption">
+      {%- render 'vf-mono', text: label, size: 'micro', color: 'fg-3' -%}
+    </figcaption>
+  {%- endif -%}
+</figure>
+
+{% style %}
+  .vf-cube-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: var(--cube-size, 280px);
+    margin: 0;
+  }
+  .vf-cube {
+    width: var(--cube-size, 280px);
+    height: calc(var(--cube-size, 280px) * 1.1);
+    animation: vf-cube-float 4s var(--vf-ease-soft) infinite alternate;
+  }
+  .vf-cube svg { width: 100%; height: 100%; display: block; }
+
+  .vf-cube__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(201, 169, 110, 0.06), transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .vf-cube__caption {
+    margin-top: var(--vf-s-3);
+    text-align: center;
+  }
+
+  @keyframes vf-cube-float {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-6px); }
+  }
+{% endstyle %}

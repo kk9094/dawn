@@ -1,0 +1,47 @@
+{%- comment -%}
+  vf-eyebrow — small-caps section eyebrow
+
+  Required:
+    text     — eyebrow text (will be UPPERCASED via CSS)
+
+  Optional:
+    color    — 'teal' (default) | 'gold' | 'ember' | 'bone'
+    as       — HTML element to render (default 'span')
+    class    — extra class names
+
+  Usage:
+    {% render 'vf-eyebrow', text: 'Material · Method' %}
+    {% render 'vf-eyebrow', text: 'Atelier', color: 'ember' %}
+
+  Rules:
+    - Default colour is Teal (NOT Gold). Gold reserved for Série II
+      and certificate moments.
+    - Always uppercase via CSS, not in source.
+{%- endcomment -%}
+
+{%- liquid
+  assign tag = as | default: 'span'
+  assign color = color | default: 'teal'
+-%}
+
+<{{ tag }} class="vf-eyebrow vf-eyebrow--{{ color }} {{ class }}">{{ text | escape }}</{{ tag }}>
+
+{% style %}
+  .vf-eyebrow {
+    display: inline-block;
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-eyebrow);
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-eyebrow);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .vf-eyebrow--teal  { color: var(--vf-teal); }
+  .vf-eyebrow--gold  { color: var(--vf-gold); }
+  .vf-eyebrow--ember { color: var(--vf-ember); }
+  .vf-eyebrow--bone  { color: var(--vf-fg-2); }
+
+  /* Bone-mode parity — Teal Deep reads better on Bone */
+  [data-mode="bone"] .vf-eyebrow--teal  { color: var(--vf-teal-deep); }
+  [data-mode="bone"] .vf-eyebrow--bone  { color: var(--vf-fg-on-bone-2); }
+{% endstyle %}

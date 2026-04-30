@@ -1,0 +1,124 @@
+{%- comment -%}
+  vf-statement.liquid
+
+  Single bone-mode surface on the homepage. Centred italic Cormorant
+  quote with Teal Deep <em> accents. No blocks.
+  See docs/section-schemas.md §2 for the schema contract.
+{%- endcomment -%}
+
+<section
+  class="vf-statement"
+  data-mode="bone"
+  data-section-id="{{ section.id }}"
+  aria-label="Studio statement"
+>
+  <div class="vf-statement__inner">
+    <div class="vf-statement__quote-wrap">
+      <span class="vf-statement__accent" role="presentation" aria-hidden="true"></span>
+      {%- if section.settings.quote_html != blank -%}
+        <blockquote class="vf-statement__quote">
+          {{ section.settings.quote_html }}
+        </blockquote>
+      {%- endif -%}
+
+      {%- if section.settings.attribution != blank -%}
+        <div class="vf-statement__attribution">
+          {%- render 'vf-mono', text: section.settings.attribution -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  .vf-statement {
+    background: var(--vf-bone);
+    padding: var(--vf-s-9) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-statement__inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vf-statement__quote-wrap {
+    width: 100%;
+    max-width: 880px;
+    text-align: center;
+  }
+
+  .vf-statement__accent {
+    display: block;
+    width: 32px;
+    height: var(--vf-hairline);
+    background: var(--vf-teal);
+    margin: 0 auto var(--vf-s-5);
+  }
+
+  .vf-statement__quote {
+    font-family: var(--vf-ff-display);
+    font-style: italic;
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-display-2);
+    line-height: var(--vf-lh-display);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+    padding: 0;
+  }
+
+  .vf-statement__quote p {
+    margin: 0;
+  }
+
+  .vf-statement blockquote em {
+    color: var(--vf-teal-deep);
+  }
+
+  .vf-statement__attribution {
+    margin-top: var(--vf-s-4);
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Statement",
+  "tag": "section",
+  "class": "shopify-section--vf-statement",
+  "enabled_on": {
+    "templates": ["index", "page"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Quote"
+    },
+    {
+      "type": "richtext",
+      "id": "quote_html",
+      "label": "Quote (use <em> for Teal italic accents)",
+      "default": "<p>Light defines its <em>geometry</em>; geometry defines the <em>object</em>.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Attribution"
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "Studio note · 2026"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Voxel Forge · Statement",
+      "category": "Voxel Forge"
+    }
+  ]
+}
+{% endschema %}

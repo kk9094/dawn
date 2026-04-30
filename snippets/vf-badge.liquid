@@ -1,0 +1,59 @@
+{%- comment -%}
+  vf-badge — tier badge (Série I, Série II, Atelier, Sold Out)
+
+  Required:
+    tier     — 'I' | 'II' | 'Atelier' | 'SoldOut'
+
+  Optional:
+    label    — visible text override (defaults to the tier name)
+    class    — extra class names
+
+  Usage:
+    {% render 'vf-badge', tier: 'II' %}
+    {% render 'vf-badge', tier: 'Atelier', label: 'Atelier · Commission' %}
+
+  Rules:
+    - Tier I    → Bone hairline, neutral
+    - Tier II   → Gold hairline, gold text
+    - Atelier   → Ember hairline, ember text
+    - SoldOut   → Bone @ 18% — quiet, not alarming
+{%- endcomment -%}
+
+{%- liquid
+  case tier
+    when 'I'
+      assign default_label = 'Série I'
+    when 'II'
+      assign default_label = 'Série II'
+    when 'Atelier'
+      assign default_label = 'Atelier'
+    when 'SoldOut'
+      assign default_label = 'Sold Out'
+    else
+      assign default_label = tier
+  endcase
+  assign visible_label = label | default: default_label
+-%}
+
+<span class="vf-badge vf-badge--{{ tier | downcase }} {{ class }}">{{ visible_label | escape }}</span>
+
+{% style %}
+  .vf-badge {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 var(--vf-s-2);
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-label);
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-label);
+    text-transform: uppercase;
+    border: var(--vf-hairline) solid;
+    border-radius: var(--vf-radius-0);
+    background: rgba(10, 10, 10, 0.4);
+  }
+  .vf-badge--i        { color: var(--vf-fg-1);  border-color: var(--vf-border-1); }
+  .vf-badge--ii       { color: var(--vf-gold);  border-color: var(--vf-gold); }
+  .vf-badge--atelier  { color: var(--vf-ember); border-color: var(--vf-ember); }
+  .vf-badge--soldout  { color: var(--vf-fg-3);  border-color: var(--vf-border-2); }
+{% endstyle %}

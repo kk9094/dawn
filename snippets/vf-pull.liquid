@@ -1,0 +1,71 @@
+{%- comment -%}
+  vf-pull — pull-quote
+
+  Required:
+    text     — the quoted text
+
+  Optional:
+    attribution — small attribution line below
+    align       — 'left' (default) | 'center'
+    class       — extra class names
+
+  Usage:
+    {% render 'vf-pull',
+        text: 'Light defines its geometry.',
+        attribution: 'Studio note · 2026' %}
+
+  Rules:
+    - Cormorant Garamond italic, light weight, no quotation marks
+      (the typography does the work; quote marks are noisy).
+    - Hairline rule above (40px wide).
+    - Period at end of complete declarative is fine; never an
+      exclamation or question mark.
+{%- endcomment -%}
+
+{%- liquid
+  assign align = align | default: 'left'
+-%}
+
+<figure class="vf-pull vf-pull--{{ align }} {{ class }}">
+  <span class="vf-pull__rule" aria-hidden="true"></span>
+  <blockquote class="vf-pull__quote">{{ text | escape }}</blockquote>
+  {%- if attribution -%}
+    <figcaption class="vf-pull__attr">
+      {%- render 'vf-mono', text: attribution, size: 'micro', color: 'fg-3' -%}
+    </figcaption>
+  {%- endif -%}
+</figure>
+
+{% style %}
+  .vf-pull {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-3);
+    margin: 0;
+    max-width: 640px;
+  }
+  .vf-pull--center {
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vf-pull__rule {
+    display: block;
+    width: 40px;
+    height: var(--vf-hairline);
+    background: var(--vf-fg-3);
+  }
+
+  .vf-pull__quote {
+    font-family: var(--vf-ff-display);
+    font-style: italic;
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h2);
+    line-height: var(--vf-lh-h);
+    color: var(--vf-fg-1);
+    margin: 0;
+    letter-spacing: var(--vf-track-tight);
+  }
+{% endstyle %}

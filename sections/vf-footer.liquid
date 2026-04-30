@@ -1,0 +1,723 @@
+{%- comment -%}
+  vf-footer.liquid
+
+  NEW SECTION — sections/vf-footer.liquid.
+  Do NOT modify Dawn's native footer.liquid. The merchant places this
+  section in their sections/footer.json group via the theme customiser.
+  Root element is <section class="vf-footer">, not <footer>.
+
+  Three regions: newsletter strip / link columns / bottom bar.
+  All three are hairline-divided.
+
+  Schema contract: docs/section-schemas.md §7
+  Visual reference: ui_kits/website/Footer.jsx
+
+  Judgement calls
+  ───────────────
+  1.  Newsletter form uses {%- form 'customer' -%} (Shopify native), not
+      plain <form action="/contact">. Handles posted_successfully? and
+      errors automatically.
+
+  2.  Submit button is <button type="submit">, not vf-button snippet.
+      The vf-button snippet renders <a>, which cannot submit a form.
+      .vf-footer__submit in this section's {% style %} block mirrors the
+      ghost aesthetic (transparent, --vf-border-1, Bone text, Bone-bright
+      hover). Form-submit exception — not a re-implementation.
+
+  3.  Column title colour: JSX colTitle uses #C9A96E (Gold) — JSX DRIFT.
+      Corrected to --vf-fg-3. Gold is reserved for the wordmark and Série II
+      / certificate moments. Spreading Gold to column titles on every page
+      of the store violates the "sparingly" rule.
+
+  4.  Subscribe button colour: JSX has raw <button style={{ color: "#C9A96E" }}>
+      — JSX DRIFT. Corrected to ghost (Bone text / Bone-bright hover).
+      Filled Teal not used here — the newsletter strip already carries a
+      Teal eyebrow moment; two competing Teal accents in the same region is
+      wrong. Ghost is the correct footer register.
+
+  5.  BĒHANCE → BEHANCE. Macron not in approved glyph list (CLAUDE.md §3);
+      Behance brand uses a plain E.
+
+  6.  Studio description max-width: 280px — deliberate typographic measure
+      literal matching JSX. Same category as Material's 460px.
+
+  7.  Wordmark font-size: 26px — deliberate literal. Only use of this size
+      in the project; no token justified.
+
+  8.  Column title tracking: 0.28em (--vf-track-eyebrow). JSX uses 0.30em.
+      Delta is 0.02em — sub-perceptual. Token wins.
+
+  9.  Column title font-size: 9px — navigation label chrome. Same register
+      as Atelier metric labels and Material FIG. caption. CLAUDE.md 11px
+      floor applies to body copy; not escalated.
+
+ 10.  Link line-height: 2.2 — deliberate literal. No token exists in this
+      range. Controls click-target spacing between links, not text
+      readability. Matches JSX exactly.
+
+ 11.  Studio description, EST. 2026 line, newsletter sub-line are all
+      hardcoded brand-identity statements. Not merchant-editable per
+      schema contract. EST year is 2026 (studio founding year).
+
+ 12.  Schema doc §7 says "Wordmark in bottom band" — JSX places the
+      wordmark in the wide studio column (Region 2). JSX is the visual
+      contract; schema doc needs a correction commit.
+
+ 13.  Three-breakpoint strategy: default single-column / 750–959px (studio
+      full-width above 2×2 link grid) / 960px+ (full 1.4fr 1fr×4). Studio
+      column uses grid-column: 1 / -1 at tablet — no wrapper div needed.
+      Tablet break is genuine: five 1fr columns at 800–1000px viewport
+      renders each column at ~130px — unreadable without it.
+
+ 14.  Social ↗ glyph injected via ::after — approved unicode glyph
+      per CLAUDE.md §3. Not in merchant content.
+
+ 15.  Social link hover: .vf-footer__social-link .vf-mono { color: inherit }
+      lets the anchor's own transition drive the colour change, avoiding a
+      direct class override on vf-mono's internal colour rule.
+
+ 16.  enabled_on omitted — section available everywhere. Merchant assigns
+      it to footer.json via the theme customiser.
+{%- endcomment -%}
+
+<section
+  class="vf-footer"
+  data-section-id="{{ section.id }}"
+>
+
+  {%- comment -%}── Region 1 · Newsletter strip ──{%- endcomment -%}
+  <div class="vf-footer__newsletter">
+    <div class="vf-footer__newsletter-inner">
+
+      <div class="vf-footer__newsletter-left">
+        {%- render 'vf-eyebrow', text: 'Studio Dispatch' -%}
+        <h3 class="vf-footer__newsletter-headline">
+          {{- section.settings.newsletter_headline_part_1 | escape -}}<br>
+          <em>{{- section.settings.newsletter_headline_part_2 | escape -}}</em>
+        </h3>
+        {%- if section.settings.newsletter_body != blank -%}
+          <div class="vf-footer__newsletter-body">
+            {{- section.settings.newsletter_body -}}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="vf-footer__newsletter-right">
+        {%- form 'customer', id: 'ContactFooter', class: 'vf-footer__newsletter-form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="vf-footer__email-row">
+            <label class="visually-hidden" for="NewsletterEmail">Email address</label>
+            <input
+              type="email"
+              name="contact[email]"
+              id="NewsletterEmail"
+              class="vf-footer__email-input"
+              placeholder="you@studio.com"
+              autocomplete="email"
+              required
+            >
+            <button type="submit" class="vf-footer__submit">
+              {{- section.settings.newsletter_cta_label | escape -}}
+            </button>
+          </div>
+          {%- comment -%}Sub-line: hardcoded operational copy. Not merchant-editable.{%- endcomment -%}
+          {%- render 'vf-mono', text: 'Four notes a year. No promotions. Unsubscribe in one click.', size: 'small', color: 'fg-3' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="vf-footer__newsletter-success">Subscribed.</p>
+          {%- elsif form.errors -%}
+            <p class="vf-footer__newsletter-error">{{ form.errors | default_errors }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+
+    </div>
+  </div>
+
+  {%- comment -%}── Region 2 · Link columns ──{%- endcomment -%}
+  <div class="vf-footer__columns">
+    <div class="vf-footer__columns-inner">
+
+      {%- comment -%}Studio column — hardcoded brand identity. Not merchant-editable.{%- endcomment -%}
+      <div class="vf-footer__studio">
+        <div class="vf-footer__wordmark" aria-label="Voxel Forge">
+          <span class="vf-wordmark__voxel" aria-hidden="true">VOXEL</span>
+          <span class="vf-wordmark__forge" aria-hidden="true">FORGE</span>
+        </div>
+        <p class="vf-footer__studio-desc">Voxel Forge is a Chennai studio producing precision 3D-printed sculptural lighting in numbered editions.</p>
+        {%- render 'vf-mono', text: 'EST. 2026 · CHENNAI · INDIA', size: 'small', color: 'fg-3' -%}
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'link_column' -%}
+          <div class="vf-footer__col" {{ block.shopify_attributes }}>
+            {%- if block.settings.title != blank -%}
+              <div class="vf-footer__col-title">{{- block.settings.title | escape -}}</div>
+            {%- endif -%}
+            <ul class="vf-footer__col-links">
+              {%- if block.settings.link_1_label != blank -%}
+                <li><a class="vf-footer__link" href="{{ block.settings.link_1_url }}">{{- block.settings.link_1_label | escape -}}</a></li>
+              {%- endif -%}
+              {%- if block.settings.link_2_label != blank -%}
+                <li><a class="vf-footer__link" href="{{ block.settings.link_2_url }}">{{- block.settings.link_2_label | escape -}}</a></li>
+              {%- endif -%}
+              {%- if block.settings.link_3_label != blank -%}
+                <li><a class="vf-footer__link" href="{{ block.settings.link_3_url }}">{{- block.settings.link_3_label | escape -}}</a></li>
+              {%- endif -%}
+              {%- if block.settings.link_4_label != blank -%}
+                <li><a class="vf-footer__link" href="{{ block.settings.link_4_url }}">{{- block.settings.link_4_label | escape -}}</a></li>
+              {%- endif -%}
+            </ul>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    </div>
+  </div>
+
+  {%- comment -%}── Region 3 · Bottom bar ──{%- endcomment -%}
+  <div class="vf-footer__bottom">
+    <div class="vf-footer__bottom-inner">
+      {%- render 'vf-mono', text: section.settings.bottom_bar_text, size: 'small', color: 'fg-3' -%}
+      {%- assign has_social_blocks = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'social_link' -%}
+          {%- assign has_social_blocks = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if has_social_blocks -%}
+        <div class="vf-footer__social">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'social_link' -%}
+              <a
+                class="vf-footer__social-link"
+                href="{{ block.settings.url }}"
+                target="_blank"
+                rel="noopener"
+                {{ block.shopify_attributes }}
+              >
+                {%- render 'vf-mono', text: block.settings.label, size: 'small', color: 'fg-3' -%}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+</section>
+
+{% style %}
+  /* ── Section root ── */
+  .vf-footer {
+    background: var(--vf-obsidian);
+    border-top: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  /* ── Region 1 · Newsletter strip ── */
+  .vf-footer__newsletter {
+    padding: var(--vf-s-8) var(--vf-grid-margin-d);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-footer__newsletter-inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--vf-s-6);
+    align-items: center;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vf-footer__newsletter-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--vf-s-8);
+    }
+  }
+
+  .vf-footer__newsletter-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-4);
+  }
+
+  .vf-footer__newsletter-headline {
+    font-family: var(--vf-ff-display);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-h2);
+    line-height: var(--vf-lh-h);
+    letter-spacing: var(--vf-track-tight);
+    color: var(--vf-fg-1);
+    margin: 0;
+  }
+
+  .vf-footer__newsletter-headline em {
+    color: var(--vf-fg-3);
+    font-style: italic;
+  }
+
+  .vf-footer__newsletter-body {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    line-height: var(--vf-lh-body);
+    color: var(--vf-fg-2);
+  }
+
+  .vf-footer__newsletter-body p { margin: 0 0 var(--vf-s-2); }
+  .vf-footer__newsletter-body p:last-child { margin-bottom: 0; }
+
+  /* ── Newsletter form ── */
+  .vf-footer__newsletter-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-3);
+  }
+
+  .vf-footer__email-row {
+    display: flex;
+    align-items: center;
+    gap: var(--vf-s-3);
+    padding-bottom: var(--vf-s-2);
+    border-bottom: var(--vf-hairline) solid var(--vf-border-1);
+  }
+
+  .vf-footer__email-input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    color: var(--vf-fg-1);
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-body);
+    font-weight: var(--vf-w-light);
+    outline: none;
+    padding: 0;
+  }
+
+  .vf-footer__email-input::placeholder {
+    color: var(--vf-fg-3);
+  }
+
+  /* Form submit — ghost aesthetic. vf-button snippet outputs <a>; cannot be
+     used for type="submit". Section-scoped rule is the accepted exception. */
+  .vf-footer__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: var(--vf-hit-min);
+    padding: 0 var(--vf-s-4);
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-label);
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-label);
+    text-transform: uppercase;
+    color: var(--vf-fg-2);
+    background: transparent;
+    border: var(--vf-hairline) solid var(--vf-border-1);
+    border-radius: var(--vf-radius-0);
+    cursor: pointer;
+    white-space: nowrap;
+    transition:
+      color        var(--vf-dur-base) var(--vf-ease),
+      border-color var(--vf-dur-base) var(--vf-ease);
+  }
+
+  .vf-footer__submit:hover {
+    color: var(--vf-fg-1);
+    border-color: var(--vf-fg-1);
+  }
+
+  .vf-footer__newsletter-success {
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-body);
+    font-weight: var(--vf-w-light);
+    color: var(--vf-signal-success);
+    margin: 0;
+  }
+
+  .vf-footer__newsletter-error {
+    font-family: var(--vf-ff-body);
+    font-size: var(--vf-fs-body);
+    font-weight: var(--vf-w-light);
+    color: var(--vf-signal-error);
+    margin: 0;
+  }
+
+  /* ── Region 2 · Link columns ── */
+  .vf-footer__columns {
+    padding: var(--vf-s-8) var(--vf-grid-margin-d);
+  }
+
+  .vf-footer__columns-inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--vf-s-5);
+    align-items: start;
+  }
+
+  @media screen and (min-width: 750px) {
+    .vf-footer__columns-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    /* Studio col spans full row; 4 link cols flow as 2×2 below. */
+    .vf-footer__studio {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media screen and (min-width: 960px) {
+    .vf-footer__columns-inner {
+      grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+      gap: var(--vf-s-6);
+    }
+    .vf-footer__studio {
+      grid-column: auto;
+    }
+  }
+
+  /* ── Studio column ── */
+  .vf-footer__studio {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-4);
+  }
+
+  /* Wordmark: 26px deliberate literal — only use of this size, no token justified. */
+  .vf-footer__wordmark {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-0);
+    line-height: 1;
+  }
+
+  .vf-wordmark__voxel,
+  .vf-wordmark__forge {
+    font-family: var(--vf-ff-body);
+    font-size: 26px;
+    font-weight: var(--vf-w-light);
+    line-height: 1;
+    display: block;
+  }
+
+  .vf-wordmark__voxel {
+    color: var(--vf-fg-1);
+    letter-spacing: var(--vf-track-wordmark);
+  }
+
+  /* v1.2 carve-out: Gold on wordmark only. No other Gold reference in this section. */
+  .vf-wordmark__forge {
+    color: var(--vf-gold);
+    letter-spacing: var(--vf-track-forge);
+  }
+
+  .vf-footer__studio-desc {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    line-height: var(--vf-lh-body);
+    color: var(--vf-fg-3);
+    /* Typographic measure (matches JSX). Same category as Material's 460px. */
+    max-width: 280px;
+    margin: 0;
+  }
+
+  /* ── Link columns ── */
+  .vf-footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-2);
+  }
+
+  /* 9px: navigation label chrome — deliberate exception to 11px body floor.
+     Same register as Atelier metric labels and Material FIG. caption.
+     Tracking: 0.28em (--vf-track-eyebrow); JSX 0.30em — token wins. */
+  .vf-footer__col-title {
+    font-family: var(--vf-ff-mono);
+    font-size: 9px;
+    font-weight: var(--vf-w-light);
+    letter-spacing: var(--vf-track-eyebrow);
+    text-transform: uppercase;
+    color: var(--vf-fg-3);
+    margin-bottom: var(--vf-s-1);
+  }
+
+  .vf-footer__col-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vf-footer__link {
+    font-family: var(--vf-ff-body);
+    font-weight: var(--vf-w-light);
+    font-size: var(--vf-fs-body);
+    /* line-height 2.2: deliberate literal — controls click-target spacing
+       between links; no token exists in this range. Matches JSX exactly. */
+    line-height: 2.2;
+    color: var(--vf-fg-3);
+    text-decoration: none;
+    display: block;
+    transition: color var(--vf-dur-fast) var(--vf-ease);
+  }
+
+  .vf-footer__link:hover {
+    color: var(--vf-fg-1);
+  }
+
+  /* ── Region 3 · Bottom bar ── */
+  .vf-footer__bottom {
+    padding: var(--vf-s-4) var(--vf-grid-margin-d);
+    border-top: var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-footer__bottom-inner {
+    max-width: var(--vf-grid-max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--vf-s-5);
+  }
+
+  .vf-footer__social {
+    display: flex;
+    gap: var(--vf-s-4);
+  }
+
+  .vf-footer__social-link {
+    color: var(--vf-fg-3);
+    text-decoration: none;
+    transition: color var(--vf-dur-fast) var(--vf-ease);
+  }
+
+  /* ↗ injected via CSS — approved unicode glyph (CLAUDE.md §3). Not in merchant content. */
+  .vf-footer__social-link::after {
+    content: " ↗";
+    font-family: var(--vf-ff-mono);
+    font-size: var(--vf-fs-mono-2);
+  }
+
+  /* Override vf-mono's colour so the parent anchor's transition drives hover. */
+  .vf-footer__social-link .vf-mono {
+    color: inherit;
+  }
+
+  .vf-footer__social-link:hover {
+    color: var(--vf-fg-1);
+  }
+
+  /* ── Mobile ── */
+  @media screen and (max-width: 749px) {
+    .vf-footer__newsletter {
+      padding: var(--vf-s-7) var(--vf-grid-margin-m);
+    }
+
+    .vf-footer__columns {
+      padding: var(--vf-s-7) var(--vf-grid-margin-m);
+    }
+
+    .vf-footer__studio-desc {
+      max-width: none;
+    }
+
+    .vf-footer__bottom {
+      padding: var(--vf-s-4) var(--vf-grid-margin-m);
+    }
+
+    .vf-footer__bottom-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--vf-s-3);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Voxel Forge · Footer",
+  "tag": "section",
+  "class": "shopify-section--vf-footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_headline_part_1",
+      "label": "Newsletter headline (first line)",
+      "default": "A quarterly note from"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_headline_part_2",
+      "label": "Newsletter headline (second line, italic)",
+      "default": "the workshop floor."
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_body",
+      "label": "Newsletter body",
+      "default": "<p>Production updates, edition openings, and notes from the studio floor.</p>"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_cta_label",
+      "label": "Submit button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "header",
+      "content": "Bottom bar"
+    },
+    {
+      "type": "text",
+      "id": "bottom_bar_text",
+      "label": "Bottom-bar mono text",
+      "default": "Voxel Forge · Chennai · 2026"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column (max 4)",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Column title",
+          "default": "Editions"
+        },
+        {
+          "type": "text",
+          "id": "link_1_label",
+          "label": "Link 1 label"
+        },
+        {
+          "type": "url",
+          "id": "link_1_url",
+          "label": "Link 1 URL"
+        },
+        {
+          "type": "text",
+          "id": "link_2_label",
+          "label": "Link 2 label"
+        },
+        {
+          "type": "url",
+          "id": "link_2_url",
+          "label": "Link 2 URL"
+        },
+        {
+          "type": "text",
+          "id": "link_3_label",
+          "label": "Link 3 label"
+        },
+        {
+          "type": "url",
+          "id": "link_3_url",
+          "label": "Link 3 URL"
+        },
+        {
+          "type": "text",
+          "id": "link_4_label",
+          "label": "Link 4 label"
+        },
+        {
+          "type": "url",
+          "id": "link_4_url",
+          "label": "Link 4 URL"
+        }
+      ]
+    },
+    {
+      "type": "social_link",
+      "name": "Social link",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Platform label",
+          "info": "Uppercase, e.g. INSTAGRAM · BEHANCE · PINTEREST",
+          "default": "INSTAGRAM"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Profile URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Voxel Forge · Footer",
+      "category": "Voxel Forge",
+      "settings": {
+        "newsletter_headline_part_1": "A quarterly note from",
+        "newsletter_headline_part_2": "the workshop floor.",
+        "newsletter_cta_label": "Subscribe",
+        "bottom_bar_text": "Voxel Forge · Chennai · 2026"
+      },
+      "blocks": [
+        {
+          "type": "link_column",
+          "settings": {
+            "title": "Collections",
+            "link_1_label": "Série I",
+            "link_2_label": "Série II",
+            "link_3_label": "Atelier",
+            "link_4_label": "Archive"
+          }
+        },
+        {
+          "type": "link_column",
+          "settings": {
+            "title": "Studio",
+            "link_1_label": "The Process",
+            "link_2_label": "Materials",
+            "link_3_label": "Press · Notes",
+            "link_4_label": "Visit Chennai"
+          }
+        },
+        {
+          "type": "link_column",
+          "settings": {
+            "title": "Care",
+            "link_1_label": "Shipping",
+            "link_2_label": "Returns",
+            "link_3_label": "Care · Cleaning",
+            "link_4_label": "Contact"
+          }
+        },
+        {
+          "type": "link_column",
+          "settings": {
+            "title": "Legal",
+            "link_1_label": "Terms of Service",
+            "link_2_label": "Privacy Policy",
+            "link_3_label": "Refund Policy"
+          }
+        },
+        {
+          "type": "social_link",
+          "settings": { "label": "INSTAGRAM" }
+        },
+        {
+          "type": "social_link",
+          "settings": { "label": "BEHANCE" }
+        },
+        {
+          "type": "social_link",
+          "settings": { "label": "PINTEREST" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

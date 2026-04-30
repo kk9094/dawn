@@ -229,7 +229,7 @@ Block type `metric` — required exactly 3. Renders as the metric row.
 | --- | --- |
 | 4-column link grid + 1-column newsletter (1-col mobile) | Brand-locked composition |
 | Hairline column dividers | Brand structural element |
-| Wordmark in bottom band (gold "F O R G E") | Identity element |
+| Logo: `shopify_logo.svg` at 128×32 (single-line, 32px height — lighter footer register than the 40px header). Replaces the original wordmark spans; the `.vf-wordmark__*` classes in `vf-tokens.css` are preserved as orphaned but reserved tokens for future packaging or certificate surfaces. | Identity element |
 | Bottom-bar mono text (workshop / edition / year) | Type system |
 
 ### Editable (settings)
@@ -265,7 +265,7 @@ The header is the one place where modifying a Dawn file is acceptable, because t
 ### Hardcoded changes to `header.liquid`
 | What | Why |
 | --- | --- |
-| Logo replaced with VF wordmark snippet (Bone "VOXEL" + Gold "F O R G E") | Identity |
+| Logo: hardcoded `shopify_logo.svg` asset (160×40 desktop, 128×32 mobile). Customiser logo settings disabled — see comment block in `sections/header.liquid` for the AGENTS.md §2 sanction. | Identity |
 | Nav link tracking: `var(--vf-track-label)` (0.18em) | Type system |
 | Nav link colour: `var(--vf-fg-1)` | Type system |
 | Sticky on scroll, 0.5px hairline at bottom | Brand-locked behaviour |

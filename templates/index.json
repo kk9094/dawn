@@ -118,8 +118,8 @@
           "type": "tile",
           "settings": {
             "product": "",
-            "tier": "Atelier",
-            "name_override": "",
+            "tier": "II",
+            "name_override": "Volute",
             "subtitle": "Lamp"
           }
         },
@@ -222,6 +222,7 @@
         "headline_part_2": "from the inside.",
         "body": "<p>A gyroid lattice carries the load. Light scatters through it.</p>",
         "figure_caption": "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%",
+        "figure_image": "shopify://shop_images/Volute_engg4.svg",
         "pull_text": "Lighter than aluminium. Stronger than ABS.",
         "pull_attribution": "Engineering note · 2026"
       }

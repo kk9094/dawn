@@ -326,3 +326,28 @@ For sections that require an exact count of blocks (Process needs 4 steps, Ateli
 ```
 
 Don't enforce minimums in schema — Shopify will simply not render missing blocks. Document the requirement in the block label instead: "Step 01 of 04 (4 required)".
+
+---
+
+### Eyebrow colour token — `--vf-color-eyebrow`
+
+The `vf-eyebrow` snippet's `teal` variant (the default) and the `vf-mono` snippet's `teal` variant both resolve through the semantic token `--vf-color-eyebrow` rather than direct `--vf-teal`. This token cascades by surface:
+
+| Surface | Resolves to | Contrast vs background |
+| --- | --- | --- |
+| Default (Obsidian) | `--vf-teal-bright` (#5BA89A) | 7.1:1 |
+| `[data-mode="bone"]` | `--vf-teal-deep` (#2A5A50) | 6.1:1 on Bone |
+| `.vf-atelier` | `--vf-ember-bright` (#DD7A60) | 6.6:1 on Obsidian |
+
+**Why this matters:** `--vf-teal` (#3D7A6B) is 3.95:1 on Obsidian — it fails WCAG AA for small text (4.5:1 required). Teal remains in the palette for display-size uses only.
+
+**Naming note:** `.vf-eyebrow--teal` and `.vf-mono--teal` are now semantically "use surface accent", not literally Forge Teal. A future refactor should rename both the CSS classes to `--accent` and rename the token to `--vf-color-accent` (or `--vf-color-accent-small`). Not in scope until the full snippet API review.
+
+**Adding a new surface override:** Set `--vf-color-eyebrow` on the section root selector's CSS rule. It will cascade to all eyebrow and mono-teal descendants automatically.
+
+---
+
+### Known deferred issues
+
+**`vf-button.liquid` bone-mode hover contrast (deferred — post-QA)**
+`[data-mode="bone"] .vf-btn--filled:hover` sets `background: var(--vf-teal)` with inherited `color: var(--vf-bone)`. Bone (#E8E2D6) on Teal (#3D7A6B) = 3.95:1 — fails WCAG AA for 14px/300-weight body text. The current build has no filled button on a bone-mode surface (Statement section has no CTA), so this is latent. Fix in a dedicated button-contrast pass after QA completes.

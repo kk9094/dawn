@@ -55,7 +55,7 @@
 
     <div class="vf-atelier__copy">
       {%- if section.settings.eyebrow != blank -%}
-        {%- render 'vf-eyebrow', text: section.settings.eyebrow, color: 'ember' -%}
+        {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
       {%- endif -%}
       <h2 id="vf-atelier-title" class="vf-atelier__headline">
         {{- section.settings.headline_part_1 | escape -}}<br>
@@ -101,6 +101,7 @@
     background: var(--vf-obsidian);
     padding: var(--vf-s-9) var(--vf-grid-margin-d);
     border-bottom: var(--vf-hairline) solid var(--vf-border-2);
+    --vf-color-eyebrow: var(--vf-ember-bright);   /* 6.6:1 on Obsidian */
   }
 
   /* Corner glow — rgba(196,97,74) = --vf-ember; no alpha-composable token */

@@ -36,12 +36,11 @@
     text-transform: uppercase;
     line-height: 1;
   }
-  .vf-eyebrow--teal  { color: var(--vf-teal); }
+  .vf-eyebrow--teal  { color: var(--vf-color-eyebrow); }
   .vf-eyebrow--gold  { color: var(--vf-gold); }
   .vf-eyebrow--ember { color: var(--vf-ember); }
   .vf-eyebrow--bone  { color: var(--vf-fg-2); }
 
-  /* Bone-mode parity — Teal Deep reads better on Bone */
-  [data-mode="bone"] .vf-eyebrow--teal  { color: var(--vf-teal-deep); }
+  /* Bone-mode parity for bone variant — teal cascade handled by vf-tokens.css */
   [data-mode="bone"] .vf-eyebrow--bone  { color: var(--vf-fg-on-bone-2); }
 {% endstyle %}

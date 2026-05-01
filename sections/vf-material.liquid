@@ -56,9 +56,18 @@
   <div class="vf-material__inner">
 
     <div class="vf-material__figure">
-      <div class="vf-material__figure-cube" aria-hidden="true">
-        {%- render 'vf-cube', size: 340 -%}
-      </div>
+      {%- if section.settings.figure_image != blank -%}
+        {{ section.settings.figure_image | image_url: width: 1600 | image_tag:
+            loading: 'lazy',
+            class: 'vf-material__media',
+            alt: section.settings.figure_image.alt | default: section.settings.figure_caption | default: shop.name,
+            sizes: '(max-width: 749px) calc(100vw - 48px), 52vw',
+            widths: '400, 800, 1200, 1600' }}
+      {%- else -%}
+        <div class="vf-material__figure-cube" aria-hidden="true">
+          {%- render 'vf-cube', size: 340 -%}
+        </div>
+      {%- endif -%}
       {%- if section.settings.figure_caption != blank -%}
         <div class="vf-material__figure-caption">
           {%- comment -%}Editorial caption — deliberate 9px exception. Not body copy; do not escalate.{%- endcomment -%}
@@ -161,6 +170,15 @@
     bottom: var(--vf-s-3);
     left: var(--vf-s-3);
     z-index: 2;
+  }
+  .vf-material__media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 1;
   }
 
   .vf-material__copy {
@@ -285,6 +303,11 @@
       "id": "figure_caption",
       "label": "Figure caption",
       "default": "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%"
+    },
+    {
+      "type": "image_picker",
+      "id": "figure_image",
+      "label": "Figure image"
     },
     {
       "type": "header",

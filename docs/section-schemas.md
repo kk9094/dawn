@@ -44,6 +44,11 @@ The "Type" column maps to Shopify's input types: `text`, `richtext`, `image_pick
 | `cta_primary_href` | url | Primary CTA link | `/collections/all` |
 | `cta_secondary_label` | text | Secondary CTA label | "Read the brief" |
 | `cta_secondary_href` | url | Secondary CTA link | `/pages/about` |
+| `feature_image` | image_picker | Feature image | — |
+
+> **Figure column:** When `feature_image` is blank the IsoCube renders at 420px with glow. When set, the image replaces the cube entirely — the figure div gains the modifier class `vf-hero__figure--media`, which applies `aspect-ratio: var(--vf-ratio-process)` and `overflow: hidden`. The cube is never rendered alongside the image.
+>
+> **`aria-hidden="true"`** is set on the figure div unconditionally. In the IsoCube state the cube is decorative. In the image state the image carries the section's content meaning through the alt text supplied to `image_tag` — but the `<section>` itself is labelled by `#vf-hero-title` (via `aria-labelledby`), so the figure is supplementary. Hiding it from the accessibility tree is correct in both states.
 
 ### Editable (blocks)
 Block type `metric` — repeating. Maximum 3 blocks. Renders as the metric stack at bottom of hero.
@@ -169,8 +174,11 @@ Block type `tile` — used when `source_collection` is unset. Maximum 3 (matches
 | `headline_part_2` | text | Headline (italic, second half) | "from the inside." |
 | `body` | richtext | Body copy | "A gyroid lattice carries the load. Light scatters through it." |
 | `figure_caption` | text | Figure caption | "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%" |
+| `figure_image` | image_picker | Figure image | — |
 | `pull_text` | text | Pull-quote text | "Lighter than aluminium. Stronger than ABS." |
 | `pull_attribution` | text | Pull-quote attribution | "Engineering note · 2026" |
+
+> **Figure image:** When `figure_image` is blank the IsoCube renders at 340px (no glow). When set, the image replaces the cube — `.vf-material__media` slots in as `position: absolute; inset: 0; z-index: 1` so it fills the same aspect-ratio container. The caption overlays at `z-index: 2` in both states.
 
 ### Editable (blocks)
 Block type `spec_row` — repeating. Maximum 8.

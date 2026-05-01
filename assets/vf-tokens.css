@@ -391,3 +391,50 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   8 · Header surface
+   Pins the header to Obsidian regardless of which colour scheme
+   the merchant has selected in the Customiser. .header-wrapper
+   has equal specificity (0,1,0) to .color-scheme-*; this
+   external stylesheet loads later so it wins without !important.
+   Re-scopes Dawn's --color-* tokens so nav links, active
+   underline, icons, and cart badge all inherit brand colours
+   without touching header.liquid.
+
+   Deferred: .header__submenu renders with its own
+   color-{{ menu_color_scheme }} class — it needs a separate
+   token re-scope when nav grows beyond top-level links.
+   Tracked in docs/section-schemas.md Known deferred issues.
+   ───────────────────────────────────────────────────────────── */
+
+.header-wrapper {
+  background-color: var(--vf-obsidian);
+  --color-foreground:  232, 226, 214;   /* Bone — nav links, active underline, icons */
+  --color-background:  10, 10, 10;      /* Obsidian — keeps gradient token consistent */
+  --color-button:      61, 122, 107;    /* Forge Teal — cart badge background */
+  --color-button-text: 232, 226, 214;   /* Bone — cart badge count */
+}
+
+/* Nav hover and focus-visible colour — unguarded; transition gated below */
+.header-wrapper .header__menu-item:hover,
+.header-wrapper .header__menu-item:focus-visible {
+  color: var(--vf-teal-bright);
+}
+
+/* Icon hover and focus-visible colour */
+.header-wrapper .header__icon:hover,
+.header-wrapper .header__icon:focus-visible {
+  color: var(--vf-teal-bright);
+}
+
+/* Transitions gated — browser does NOT auto-suppress bare transitions */
+@media (prefers-reduced-motion: no-preference) {
+  .header-wrapper .header__menu-item:hover,
+  .header-wrapper .header__menu-item:focus-visible,
+  .header-wrapper .header__icon:hover,
+  .header-wrapper .header__icon:focus-visible {
+    transition: color var(--vf-dur-fast) var(--vf-ease);
+  }
+}

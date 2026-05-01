@@ -351,3 +351,6 @@ The `vf-eyebrow` snippet's `teal` variant (the default) and the `vf-mono` snippe
 
 **`vf-button.liquid` bone-mode hover contrast (deferred — post-QA)**
 `[data-mode="bone"] .vf-btn--filled:hover` sets `background: var(--vf-teal)` with inherited `color: var(--vf-bone)`. Bone (#E8E2D6) on Teal (#3D7A6B) = 3.95:1 — fails WCAG AA for 14px/300-weight body text. The current build has no filled button on a bone-mode surface (Statement section has no CTA), so this is latent. Fix in a dedicated button-contrast pass after QA completes.
+
+**`.header__submenu` colour scheme (deferred — when nav grows)**
+The dropdown submenu renders with `class="header__submenu ... color-{{ section.settings.menu_color_scheme }} gradient ..."` — it carries its own Customiser colour scheme, separate from the header wrapper's scheme. The `vf-tokens.css §8` header override targets `.header-wrapper` and does not reach into `.header__submenu`. If nav expands beyond top-level links, add a parallel token re-scope on `.header__submenu` (same pattern: `--color-foreground`, `--color-background`, hover rules). Not needed while the nav is top-level-only.

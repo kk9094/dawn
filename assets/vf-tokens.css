@@ -116,6 +116,7 @@
   /* ── PALETTE · Atelier ── */
   --vf-ember:           #C4614A;
   --vf-ember-deep:      #A04A35;
+  --vf-ember-bright:    #DD7A60;
 
   /* ── PALETTE · Signal (system, not brand) ── */
   --vf-signal-success:  #4A8B6F;
@@ -138,6 +139,11 @@
   --vf-border-2:        rgba(232,226,214,0.08);
   --vf-border-on-bone-1: rgba(10,10,10,0.18);
   --vf-border-on-bone-2: rgba(10,10,10,0.08);
+
+  /* ── SEMANTIC · surface-aware small-text accent ── */
+  /* Default: teal-bright 7.1:1 on Obsidian. Override per surface. */
+  /* Future rename candidate: --vf-color-accent or --vf-color-accent-small */
+  --vf-color-eyebrow:   var(--vf-teal-bright);
 
   /* ── TYPE · families ── */
   --vf-ff-display:      'Cormorant Garamond', Georgia, serif;
@@ -247,11 +253,12 @@
    ───────────────────────────────────────────────────────────── */
 
 [data-mode="bone"] {
-  --vf-fg-1:        var(--vf-fg-on-bone-1);
-  --vf-fg-2:        var(--vf-fg-on-bone-2);
-  --vf-fg-3:        var(--vf-fg-on-bone-3);
-  --vf-border-1:    var(--vf-border-on-bone-1);
-  --vf-border-2:    var(--vf-border-on-bone-2);
+  --vf-fg-1:           var(--vf-fg-on-bone-1);
+  --vf-fg-2:           var(--vf-fg-on-bone-2);
+  --vf-fg-3:           var(--vf-fg-on-bone-3);
+  --vf-border-1:       var(--vf-border-on-bone-1);
+  --vf-border-2:       var(--vf-border-on-bone-2);
+  --vf-color-eyebrow:  var(--vf-teal-deep);        /* 6.1:1 on Bone */
 }
 
 

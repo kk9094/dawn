@@ -112,15 +112,17 @@
     background: rgba(232, 226, 214, 0.04);
   }
 
-  /* Ember — Atelier and commission surfaces. No bone-mode parity (Atelier is Obsidian-only). */
+  /* Ember — Atelier and commission surfaces. Ghost: transparent resting, fills on hover.
+     No bone-mode parity (Atelier is Obsidian-only). */
   .vf-btn--ember {
-    background: var(--vf-ember);
-    color: var(--vf-bone);
-    border-color: var(--vf-ember);
+    background: transparent;
+    color: var(--vf-ember-bright);
+    border-color: var(--vf-ember-bright);
   }
   .vf-btn--ember:hover {
-    background: var(--vf-ember-deep);
-    border-color: var(--vf-ember-deep);
+    background: var(--vf-ember-bright);
+    color: var(--vf-obsidian);
+    border-color: var(--vf-ember-bright);
   }
 
   /* Bone-mode parity */

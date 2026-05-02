@@ -49,6 +49,8 @@ The "Type" column maps to Shopify's input types: `text`, `richtext`, `image_pick
 > **Figure column:** When `feature_image` is blank the IsoCube renders at 420px with glow. When set, the image replaces the cube entirely — the figure div gains the modifier class `vf-hero__figure--media`, which applies `aspect-ratio: var(--vf-ratio-process)` and `overflow: hidden`. The cube is never rendered alongside the image.
 >
 > **`aria-hidden="true"`** is set on the figure div unconditionally. In the IsoCube state the cube is decorative. In the image state the image carries the section's content meaning through the alt text supplied to `image_tag` — but the `<section>` itself is labelled by `#vf-hero-title` (via `aria-labelledby`), so the figure is supplementary. Hiding it from the accessibility tree is correct in both states.
+>
+> **Mobile figure behavior:** The hero has no `display: none` on the figure at mobile. Below 750px the inner grid collapses to a single column — figure renders full-width below the copy. The section has `overflow: hidden`, so the 420px IsoCube is center-cropped to the viewport width. The **center face** of the cube is the intended visible region at mobile widths — not the corner glow or the iso-grid pattern, which may not be visible at this crop. This is cropped-as-designed, not broken. The feature image (when set) renders correctly at all widths via `aspect-ratio` on the `--media` modifier.
 
 ### Editable (blocks)
 Block type `metric` — repeating. Maximum 3 blocks. Renders as the metric stack at bottom of hero.
@@ -280,6 +282,8 @@ The header is the one place where modifying a Dawn file is acceptable, because t
 
 No new `settings` introduced — header content (nav links, announcement bar) continues to use Dawn's existing schema.
 
+> **Responsive breakpoint note:** Real browser windows at 990px width report approximately 975px CSS viewport due to scrollbar reservation (~15px). The mobile drawer appears at this exact window width. Chrome DevTools device-emulation mode reports the inner viewport directly, so "990px" there shows the desktop nav correctly. Both behaviors are correct per Dawn's `min-width: 990px` responsive design — this is not a bug.
+
 ---
 
 ## Universal schema rules
@@ -352,6 +356,8 @@ The `vf-eyebrow` snippet's `teal` variant (the default) and the `vf-mono` snippe
 **Naming note:** `.vf-eyebrow--teal` and `.vf-mono--teal` are now semantically "use surface accent", not literally Forge Teal. A future refactor should rename both the CSS classes to `--accent` and rename the token to `--vf-color-accent` (or `--vf-color-accent-small`). Not in scope until the full snippet API review.
 
 **Adding a new surface override:** Set `--vf-color-eyebrow` on the section root selector's CSS rule. It will cascade to all eyebrow and mono-teal descendants automatically.
+
+**Snippet colour variant pattern — bright tokens for small text:** Snippet colour variants on dark surfaces are progressively routed through bright or semantic tokens for WCAG AA contrast. `vf-eyebrow--teal`, `vf-mono--teal`, and `vf-mono--ember` all now resolve to their bright equivalents (`--vf-teal-bright`, `--vf-teal-bright` via `--vf-color-eyebrow`, and `--vf-ember-bright` respectively). The direct `--vf-teal` and `--vf-ember` tokens should be reserved for display-size uses (≥ 1.5rem) where WCAG large-text rules apply (3:1 minimum vs 4.5:1 for small text). When adding new colour variants to snippets, default to the bright token and document the contrast ratio.
 
 ---
 

@@ -446,6 +446,6 @@ body {
    values are already correct in Dawn — only column track widths change. */
 @media screen and (min-width: 990px) {
   .header-wrapper .header--middle-left {
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
   }
 }

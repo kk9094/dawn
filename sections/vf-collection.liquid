@@ -70,7 +70,7 @@
       {%- if section.settings.source_collection != blank -%}
 
         {%- assign coll = collections[section.settings.source_collection] -%}
-        {%- for product in coll.products limit: 3 -%}
+        {%- for product in coll.products limit: 2 -%}
 
           {%- comment -%} Derive tier from product tags. {%- endcomment -%}
           {%- assign tile_tier = '' -%}
@@ -113,11 +113,31 @@
 
         {%- endfor -%}
 
+        <a
+          class="vf-collection__tile vf-collection__tile--atelier"
+          href="/pages/atelier"
+          aria-label="Atelier — Commission inquiry"
+        >
+          <div class="vf-collection__tile-badge">
+            {%- render 'vf-badge', tier: 'Atelier' -%}
+          </div>
+          <div class="vf-collection__tile-cube" aria-hidden="true">
+            {%- render 'vf-cube', size: 180 -%}
+          </div>
+          <div class="vf-collection__tile-info">
+            <div class="vf-collection__tile-name">Commission</div>
+            <div class="vf-collection__tile-subtitle">Atelier · 1 of 1</div>
+            <div class="vf-collection__tile-price">
+              {%- render 'vf-mono', text: 'On request', color: 'ember', size: 'base' -%}
+            </div>
+          </div>
+        </a>
+
       {%- else -%}
 
         {%- for block in section.blocks -%}
           {%- assign tile_product = all_products[block.settings.product] -%}
-          {%- if tile_product != blank -%}
+          {%- if tile_product != blank and block.settings.tier != 'Atelier' -%}
             {%- assign tile_name = block.settings.name_override | default: tile_product.title -%}
             {%- if block.settings.tier == 'Atelier' -%}
               {%- assign tile_price = 'On request' -%}
@@ -145,6 +165,26 @@
 
           {%- endif -%}
         {%- endfor -%}
+
+        <a
+          class="vf-collection__tile vf-collection__tile--atelier"
+          href="/pages/atelier"
+          aria-label="Atelier — Commission inquiry"
+        >
+          <div class="vf-collection__tile-badge">
+            {%- render 'vf-badge', tier: 'Atelier' -%}
+          </div>
+          <div class="vf-collection__tile-cube" aria-hidden="true">
+            {%- render 'vf-cube', size: 180 -%}
+          </div>
+          <div class="vf-collection__tile-info">
+            <div class="vf-collection__tile-name">Commission</div>
+            <div class="vf-collection__tile-subtitle">Atelier · 1 of 1</div>
+            <div class="vf-collection__tile-price">
+              {%- render 'vf-mono', text: 'On request', color: 'ember', size: 'base' -%}
+            </div>
+          </div>
+        </a>
 
       {%- endif -%}
     </div>
@@ -225,6 +265,16 @@
 
   .vf-collection__tile:hover .vf-cube-wrap {
     transform: scale(1.04);
+  }
+
+  .vf-collection__tile--atelier:hover {
+    border-color: var(--vf-ember-bright);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vf-collection__tile--atelier {
+      transition: border-color var(--vf-dur-fast) var(--vf-ease);
+    }
   }
 
   .vf-collection__tile-info {

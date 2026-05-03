@@ -121,6 +121,7 @@ Block type `step` — required exactly 4. Lower or higher counts will read wrong
 | Tier badge on tile (Série I/II/Atelier) | Identity element |
 | Hover scale 1.04 on lamp image | Motion system |
 | Bottom gradient overlay always-on | Motion system |
+| **Three-tile architecture:** Série I + Série II from collection (limit: 2), Atelier tile static | Atelier is commission-only — no product SKU exists. Static tile hardcodes href="/pages/atelier", title="Commission", subtitle="Atelier · 1 of 1", price="On request" in Ember Bright. Hover adds `border-color: --vf-ember-bright` transition (motion-gated). Block path skips any block where `tier == 'Atelier'` and always appends the same static tile. |
 
 ### Editable (settings)
 | ID | Type | Label | Default |

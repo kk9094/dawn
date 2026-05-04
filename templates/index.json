@@ -116,6 +116,7 @@
       "blocks": {
         "tile_NpQKUN": {
           "type": "tile",
+          "disabled": true,
           "settings": {
             "product": "anemos",
             "tier": "I",
@@ -125,6 +126,7 @@
         },
         "tile_zcKefb": {
           "type": "tile",
+          "disabled": true,
           "settings": {
             "product": "lamina",
             "tier": "II",
@@ -134,6 +136,7 @@
         },
         "tile_m9cz66": {
           "type": "tile",
+          "disabled": true,
           "settings": {
             "product": "",
             "tier": "Atelier",
@@ -152,7 +155,7 @@
         "eyebrow": "Editions · 2026",
         "headline_part_1": "Three editions.",
         "headline_part_2": "Open now.",
-        "source_collection": ""
+        "source_collection": "homepage"
       }
     },
     "vf_material_agY3cd": {

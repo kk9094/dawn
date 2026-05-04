@@ -141,10 +141,10 @@ Block type `tile` — used when `source_collection` is unset. Maximum 3 (matches
 | `subtitle` | text | Subtitle (e.g. "Lamp", "Pendant · gold", "Commission · 1 of 1") |
 
 > **Note:** When `source_collection` is set, tier is derived from product
-> tags (`tier:i`, `tier:ii`, `tier:atelier`). Tag-based tier dispatch is the
+> tags (`serie-1`, `serie-2`, `atelier`). Tag-based tier dispatch is the
 > preferred mechanism — block fallback is for catalogue bring-up only.
 >
-> **Note:** "On request" is hardcoded for `tier:atelier` tiles in both paths.
+> **Note:** "On request" is hardcoded for `atelier`-tagged tiles in the collection path.
 > There is no merchant price-override setting. This prevents "On request" from
 > being misused as promotional copy in violation of voice rules.
 >

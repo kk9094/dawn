@@ -9,7 +9,7 @@
 
   Tile rendering forks on source_collection:
     — Collection path (source_collection set): iterates up to 3 products;
-      tier derived from product tags (tier:i, tier:ii, tier:atelier).
+      tier derived from product tags (serie-1, serie-2, atelier).
     — Block path (source_collection blank): up to 3 manually configured
       tile blocks; tier comes directly from block.settings.tier select.
 
@@ -75,11 +75,11 @@
           {%- comment -%} Derive tier from product tags. {%- endcomment -%}
           {%- assign tile_tier = '' -%}
           {%- for tag in product.tags -%}
-            {%- if tag == 'tier:i' -%}
+            {%- if tag == 'serie-1' -%}
               {%- assign tile_tier = 'I' -%}
-            {%- elsif tag == 'tier:ii' -%}
+            {%- elsif tag == 'serie-2' -%}
               {%- assign tile_tier = 'II' -%}
-            {%- elsif tag == 'tier:atelier' -%}
+            {%- elsif tag == 'atelier' -%}
               {%- assign tile_tier = 'Atelier' -%}
             {%- endif -%}
           {%- endfor -%}
@@ -96,9 +96,20 @@
                 {%- render 'vf-badge', tier: tile_tier -%}
               {%- endif -%}
             </div>
-            <div class="vf-collection__tile-cube" aria-hidden="true">
-              {%- render 'vf-cube', size: 180 -%}
-            </div>
+            {%- if product.featured_image != blank -%}
+              <div class="vf-collection__tile-image">
+                {{- product.featured_image | image_url: width: 1200 | image_tag:
+                    loading: 'lazy',
+                    class: 'vf-collection__tile-media',
+                    alt: product.featured_image.alt | default: product.title,
+                    sizes: '(max-width: 749px) calc(100vw - 48px), (min-width: 1400px) 440px, 30vw',
+                    widths: '400, 800, 1200' -}}
+              </div>
+            {%- else -%}
+              <div class="vf-collection__tile-cube" aria-hidden="true">
+                {%- render 'vf-cube', size: 180 -%}
+              </div>
+            {%- endif -%}
             <div class="vf-collection__tile-info">
               <div class="vf-collection__tile-name">{{- product.title | escape -}}</div>
               {%- comment -%}
@@ -257,13 +268,34 @@
     z-index: 1;
   }
 
-  /* TODO: when product images replace the cube placeholder,
-     move hover scale target to the image wrapper. */
+  .vf-collection__tile-image {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .vf-collection__tile-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
   .vf-collection__tile .vf-cube-wrap {
     transition: transform var(--vf-dur-fast) var(--vf-ease);
   }
 
   .vf-collection__tile:hover .vf-cube-wrap {
+    transform: scale(1.04);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vf-collection__tile-image {
+      transition: transform var(--vf-dur-fast) var(--vf-ease);
+    }
+  }
+
+  .vf-collection__tile:hover .vf-collection__tile-image {
     transform: scale(1.04);
   }
 
@@ -362,7 +394,7 @@
     },
     {
       "type": "paragraph",
-      "content": "When a collection is selected, up to 3 products render automatically. Tier is derived from product tags: tier:i, tier:ii, tier:atelier. Leave blank to configure tiles manually using the blocks below."
+      "content": "When a collection is selected, up to 3 products render automatically. Tier is derived from product tags: serie-1, serie-2, atelier. Leave blank to configure tiles manually using the blocks below."
     },
     {
       "type": "collection",

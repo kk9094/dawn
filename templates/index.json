@@ -114,22 +114,22 @@
     "vf_collection_APxWcN": {
       "type": "vf-collection",
       "blocks": {
-        "tile_zcKefb": {
-          "type": "tile",
-          "settings": {
-            "product": "",
-            "tier": "II",
-            "name_override": "Volute",
-            "subtitle": "Lamp"
-          }
-        },
         "tile_NpQKUN": {
           "type": "tile",
           "settings": {
-            "product": "",
-            "tier": "II",
+            "product": "anemos",
+            "tier": "I",
             "name_override": "",
             "subtitle": "Pendant · gold"
+          }
+        },
+        "tile_zcKefb": {
+          "type": "tile",
+          "settings": {
+            "product": "lamina",
+            "tier": "II",
+            "name_override": "Volute",
+            "subtitle": "Lamp"
           }
         },
         "tile_m9cz66": {
@@ -143,8 +143,8 @@
         }
       },
       "block_order": [
-        "tile_zcKefb",
         "tile_NpQKUN",
+        "tile_zcKefb",
         "tile_m9cz66"
       ],
       "name": "Voxel Forge · Collection",

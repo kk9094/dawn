@@ -65,6 +65,7 @@ These are non-negotiable. If a rule conflicts with anything else, this rule wins
 - **Hit targets:** `min-height: 48px` and `min-width: 48px` for any tappable surface.
 - **Type sizes:** never below 11px on mobile. Body is 14px.
 - **Colour contrast:** Forge Teal (`#3D7A6B`) on Obsidian is 4.4:1 — display only, never paragraph copy. Use Bone (`#E8E2D6`) for body text.
+- **Badge contrast:** Badge text and border on dark surfaces use bright token variants. Pattern: Série I → `--vf-teal-bright`, Série II → `--vf-gold` (safe at all sizes), Atelier → `--vf-ember-bright`. Direct `--vf-teal` and `--vf-ember` are display-only (≥ 1.5rem). This matches the eyebrow and mono bright-token rule.
 
 ---
 

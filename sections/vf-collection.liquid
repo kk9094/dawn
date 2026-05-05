@@ -8,8 +8,8 @@
   Visual reference: ui_kits/website/Collection.jsx
 
   Tile rendering forks on source_collection:
-    — Collection path (source_collection set): iterates up to 3 products;
-      tier derived from product tags (serie-1, serie-2, atelier).
+    — Collection path (source_collection set): two passes, one per tier
+      (serie-1 → serie-2); first match breaks per pass. Atelier is static.
     — Block path (source_collection blank): up to 3 manually configured
       tile blocks; tier comes directly from block.settings.tier select.
 
@@ -34,14 +34,13 @@
      pattern. The SVG's aria-label is suppressed — the product name
      in the anchor text serves as the accessible tile description.
 
-  6. Hover scale 1.04 applied to .vf-cube-wrap inside each tile.
-     TODO: when product images replace the cube placeholder, move the
-     hover scale target to the image wrapper.
+  6. Hover scale 1.04 applied to .vf-collection__tile-image when a product
+     image is present; falls back to .vf-cube-wrap for the IsoCube placeholder.
 
-  7. Tile count is capped at 3 on both paths (limit: 3 in the collection
-     path; max_blocks: 3 in schema). Matches the headline copy
-     ("Three editions. Open now.") — 2-row wrap reads as a layout
-     accident and is not supported.
+  7. Tile order is fixed to brand hierarchy: Série I → Série II → Atelier.
+     The two-pass structure (one pass per tag, break on first match) makes
+     limit: N redundant — removed. max_blocks: 3 in schema caps the block
+     path to three tiles.
 {%- endcomment -%}
 
 <section
@@ -70,58 +69,87 @@
       {%- if section.settings.source_collection != blank -%}
 
         {%- assign coll = collections[section.settings.source_collection] -%}
-        {%- for product in coll.products limit: 2 -%}
 
-          {%- comment -%} Derive tier from product tags. {%- endcomment -%}
-          {%- assign tile_tier = '' -%}
+        {%- comment -%} Pass 1: Série I — first product tagged serie-1. {%- endcomment -%}
+        {%- for product in coll.products -%}
+          {%- assign product_tier = '' -%}
           {%- for tag in product.tags -%}
-            {%- if tag == 'serie-1' -%}
-              {%- assign tile_tier = 'I' -%}
-            {%- elsif tag == 'serie-2' -%}
-              {%- assign tile_tier = 'II' -%}
-            {%- elsif tag == 'atelier' -%}
-              {%- assign tile_tier = 'Atelier' -%}
-            {%- endif -%}
+            {%- if tag == 'serie-1' -%}{%- assign product_tier = 'I' -%}{%- break -%}{%- endif -%}
           {%- endfor -%}
-
-          {%- if tile_tier == 'Atelier' -%}
-            {%- assign tile_price = 'On request' -%}
-          {%- else -%}
+          {%- if product_tier == 'I' -%}
             {%- assign tile_price = product.price | money -%}
-          {%- endif -%}
-
-          <a class="vf-collection__tile" href="{{ product.url }}">
-            <div class="vf-collection__tile-badge">
-              {%- if tile_tier != blank -%}
-                {%- render 'vf-badge', tier: tile_tier -%}
+            <a class="vf-collection__tile vf-collection__tile--i" href="{{ product.url }}">
+              <div class="vf-collection__tile-badge">
+                {%- render 'vf-badge', tier: 'I' -%}
+              </div>
+              {%- if product.featured_image != blank -%}
+                <div class="vf-collection__tile-image">
+                  {{- product.featured_image | image_url: width: 1200 | image_tag:
+                      loading: 'lazy',
+                      class: 'vf-collection__tile-media',
+                      alt: product.featured_image.alt | default: product.title,
+                      sizes: '(max-width: 749px) calc(100vw - 48px), (min-width: 1400px) 440px, 30vw',
+                      widths: '400, 800, 1200' -}}
+                </div>
+              {%- else -%}
+                <div class="vf-collection__tile-cube" aria-hidden="true">
+                  {%- render 'vf-cube', size: 180 -%}
+                </div>
               {%- endif -%}
-            </div>
-            {%- if product.featured_image != blank -%}
-              <div class="vf-collection__tile-image">
-                {{- product.featured_image | image_url: width: 1200 | image_tag:
-                    loading: 'lazy',
-                    class: 'vf-collection__tile-media',
-                    alt: product.featured_image.alt | default: product.title,
-                    sizes: '(max-width: 749px) calc(100vw - 48px), (min-width: 1400px) 440px, 30vw',
-                    widths: '400, 800, 1200' -}}
+              <div class="vf-collection__tile-info">
+                <div class="vf-collection__tile-name">{{- product.title | escape -}}</div>
+                {%- comment -%}
+                  TODO: when custom.subtitle metafield is wired up, prefer it over product_type.
+                {%- endcomment -%}
+                <div class="vf-collection__tile-subtitle">{{- product.product_type | escape -}}</div>
+                <div class="vf-collection__tile-price">
+                  {%- render 'vf-mono', text: tile_price, color: 'gold', size: 'base' -%}
+                </div>
               </div>
-            {%- else -%}
-              <div class="vf-collection__tile-cube" aria-hidden="true">
-                {%- render 'vf-cube', size: 180 -%}
-              </div>
-            {%- endif -%}
-            <div class="vf-collection__tile-info">
-              <div class="vf-collection__tile-name">{{- product.title | escape -}}</div>
-              {%- comment -%}
-                TODO: when custom.subtitle metafield is wired up, prefer it over product_type.
-              {%- endcomment -%}
-              <div class="vf-collection__tile-subtitle">{{- product.product_type | escape -}}</div>
-              <div class="vf-collection__tile-price">
-                {%- render 'vf-mono', text: tile_price, color: 'gold', size: 'base' -%}
-              </div>
-            </div>
-          </a>
+            </a>
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
 
+        {%- comment -%} Pass 2: Série II — first product tagged serie-2. {%- endcomment -%}
+        {%- for product in coll.products -%}
+          {%- assign product_tier = '' -%}
+          {%- for tag in product.tags -%}
+            {%- if tag == 'serie-2' -%}{%- assign product_tier = 'II' -%}{%- break -%}{%- endif -%}
+          {%- endfor -%}
+          {%- if product_tier == 'II' -%}
+            {%- assign tile_price = product.price | money -%}
+            <a class="vf-collection__tile vf-collection__tile--ii" href="{{ product.url }}">
+              <div class="vf-collection__tile-badge">
+                {%- render 'vf-badge', tier: 'II' -%}
+              </div>
+              {%- if product.featured_image != blank -%}
+                <div class="vf-collection__tile-image">
+                  {{- product.featured_image | image_url: width: 1200 | image_tag:
+                      loading: 'lazy',
+                      class: 'vf-collection__tile-media',
+                      alt: product.featured_image.alt | default: product.title,
+                      sizes: '(max-width: 749px) calc(100vw - 48px), (min-width: 1400px) 440px, 30vw',
+                      widths: '400, 800, 1200' -}}
+                </div>
+              {%- else -%}
+                <div class="vf-collection__tile-cube" aria-hidden="true">
+                  {%- render 'vf-cube', size: 180 -%}
+                </div>
+              {%- endif -%}
+              <div class="vf-collection__tile-info">
+                <div class="vf-collection__tile-name">{{- product.title | escape -}}</div>
+                {%- comment -%}
+                  TODO: when custom.subtitle metafield is wired up, prefer it over product_type.
+                {%- endcomment -%}
+                <div class="vf-collection__tile-subtitle">{{- product.product_type | escape -}}</div>
+                <div class="vf-collection__tile-price">
+                  {%- render 'vf-mono', text: tile_price, color: 'gold', size: 'base' -%}
+                </div>
+              </div>
+            </a>
+            {%- break -%}
+          {%- endif -%}
         {%- endfor -%}
 
         <a
@@ -156,7 +184,7 @@
               {%- assign tile_price = tile_product.price | money -%}
             {%- endif -%}
 
-            <a class="vf-collection__tile" href="{{ tile_product.url }}" {{ block.shopify_attributes }}>
+            <a class="vf-collection__tile vf-collection__tile--{{ block.settings.tier | downcase }}" href="{{ tile_product.url }}" {{ block.shopify_attributes }}>
               <div class="vf-collection__tile-badge">
                 {%- render 'vf-badge', tier: block.settings.tier -%}
               </div>
@@ -299,11 +327,21 @@
     transform: scale(1.04);
   }
 
+  .vf-collection__tile--i:hover {
+    border-color: var(--vf-teal-bright);
+  }
+
+  .vf-collection__tile--ii:hover {
+    border-color: var(--vf-gold);
+  }
+
   .vf-collection__tile--atelier:hover {
     border-color: var(--vf-ember-bright);
   }
 
   @media (prefers-reduced-motion: no-preference) {
+    .vf-collection__tile--i,
+    .vf-collection__tile--ii,
     .vf-collection__tile--atelier {
       transition: border-color var(--vf-dur-fast) var(--vf-ease);
     }

@@ -121,7 +121,8 @@ Block type `step` — required exactly 4. Lower or higher counts will read wrong
 | Tier badge on tile (Série I/II/Atelier) | Identity element |
 | Hover scale 1.04 on lamp image | Motion system |
 | Bottom gradient overlay always-on | Motion system |
-| **Three-tile architecture:** Série I + Série II from collection (limit: 2), Atelier tile static | Atelier is commission-only — no product SKU exists. Static tile hardcodes href="/pages/atelier", title="Commission", subtitle="Atelier · 1 of 1", price="On request" in Ember Bright. Hover adds `border-color: --vf-ember-bright` transition (motion-gated). Block path skips any block where `tier == 'Atelier'` and always appends the same static tile. |
+| **Three-tile architecture:** Série I + Série II from collection, Atelier tile static | Atelier is commission-only — no product SKU exists. Static tile hardcodes href="/pages/atelier", title="Commission", subtitle="Atelier · 1 of 1", price="On request" in Ember Bright. Hover adds `border-color: --vf-ember-bright` transition (motion-gated). Block path skips any block where `tier == 'Atelier'` and always appends the same static tile. |
+| **Tile order fixed to brand hierarchy** (Série I → Série II → Atelier) | Two separate passes over the collection, each breaking on first matching tier tag. Collection sort order is ignored. If the source collection lacks a `serie-1` or `serie-2` tagged product, that tile position renders empty — intentional fail-loud behavior. The static Atelier tile is unconditional and always renders in position 3 regardless of source collection contents. |
 
 ### Editable (settings)
 | ID | Type | Label | Default |

@@ -13,9 +13,9 @@
     {% render 'vf-badge', tier: 'Atelier', label: 'Atelier · Commission' %}
 
   Rules:
-    - Tier I    → Bone hairline, neutral
-    - Tier II   → Gold hairline, gold text
-    - Atelier   → Ember hairline, ember text
+    - Tier I    → Teal-bright hairline and text
+    - Tier II   → Gold hairline and text
+    - Atelier   → Ember-bright hairline and text
     - SoldOut   → Bone @ 18% — quiet, not alarming
 {%- endcomment -%}
 
@@ -52,8 +52,8 @@
     border-radius: var(--vf-radius-0);
     background: rgba(10, 10, 10, 0.4);
   }
-  .vf-badge--i        { color: var(--vf-fg-1);  border-color: var(--vf-border-1); }
-  .vf-badge--ii       { color: var(--vf-gold);  border-color: var(--vf-gold); }
-  .vf-badge--atelier  { color: var(--vf-ember); border-color: var(--vf-ember); }
-  .vf-badge--soldout  { color: var(--vf-fg-3);  border-color: var(--vf-border-2); }
+  .vf-badge--i        { color: var(--vf-teal-bright);  border-color: var(--vf-teal-bright); }
+  .vf-badge--ii       { color: var(--vf-gold);         border-color: var(--vf-gold); }
+  .vf-badge--atelier  { color: var(--vf-ember-bright); border-color: var(--vf-ember-bright); }
+  .vf-badge--soldout  { color: var(--vf-fg-3);         border-color: var(--vf-border-2); }
 {% endstyle %}

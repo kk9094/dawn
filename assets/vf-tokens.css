@@ -411,6 +411,7 @@ body {
 
 .header-wrapper {
   background-color: var(--vf-obsidian);
+  --gradient-background: var(--vf-obsidian);  /* overrides merchant scheme gradient on all .gradient children */
   --color-foreground:  232, 226, 214;   /* Bone — nav links, active underline, icons */
   --color-background:  10, 10, 10;      /* Obsidian — keeps gradient token consistent */
   --color-button:      61, 122, 107;    /* Forge Teal — cart badge background */
@@ -465,4 +466,54 @@ body {
   letter-spacing: var(--vf-track-eyebrow);
   text-transform: uppercase;
   color:          var(--vf-fg-1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   10 · Search modal surface
+   .search-modal carries .gradient which uses var(--gradient-background).
+   That variable is set per merchant scheme in theme.liquid and is NOT
+   re-scoped by §8's --color-background override. Fix: §8 now pins
+   --gradient-background on .header-wrapper, making all .gradient
+   children dark. §10 handles search-modal-specific surfaces.
+
+   Submit button (.search__button.field__button): color: currentColor →
+   inherits Bone from §8 --color-foreground. Visible on dark surface,
+   no override needed.
+
+   --inputs-border-width resolves to 0.5px (vf-tokens.css hairline).
+   Focus ring uses 2px per AGENTS.md §3 focus-ring spec for interactive
+   surfaces — hardcoded, not relying on the hairline token.
+   ───────────────────────────────────────────────────────────── */
+
+/* Input: graphite background differentiates from obsidian modal surface */
+.header__search .field__input {
+  background-color: var(--vf-graphite);
+}
+
+/* Focus ring: 2px teal-bright, overrides Dawn's .field::after box-shadow */
+.header__search .field:focus-within::after {
+  box-shadow: 0 0 0 2px var(--vf-teal-bright);
+}
+
+/* Scrim: dark obsidian at 70% over page content */
+.header__search .modal-overlay::after {
+  background-color: color-mix(in srgb, var(--vf-obsidian) 70%, transparent);
+}
+
+/* Close button hover and focus */
+.header__search .search-modal__close-button:hover,
+.header__search .search-modal__close-button:focus-visible {
+  color: var(--vf-teal-bright);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .header__search .search-modal__close-button {
+    transition: color var(--vf-dur-fast) var(--vf-ease);
+  }
+}
+
+/* Predictive results dropdown */
+.header__search .predictive-search {
+  background: var(--vf-obsidian);
+  border-color: var(--vf-border-2);
 }

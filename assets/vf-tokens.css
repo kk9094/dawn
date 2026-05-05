@@ -449,3 +449,20 @@ body {
     grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   9 · Announcement bar surface
+   Rescopes .announcement-bar__message away from Dawn's .h5
+   heading class (Cormorant Garamond, ~19px) to the mono utility
+   register (DM Mono, 11px uppercase tracked). Same source-order
+   override mechanism as §8 — (0,1,0) specificity, no !important.
+   ───────────────────────────────────────────────────────────── */
+
+.announcement-bar__message {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-eyebrow);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-eyebrow);
+  text-transform: uppercase;
+  color:          var(--vf-fg-1);
+}

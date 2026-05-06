@@ -495,8 +495,9 @@ body {
   box-shadow: 0 0 0 2px var(--vf-teal-bright);
 }
 
-/* Scrim: dark obsidian at 70% over page content */
-.header__search .modal-overlay::after {
+/* Scrim: dark obsidian at 70% over page content.
+   Three-class chain (0,0,3,1) beats base.css details[open] .modal-overlay::after (0,0,2,2). */
+.header__search .search-modal .modal-overlay::after {
   background-color: color-mix(in srgb, var(--vf-obsidian) 70%, transparent);
 }
 

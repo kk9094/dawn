@@ -158,16 +158,19 @@
   /* ── TYPE · sizes ── */
   --vf-fs-display-1:    clamp(3.5rem, 6vw, 5.5rem);
   --vf-fs-display-2:    clamp(2.5rem, 4vw, 3.75rem);
+  --vf-fs-display-sm:   15px;              /* small display — Cormorant secondary, edition subtitle */
   --vf-fs-h-section:    clamp(2.2rem, 3.4vw, 3.4rem);
   --vf-fs-h1:           clamp(2rem, 3vw, 3rem);
   --vf-fs-h2:           clamp(1.625rem, 2.4vw, 2.25rem);
   --vf-fs-h3:           clamp(1.25rem, 1.6vw, 1.5rem);
   --vf-fs-body:         14px;
+  --vf-fs-body-sm:      13px;              /* small secondary body — accordion content, metadata */
   --vf-fs-body-large:   16px;
   --vf-fs-meta:         12px;
   --vf-fs-mono-1:       11px;
   --vf-fs-mono-2:       10px;
   --vf-fs-mono-display: 26px;
+  --vf-fs-mono-price:   18px;              /* DM Mono price / mono emphasis */
   --vf-fs-eyebrow:      11px;
   --vf-fs-label:        10px;
 
@@ -175,6 +178,7 @@
   --vf-track-tight:     -0.01em;
   --vf-track-body:      0;
   --vf-track-label:     0.18em;
+  --vf-track-meta-strong: 0.22em;          /* mid-tier metadata tracking — vendor, sku, cart labels */
   --vf-track-eyebrow:   0.28em;
   --vf-track-wordmark:  0.18em;
   --vf-track-forge:     0.52em;
@@ -182,7 +186,7 @@
   /* ── TYPE · line-heights ── */
   --vf-lh-display:      1.08;
   --vf-lh-h:            1.1;
-  --vf-lh-body:         1.65;
+  --vf-lh-body:         1.6;
   --vf-lh-tight:        1.3;
 
   /* ── SPACING · 8px baseline ── */
@@ -235,6 +239,7 @@
 
   /* ── MOTION ── */
   --vf-dur-focus:       200ms;
+  --vf-dur-micro:       120ms;             /* transactional micro-interactions — product/cart/collection */
   --vf-dur-fast:        300ms;
   --vf-dur-base:        600ms;
   --vf-dur-slow:        900ms;
@@ -517,4 +522,475 @@ body {
 .header__search .predictive-search {
   background: var(--vf-obsidian);
   border-color: var(--vf-border-2);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   11 · Product page · Transactional register
+
+   Surface:     Bone   #E8E2D6   var(--vf-bone)
+   Ink primary: Jet    #111111   var(--vf-jet)
+   Ink meta:    Iron   #3A3A3A   var(--vf-iron)
+   Accent:      Teal Deep #2A5A50  var(--vf-teal-deep)
+
+   Anchor: product-info.gradient — (0,0,1,1) beats .color-{scheme} (0,0,1,0).
+   Accordion [open] overrides budget to (0,0,4,1)+ following §10 pattern.
+   All transitions var(--vf-dur-micro) ease, motion-gated. See §11M for cart popup.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── A · Surface re-scope ── */
+
+product-info.gradient {
+  --gradient-background:          var(--vf-bone);
+  --color-background:             232, 226, 214;   /* Bone — RGB triplet for Dawn composition */
+  --color-foreground:             17,  17,  17;    /* Jet */
+  --color-button:                 42,  90,  80;    /* Teal Deep — buy-it-now primary */
+  --color-button-text:            232, 226, 214;   /* Bone on Teal Deep */
+  --color-secondary-button:       232, 226, 214;   /* Bone — add-to-cart ghost base */
+  --color-secondary-button-text:  17,  17,  17;    /* Jet — ghost text */
+  background:                     var(--vf-bone);
+  padding-top:                    var(--vf-s-8);   /* 96px desktop — comp padY */
+  padding-bottom:                 var(--vf-s-8);
+}
+
+@media screen and (min-width: 750px) and (max-width: 989px) {
+  product-info.gradient {
+    padding-top:    56px;   /* comp tablet 56px — between --vf-s-6:48 and --vf-s-7:64 */
+    padding-bottom: 64px;   /* --vf-s-7 */
+  }
+}
+
+@media screen and (max-width: 749px) {
+  product-info.gradient {
+    padding-top:    var(--vf-s-4);  /* 24px — nearest to comp 28px */
+    padding-bottom: var(--vf-s-6);  /* 48px — nearest to comp 56px */
+  }
+}
+
+/* Optical top baseline: info column starts 24px below gallery (desktop only) */
+@media screen and (min-width: 750px) {
+  product-info .product__info-container {
+    padding-top: var(--vf-s-4);   /* 24px */
+  }
+}
+
+/* Reset Dawn's universal 1.5rem inter-block gap; rhythm set per element below */
+product-info .product__info-container > * + * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+product-info .product__info-container .product-form,
+product-info .product__info-container .product__description {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* ── B · Vendor label ── */
+
+product-info .product__text.caption-with-letter-spacing {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-mono-1);            /* 11px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-meta-strong);    /* 0.22em */
+  text-transform: uppercase;
+  color:          var(--vf-teal-deep);
+  margin-bottom:  0;
+}
+
+/* 14px — vendor→title: optical gap aligned to title cap-height; 12px merges with ascenders, 16px floats */
+product-info .product__text.caption-with-letter-spacing + .product__title {
+  margin-top: 14px;
+}
+
+/* ── C · Product title ── */
+
+product-info .product__title h1,
+product-info .product__title .h1 {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h1);       /* clamp(2rem, 3vw, 3rem) → 30px desktop */
+  font-weight:    var(--vf-w-regular);
+  font-style:     normal;
+  letter-spacing: var(--vf-track-tight); /* -0.01em; comp -0.005em absorbed per approval */
+  line-height:    var(--vf-lh-h);
+  color:          var(--vf-jet);
+}
+
+product-info .product__title {
+  margin-bottom: 20px;  /* 20px — title→price: display cap-height needs air before mono; 16px collapses, 24px detaches */
+}
+
+/* ── D · Edition subtitle — Phase 1B selector hook ── */
+/* No markup exists yet. Rule fires correctly when 1B deploys .product__edition-subtitle. */
+product-info .product__edition-subtitle {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-display-sm);  /* 15px */
+  font-style:     italic;
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: 0;
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-iron);
+  margin-top:     10px;   /* 10px — title→subtitle: italic caption tucked under headline, not a full gap */
+  margin-bottom:  20px;   /* 20px — subtitle→price: matches title→price rhythm so price reads as the same cluster */
+}
+
+/* ── E · Price ── */
+
+product-info .price {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-mono-price);  /* 18px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: 0.02em;   /* optical refinement at price scale; below system-encoding threshold */
+  color:          var(--vf-jet);
+  padding-bottom: var(--vf-s-5);            /* 32px → hairline (comp "Price → divider") */
+  border-bottom:  var(--vf-hairline) solid var(--vf-iron);
+  margin-bottom:  28px;   /* 28px — post-hairline silence: divider is a deliberate pause; its air must exceed block rhythm to signal price cluster end */
+}
+
+/* ── F · Description ── */
+
+product-info .product__description {
+  font-family:   var(--vf-ff-body);
+  font-size:     var(--vf-fs-body);    /* 14px */
+  font-weight:   var(--vf-w-light);   /* 300 */
+  line-height:   var(--vf-lh-body);
+  color:         var(--vf-jet);
+  max-width:     38ch;
+  margin-top:    0;
+  margin-bottom: var(--vf-s-5);  /* 32px → qty section; comp 36px — nearest token */
+}
+
+/* Italic phrase within description swaps to Cormorant (existing <em>/<i> markup) */
+product-info .product__description em,
+product-info .product__description i {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-display-sm);  /* 15px */
+  font-style:  italic;
+}
+
+/* ── G · Quantity selector ── */
+
+product-info .quantity__label {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);          /* 12px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);      /* 0.18em */
+  text-transform: uppercase;
+  color:          var(--vf-jet);
+  display:        block;
+  margin-bottom:  10px;   /* 10px — label→control coupling: label floats over its input, not a full interblock gap */
+}
+
+/* Iron hairline via inset shadow — avoids layout shift on focus swap */
+product-info .quantity {
+  min-height: 48px;
+  box-shadow: inset 0 0 0 var(--vf-hairline) var(--vf-iron);
+}
+
+/* Remove Dawn's ::after / ::before pseudo-border rendering */
+product-info .quantity::after {
+  box-shadow: none;
+  border:     none;
+}
+
+product-info .quantity::before {
+  box-shadow: none;
+}
+
+product-info .quantity__input {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);        /* 12px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);    /* 0.18em */
+  color:          var(--vf-jet);
+  opacity:        1;   /* override Dawn's 0.85 */
+}
+
+product-info .quantity__button {
+  font-family: var(--vf-ff-mono);
+  font-size:   var(--vf-fs-meta);   /* 12px — override Dawn's 1.8rem */
+  color:       var(--vf-iron);
+}
+
+product-info .quantity__button[disabled],
+product-info .quantity__button.disabled {
+  color: color-mix(in srgb, var(--vf-iron) 40%, transparent);
+}
+
+/* Focus: Teal Deep ring replaces Iron hairline — single line, no doubling */
+product-info .quantity__button:focus-visible,
+product-info .quantity__input:focus-visible {
+  outline:          none;
+  box-shadow:       inset 0 0 0 1.5px var(--vf-teal-deep);
+  background-color: transparent;
+  z-index:          2;
+}
+
+product-info .product-form__quantity {
+  margin-bottom: 14px;   /* 14px — qty→CTA tight coupling: quantity and add-to-cart are a unit; 16px would read as separate items */
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  product-info .quantity__button {
+    transition: color var(--vf-dur-micro) ease;
+  }
+  product-info .quantity {
+    transition: box-shadow var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── H · Add-to-cart button (ghost) ── */
+/* Ghost on both button--primary and button--secondary per approved decision.
+   Bypasses Dawn's ::before / ::after pseudo-border system with inset box-shadow. */
+
+product-info .product-form__submit {
+  background-color: transparent;
+  color:            var(--vf-jet);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) var(--vf-iron);
+  min-height:       48px;
+  font-family:      var(--vf-ff-mono);
+  font-size:        var(--vf-fs-meta);        /* 12px */
+  font-weight:      var(--vf-w-regular);
+  letter-spacing:   var(--vf-track-label);    /* 0.18em */
+  text-transform:   uppercase;
+  border-radius:    var(--vf-radius-0);
+  margin-bottom:    var(--vf-s-5);   /* → first accordion; comp 36px — --vf-s-5:32px nearest */
+}
+
+product-info .product-form__submit::before,
+product-info .product-form__submit::after {
+  box-shadow: none;
+}
+
+product-info .product-form__submit:not([disabled]):not([aria-disabled='true']):hover {
+  background-color: var(--vf-teal-deep);
+  color:            var(--vf-bone);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) var(--vf-teal-deep);
+}
+
+product-info .product-form__submit:not([disabled]):not([aria-disabled='true']):active {
+  background-color: color-mix(in oklch, var(--vf-teal-deep) 92%, black);
+  color:            var(--vf-bone);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) color-mix(in oklch, var(--vf-teal-deep) 92%, black);
+}
+
+product-info .product-form__submit:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+/* Loading state: show filled Teal Deep while request is in flight */
+product-info .product-form__submit.loading {
+  background-color: var(--vf-teal-deep);
+  color:            var(--vf-bone);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) var(--vf-teal-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  product-info .product-form__submit {
+    transition: background-color var(--vf-dur-micro) ease, color var(--vf-dur-micro) ease, box-shadow var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── I · Buy-it-now (unbranded dynamic checkout) ── */
+
+product-info button.shopify-payment-button__button--unbranded {
+  background-color: var(--vf-teal-deep);
+  color:            var(--vf-bone);
+  min-height:       48px;
+  font-family:      var(--vf-ff-mono);
+  font-size:        var(--vf-fs-meta);        /* 12px */
+  font-weight:      var(--vf-w-regular);
+  letter-spacing:   var(--vf-track-label);    /* 0.18em */
+  text-transform:   uppercase;
+  border-radius:    var(--vf-radius-0);
+}
+
+product-info button.shopify-payment-button__button--unbranded::before,
+product-info button.shopify-payment-button__button--unbranded::after {
+  box-shadow: none;
+}
+
+product-info button.shopify-payment-button__button--unbranded:not([disabled]):hover {
+  background-color: color-mix(in oklch, var(--vf-teal-deep) 97%, white);
+}
+
+product-info button.shopify-payment-button__button--unbranded:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  product-info button.shopify-payment-button__button--unbranded {
+    transition: background-color var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── J · Accordions ── */
+
+product-info .accordion {
+  border-top-color:    var(--vf-iron);
+  border-bottom-color: var(--vf-iron);
+  border-top-width:    var(--vf-hairline);
+  border-bottom-width: var(--vf-hairline);
+  margin-top:          0;
+  margin-bottom:       0;
+}
+
+product-info .accordion + .accordion {
+  border-top: none;
+}
+
+product-info .accordion summary {
+  padding-top:    18px;   /* 18px — accordion breath: opens hit area proportional to body leading without full section-gap weight */
+  padding-bottom: 18px;
+}
+
+product-info .accordion__title {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-body);     /* 14px */
+  font-weight:    var(--vf-w-medium);    /* 500 */
+  letter-spacing: 0;
+  color:          var(--vf-jet);
+}
+
+/* Icon + chevron: Iron at rest */
+product-info .accordion .svg-wrapper {
+  fill:  var(--vf-iron);
+  color: var(--vf-iron);
+}
+
+product-info .accordion summary .icon-caret {
+  fill:  var(--vf-iron);
+  color: var(--vf-iron);
+}
+
+/* Hover: Teal Deep on label and icon */
+product-info .accordion summary:hover .accordion__title {
+  color: var(--vf-teal-deep);
+}
+
+product-info .accordion summary:hover .svg-wrapper,
+product-info .accordion summary:hover .icon-caret {
+  fill:  var(--vf-teal-deep);
+  color: var(--vf-teal-deep);
+}
+
+/* Open state: Teal Deep — (0,0,4,1) beats component-accordion.css (0,0,2,0) */
+product-info .accordion details[open] > summary .accordion__title {
+  color: var(--vf-teal-deep);
+}
+
+product-info .accordion details[open] > summary .svg-wrapper,
+product-info .accordion details[open] > summary .icon-caret {
+  fill:  var(--vf-teal-deep);
+  color: var(--vf-teal-deep);
+}
+
+product-info .accordion__content {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-sm);    /* 13px */
+  font-weight: var(--vf-w-light);       /* 300 */
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-iron);
+}
+
+/* 28px — form cluster termination: mirrors post-hairline spacing, signals end of form group before share utility */
+product-info .product__accordion:last-of-type {
+  margin-bottom: 28px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  product-info .accordion__title,
+  product-info .accordion .svg-wrapper,
+  product-info .accordion .icon-caret {
+    transition: color var(--vf-dur-micro) ease, fill var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── K · Share link ── */
+/* .share-button__button targets both the <summary> trigger and the fallback <button> */
+
+product-info .share-button__button {
+  font-family:      var(--vf-ff-mono);
+  font-size:        var(--vf-fs-mono-1);       /* 11px */
+  font-weight:      var(--vf-w-regular);
+  letter-spacing:   var(--vf-track-label);     /* 0.18em */
+  text-transform:   uppercase;
+  color:            var(--vf-teal-deep);
+  background:       transparent;
+  border:           none;
+  border-bottom:    var(--vf-hairline) solid var(--vf-teal-deep);
+  padding-bottom:   2px;
+  cursor:           pointer;
+}
+
+product-info .share-button__button:hover {
+  border-bottom-width: 1px;   /* hover: underline thickens */
+}
+
+product-info .share-button__button:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  product-info .share-button__button {
+    transition: border-bottom-width var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── L · Thumbnails ── */
+
+product-info .thumbnail {
+  box-shadow: inset 0 0 0 var(--vf-hairline) var(--vf-iron);
+}
+
+/* Active: 1px Teal Deep — hairline exception; 0.5px washes out at thumbnail size */
+product-info .thumbnail[aria-current] {
+  box-shadow:   inset 0 0 0 1px var(--vf-teal-deep);
+  border-color: var(--vf-teal-deep);
+}
+
+/* Hover: dim all non-active, non-hovered siblings */
+product-info .thumbnail-list:has(.thumbnail:hover) .thumbnail:not(:hover):not([aria-current]) {
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  product-info .thumbnail {
+    transition: box-shadow var(--vf-dur-micro) ease, opacity var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── M · Cart notification popup ── */
+/* Outside product-info — targeted directly. Source-order over .color-{scheme} at equal spec. */
+
+.cart-notification {
+  --gradient-background: var(--vf-bone);
+  --color-background:    232, 226, 214;
+  --color-foreground:    17,  17,  17;
+  background:            var(--vf-bone);
+}
+
+/* "Check out" — filled Teal Deep */
+.cart-notification .button--primary {
+  background-color: var(--vf-teal-deep);
+  color:            var(--vf-bone);
+}
+
+.cart-notification .button--primary::before,
+.cart-notification .button--primary::after {
+  box-shadow: none;
+}
+
+/* "View cart" — ghost */
+.cart-notification .button--secondary {
+  background-color: transparent;
+  color:            var(--vf-jet);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) var(--vf-iron);
+}
+
+.cart-notification .button--secondary::before,
+.cart-notification .button--secondary::after {
+  box-shadow: none;
 }

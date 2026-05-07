@@ -52,6 +52,10 @@ These are non-negotiable. If a rule conflicts with anything else, this rule wins
 ### Buttons & focus
 - All buttons: `min-height: 48px`. Override Dawn's 45px floor for `.vf-btn`.
 - Focus ring: `outline: 2px solid var(--vf-teal); outline-offset: 2px;` on `:focus-visible` (not `:focus`). Suppress Dawn's `box-shadow` ring on `.vf-*` only — leave it intact for default Dawn sections.
+- **Focus ring weight scales with surrounding hairline:**
+  - `2px` on editorial surfaces (Obsidian field, no adjacent hairline borders) — `var(--vf-teal-bright)`
+  - `1.5px` on transactional surfaces (Bone field) where the ring sits adjacent to 0.5px hairline borders — prevents double-line readability issue — `var(--vf-teal-deep)`
+  - Always `outline-offset: 2px` to separate ring from any adjacent border
 
 ### Voice
 - **No emoji.** Approved unicode glyphs only: `→ ↗ · — ° ± ∞`

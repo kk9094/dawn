@@ -646,6 +646,22 @@ product-info .price {
   margin-bottom:  28px;   /* 28px — post-hairline silence: divider is a deliberate pause; its air must exceed block rhythm to signal price cluster end */
 }
 
+/* ── E+ · Sold Out badge ── */
+/* .price__badge-sold-out at (0,0,1,1) beats .badge base at (0,0,1,0).
+   Verify 12px visual weight against 18px price post-deploy; may revisit to 11px or 14px. */
+
+product-info .price__badge-sold-out {
+  background-color: var(--vf-iron);
+  color:            var(--vf-bone);
+  border-color:     transparent;
+  border-radius:    4px;                        /* brand max radius; overrides merchant --badge-corner-radius */
+  font-family:      var(--vf-ff-mono);
+  font-size:        var(--vf-fs-meta);          /* 12px */
+  font-weight:      var(--vf-w-regular);
+  letter-spacing:   var(--vf-track-label);      /* 0.18em */
+  text-transform:   uppercase;
+}
+
 /* ── F · Description ── */
 
 product-info .product__description {
@@ -655,8 +671,12 @@ product-info .product__description {
   line-height:   var(--vf-lh-body);
   color:         var(--vf-jet);
   max-width:     38ch;
+}
+
+/* Reset block at (0,0,2,1) zeroed margin-bottom; match selector depth to restore via source-order */
+product-info .product__info-container .product__description {
   margin-top:    0;
-  margin-bottom: var(--vf-s-5);  /* 32px → qty section; comp 36px — nearest token */
+  margin-bottom: 36px;  /* 36px — description→qty: exact comp spec; browser <p> default was producing ~16px */
 }
 
 /* Italic phrase within description swaps to Cormorant (existing <em>/<i> markup) */
@@ -993,4 +1013,101 @@ product-info .thumbnail-list:has(.thumbnail:hover) .thumbnail:not(:hover):not([a
 .cart-notification .button--secondary::before,
 .cart-notification .button--secondary::after {
   box-shadow: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   12 · Mobile nav drawer · Editorial register
+
+   Surface: Obsidian — editorial extension of the header.
+   Same register as §8 (header) and §10 (search modal).
+
+   Root cause: .menu-drawer carries color-{section.settings.menu_color_scheme}
+   which sets --color-background at element scope (0,0,1,0), overriding §8's
+   inherited obsidian value. Fix: re-declare variables on .menu-drawer directly;
+   vf-tokens.css loads last so source-order wins at equal specificity.
+
+   Scrim: component-menu-drawer.css targets the backdrop via
+   `menu-drawer > details > summary::before` using `menu-drawer` as a CSS type
+   selector for a <menu-drawer> custom element. The Liquid renders <header-drawer>
+   as the outer element — that selector does not match. Scrim added here via
+   the confirmed class selector .menu-drawer-container.
+
+   The × close icon in the header bar is in .header__icon--menu (outside .menu-drawer);
+   already covered by §8 hover rules. .menu-drawer__close-button is the submenu
+   back-arrow button, handled below.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── A · Surface re-scope ── */
+
+.menu-drawer {
+  --gradient-background: var(--vf-obsidian);
+  --color-background:    10, 10, 10;     /* Obsidian — component-menu-drawer reads rgb(var(--color-background)) */
+  --color-foreground:    232, 226, 214;  /* Bone — .link--text descendants inherit via rgb(var(--color-foreground)) */
+  background:            var(--vf-obsidian);
+}
+
+/* ── B · Nav link colours ── */
+
+/* Explicit Bone — belt-and-suspenders for elements that may not inherit via .link--text */
+.menu-drawer .menu-drawer__menu-item {
+  color: var(--vf-bone);
+}
+
+/* Hover and keyboard focus: Teal Bright + 6% Bone surface tint.
+   Selector at (0,0,3,0) beats component-menu-drawer.css (0,0,2,0). */
+.menu-drawer .menu-drawer__menu-item:hover,
+.menu-drawer .menu-drawer__menu-item:focus-visible,
+.menu-drawer .menu-drawer__close-button:hover,
+.menu-drawer .menu-drawer__close-button:focus-visible {
+  color:            var(--vf-teal-bright);
+  background-color: color-mix(in srgb, var(--vf-bone) 6%, transparent);
+}
+
+/* Active page marker — Bone at rest, Teal Bright on hover */
+.menu-drawer .menu-drawer__menu-item--active {
+  color: var(--vf-bone);
+}
+
+.menu-drawer .menu-drawer__menu-item--active:hover {
+  color:            var(--vf-teal-bright);
+  background-color: color-mix(in srgb, var(--vf-bone) 8%, transparent);
+}
+
+/* ── C · Focus ring — editorial surface ── */
+/* 2px Teal Bright per CLAUDE.md §3 editorial spec.
+   box-shadow: none suppresses .focus-inset box-shadow applied by Dawn on nav items. */
+
+.menu-drawer .menu-drawer__menu-item:focus-visible,
+.menu-drawer .menu-drawer__close-button:focus-visible {
+  outline:        2px solid var(--vf-teal-bright);
+  outline-offset: 2px;
+  box-shadow:     none;
+}
+
+/* ── D · Scrim ── */
+/* Targets the ::before pseudo-element that component-menu-drawer.css
+   creates as the page-dimming backdrop when the drawer is open. */
+
+.menu-drawer-container > details > summary::before {
+  background: color-mix(in srgb, var(--vf-obsidian) 70%, transparent);
+}
+
+/* ── E · Account and social links ── */
+
+.menu-drawer .menu-drawer__account {
+  color: var(--vf-bone);
+}
+
+.menu-drawer .menu-drawer__account:hover {
+  color: var(--vf-teal-bright);
+}
+
+/* ── F · Transitions ── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu-drawer .menu-drawer__menu-item,
+  .menu-drawer .menu-drawer__close-button,
+  .menu-drawer .menu-drawer__account {
+    transition: color var(--vf-dur-fast) var(--vf-ease), background-color var(--vf-dur-fast) var(--vf-ease);
+  }
 }

@@ -159,8 +159,10 @@
   --vf-fs-display-1:    clamp(3.5rem, 6vw, 5.5rem);
   --vf-fs-display-2:    clamp(2.5rem, 4vw, 3.75rem);
   --vf-fs-display-sm:   15px;              /* small display — Cormorant secondary, edition subtitle */
+  --vf-fs-display-md:   18px;              /* mid display — Cormorant intermediate, empty-state subtitle */
   --vf-fs-h-section:    clamp(2.2rem, 3.4vw, 3.4rem);
   --vf-fs-h1:           clamp(2rem, 3vw, 3rem);
+  --vf-fs-page-title:   38px;              /* Cormorant page-level H1 — cart, collection, account */
   --vf-fs-h2:           clamp(1.625rem, 2.4vw, 2.25rem);
   --vf-fs-h3:           clamp(1.25rem, 1.6vw, 1.5rem);
   --vf-fs-body:         14px;
@@ -171,6 +173,7 @@
   --vf-fs-mono-2:       10px;
   --vf-fs-mono-display: 26px;
   --vf-fs-mono-price:   18px;              /* DM Mono price / mono emphasis */
+  --vf-fs-mono-strong:  22px;              /* DM Mono strong — settlement total, order amounts */
   --vf-fs-eyebrow:      11px;
   --vf-fs-label:        10px;
 
@@ -1109,5 +1112,332 @@ product-info .thumbnail-list:has(.thumbnail:hover) .thumbnail:not(:hover):not([a
   .menu-drawer .menu-drawer__close-button,
   .menu-drawer .menu-drawer__account {
     transition: color var(--vf-dur-fast) var(--vf-ease), background-color var(--vf-dur-fast) var(--vf-ease);
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   13 · Cart page · Transactional register
+
+   Surface:     Bone      #E8E2D6   var(--vf-bone)
+   Ink primary: Jet       #111111   var(--vf-jet)
+   Ink meta:    Iron      #3A3A3A   var(--vf-iron)
+   Accent:      Teal Deep #2A5A50   var(--vf-teal-deep)
+
+   Anchor (items):  cart-items.gradient — (0,0,1,1) beats .color-{scheme} (0,0,1,0).
+   Anchor (footer): .cart__footer-wrapper .gradient — (0,0,2,0) beats .color-{scheme}.
+   All transitions var(--vf-dur-micro), motion-gated.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── A · Surface re-scope ── */
+
+cart-items.gradient {
+  --gradient-background: var(--vf-bone);
+  --color-background:    232, 226, 214;   /* Bone */
+  --color-foreground:    17,  17,  17;    /* Jet */
+  background:            var(--vf-bone);
+}
+
+/* cart.json section "cart-footer" wraps as .cart__footer-wrapper; inner .gradient carries .color-{scheme} */
+.cart__footer-wrapper .gradient {
+  --gradient-background: var(--vf-bone);
+  --color-background:    232, 226, 214;
+  --color-foreground:    17,  17,  17;
+  background:            var(--vf-bone);
+}
+
+/* ── B · Line item table ── */
+
+/* Column headers — (0,0,1,2) beats component-cart-items.css .cart-items th at (0,0,1,1) */
+cart-items .cart-items th {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-mono-2);          /* 10px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-meta-strong);  /* 0.22em */
+  text-transform: uppercase;
+  color:          var(--vf-iron);
+  border-bottom:  var(--vf-hairline) solid var(--vf-iron);
+  padding-bottom: var(--vf-s-2);
+}
+
+/* Row hairlines — last item skips trailing rule */
+cart-items .cart-item {
+  border-bottom: var(--vf-hairline) solid var(--vf-iron);
+}
+
+cart-items .cart-item:last-child {
+  border-bottom: none;
+}
+
+/* Thumbnail — box-shadow ring (inset is ineffective on replaced <img> content) */
+cart-items .cart-item__image {
+  box-shadow: 0 0 0 var(--vf-hairline) var(--vf-iron);
+}
+
+/* Vendor — Teal Deep mono metadata label */
+cart-items .cart-item__details .caption-with-letter-spacing {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-mono-1);          /* 11px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-meta-strong);  /* 0.22em */
+  text-transform: uppercase;
+  color:          var(--vf-teal-deep);
+}
+
+/* Item name — Cormorant display register */
+cart-items .cart-item__name {
+  font-family:     var(--vf-ff-display);
+  font-size:       var(--vf-fs-h2);             /* clamp(1.625rem, 2.4vw, 2.25rem) */
+  font-weight:     var(--vf-w-regular);
+  letter-spacing:  var(--vf-track-tight);
+  line-height:     var(--vf-lh-h);
+  color:           var(--vf-jet);
+  text-decoration: none;
+}
+
+cart-items .cart-item__name:hover {
+  color: var(--vf-teal-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  cart-items .cart-item__name {
+    transition: color var(--vf-dur-micro) ease;
+  }
+}
+
+/* Line total — DM Mono 16px medium, right-aligned (price--end handles text alignment) */
+cart-items .cart-item__totals .price {
+  font-family: var(--vf-ff-mono);
+  font-size:   var(--vf-fs-body-large);  /* 16px */
+  font-weight: var(--vf-w-medium);       /* 500 */
+  color:       var(--vf-jet);
+}
+
+/* Remove button — inject "REMOVE" text, suppress SVG icon.
+   component-cart-items.css: cart-remove-button .button:after { content: none } at (0,0,1,2).
+   a.button::after at (0,0,1,3) + source order wins. */
+cart-items cart-remove-button .svg-wrapper {
+  display: none;
+}
+
+cart-items cart-remove-button a.button::after {
+  content:        'REMOVE';
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);        /* 12px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);    /* 0.18em */
+  text-transform: uppercase;
+  color:          var(--vf-iron);
+}
+
+cart-items cart-remove-button a.button:hover::after {
+  color: var(--vf-teal-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  cart-items cart-remove-button a.button::after {
+    transition: color var(--vf-dur-micro) ease;
+  }
+}
+
+/* Quantity stepper — 32px height (tighter than product page's 48px in table context) */
+cart-items .quantity {
+  min-height: 32px;
+  box-shadow: inset 0 0 0 var(--vf-hairline) var(--vf-iron);
+}
+
+cart-items .quantity::after,
+cart-items .quantity::before {
+  box-shadow: none;
+  border:     none;
+}
+
+cart-items .quantity__input {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);
+  color:          var(--vf-jet);
+  opacity:        1;
+}
+
+cart-items .quantity__button {
+  font-family: var(--vf-ff-mono);
+  font-size:   var(--vf-fs-meta);
+  color:       var(--vf-iron);
+}
+
+/* Focus: inset 1.5px Teal Deep — matches §11 transactional spec; no double-line with hairline */
+cart-items .quantity__button:focus-visible,
+cart-items .quantity__input:focus-visible {
+  outline:          none;
+  box-shadow:       inset 0 0 0 1.5px var(--vf-teal-deep);
+  background-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  cart-items .quantity__button {
+    transition: color var(--vf-dur-micro) ease;
+  }
+  cart-items .quantity {
+    transition: box-shadow var(--vf-dur-micro) ease;
+  }
+}
+
+/* Row hover: hovered row full opacity; siblings dim */
+cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
+  opacity: 0.85;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  cart-items .cart-item {
+    transition: opacity var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── C · Settlement section ── */
+
+/* Settlement column: 44% at desktop (component-cart.css sets fixed 35rem; (0,0,2,1) beats (0,0,1,1)) */
+@media screen and (min-width: 750px) {
+  .cart__footer-wrapper .cart__footer > * {
+    width: 44%;
+  }
+}
+
+/* Totals: label left, amount right (component-totals.css defaults to flex-end) */
+.cart__footer-wrapper .totals {
+  justify-content: space-between;
+}
+
+/* Settlement label */
+.cart__footer-wrapper .totals__total {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-mono-2);          /* 10px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-meta-strong);  /* 0.22em */
+  text-transform: uppercase;
+  color:          var(--vf-iron);
+}
+
+/* Settlement amount */
+.cart__footer-wrapper .totals__total-value {
+  font-family: var(--vf-ff-mono);
+  font-size:   var(--vf-fs-mono-strong);   /* 22px */
+  font-weight: var(--vf-w-medium);         /* 500 */
+  color:       var(--vf-jet);
+}
+
+/* Tax disclaimer */
+.cart__footer-wrapper .tax-note {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-meta);   /* 12px */
+  font-weight: var(--vf-w-light);
+  color:       var(--vf-iron);
+}
+
+/* Checkout button — filled Teal Deep; max-width: 100% overrides component-cart.css 36rem */
+.cart__footer-wrapper .cart__checkout-button {
+  background-color: var(--vf-teal-deep);
+  color:            var(--vf-bone);
+  max-width:        100%;
+  font-family:      var(--vf-ff-mono);
+  font-size:        var(--vf-fs-meta);        /* 12px */
+  font-weight:      var(--vf-w-regular);
+  letter-spacing:   var(--vf-track-label);    /* 0.18em */
+  text-transform:   uppercase;
+  border-radius:    var(--vf-radius-0);
+  min-height:       48px;
+}
+
+.cart__footer-wrapper .cart__checkout-button::before,
+.cart__footer-wrapper .cart__checkout-button::after {
+  box-shadow: none;
+}
+
+.cart__footer-wrapper .cart__checkout-button:hover {
+  background-color: color-mix(in oklch, var(--vf-teal-deep) 97%, white);
+}
+
+.cart__footer-wrapper .cart__checkout-button:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cart__footer-wrapper .cart__checkout-button {
+    transition: background-color var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── D · Cross-sell suppression ── */
+/* Shopify derives wrapper ID from cart.json section key "featured-collection".
+   display: none removes the block without touching templates. */
+
+#shopify-section-featured-collection {
+  display: none;
+}
+
+/* ── E · Empty cart editorial styling ── */
+
+.cart__warnings {
+  text-align:     center;
+  padding-top:    var(--vf-s-8);   /* 96px */
+  padding-bottom: var(--vf-s-8);
+}
+
+/* Page-level H1 — Cormorant editorial display */
+.cart__empty-text {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-display-1);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-display);
+  color:          var(--vf-jet);
+  margin-bottom:  var(--vf-s-4);   /* 24px */
+}
+
+/* Phase 2B hook — italic subtitle below empty H1; fires when .cart__empty-subtitle added to template */
+.cart__empty-subtitle {
+  font-family:   var(--vf-ff-display);
+  font-size:     var(--vf-fs-display-md);   /* 18px */
+  font-style:    italic;
+  font-weight:   var(--vf-w-regular);
+  color:         var(--vf-iron);
+  margin-bottom: var(--vf-s-6);   /* 48px */
+}
+
+/* Continue shopping — ghost CTA */
+.cart__warnings .button {
+  background-color: transparent;
+  color:            var(--vf-jet);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) var(--vf-iron);
+  font-family:      var(--vf-ff-mono);
+  font-size:        var(--vf-fs-meta);        /* 12px */
+  font-weight:      var(--vf-w-regular);
+  letter-spacing:   var(--vf-track-label);    /* 0.18em */
+  text-transform:   uppercase;
+  border-radius:    var(--vf-radius-0);
+  min-height:       48px;
+}
+
+.cart__warnings .button::before,
+.cart__warnings .button::after {
+  box-shadow: none;
+}
+
+.cart__warnings .button:hover {
+  background-color: var(--vf-teal-deep);
+  color:            var(--vf-bone);
+  box-shadow:       inset 0 0 0 var(--vf-hairline) var(--vf-teal-deep);
+}
+
+.cart__warnings .button:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cart__warnings .button {
+    transition: background-color var(--vf-dur-micro) ease, color var(--vf-dur-micro) ease, box-shadow var(--vf-dur-micro) ease;
   }
 }

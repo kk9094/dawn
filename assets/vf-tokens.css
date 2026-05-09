@@ -1370,10 +1370,10 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
 }
 
 /* ── D · Cross-sell suppression ── */
-/* Shopify derives wrapper ID from cart.json section key "featured-collection".
-   display: none removes the block without touching templates. */
+/* JSON template sections get IDs like shopify-section-template--{hash}__{key},
+   not shopify-section-{key}. The hash is store-specific; match by suffix instead. */
 
-#shopify-section-featured-collection {
+[id$="__featured-collection"] {
   display: none;
 }
 

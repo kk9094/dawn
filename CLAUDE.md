@@ -27,6 +27,7 @@ When starting a fresh task, load files in this order. Stop at the first file tha
 4. **`docs/section-schemas.md`** — what's hardcoded vs merchant-editable per section
 5. **`ui_kits/website/[Section].jsx`** — visual reference for the section being ported
 6. **`snippets/vf-*.liquid`** — primitive snippets to render rather than re-implement
+7. **Verify token wiring before touching `assets/vf-tokens.css`:** run `grep -n 'vf-tokens' layout/theme.liquid` — must return one match (the `<link>` tag, around line 260). If missing, the cascade is broken and CSS changes will not reach the storefront.
 
 ---
 
@@ -38,11 +39,14 @@ These are non-negotiable. If a rule conflicts with anything else, this rule wins
 - **Never hardcode colour, spacing, or type values inside `.vf-*` components.** Always reference `--vf-*`.
 - **Never use Dawn's `--color-*` tokens inside `.vf-*` components.** Dawn tokens are for merchant-customisable surfaces (default sections); VF brand surfaces use VF tokens.
 - **Always reference grid tokens** (`--vf-grid-max`, `--vf-grid-margin-d`, `--vf-grid-gutter-d`) instead of literal values like `1400px` or `48px`.
+- **Gold has two register variants.** `--vf-gold` (#C9A96E) is editorial-safe on Obsidian (~10:1). `--vf-gold-deep` (#7A5C25, 4.81:1 on Bone) is transactional-safe on Bone. Pattern mirrors `--vf-teal-bright` / `--vf-teal-deep`. The semantic alias `--vf-color-tier-ii` dispatches automatically via `[data-mode="bone"]` — never reference either palette token directly on tier call sites.
+- **No sub-pixel precision in tokens.** Tokens encode meaningful design decisions, not comp-pixel exactness. When the difference between two candidate values is less than 1.5px at typical render sizes (e.g., `-0.005em` vs `-0.01em` tracking at 30px = 0.15px), use the existing token. Propose a new token only for genuinely distinct system-level sizes.
 
 ### Liquid conventions
 - **Asset URLs:** `{{ 'filename.ext' | asset_url }}`. Never relative paths like `../../assets/...`.
 - **Snippets:** `{% render 'vf-button', label: 'See the editions', href: '/collections/all' %}`. Never re-implement primitives inline.
 - **Schema:** every section file ends with `{% schema %}` JSON. Refer to `docs/section-schemas.md` for the per-section editable-fields contract.
+- **Schema: resource-reference settings cannot have `"default"`.** Settings of type `image_picker`, `url`, `collection`, `product`, `page`, `video`, `article`, `blog` reject the `"default"` property — Shopify raises a validation error on save. Handle missing values in Liquid: `{%- if section.settings.image -%}…{%- else -%}{% render 'vf-cube' %}{%- endif -%}`.
 - **Liquid whitespace:** use `{%-` and `-%}` aggressively. Rendered HTML must not contain blank lines from Liquid logic.
 
 ### Mobile breakpoint
@@ -68,8 +72,8 @@ These are non-negotiable. If a rule conflicts with anything else, this rule wins
 - **Reduced motion:** every `transition` and `animation` on `.vf-*` must collapse under `prefers-reduced-motion: reduce`. Baseline rule lives in `assets/vf-tokens.css`.
 - **Hit targets:** `min-height: 48px` and `min-width: 48px` for any tappable surface.
 - **Type sizes:** never below 11px on mobile. Body is 14px.
-- **Colour contrast:** Forge Teal (`#3D7A6B`) on Obsidian is 4.4:1 — display only, never paragraph copy. Use Bone (`#E8E2D6`) for body text.
-- **Badge contrast:** Badge text and border on dark surfaces use bright token variants. Pattern: Série I → `--vf-teal-bright`, Série II → `--vf-gold` (safe at all sizes), Atelier → `--vf-ember-bright`. Direct `--vf-teal` and `--vf-ember` are display-only (≥ 1.5rem). This matches the eyebrow and mono bright-token rule.
+- **Colour contrast:** Forge Teal (#3D7A6B) on Obsidian is 4.4:1 — display only at ≥1.5rem, never paragraph copy. Never reference `--vf-teal` directly for text; use the `--vf-color-eyebrow` semantic alias, which routes to `--vf-teal-bright` on Obsidian or `--vf-teal-deep` on Bone based on `[data-mode]` context.
+- **Badge contrast:** Badge and tier-label text use surface-appropriate variants. Dark surfaces (Obsidian): Série I → `--vf-teal-bright`, Série II → `--vf-gold`, Atelier → `--vf-ember-bright`. Bone surfaces: Série I → `--vf-teal-deep`, Série II → `--vf-gold-deep`, Atelier → `--vf-ember-deep`. Direct `--vf-teal` and `--vf-ember` are display-only (≥1.5rem). Use `--vf-color-tier-*` aliases which dispatch automatically via `[data-mode]` context.
 
 ---
 
@@ -96,13 +100,19 @@ These primitives live in `snippets/` and are called via `{% render %}`. Re-imple
 | Snippet | Purpose | Required params |
 | --- | --- | --- |
 | `vf-button` | All CTAs, primary and ghost | `label`, `href`, `variant` (`filled`/`ghost`), optional `size` |
-| `vf-eyebrow` | Section eyebrows (small caps, tracked) | `text`, optional `color` (default Teal) |
-| `vf-mono` | DM Mono utility text | `text`, optional `size`, optional `color` |
+| `vf-eyebrow` | Section eyebrows (small caps, tracked) | `text`; optional `color` (`teal` default / `gold` / `ember` / `bone`); optional `tier` (`I` / `II` / `Atelier`) |
+| `vf-mono` | DM Mono utility text | `text`; optional `size`; optional `color`; optional `tier` (`I` / `II` / `Atelier`) |
 | `vf-cube` | The IsoCube illustration | optional `size` (default 280), optional `glow` (boolean) |
 | `vf-icon` | All icons from the 19-glyph set | `name` (one of: voxel, layers, lamp, home, precision, print, quality, package, delivery, certificate, forge, settings, search, user, cart, menu, atelier, edition, prestige), optional `size` |
 | `vf-badge` | Tier badges (Série I/II/Atelier) | `tier` (`I` / `II` / `Atelier` / `SoldOut`) |
 | `vf-edition-mark` | "04 / 30" numbered-edition mark | `current`, `total` |
-| `vf-pull` | Pull-quote with hairline rule | `text`, optional `attribution` |
+| `vf-pull` | Pull-quote with hairline rule | `text`, optional `attribution`, optional `align` (`center`) |
+
+### vf-eyebrow and vf-mono — dual color routing
+
+`color` and `tier` are separate parameters with different semantic destinations. `color: 'ember'` routes to the display-tone palette (`--vf-ember`) — correct for large editorial type (≥1.5rem) but insufficient contrast at small sizes. `tier: 'Atelier'` routes through the semantic alias `--vf-color-tier-atelier`, which dispatches to `--vf-ember-bright` on Obsidian or `--vf-ember-deep` on Bone via `[data-mode]` context, enforcing contrast safety at any size.
+
+Rule: for any element carrying tier identity — badges, collection header eyebrows, edition marks, "END OF EDITION" labels — use `tier:`. Reserve `color:` for large editorial accents where specific palette control is intentional and display size is guaranteed large. When both are passed, `tier` takes precedence. An empty-string or omitted `tier` falls back to `color`.
 
 ---
 
@@ -117,6 +127,9 @@ When asked to port a section from React to Liquid:
 5. **Use `block.settings.*`** for editable content. Use literal values for brand-locked surfaces (layout, type ramp, colour pairings).
 6. **Test against Dawn's mobile breakpoint** (750px), not 768px.
 7. **Check the section against `__BANNED__` list** before committing. If it has any banned pattern, fix it.
+8. **When reducing `max_blocks`, clean up the customizer manually.** Shopify does not auto-remove blocks beyond the new limit. The customizer retains orphan blocks that fail validation on save. After deploying the schema change: open the customizer for every affected template, delete blocks above the new limit, then save.
+
+**Section settings are global within a template.** Customizer settings (text, images) on a `templates/*.json` section are shared across all pages using that template — editing "subtitle" on `/collections/serie-1` propagates to every collection page. For content that must vary per page: use `{{ collection.description }}` (set in Shopify Admin → Collections) or `{{ collection.metafields.namespace.key }}` (define the metafield in admin first). Section settings are for content that is intentionally identical across all instances.
 
 ---
 
@@ -143,7 +156,7 @@ Examples:
 
 If a request would require any of the following, **stop and ask**:
 
-- Editing files outside the allowed prefix (`vf-*`, `vf-tokens.css`, `theme.liquid` token block)
+- Editing files outside the allowed prefix (`vf-*`, `vf-tokens.css`, `theme.liquid` token block). **Exception: `templates/*.json` config files are permitted** when wiring custom `vf-*` sections into templates — these are configuration, not Liquid logic, and follow the established pattern in `templates/collection.json`, `templates/list-collections.json`, etc.
 - Modifying any default Dawn section (`main-product`, `header`, `footer`, etc.)
 - Adding a new colour, font weight, or breakpoint not in `vf-tokens.css`
 - Bypassing a snippet contract by re-implementing a primitive inline
@@ -151,3 +164,48 @@ If a request would require any of the following, **stop and ask**:
 - Anything involving `localStorage`, third-party trackers, or external API calls
 
 Default to "ask the human" rather than guess. The kit was built carefully; small drifts compound.
+
+---
+
+## 9 · Dawn and Shopify mechanics
+
+Patterns specific to how Dawn and Shopify behave. These take precedence over generic Shopify documentation.
+
+### JSON template section IDs
+
+Sections rendered via `templates/*.json` receive IDs of the form `shopify-section-template--{store_hash}__{section_key}`, where `{store_hash}` is a numeric store-specific ID assigned at install time — not derivable from theme source. CSS selectors and JS queries must use the attribute suffix form: `[id$="__{section_key}"]`. The double-underscore separator prevents false matches on short keys. The simple `shopify-section-{name}` format only applies to sections rendered via `{% section 'name' %}` calls in a Liquid layout file. First established fixing cart cross-sell suppression (§13).
+
+### Dawn `details[open]` selector specificity
+
+Dawn modal and drawer open states are controlled via `details[open]` at specificity (0,0,2) — two element-type selectors that beat single-class overrides at (0,0,1). Effective overrides require minimum (0,0,3): typically `.section-class details[open] .target` or an attribute-plus-element combination. A second class added to the rule is the minimum fix. Encountered in §10 (search modal) and §12 (nav drawer).
+
+### Dawn-native surface re-scoping
+
+To re-theme a Dawn section to a VF surface without editing Dawn files, override these Dawn custom properties on the section wrapper:
+
+- `--color-background` — surface fill
+- `--gradient-background` — gradient overlay (set equal to `--color-background` to suppress the gradient)
+- `--color-foreground` — text and icon ink
+- `--color-button` / `--color-button-text` — CTA surface and label
+
+Anchor the override on `.section-class.gradient` at specificity (0,0,1,1), which beats Dawn's `.color-{scheme}` at (0,0,1,0). When specificity ties, source order is the tiebreaker — `vf-tokens.css` loads after `base.css`, giving it the win (confirmed in §1 Stack). Established in §11 (product page), §13 (cart), §14 (collection).
+
+### Custom-element vs class selector durability
+
+Dawn registers JavaScript-upgraded custom elements (`<header-drawer>`, `<menu-drawer>`, `<cart-notification>`, etc.), and Dawn's component CSS sometimes targets these by element tag name (e.g., `menu-drawer > details > summary::before`). Tag-name selectors are fragile: if Dawn renames or re-wraps the element in a future version, the rule silently stops matching. When writing VF overrides for Dawn component internals, use class-based selectors — `.menu-drawer-container > details > summary::before` survives element renames.
+
+---
+
+## 10 · QA and verification
+
+### Computed values over screenshots for tier and contrast
+
+Tier accent colors on Bone surfaces — Teal Deep `#2A5A50`, Gold Deep `#7A5C25`, Ember Deep `#A04A35` — are dark, low-saturation variants calibrated for contrast, not vividness. Compressed screenshots and image-viewer apps shift these toward neutral grey, making correct dispatch appear broken. DevTools computed value is ground truth. When QA flags a tier accent as "muted" or "grey": open DevTools Elements panel, select the element, read `color` in the Computed tab. Correct hex confirms the dispatch is working; the screenshot was misleading.
+
+### Screenshot tooling artifacts vs real defects
+
+Shopify theme preview and headless screenshot tools can omit sections that require JavaScript initialization — product media galleries, nav drawers, search modals, and carousel components are common casualties. A component "missing" in a screenshot does not confirm it is broken in the storefront. Verify against the live browser before starting diagnostic work. Sending an agent on a component-diagnostic based solely on a screenshot is a likely false alarm.
+
+### DevTools verification before accepting "no code change needed"
+
+When an agent concludes that no code change is needed after a code-path trace, the conclusion covers logical correctness of the dispatch chain — not necessarily what the live storefront renders. Closing the gap takes 30 seconds: inspect the element in DevTools, confirm the computed value of `color` (or relevant property) matches the expected token. This applies especially to tier color dispatch, `data-mode` inheritance, and CSS custom property chains that are invisible to static code analysis.

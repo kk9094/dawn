@@ -1,0 +1,318 @@
+{%- comment -%}
+  vf-collection-list — Hardcoded three-tier collection directory.
+  Replaces Dawn's main-list-collections on /collections.
+
+  Tiles: Série I → /collections/serie-1
+         Série II → /collections/serie-2
+         Atelier  → /pages/atelier
+
+  Schema settings: heading, image_i, image_ii, image_atelier, closing_quote.
+{%- endcomment -%}
+
+{%- liquid
+  assign c_i  = collections['serie-1']
+  assign c_ii = collections['serie-2']
+-%}
+
+<div class="vf-collection-list" data-mode="bone">
+
+  <header class="vf-collection-list__header page-width">
+    <h1 class="vf-collection-list__title">{{ section.settings.heading | escape }}</h1>
+  </header>
+
+  <ul class="vf-collection-list__grid page-width" role="list">
+
+    {%- comment -%} — Série I ————————————————————————— {%- endcomment -%}
+    <li class="vf-collection-tile-wrap">
+      <a class="vf-collection-tile" href="/collections/serie-1">
+        {%- liquid
+          assign img = section.settings.image_i
+          if img == blank
+            assign img = c_i.featured_image
+          endif
+        -%}
+        {%- if img != blank -%}
+          <div class="vf-collection-tile__image-wrap">
+            <img
+              src="{{ img | image_url: width: 800 }}"
+              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              sizes="(min-width: 750px) 33vw, 100vw"
+              alt="{{ img.alt | default: 'Série I' | escape }}"
+              width="800"
+              height="{{ 800 | divided_by: img.aspect_ratio | round }}"
+              loading="lazy"
+              class="vf-collection-tile__image"
+            >
+          </div>
+        {%- endif -%}
+        <div class="vf-collection-tile__body">
+          {%- render 'vf-eyebrow', text: 'Série I', tier: 'I' -%}
+          <h2 class="vf-collection-tile__name">{{ c_i.title | default: 'Série I' | escape }}</h2>
+          {%- if c_i.products_count > 0 -%}
+            <div class="vf-collection-tile__count">
+              {%- liquid
+                assign n = c_i.products_count
+                if n < 10
+                  assign n_str = '0' | append: n
+                else
+                  assign n_str = n | append: ''
+                endif
+              -%}
+              {%- render 'vf-mono', text: n_str, size: 'small', color: 'fg-3' -%}
+              <span class="vf-collection-tile__count-sep" aria-hidden="true">&thinsp;·&thinsp;</span>
+              {%- render 'vf-mono', text: 'EDITIONS', size: 'small', color: 'fg-3' -%}
+            </div>
+          {%- endif -%}
+          <span class="vf-collection-tile__arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </li>
+
+    {%- comment -%} — Série II ——————————————————————— {%- endcomment -%}
+    <li class="vf-collection-tile-wrap">
+      <a class="vf-collection-tile" href="/collections/serie-2">
+        {%- liquid
+          assign img = section.settings.image_ii
+          if img == blank
+            assign img = c_ii.featured_image
+          endif
+        -%}
+        {%- if img != blank -%}
+          <div class="vf-collection-tile__image-wrap">
+            <img
+              src="{{ img | image_url: width: 800 }}"
+              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              sizes="(min-width: 750px) 33vw, 100vw"
+              alt="{{ img.alt | default: 'Série II' | escape }}"
+              width="800"
+              height="{{ 800 | divided_by: img.aspect_ratio | round }}"
+              loading="lazy"
+              class="vf-collection-tile__image"
+            >
+          </div>
+        {%- endif -%}
+        <div class="vf-collection-tile__body">
+          {%- render 'vf-eyebrow', text: 'Série II', tier: 'II' -%}
+          <h2 class="vf-collection-tile__name">{{ c_ii.title | default: 'Série II' | escape }}</h2>
+          {%- if c_ii.products_count > 0 -%}
+            <div class="vf-collection-tile__count">
+              {%- liquid
+                assign n = c_ii.products_count
+                if n < 10
+                  assign n_str = '0' | append: n
+                else
+                  assign n_str = n | append: ''
+                endif
+              -%}
+              {%- render 'vf-mono', text: n_str, size: 'small', color: 'fg-3' -%}
+              <span class="vf-collection-tile__count-sep" aria-hidden="true">&thinsp;·&thinsp;</span>
+              {%- render 'vf-mono', text: 'EDITIONS', size: 'small', color: 'fg-3' -%}
+            </div>
+          {%- endif -%}
+          <span class="vf-collection-tile__arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </li>
+
+    {%- comment -%} — Atelier ————————————————————————— {%- endcomment -%}
+    <li class="vf-collection-tile-wrap">
+      <a class="vf-collection-tile" href="/pages/atelier">
+        {%- assign img = section.settings.image_atelier -%}
+        {%- if img != blank -%}
+          <div class="vf-collection-tile__image-wrap">
+            <img
+              src="{{ img | image_url: width: 800 }}"
+              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              sizes="(min-width: 750px) 33vw, 100vw"
+              alt="{{ img.alt | default: 'Atelier' | escape }}"
+              width="800"
+              height="{{ 800 | divided_by: img.aspect_ratio | round }}"
+              loading="lazy"
+              class="vf-collection-tile__image"
+            >
+          </div>
+        {%- endif -%}
+        <div class="vf-collection-tile__body">
+          {%- render 'vf-eyebrow', text: 'Atelier', tier: 'Atelier' -%}
+          <h2 class="vf-collection-tile__name">Atelier</h2>
+          <div class="vf-collection-tile__count">
+            {%- render 'vf-mono', text: 'Bespoke', size: 'small', color: 'fg-3' -%}
+          </div>
+          <span class="vf-collection-tile__arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+  {%- if section.settings.closing_quote != blank -%}
+    <div class="vf-collection-list__closing page-width">
+      {%- render 'vf-pull', text: section.settings.closing_quote, align: 'center' -%}
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% style %}
+  .vf-collection-list {
+    background-color: var(--vf-bone);
+    padding-bottom:   var(--vf-s-8);
+  }
+
+  .vf-collection-list__header {
+    padding: var(--vf-s-6) 0 var(--vf-s-5);
+  }
+
+  .vf-collection-list__title {
+    font-family:  var(--vf-ff-display);
+    font-size:    var(--vf-fs-page-title);
+    font-weight:  var(--vf-w-light);
+    font-style:   normal;
+    line-height:  var(--vf-lh-display);
+    color:        var(--vf-jet);
+    margin:       0;
+  }
+
+  .vf-collection-list__grid {
+    display:               grid;
+    grid-template-columns: 1fr;
+    gap:                   var(--vf-s-4);
+    list-style:            none;
+    margin:                0;
+    padding:               0;
+  }
+
+  .vf-collection-tile {
+    display:          block;
+    text-decoration:  none;
+    color:            inherit;
+    background-color: transparent;
+  }
+
+  .vf-collection-tile__image-wrap {
+    overflow:      hidden;
+    aspect-ratio:  3 / 4;
+    background:    var(--vf-iron);
+  }
+
+  .vf-collection-tile__image {
+    display:    block;
+    width:      100%;
+    height:     100%;
+    object-fit: cover;
+  }
+
+  .vf-collection-tile__body {
+    padding: var(--vf-s-3) 0 var(--vf-s-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--vf-s-1);
+  }
+
+  .vf-collection-tile__name {
+    font-family:  var(--vf-ff-display);
+    font-size:    var(--vf-fs-h2);
+    font-weight:  var(--vf-w-light);
+    font-style:   italic;
+    line-height:  var(--vf-lh-h);
+    color:        var(--vf-jet);
+    margin:       0;
+  }
+
+  .vf-collection-tile__count {
+    display:     flex;
+    align-items: center;
+  }
+
+  .vf-collection-tile__count-sep {
+    font-family: var(--vf-ff-mono);
+    font-size:   var(--vf-fs-mono-2);
+    color:       var(--vf-iron);
+  }
+
+  .vf-collection-tile__arrow {
+    font-size:  var(--vf-fs-meta);
+    color:      var(--vf-iron);
+    margin-top: var(--vf-s-0);
+  }
+
+  .vf-collection-tile:hover .vf-collection-tile__arrow {
+    color: var(--vf-jet);
+  }
+
+  .vf-collection-tile:focus-visible {
+    outline:        1.5px solid var(--vf-teal-deep);
+    outline-offset: 2px;
+  }
+
+  .vf-collection-list__closing {
+    padding-top: var(--vf-s-8);
+  }
+
+  @media screen and (min-width: 750px) {
+    .vf-collection-list__header {
+      padding: var(--vf-s-8) 0 var(--vf-s-6);
+    }
+
+    .vf-collection-list__title {
+      font-size: var(--vf-fs-h1);
+    }
+
+    .vf-collection-list__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .vf-collection-tile__image {
+      transition: transform var(--vf-dur-base) ease;
+    }
+
+    .vf-collection-tile:hover .vf-collection-tile__image {
+      transform: scale(1.03);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "VF Collection List",
+  "class": "vf-collection-list-section",
+  "enabled_on": {
+    "templates": ["list-collections"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "default": "Collections"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_i",
+      "label": "Série I — tile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_ii",
+      "label": "Série II — tile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_atelier",
+      "label": "Atelier — tile image"
+    },
+    {
+      "type": "text",
+      "id": "closing_quote",
+      "label": "Closing pull-quote"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF Collection List"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,75 @@
+{%- comment -%}
+  vf-collection-footer — End-of-edition closing mark.
+  Renders a centered hairline + tier-accented "END OF EDITION" label.
+  Must appear after main-collection-product-grid in collection.json.
+{%- endcomment -%}
+
+{%- liquid
+  assign tier_param = ''
+
+  case collection.handle
+    when 'serie-1', 'serie-i'
+      assign tier_param = 'I'
+    when 'serie-2', 'serie-ii'
+      assign tier_param = 'II'
+    when 'atelier'
+      assign tier_param = 'Atelier'
+  endcase
+-%}
+
+<div class="vf-collection-footer__outer" data-mode="bone">
+  <div class="vf-collection-footer__wrap page-width">
+    <div class="vf-collection-footer__rule-group" role="separator" aria-label="End of edition">
+      <hr class="vf-collection-footer__rule" aria-hidden="true">
+      <div class="vf-collection-footer__label">
+        {%- if tier_param != '' -%}
+          {%- render 'vf-mono', text: 'END OF EDITION', size: 'small', tier: tier_param -%}
+        {%- else -%}
+          {%- render 'vf-mono', text: 'END OF EDITION', size: 'small', color: 'fg-3' -%}
+        {%- endif -%}
+      </div>
+      <hr class="vf-collection-footer__rule" aria-hidden="true">
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .vf-collection-footer__outer {
+    background-color: var(--vf-bone);
+    padding: var(--vf-s-7) 0 var(--vf-s-8);
+  }
+
+  .vf-collection-footer__rule-group {
+    display:     flex;
+    align-items: center;
+    gap:         var(--vf-s-4);
+  }
+
+  .vf-collection-footer__rule {
+    flex:       1;
+    height:     var(--vf-hairline);
+    background: var(--vf-iron);
+    border:     none;
+    margin:     0;
+  }
+
+  .vf-collection-footer__label {
+    flex-shrink: 0;
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "VF Collection Footer",
+  "class": "vf-collection-footer-section",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VF Collection Footer"
+    }
+  ]
+}
+{% endschema %}

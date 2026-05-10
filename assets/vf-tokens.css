@@ -111,6 +111,7 @@
   /* ── PALETTE · Prestige ── */
   --vf-gold:            #C9A96E;
   --vf-gold-warm:       #B89856;
+  --vf-gold-deep:       #7A5C25;              /* transactional-safe — 4.81:1 on Bone (AA pass) */
   --vf-gold-pale:       #DBC089;
 
   /* ── PALETTE · Atelier ── */
@@ -179,6 +180,7 @@
   --vf-fs-mono-2:       10px;
   --vf-fs-mono-display: 26px;
   --vf-fs-mono-price:   18px;              /* DM Mono price / mono emphasis */
+  --vf-fs-mono-card:    15px;              /* DM Mono · product grid card price */
   --vf-fs-mono-strong:  22px;              /* DM Mono strong — settlement total, order amounts */
   --vf-fs-eyebrow:      11px;
   --vf-fs-label:        10px;
@@ -272,7 +274,12 @@
   --vf-fg-3:           var(--vf-fg-on-bone-3);
   --vf-border-1:       var(--vf-border-on-bone-1);
   --vf-border-2:       var(--vf-border-on-bone-2);
-  --vf-color-eyebrow:  var(--vf-teal-deep);        /* 6.1:1 on Bone */
+  --vf-color-eyebrow:  var(--vf-teal-deep);         /* 6.1:1 on Bone */
+
+  /* Tier accents on Bone — bright/warm variants fail small-text contrast; swap to deep */
+  --vf-color-tier-i:       var(--vf-teal-deep);    /* 9.8:1 on Bone */
+  --vf-color-tier-ii:      var(--vf-gold-deep);    /* 4.81:1 on Bone (AA pass) */
+  --vf-color-tier-atelier: var(--vf-ember-deep);   /* 4.7:1 on Bone */
 }
 
 
@@ -1446,4 +1453,60 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   .cart__warnings .button {
     transition: background-color var(--vf-dur-micro) ease, color var(--vf-dur-micro) ease, box-shadow var(--vf-dur-micro) ease;
   }
+}
+
+/* ─────────────────────────────────────────────────────────
+   §14 · COLLECTION PAGES — Bone surface
+   Extends the transactional register (§11 product, §13 cart).
+   Surface A — individual collection pages (tier-aware header + grid)
+   Surface B — /collections list page (vf-collection-list section)
+   ───────────────────────────────────────────────────────── */
+
+/* ── A. Suppress Dawn banner — vf-collection-header always replaces it ── */
+.vf-collection-header-section ~ .shopify-section .collection-hero {
+  display: none;
+}
+
+/* ── B. Product grid — Bone surface, suppress Dawn gradient ── */
+.vf-collection-header-section ~ .shopify-section [id$="__product-grid"] .gradient {
+  background-color: var(--vf-bone);
+  background-image: none;
+}
+
+/* ── C. Cards — no elevation, layout-only on Bone ── */
+.vf-collection-header-section ~ .shopify-section .card--card {
+  background-color: transparent;
+  box-shadow:       none;
+}
+
+/* ── D. Card vendor label ── */
+.vf-collection-header-section ~ .shopify-section .caption-with-letter-spacing {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-label);
+  color:          var(--vf-iron);
+  text-transform: uppercase;
+}
+
+/* ── E. Card title — Cormorant italic, Jet ── */
+.vf-collection-header-section ~ .shopify-section .card__heading {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-h3);
+  font-weight: var(--vf-w-light);
+  font-style:  italic;
+  color:       var(--vf-jet);
+}
+
+.vf-collection-header-section ~ .shopify-section .card__heading a,
+.vf-collection-header-section ~ .shopify-section .card__heading a:visited {
+  color: var(--vf-jet);
+}
+
+/* ── F. Card price — DM Mono 15px, Iron ── */
+.vf-collection-header-section ~ .shopify-section .price__container .price-item {
+  font-family: var(--vf-ff-mono);
+  font-size:   var(--vf-fs-mono-card);
+  font-weight: var(--vf-w-light);
+  color:       var(--vf-iron);
 }

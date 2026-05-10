@@ -1,0 +1,187 @@
+{%- comment -%}
+  vf-collection-header — Tier-aware collection page header.
+  Replaces Dawn's main-collection-banner on collection pages.
+
+  Dispatches data-tier on inner wrapper so CSS sibling selectors can
+  re-theme the downstream product grid section.
+
+  Handle → tier map:
+    serie-1 / serie-i   → I
+    serie-2 / serie-ii  → II
+    atelier             → Atelier
+{%- endcomment -%}
+
+{%- liquid
+  assign tier       = ''
+  assign tier_label = ''
+  assign tier_param = ''
+
+  case collection.handle
+    when 'serie-1', 'serie-i'
+      assign tier       = 'i'
+      assign tier_label = 'Série I'
+      assign tier_param = 'I'
+    when 'serie-2', 'serie-ii'
+      assign tier       = 'ii'
+      assign tier_label = 'Série II'
+      assign tier_param = 'II'
+    when 'atelier'
+      assign tier       = 'atelier'
+      assign tier_label = 'Atelier'
+      assign tier_param = 'Atelier'
+  endcase
+
+  assign edition_count = collection.products_count
+  if edition_count < 10
+    assign edition_str = '0' | append: edition_count
+  else
+    assign edition_str = edition_count | append: ''
+  endif
+-%}
+
+<div class="vf-collection-header__outer" data-mode="bone">
+  <div
+    class="vf-collection-header__inner page-width"
+    {% if tier != '' %}data-tier="{{ tier }}"{% endif %}
+  >
+
+    {%- if tier != '' -%}
+      <div class="vf-collection-header__eyebrow">
+        {%- render 'vf-eyebrow', text: tier_label, tier: tier_param -%}
+      </div>
+    {%- endif -%}
+
+    <h1 class="vf-collection-header__title">{{ collection.title | escape }}</h1>
+
+    {%- if section.settings.subtitle != blank -%}
+      <p class="vf-collection-header__subtitle">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+
+    {%- if collection.description != blank -%}
+      <div class="vf-collection-header__description">{{ collection.description }}</div>
+    {%- endif -%}
+
+    {%- if edition_count > 0 -%}
+      <div class="vf-collection-header__meta">
+        {%- render 'vf-mono', text: edition_str, size: 'base', color: 'fg-3' -%}
+        <span class="vf-collection-header__sep" aria-hidden="true">&thinsp;·&thinsp;</span>
+        {%- render 'vf-mono', text: 'EDITIONS', size: 'base', color: 'fg-3' -%}
+      </div>
+    {%- endif -%}
+
+    <hr class="vf-collection-header__rule" aria-hidden="true">
+
+  </div>
+</div>
+
+{% style %}
+  .vf-collection-header__outer {
+    background-color: var(--vf-bone);
+    padding:          var(--vf-s-6) 0 var(--vf-s-5);
+  }
+
+  .vf-collection-header__inner {
+    display:        flex;
+    flex-direction: column;
+    align-items:    flex-start;
+    gap:            var(--vf-s-1);
+  }
+
+  .vf-collection-header__eyebrow {
+    margin-bottom: var(--vf-s-0);
+  }
+
+  .vf-collection-header__title {
+    font-family:  var(--vf-ff-display);
+    font-size:    var(--vf-fs-page-title);
+    font-weight:  var(--vf-w-light);
+    font-style:   normal;
+    line-height:  var(--vf-lh-display);
+    color:        var(--vf-jet);
+    margin:       0;
+  }
+
+  .vf-collection-header__subtitle {
+    font-family:  var(--vf-ff-display);
+    font-size:    var(--vf-fs-display-md);
+    font-weight:  var(--vf-w-light);
+    font-style:   italic;
+    line-height:  var(--vf-lh-h);
+    color:        var(--vf-iron);
+    margin:       0;
+  }
+
+  .vf-collection-header__description {
+    font-family:  var(--vf-ff-body);
+    font-size:    var(--vf-fs-body-large);
+    font-weight:  var(--vf-w-light);
+    line-height:  var(--vf-lh-body);
+    color:        var(--vf-jet);
+    max-width:    60ch;
+    margin:       0;
+  }
+
+  .vf-collection-header__description p {
+    margin: 0 0 var(--vf-s-2);
+  }
+
+  .vf-collection-header__description p:last-child {
+    margin-bottom: 0;
+  }
+
+  .vf-collection-header__meta {
+    display:     flex;
+    align-items: center;
+  }
+
+  .vf-collection-header__sep {
+    font-family: var(--vf-ff-mono);
+    font-size:   var(--vf-fs-mono-1);
+    color:       var(--vf-iron);
+  }
+
+  .vf-collection-header__rule {
+    width:      40px;
+    height:     var(--vf-hairline);
+    background: var(--vf-iron);
+    border:     none;
+    margin:     var(--vf-s-4) 0 0;
+  }
+
+  .vf-collection-header__inner[data-tier="i"]       .vf-collection-header__rule { background: var(--vf-color-tier-i); }
+  .vf-collection-header__inner[data-tier="ii"]      .vf-collection-header__rule { background: var(--vf-color-tier-ii); }
+  .vf-collection-header__inner[data-tier="atelier"] .vf-collection-header__rule { background: var(--vf-color-tier-atelier); }
+
+  @media screen and (min-width: 750px) {
+    .vf-collection-header__outer {
+      padding: var(--vf-s-8) 0 var(--vf-s-6);
+    }
+
+    .vf-collection-header__title {
+      font-size: var(--vf-fs-h1);
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "VF Collection Header",
+  "class": "vf-collection-header-section",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Italic subtitle",
+      "info": "Short italic Cormorant line beneath the title. Leave blank to omit."
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF Collection Header"
+    }
+  ]
+}
+{% endschema %}

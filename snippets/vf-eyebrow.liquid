@@ -6,25 +6,39 @@
 
   Optional:
     color    — 'teal' (default) | 'gold' | 'ember' | 'bone'
+    tier     — 'I' | 'II' | 'Atelier' — takes precedence over color if both provided
     as       — HTML element to render (default 'span')
     class    — extra class names
 
   Usage:
     {% render 'vf-eyebrow', text: 'Material · Method' %}
     {% render 'vf-eyebrow', text: 'Atelier', color: 'ember' %}
+    {% render 'vf-eyebrow', text: 'Série I', tier: 'I' %}
 
   Rules:
     - Default colour is Teal (NOT Gold). Gold reserved for Série II
       and certificate moments.
     - Always uppercase via CSS, not in source.
+    - tier parameter resolves through --vf-color-tier-* semantic aliases.
 {%- endcomment -%}
 
 {%- liquid
   assign tag = as | default: 'span'
   assign color = color | default: 'teal'
+  assign _modifier = color
+  if tier
+    case tier
+      when 'I'
+        assign _modifier = 'tier-i'
+      when 'II'
+        assign _modifier = 'tier-ii'
+      when 'Atelier'
+        assign _modifier = 'tier-atelier'
+    endcase
+  endif
 -%}
 
-<{{ tag }} class="vf-eyebrow vf-eyebrow--{{ color }} {{ class }}">{{ text | escape }}</{{ tag }}>
+<{{ tag }} class="vf-eyebrow vf-eyebrow--{{ _modifier }} {{ class }}">{{ text | escape }}</{{ tag }}>
 
 {% style %}
   .vf-eyebrow {
@@ -40,6 +54,11 @@
   .vf-eyebrow--gold  { color: var(--vf-gold); }
   .vf-eyebrow--ember { color: var(--vf-ember); }
   .vf-eyebrow--bone  { color: var(--vf-fg-2); }
+
+  /* Tier semantic aliases — resolve through --vf-color-tier-* tokens */
+  .vf-eyebrow--tier-i        { color: var(--vf-color-tier-i); }
+  .vf-eyebrow--tier-ii       { color: var(--vf-color-tier-ii); }
+  .vf-eyebrow--tier-atelier  { color: var(--vf-color-tier-atelier); }
 
   /* Bone-mode parity for bone variant — teal cascade handled by vf-tokens.css */
   [data-mode="bone"] .vf-eyebrow--bone  { color: var(--vf-fg-on-bone-2); }

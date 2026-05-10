@@ -145,6 +145,12 @@
   /* Future rename candidate: --vf-color-accent or --vf-color-accent-small */
   --vf-color-eyebrow:   var(--vf-teal-bright);
 
+  /* ── SEMANTIC · tier accent aliases ── */
+  /* Semantic aliases — encode purpose, not color value. Resolve through palette tokens. */
+  --vf-color-tier-i:       var(--vf-teal-bright);
+  --vf-color-tier-ii:      var(--vf-gold);
+  --vf-color-tier-atelier: var(--vf-ember-bright);
+
   /* ── TYPE · families ── */
   --vf-ff-display:      'Cormorant Garamond', Georgia, serif;
   --vf-ff-body:         'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

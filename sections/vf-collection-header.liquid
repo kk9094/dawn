@@ -63,9 +63,9 @@
 
     {%- if edition_count > 0 -%}
       <div class="vf-collection-header__meta">
-        {%- render 'vf-mono', text: edition_str, size: 'base', color: 'fg-3' -%}
+        {%- render 'vf-mono', text: edition_str, size: 'base', tier: tier_param, color: 'fg-3' -%}
         <span class="vf-collection-header__sep" aria-hidden="true">&thinsp;·&thinsp;</span>
-        {%- render 'vf-mono', text: 'EDITIONS', size: 'base', color: 'fg-3' -%}
+        {%- render 'vf-mono', text: 'EDITIONS', size: 'base', tier: tier_param, color: 'fg-3' -%}
       </div>
     {%- endif -%}
 
@@ -175,7 +175,7 @@
       "type": "text",
       "id": "subtitle",
       "label": "Italic subtitle",
-      "info": "Short italic Cormorant line beneath the title. Leave blank to omit."
+      "info": "Global — applies to all collection pages. For per-collection context, use the collection description in Shopify Admin. Leave blank to omit."
     }
   ],
   "presets": [

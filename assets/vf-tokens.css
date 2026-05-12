@@ -1529,7 +1529,7 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
 }
 
 .vf-product-header__nav {
-  padding-block: var(--vf-s-2);   /* 12px — slim strip; matches transactional rhythm */
+  padding-block: 0;   /* link padding-block governs vertical rhythm; nav padding removed to avoid double-spacing */
 }
 
 .vf-product-header__list {
@@ -1569,7 +1569,7 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
 .vf-product-header__link {
   text-decoration: none;
   border-bottom:   var(--vf-hairline) solid transparent;
-  padding-bottom:  1px;
+  padding-block:   var(--vf-s-3);   /* 16px — effective tap height ≈ 51px (WCAG 44px guidance) */
 }
 
 .vf-product-header__link:hover,

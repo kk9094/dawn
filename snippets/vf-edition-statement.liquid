@@ -10,5 +10,5 @@
   assign _size = _p.metafields.vox.edition_size
 -%}
 {%- if _is_serie_ii and _size and _size > 0 -%}
-  <p class="vf-edition-statement">Edition of {%- render 'vf-num-words', num: _size -%}</p>
+  <p class="vf-edition-statement">Edition of {% render 'vf-num-words', num: _size %}</p>
 {%- endif -%}

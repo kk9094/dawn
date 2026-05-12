@@ -1,0 +1,40 @@
+{%- liquid
+  assign tier_collection = nil
+  for _col in product.collections
+    if _col.handle == 'serie-1' or _col.handle == 'serie-i' or _col.handle == 'serie-2' or _col.handle == 'serie-ii'
+      assign tier_collection = _col
+      break
+    endif
+  endfor
+-%}
+
+<div class="vf-product-header">
+  <nav class="vf-product-header__nav page-width" aria-label="Breadcrumb">
+    <ol class="vf-product-header__list" role="list">
+
+      <li class="vf-product-header__item">
+        <a class="vf-product-header__link" href="/collections">Collection</a>
+      </li>
+
+      {%- if tier_collection != nil -%}
+        <li class="vf-product-header__item">
+          <a class="vf-product-header__link" href="{{ tier_collection.url }}">{{ tier_collection.title | escape }}</a>
+        </li>
+      {%- endif -%}
+
+      <li class="vf-product-header__item">
+        <span class="vf-product-header__current" aria-current="page">{{ product.title | escape }}</span>
+      </li>
+
+    </ol>
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "VF Product Header",
+  "tag": "section",
+  "class": "vf-product-header-section",
+  "settings": []
+}
+{% endschema %}

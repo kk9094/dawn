@@ -1,0 +1,101 @@
+{%- liquid
+  assign output = ''
+  assign n = num | times: 1
+
+  if n >= 1 and n <= 20
+    case n
+      when 1
+        assign output = 'one'
+      when 2
+        assign output = 'two'
+      when 3
+        assign output = 'three'
+      when 4
+        assign output = 'four'
+      when 5
+        assign output = 'five'
+      when 6
+        assign output = 'six'
+      when 7
+        assign output = 'seven'
+      when 8
+        assign output = 'eight'
+      when 9
+        assign output = 'nine'
+      when 10
+        assign output = 'ten'
+      when 11
+        assign output = 'eleven'
+      when 12
+        assign output = 'twelve'
+      when 13
+        assign output = 'thirteen'
+      when 14
+        assign output = 'fourteen'
+      when 15
+        assign output = 'fifteen'
+      when 16
+        assign output = 'sixteen'
+      when 17
+        assign output = 'seventeen'
+      when 18
+        assign output = 'eighteen'
+      when 19
+        assign output = 'nineteen'
+      when 20
+        assign output = 'twenty'
+    endcase
+  elsif n >= 21 and n <= 99
+    assign _tens = n | divided_by: 10
+    assign _ones = n | modulo: 10
+    case _tens
+      when 2
+        assign _t = 'twenty'
+      when 3
+        assign _t = 'thirty'
+      when 4
+        assign _t = 'forty'
+      when 5
+        assign _t = 'fifty'
+      when 6
+        assign _t = 'sixty'
+      when 7
+        assign _t = 'seventy'
+      when 8
+        assign _t = 'eighty'
+      when 9
+        assign _t = 'ninety'
+    endcase
+    if _ones == 0
+      assign output = _t
+    else
+      case _ones
+        when 1
+          assign _o = 'one'
+        when 2
+          assign _o = 'two'
+        when 3
+          assign _o = 'three'
+        when 4
+          assign _o = 'four'
+        when 5
+          assign _o = 'five'
+        when 6
+          assign _o = 'six'
+        when 7
+          assign _o = 'seven'
+        when 8
+          assign _o = 'eight'
+        when 9
+          assign _o = 'nine'
+      endcase
+      assign output = _t | append: '-' | append: _o
+    endif
+  elsif n == 100
+    assign output = 'one hundred'
+  else
+    if num != blank
+      assign output = num | append: ''
+    endif
+  endif
+-%}{{- output -}}

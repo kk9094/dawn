@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "vf-product-header": {
+      "type": "vf-product-header",
+      "settings": {}
+    },
     "main": {
       "type": "main-product",
       "blocks": {
@@ -22,6 +26,12 @@
         "title": {
           "type": "title",
           "settings": {}
+        },
+        "edition": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'vf-edition-statement' %}"
+          }
         },
         "caption": {
           "type": "text",
@@ -102,7 +112,7 @@
       "block_order": [
         "vendor",
         "title",
-        "caption",
+        "edition",
         "price",
         "description",
         "variant_picker",
@@ -151,6 +161,7 @@
     }
   },
   "order": [
+    "vf-product-header",
     "main",
     "related-products"
   ]

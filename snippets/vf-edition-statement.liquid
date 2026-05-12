@@ -1,0 +1,14 @@
+{%- liquid
+  assign _p = product
+  assign _is_serie_ii = false
+  for _col in _p.collections
+    if _col.handle == 'serie-2' or _col.handle == 'serie-ii'
+      assign _is_serie_ii = true
+      break
+    endif
+  endfor
+  assign _size = _p.metafields.vox.edition_size
+-%}
+{%- if _is_serie_ii and _size and _size > 0 -%}
+  <p class="vf-edition-statement">Edition of {%- render 'vf-num-words', num: _size -%}</p>
+{%- endif -%}

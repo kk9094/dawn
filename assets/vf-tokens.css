@@ -1510,3 +1510,92 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   font-weight: var(--vf-w-light);
   color:       var(--vf-iron);
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §15 · Product breadcrumb + edition statement
+
+   Breadcrumb: full-bleed Bone strip, rendered by vf-product-header
+   above main-product. DM Mono uppercase Iron. No tier color dispatch.
+   Edition statement: Cormorant italic Iron inside the info column,
+   rendered by vf-edition-statement on Série II products only.
+   ─────────────────────────────────────────────────────────── */
+
+/* ── A · Breadcrumb strip ── */
+
+.vf-product-header {
+  background-color: var(--vf-bone);
+  border-bottom:    var(--vf-hairline) solid var(--vf-iron);
+}
+
+.vf-product-header__nav {
+  padding-block: var(--vf-s-2);   /* 12px — slim strip; matches transactional rhythm */
+}
+
+.vf-product-header__list {
+  display:     flex;
+  flex-wrap:   wrap;
+  align-items: center;
+  list-style:  none;
+  margin:      0;
+  padding:     0;
+}
+
+.vf-product-header__item {
+  display:     flex;
+  align-items: center;
+}
+
+.vf-product-header__link,
+.vf-product-header__current {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);            /* 12px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-meta-strong);  /* 0.22em */
+  text-transform: uppercase;
+  color:          var(--vf-iron);
+}
+
+.vf-product-header__item:not(:first-child)::before {
+  content:        '／';
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-meta-strong);
+  color:          var(--vf-iron);
+  padding-inline: var(--vf-s-1);   /* 8px each side — optical spacing around ／ */
+}
+
+.vf-product-header__link {
+  text-decoration: none;
+  border-bottom:   var(--vf-hairline) solid transparent;
+  padding-bottom:  1px;
+}
+
+.vf-product-header__link:hover,
+.vf-product-header__link:focus-visible {
+  border-bottom-color: var(--vf-iron);
+}
+
+.vf-product-header__link:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vf-product-header__link {
+    transition: border-bottom-color var(--vf-dur-micro) ease;
+  }
+}
+
+/* ── B · Edition statement ── */
+
+.vf-edition-statement {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-display-md);   /* 18px */
+  font-style:     italic;
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-body);      /* 0 */
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-iron);
+}

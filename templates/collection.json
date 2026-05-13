@@ -11,9 +11,7 @@
   "sections": {
     "header": {
       "type": "vf-collection-header",
-      "settings": {
-        "subtitle": ""
-      }
+      "settings": {}
     },
     "product-grid": {
       "type": "main-collection-product-grid",

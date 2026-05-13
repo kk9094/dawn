@@ -53,8 +53,9 @@
 
     <h1 class="vf-collection-header__title">{{ collection.title | escape }}</h1>
 
-    {%- if section.settings.subtitle != blank -%}
-      <p class="vf-collection-header__subtitle">{{ section.settings.subtitle | escape }}</p>
+    {%- assign _subtitle = collection.metafields.vox.italic_subtitle -%}
+    {%- if _subtitle != blank -%}
+      <p class="vf-collection-header__subtitle">{{ _subtitle | escape }}</p>
     {%- endif -%}
 
     {%- if collection.description != blank -%}
@@ -170,14 +171,7 @@
   "enabled_on": {
     "templates": ["collection"]
   },
-  "settings": [
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Italic subtitle",
-      "info": "Global — applies to all collection pages. For per-collection context, use the collection description in Shopify Admin. Leave blank to omit."
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "VF Collection Header"

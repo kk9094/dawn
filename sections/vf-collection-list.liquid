@@ -24,7 +24,7 @@
 
     {%- comment -%} — Série I ————————————————————————— {%- endcomment -%}
     <li class="vf-collection-tile-wrap">
-      <a class="vf-collection-tile" href="/collections/serie-1">
+      <a class="vf-collection-tile" href="{{ c_i.url }}">
         {%- liquid
           assign img = section.settings.image_i
           if img == blank
@@ -70,7 +70,7 @@
 
     {%- comment -%} — Série II ——————————————————————— {%- endcomment -%}
     <li class="vf-collection-tile-wrap">
-      <a class="vf-collection-tile" href="/collections/serie-2">
+      <a class="vf-collection-tile" href="{{ c_ii.url }}">
         {%- liquid
           assign img = section.settings.image_ii
           if img == blank

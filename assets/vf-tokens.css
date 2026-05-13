@@ -1609,18 +1609,26 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
    Ink meta:    Iron      #3A3A3A   var(--vf-iron)
    Accent:      Teal Deep #2A5A50   var(--vf-teal-deep)
 
-   Suppresses Dawn's .cart__warnings (specificity 0,2,0 matches
-   .is-empty .cart__warnings; vf-tokens.css source order wins).
+   Suppresses Dawn's .cart__warnings — component-cart.css is
+   a body-injected <link> (loads after head-linked vf-tokens.css),
+   so same-specificity source order does NOT give us the win.
+   !important is used on a semantically safe suppression target
+   (Dawn empty messaging has no valid display case alongside our section).
    Section renders zero DOM when cart has items (Liquid gate).
    Tile grid mirrors vf-collection-list: 1-col → 3-col at 990px.
    ─────────────────────────────────────────────────────────── */
 
 /* ── A · Dawn empty-state suppression ── */
 
-/* (0,2,0) matches component-cart.css .is-empty .cart__warnings { display: block };
-   vf-tokens.css loads after component-cart.css, source order wins */
-.is-empty .cart__warnings {
-  display: none;
+/* component-cart.css .is-empty .cart__warnings { display: block } loads AFTER
+   vf-tokens.css (body <link> vs head <link>); same-specificity source order
+   would give Dawn the win — !important resolves decisively. Safe: .cart__warnings
+   contains only Dawn's empty messaging with no valid display case alongside
+   vf-cart-empty. Three selectors cover all ancestor-shape variants. */
+cart-items.is-empty .cart__warnings,
+.is-empty .cart__warnings,
+.cart__warnings {
+  display: none !important;
 }
 
 /* ── B · Section wrapper and surface ── */
@@ -1696,6 +1704,7 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
 
 .vf-cart-empty-tile__body {
   padding-block-start: var(--vf-s-3);   /* 16px */
+  text-align:          center;
 }
 
 .vf-cart-empty-tile__name {

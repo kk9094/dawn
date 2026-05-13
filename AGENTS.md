@@ -48,6 +48,7 @@ These are non-negotiable. If a rule conflicts with anything else, this rule wins
 - **Schema:** every section file ends with `{% schema %}` JSON. Refer to `docs/section-schemas.md` for the per-section editable-fields contract.
 - **Schema: resource-reference settings cannot have `"default"`.** Settings of type `image_picker`, `url`, `collection`, `product`, `page`, `video`, `article`, `blog` reject the `"default"` property — Shopify raises a validation error on save. Handle missing values in Liquid: `{%- if section.settings.image -%}…{%- else -%}{% render 'vf-cube' %}{%- endif -%}`.
 - **Liquid whitespace:** use `{%-` and `-%}` aggressively. Rendered HTML must not contain blank lines from Liquid logic.
+- **Whitespace trim and inline render:** Never apply `{%-` / `-%}` trim dashes to a `{% render %}` tag whose output flows into running prose. The leading trim eats the space between the preceding word and the snippet output — `{%- render 'vf-num-words' -%}` inside `<p>Edition of …</p>` produces "Edition ofseventy". Use `{% render %}` (no dashes) when adjacent whitespace is intentional. Trim dashes are safe on block-level renders that produce only markup.
 
 ### Mobile breakpoint
 - **750px**, not 768px. Dawn defines `@media screen and (min-width: 750px)`. Match it everywhere.
@@ -193,6 +194,22 @@ Anchor the override on `.section-class.gradient` at specificity (0,0,1,1), which
 ### Custom-element vs class selector durability
 
 Dawn registers JavaScript-upgraded custom elements (`<header-drawer>`, `<menu-drawer>`, `<cart-notification>`, etc.), and Dawn's component CSS sometimes targets these by element tag name (e.g., `menu-drawer > details > summary::before`). Tag-name selectors are fragile: if Dawn renames or re-wraps the element in a future version, the rule silently stops matching. When writing VF overrides for Dawn component internals, use class-based selectors — `.menu-drawer-container > details > summary::before` survives element renames.
+
+### Metafield namespace minimum length
+
+Shopify enforces a 3-character minimum on metafield namespace identifiers. The `vf` prefix is two characters and is rejected at save time. The canonical metafield namespace for this project is `vox`. File names, CSS classes, and Liquid variable prefixes remain `vf-*` — the split is intentional and permanent. When adding new metafields: namespace = `vox`, key = snake_case descriptor (e.g., `vox.edition_size`, `vox.italic_subtitle`).
+
+### Conditional list separators via CSS `::before`
+
+For flex lists where items are conditionally rendered in Liquid (e.g., breadcrumbs with optional middle segments), inject separators via CSS rather than HTML or Liquid markup. A `::before` pseudo-element on `.item:not(:first-child)` generates the separator only when a sibling precedes it — no trailing-separator edge case when the first item is conditionally absent, and no Liquid conditionals needed. The separator character belongs in the CSS `content` property, not the Liquid template. Established in `vf-product-header` breadcrumb (Phase 1B).
+
+### Customiser orphan key persistence
+
+When a section setting is removed from `{% schema %}`, the corresponding key in `templates/*.json` is not automatically cleared — Shopify retains it, and the Customiser may restore the value on the next admin save. Atomic cleanup pattern: remove the key from both the schema and the JSON template in the same commit. If the admin has already cleared the field via the Customiser, the JSON stores `"key": ""` (empty string), not a missing key — the entry still exists and must be explicitly removed. A schema-only commit leaves a stale key that resurfaces on the next Customiser save.
+
+### Section settings vs metafields — refactor signal and pattern
+
+Detection signal: `section.settings.X` in Liquid for content that should differ per page. Confirm by attempting to change the value for one page — if the change propagates to all pages of the same template, the value belongs in a metafield. Refactor path: (1) change the Liquid read from `section.settings.X` to `resource.metafields.vox.X`; (2) remove the setting from `{% schema %}`; (3) remove the key from `templates/*.json` — all three changes in one atomic commit. The principle is stated in §6; the atomic three-step commit pattern is the implementation detail worth remembering. Confirmed in §16 (collection page italic subtitle).
 
 ---
 

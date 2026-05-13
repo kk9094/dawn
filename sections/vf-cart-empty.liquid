@@ -1,0 +1,153 @@
+{%- comment -%}
+  vf-cart-empty — Empty cart editorial section with three-tier dispatch grid.
+  Renders only when cart is empty; zero DOM output when cart has items.
+  Suppresses Dawn's .cart__warnings via §17 CSS override (vf-tokens.css).
+  Tile architecture mirrors vf-collection-list: image_picker settings,
+  hardcoded URLs, Cormorant/DM Sans typography, no edition-count line.
+{%- endcomment -%}
+
+{%- if cart == empty -%}
+
+{%- liquid
+  assign c_i  = collections['serie-1']
+  assign c_ii = collections['serie-2']
+-%}
+
+<section class="vf-cart-empty" data-mode="bone">
+
+  <div class="vf-cart-empty__header page-width">
+    <h1 class="vf-cart-empty__title">No objects in cart.</h1>
+  </div>
+
+  <hr class="vf-cart-empty__rule page-width" aria-hidden="true">
+
+  <ul class="vf-cart-empty__grid page-width" role="list">
+
+    {%- comment -%} — Série I ————————————————————————— {%- endcomment -%}
+    <li class="vf-cart-empty-tile-wrap">
+      <a class="vf-cart-empty-tile" href="/collections/serie-1">
+        {%- liquid
+          assign img = section.settings.image_i
+          if img == blank
+            assign img = c_i.featured_image
+          endif
+        -%}
+        {%- if img != blank -%}
+          <div class="vf-cart-empty-tile__image-wrap">
+            <img
+              src="{{ img | image_url: width: 800 }}"
+              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              sizes="(min-width: 750px) 33vw, 100vw"
+              alt="{{ img.alt | default: 'Série I' | escape }}"
+              width="800"
+              height="{{ 800 | divided_by: img.aspect_ratio | round }}"
+              loading="lazy"
+              class="vf-cart-empty-tile__image"
+            >
+          </div>
+        {%- endif -%}
+        <div class="vf-cart-empty-tile__body">
+          {%- render 'vf-eyebrow', text: 'Série I', tier: 'I' -%}
+          <h2 class="vf-cart-empty-tile__name">{{ c_i.title | default: 'Série I' | escape }}</h2>
+          <p class="vf-cart-empty-tile__description">Foundational geometry. Three fixed releases per year.</p>
+          <span class="vf-cart-empty-tile__arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </li>
+
+    {%- comment -%} — Série II ——————————————————————— {%- endcomment -%}
+    <li class="vf-cart-empty-tile-wrap">
+      <a class="vf-cart-empty-tile" href="/collections/serie-2">
+        {%- liquid
+          assign img = section.settings.image_ii
+          if img == blank
+            assign img = c_ii.featured_image
+          endif
+        -%}
+        {%- if img != blank -%}
+          <div class="vf-cart-empty-tile__image-wrap">
+            <img
+              src="{{ img | image_url: width: 800 }}"
+              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              sizes="(min-width: 750px) 33vw, 100vw"
+              alt="{{ img.alt | default: 'Série II' | escape }}"
+              width="800"
+              height="{{ 800 | divided_by: img.aspect_ratio | round }}"
+              loading="lazy"
+              class="vf-cart-empty-tile__image"
+            >
+          </div>
+        {%- endif -%}
+        <div class="vf-cart-empty-tile__body">
+          {%- render 'vf-eyebrow', text: 'Série II', tier: 'II' -%}
+          <h2 class="vf-cart-empty-tile__name">{{ c_ii.title | default: 'Série II' | escape }}</h2>
+          <p class="vf-cart-empty-tile__description">Articulated geometry, precision-finished in numbered editions.</p>
+          <span class="vf-cart-empty-tile__arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </li>
+
+    {%- comment -%} — Atelier ————————————————————————— {%- endcomment -%}
+    <li class="vf-cart-empty-tile-wrap">
+      <a class="vf-cart-empty-tile" href="/pages/atelier">
+        {%- assign img = section.settings.image_atelier -%}
+        {%- if img != blank -%}
+          <div class="vf-cart-empty-tile__image-wrap">
+            <img
+              src="{{ img | image_url: width: 800 }}"
+              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              sizes="(min-width: 750px) 33vw, 100vw"
+              alt="{{ img.alt | default: 'Atelier' | escape }}"
+              width="800"
+              height="{{ 800 | divided_by: img.aspect_ratio | round }}"
+              loading="lazy"
+              class="vf-cart-empty-tile__image"
+            >
+          </div>
+        {%- endif -%}
+        <div class="vf-cart-empty-tile__body">
+          {%- render 'vf-eyebrow', text: 'Atelier', tier: 'Atelier' -%}
+          <h2 class="vf-cart-empty-tile__name">Atelier</h2>
+          <p class="vf-cart-empty-tile__description">Bespoke commission by application.</p>
+          <span class="vf-cart-empty-tile__arrow" aria-hidden="true">→</span>
+        </div>
+      </a>
+    </li>
+
+  </ul>
+
+</section>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "VF Cart Empty",
+  "class": "vf-cart-empty-section",
+  "enabled_on": {
+    "templates": ["cart"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image_i",
+      "label": "Série I — tile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_ii",
+      "label": "Série II — tile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_atelier",
+      "label": "Atelier — tile image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF Cart Empty"
+    }
+  ]
+}
+{% endschema %}

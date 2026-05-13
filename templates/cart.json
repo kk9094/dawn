@@ -26,6 +26,10 @@
         "buttons"
       ]
     },
+    "vf-cart-empty": {
+      "type": "vf-cart-empty",
+      "settings": {}
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
@@ -49,6 +53,7 @@
   },
   "order": [
     "cart-items",
+    "vf-cart-empty",
     "cart-footer",
     "featured-collection"
   ]

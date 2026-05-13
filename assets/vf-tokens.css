@@ -1599,3 +1599,144 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   line-height:    var(--vf-lh-tight);
   color:          var(--vf-iron);
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §17 · Cart empty state — three-tier dispatch
+
+   Surface:     Bone      #E8E2D6   var(--vf-bone)
+   Ink primary: Jet       #111111   var(--vf-jet)
+   Ink meta:    Iron      #3A3A3A   var(--vf-iron)
+   Accent:      Teal Deep #2A5A50   var(--vf-teal-deep)
+
+   Suppresses Dawn's .cart__warnings (specificity 0,2,0 matches
+   .is-empty .cart__warnings; vf-tokens.css source order wins).
+   Section renders zero DOM when cart has items (Liquid gate).
+   Tile grid mirrors vf-collection-list: 1-col → 3-col at 990px.
+   ─────────────────────────────────────────────────────────── */
+
+/* ── A · Dawn empty-state suppression ── */
+
+/* (0,2,0) matches component-cart.css .is-empty .cart__warnings { display: block };
+   vf-tokens.css loads after component-cart.css, source order wins */
+.is-empty .cart__warnings {
+  display: none;
+}
+
+/* ── B · Section wrapper and surface ── */
+
+.vf-cart-empty {
+  background-color: var(--vf-bone);
+  padding-block:    var(--vf-s-7);   /* 64px top + bottom */
+}
+
+/* ── C · Heading cluster ── */
+
+.vf-cart-empty__header {
+  margin-bottom: var(--vf-s-6);   /* 48px between H1 and hairline */
+}
+
+.vf-cart-empty__title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-page-title);   /* 38px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         0;
+}
+
+/* ── D · Hairline divider ── */
+
+.vf-cart-empty__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-iron);
+  margin:     0 0 var(--vf-s-6) 0;   /* 48px below rule to tile grid */
+  width:      100%;
+}
+
+/* ── E · Tile grid layout ── */
+
+.vf-cart-empty__grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--vf-s-5);   /* 32px */
+  list-style:            none;
+  margin:                0;
+  padding:               0;
+}
+
+@media screen and (min-width: 990px) {
+  .vf-cart-empty__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap:                   var(--vf-s-6);   /* 48px at desktop */
+  }
+}
+
+/* ── F · Tile interior ── */
+
+.vf-cart-empty-tile {
+  display:         block;
+  text-decoration: none;
+  color:           inherit;
+}
+
+.vf-cart-empty-tile__image-wrap {
+  overflow:         hidden;
+  aspect-ratio:     3 / 4;   /* portrait — matches vf-collection-tile */
+  background-color: var(--vf-iron);
+}
+
+.vf-cart-empty-tile__image {
+  display:    block;
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.vf-cart-empty-tile__body {
+  padding-block-start: var(--vf-s-3);   /* 16px */
+}
+
+.vf-cart-empty-tile__name {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h2);   /* clamp(1.625rem, 2.4vw, 2.25rem) */
+  font-weight:    var(--vf-w-light);
+  font-style:     italic;
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-2) 0 var(--vf-s-1) 0;
+}
+
+.vf-cart-empty-tile__description {
+  font-family:  var(--vf-ff-body);
+  font-size:    var(--vf-fs-body);   /* 14px */
+  font-weight:  var(--vf-w-light);
+  line-height:  var(--vf-lh-body);
+  color:        var(--vf-iron);
+  margin:       0 0 var(--vf-s-3) 0;
+}
+
+.vf-cart-empty-tile__arrow {
+  display:   block;
+  font-size: var(--vf-fs-body-large);   /* 16px */
+  color:     var(--vf-iron);
+}
+
+/* ── G · Tile hover / focus ── */
+
+.vf-cart-empty-tile:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vf-cart-empty-tile__image {
+    transition: transform var(--vf-dur-fast) ease;
+  }
+
+  .vf-cart-empty-tile:hover .vf-cart-empty-tile__image,
+  .vf-cart-empty-tile:focus-visible .vf-cart-empty-tile__image {
+    transform: scale(1.05);
+  }
+}

@@ -1670,8 +1670,8 @@ cart-items.is-empty .cart__warnings,
   grid-template-columns: 1fr;
   gap:                   var(--vf-s-5);   /* 32px */
   list-style:            none;
-  margin:                0;
-  padding:               0;
+  margin-block:          0;
+  padding-block:         0;
 }
 
 @media screen and (min-width: 990px) {

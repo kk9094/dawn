@@ -1647,11 +1647,12 @@ cart-items.is-empty .cart__warnings,
 .vf-cart-empty__title {
   font-family:    var(--vf-ff-display);
   font-size:      var(--vf-fs-page-title);   /* 38px */
-  font-weight:    var(--vf-w-regular);
+  font-weight:    var(--vf-w-light);
   letter-spacing: var(--vf-track-tight);
   line-height:    var(--vf-lh-tight);
   color:          var(--vf-jet);
   margin:         0;
+  text-align:     center;
 }
 
 /* ── D · Hairline divider ── */
@@ -1659,8 +1660,8 @@ cart-items.is-empty .cart__warnings,
 .vf-cart-empty__rule {
   border:     0;
   border-top: var(--vf-hairline) solid var(--vf-iron);
-  margin:     0 0 var(--vf-s-6) 0;   /* 48px below rule to tile grid */
-  width:      100%;
+  margin:     var(--vf-s-3) auto var(--vf-s-6) auto;
+  width:      120px;
 }
 
 /* ── E · Tile grid layout ── */

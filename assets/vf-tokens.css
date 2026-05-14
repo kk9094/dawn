@@ -1750,3 +1750,437 @@ cart-items.is-empty .cart__warnings,
     transform: scale(1.05);
   }
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §18 · Journal surfaces — Editorial register
+
+   Surface: Obsidian (default). data-mode="obsidian" is a semantic
+   annotation; no CSS rescope is needed because Obsidian IS the
+   default :root surface. Sections inherit body background and
+   vf-fg-1 = Bone automatically. Ink tokens reference --vf-bone
+   directly (locked editorial surface, no merchant customisation).
+
+   vf-journal-index: blog post list, article cards, inline pagination.
+   vf-journal-article: lead image, title header, body content,
+     pull-quote override, next/previous navigation.
+   ─────────────────────────────────────────────────────────── */
+
+/* ── A · Section wrappers ── */
+
+.vf-journal-index,
+.vf-journal-article {
+  padding-block: var(--vf-s-7);
+}
+
+/* ── B · Blog index header ── */
+
+.vf-journal-index__header {
+  margin-bottom: var(--vf-s-5);
+  text-align:    center;
+}
+
+.vf-journal-index__title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-page-title);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-bone);
+  margin:         0;
+}
+
+.vf-journal-index__subtitle {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-display-md);
+  font-style:  italic;
+  font-weight: var(--vf-w-light);
+  color:       var(--vf-bone);
+  opacity:     0.75;
+  margin:      var(--vf-s-2) 0 0 0;
+}
+
+.vf-journal-index__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-bone);
+  opacity:    0.3;
+  margin:     var(--vf-s-3) auto var(--vf-s-7) auto;
+  width:      120px;
+}
+
+/* ── C · Article card grid ── */
+
+/* margin-block / padding-block: axis-scoped resets per §9 pattern —
+   preserves .page-width inline padding while zeroing block-axis values. */
+.vf-journal-index__grid {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--vf-s-6);
+  list-style:            none;
+  margin-block:          0;
+  padding-block:         0;
+}
+
+@media screen and (min-width: 750px) {
+  .vf-journal-index__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .vf-journal-index__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--vf-s-7);
+  }
+}
+
+/* ── D · Article card ── */
+
+.vf-journal-card {
+  display:         block;
+  text-decoration: none;
+  color:           inherit;
+}
+
+.vf-journal-card__image-wrap {
+  overflow:         hidden;
+  aspect-ratio:     3 / 2;
+  background-color: var(--vf-iron);
+  margin-bottom:    var(--vf-s-3);
+}
+
+.vf-journal-card__image {
+  display:    block;
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+.vf-journal-card__date {
+  display:        block;
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);
+  letter-spacing: var(--vf-track-meta-strong);
+  color:          var(--vf-bone);
+  opacity:        0.65;
+  margin-bottom:  var(--vf-s-2);
+}
+
+.vf-journal-card__title {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-h2);
+  font-weight: var(--vf-w-light);
+  font-style:  italic;
+  line-height: var(--vf-lh-tight);
+  color:       var(--vf-bone);
+  margin:      0 0 var(--vf-s-2) 0;
+}
+
+.vf-journal-card__excerpt {
+  font-family:        var(--vf-ff-body);
+  font-size:          var(--vf-fs-body);
+  font-weight:        var(--vf-w-light);
+  line-height:        var(--vf-lh-body);
+  color:              var(--vf-bone);
+  opacity:            0.75;
+  margin:             0 0 var(--vf-s-3) 0;
+  display:            -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow:           hidden;
+}
+
+.vf-journal-card__meta {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-family:     var(--vf-ff-mono);
+  font-size:       var(--vf-fs-meta);
+  letter-spacing:  var(--vf-track-meta-strong);
+  color:           var(--vf-bone);
+  opacity:         0.65;
+}
+
+.vf-journal-card:focus-visible {
+  outline:        1.5px solid var(--vf-teal-bright);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vf-journal-card__image {
+    transition: transform var(--vf-dur-fast) ease;
+  }
+
+  .vf-journal-card:hover .vf-journal-card__image,
+  .vf-journal-card:focus-visible .vf-journal-card__image {
+    transform: scale(1.05);
+  }
+}
+
+/* ── E · Pagination ── */
+
+/* margin-block / padding-block: axis-scoped resets on .page-width element. */
+.vf-journal-index__pagination {
+  margin-top:      var(--vf-s-7);
+  display:         flex;
+  justify-content: center;
+}
+
+.vf-journal-pagination__list {
+  display:     flex;
+  gap:         var(--vf-s-3);
+  align-items: center;
+  list-style:  none;
+  margin:      0;
+  padding:     0;
+}
+
+.vf-journal-pagination__link,
+.vf-journal-pagination__current,
+.vf-journal-pagination__gap {
+  font-family:     var(--vf-ff-mono);
+  font-size:       var(--vf-fs-meta);
+  letter-spacing:  var(--vf-track-meta-strong);
+  color:           var(--vf-bone);
+  text-decoration: none;
+  padding:         var(--vf-s-1) var(--vf-s-2);
+  opacity:         0.65;
+}
+
+.vf-journal-pagination__link:hover,
+.vf-journal-pagination__link:focus-visible {
+  opacity: 1;
+}
+
+.vf-journal-pagination__current {
+  opacity:       1;
+  border-bottom: var(--vf-hairline) solid var(--vf-bone);
+}
+
+.vf-journal-pagination__link:focus-visible {
+  outline:        1.5px solid var(--vf-teal-bright);
+  outline-offset: 2px;
+}
+
+/* ── F · Article back link ── */
+
+.vf-journal-article__back {
+  margin-bottom: var(--vf-s-5);
+}
+
+.vf-journal-article__back-link {
+  font-family:     var(--vf-ff-mono);
+  font-size:       var(--vf-fs-meta);
+  letter-spacing:  var(--vf-track-meta-strong);
+  color:           var(--vf-bone);
+  opacity:         0.65;
+  text-decoration: none;
+}
+
+.vf-journal-article__back-link:hover {
+  opacity: 1;
+}
+
+/* ── G · Article lead image ── */
+
+.vf-journal-article__lead {
+  margin: 0 0 var(--vf-s-7) 0;
+}
+
+.vf-journal-article__lead-image-wrap {
+  overflow:         hidden;
+  aspect-ratio:     3 / 2;
+  background-color: var(--vf-iron);
+}
+
+.vf-journal-article__lead-image {
+  display:    block;
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+}
+
+/* ── H · Article header ── */
+
+.vf-journal-article__header {
+  margin-bottom: var(--vf-s-6);
+  text-align:    center;
+}
+
+.vf-journal-article__meta {
+  display:         flex;
+  justify-content: center;
+  align-items:     center;
+  gap:             var(--vf-s-2);
+  font-family:     var(--vf-ff-mono);
+  font-size:       var(--vf-fs-meta);
+  letter-spacing:  var(--vf-track-meta-strong);
+  color:           var(--vf-bone);
+  opacity:         0.65;
+  margin-bottom:   var(--vf-s-3);
+}
+
+.vf-journal-article__title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-display-1);
+  font-weight:    var(--vf-w-light);
+  line-height:    var(--vf-lh-tight);
+  letter-spacing: var(--vf-track-tight);
+  color:          var(--vf-bone);
+  margin:         0 0 var(--vf-s-4) 0;
+}
+
+.vf-journal-article__lead-paragraph {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-display-md);
+  font-style:  italic;
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-bone);
+  opacity:     0.85;
+  margin:      0;
+}
+
+/* ── I · Article body content ── */
+
+.vf-journal-article__content {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-bone);
+  opacity:     0.9;
+}
+
+.vf-journal-article__content > * + * {
+  margin-top: var(--vf-s-4);
+}
+
+.vf-journal-article__content h2 {
+  font-family:   var(--vf-ff-display);
+  font-size:     var(--vf-fs-h1);
+  font-weight:   var(--vf-w-light);
+  line-height:   var(--vf-lh-tight);
+  color:         var(--vf-bone);
+  opacity:       1;
+  margin-top:    var(--vf-s-7);
+  margin-bottom: var(--vf-s-3);
+}
+
+.vf-journal-article__content h3 {
+  font-family:   var(--vf-ff-display);
+  font-size:     var(--vf-fs-h2);
+  font-weight:   var(--vf-w-light);
+  font-style:    italic;
+  color:         var(--vf-bone);
+  opacity:       1;
+  margin-top:    var(--vf-s-6);
+  margin-bottom: var(--vf-s-2);
+}
+
+.vf-journal-article__content img {
+  max-width: 100%;
+  height:    auto;
+  display:   block;
+  margin:    var(--vf-s-5) auto;
+}
+
+.vf-journal-article__content a {
+  color:                     var(--vf-bone);
+  text-decoration:           underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset:     3px;
+}
+
+/* ── J · Pull quote (blockquote override) ── */
+
+/* Dawn's base.css: blockquote { border-left: 0.2rem solid … } — banned per §4.
+   .rte blockquote { display: inline-flex } also overridden.
+   Specificity (0,1,1) matches both Dawn rules; vf-tokens.css loads after
+   base.css so source order gives us the win without !important. */
+.vf-journal-article__content blockquote {
+  display:      block;
+  font-family:  var(--vf-ff-display);
+  font-size:    var(--vf-fs-display-md);
+  font-style:   italic;
+  font-weight:  var(--vf-w-light);
+  line-height:  var(--vf-lh-body);
+  color:        var(--vf-bone);
+  border-left:  0;
+  padding-left: 0;
+  text-align:   center;
+  max-width:    80%;
+  margin:       var(--vf-s-6) auto;
+  padding:      var(--vf-s-4) 0;
+  border-top:    var(--vf-hairline) solid var(--vf-bone);
+  border-bottom: var(--vf-hairline) solid var(--vf-bone);
+  opacity:      0.9;
+}
+
+/* ── K · Article hairline divider ── */
+
+.vf-journal-article__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-bone);
+  opacity:    0.3;
+  margin:     var(--vf-s-7) auto;
+  width:      120px;
+}
+
+/* ── L · Next/previous navigation ── */
+
+.vf-journal-article__nav {
+  display:         flex;
+  justify-content: space-between;
+  gap:             var(--vf-s-5);
+  margin-bottom:   var(--vf-s-5);
+}
+
+.vf-journal-article__nav-link {
+  display:         flex;
+  flex-direction:  column;
+  gap:             var(--vf-s-1);
+  text-decoration: none;
+  color:           var(--vf-bone);
+  flex:            1;
+  max-width:       45%;
+}
+
+.vf-journal-article__nav-link--prev { text-align: left; }
+.vf-journal-article__nav-link--next { text-align: right; margin-left: auto; }
+
+.vf-journal-article__nav-label {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);
+  letter-spacing: var(--vf-track-meta-strong);
+  opacity:        0.65;
+}
+
+.vf-journal-article__nav-title {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-body-large);
+  font-style:  italic;
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-tight);
+}
+
+.vf-journal-article__nav-link:hover .vf-journal-article__nav-label,
+.vf-journal-article__nav-link:focus-visible .vf-journal-article__nav-label {
+  opacity: 1;
+}
+
+.vf-journal-article__nav-link:focus-visible {
+  outline:        1.5px solid var(--vf-teal-bright);
+  outline-offset: 4px;
+}
+
+@media screen and (max-width: 749px) {
+  .vf-journal-article__nav {
+    flex-direction: column;
+  }
+
+  .vf-journal-article__nav-link--next {
+    text-align:  left;
+    margin-left: 0;
+  }
+}

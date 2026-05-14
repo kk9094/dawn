@@ -1,0 +1,92 @@
+{%- comment -%}
+  vf-journal-article — Individual article page in editorial Obsidian register.
+  Renders lead image, title header (date + reading time meta), article body
+  with pull-quote and inline-image overrides, divider, and next/previous nav.
+  Replaces Dawn's main-article section in templates/article.json.
+  Structured data preserved via article | structured_data at end.
+{%- endcomment -%}
+
+<article class="vf-journal-article" data-mode="obsidian">
+
+  <div class="vf-journal-article__back page-width">
+    <a class="vf-journal-article__back-link" href="{{ blog.url }}">
+      <span aria-hidden="true">←</span> JOURNAL
+    </a>
+  </div>
+
+  {%- if article.image != blank -%}
+    <figure class="vf-journal-article__lead">
+      <div class="vf-journal-article__lead-image-wrap page-width">
+        <img
+          src="{{ article.image | image_url: width: 1500 }}"
+          srcset="{{ article.image | image_url: width: 750 }} 750w, {{ article.image | image_url: width: 1100 }} 1100w, {{ article.image | image_url: width: 1500 }} 1500w, {{ article.image | image_url: width: 2200 }} 2200w"
+          sizes="(min-width: 1200px) 1100px, 100vw"
+          alt="{{ article.image.alt | default: article.title | escape }}"
+          width="1500"
+          height="{{ 1500 | divided_by: article.image.aspect_ratio | round }}"
+          loading="eager"
+          fetchpriority="high"
+          class="vf-journal-article__lead-image"
+        >
+      </div>
+    </figure>
+  {%- endif -%}
+
+  <header class="vf-journal-article__header page-width page-width--narrow">
+    <div class="vf-journal-article__meta">
+      <time class="vf-journal-article__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+        {{- article.published_at | date: '%b %d, %Y' | upcase -}}
+      </time>
+      <span class="vf-journal-article__meta-sep" aria-hidden="true">·</span>
+      <span class="vf-journal-article__reading-time">{% render 'vf-reading-time', article: article %} MIN READ</span>
+    </div>
+    <h1 class="vf-journal-article__title">{{ article.title | escape }}</h1>
+    {%- if article.excerpt != blank -%}
+      <p class="vf-journal-article__lead-paragraph">{{ article.excerpt | strip_html }}</p>
+    {%- endif -%}
+  </header>
+
+  <div class="vf-journal-article__content rte page-width page-width--narrow">
+    {{ article.content }}
+  </div>
+
+  <hr class="vf-journal-article__rule" aria-hidden="true">
+
+  {%- if blog.previous_article or blog.next_article -%}
+    <nav class="vf-journal-article__nav page-width page-width--narrow" aria-label="Article navigation">
+      {%- if blog.previous_article -%}
+        <a class="vf-journal-article__nav-link vf-journal-article__nav-link--prev" href="{{ blog.previous_article.url }}">
+          <span class="vf-journal-article__nav-label">← PREVIOUS</span>
+          <span class="vf-journal-article__nav-title">{{ blog.previous_article.title | escape }}</span>
+        </a>
+      {%- endif -%}
+      {%- if blog.next_article -%}
+        <a class="vf-journal-article__nav-link vf-journal-article__nav-link--next" href="{{ blog.next_article.url }}">
+          <span class="vf-journal-article__nav-label">NEXT →</span>
+          <span class="vf-journal-article__nav-title">{{ blog.next_article.title | escape }}</span>
+        </a>
+      {%- endif -%}
+    </nav>
+  {%- endif -%}
+
+</article>
+
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+
+{% schema %}
+{
+  "name": "VF Journal Article",
+  "class": "vf-journal-article-section",
+  "enabled_on": {
+    "templates": ["article"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VF Journal Article"
+    }
+  ]
+}
+{% endschema %}

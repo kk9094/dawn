@@ -1,0 +1,7 @@
+{%- liquid
+  assign _words   = article.content | strip_html | split: ' ' | size
+  assign _minutes = _words | divided_by: 225 | ceil
+  if _minutes < 1
+    assign _minutes = 1
+  endif
+-%}{{- _minutes -}}

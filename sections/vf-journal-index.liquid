@@ -1,0 +1,124 @@
+{%- comment -%}
+  vf-journal-index — Blog index in editorial Obsidian register.
+  Renders article card grid (3 / 2 landscape image, date, reading time,
+  excerpt) with inline numbered pagination. 8 articles per page.
+  Replaces Dawn's main-blog section in templates/blog.json.
+{%- endcomment -%}
+
+<section class="vf-journal-index" data-mode="obsidian">
+
+  <header class="vf-journal-index__header page-width">
+    {%- if section.settings.eyebrow != blank -%}
+      {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+    {%- endif -%}
+    <h1 class="vf-journal-index__title">{{ section.settings.heading | escape }}</h1>
+    {%- if section.settings.subtitle != blank -%}
+      <p class="vf-journal-index__subtitle">{{ section.settings.subtitle | escape }}</p>
+    {%- endif -%}
+  </header>
+
+  <hr class="vf-journal-index__rule" aria-hidden="true">
+
+  {%- paginate blog.articles by 8 -%}
+    <ul class="vf-journal-index__grid page-width" role="list">
+      {%- for article in blog.articles -%}
+        <li class="vf-journal-card-wrap">
+          <a class="vf-journal-card" href="{{ article.url }}">
+            {%- if article.image != blank -%}
+              <div class="vf-journal-card__image-wrap">
+                <img
+                  src="{{ article.image | image_url: width: 800 }}"
+                  srcset="{{ article.image | image_url: width: 400 }} 400w, {{ article.image | image_url: width: 800 }} 800w, {{ article.image | image_url: width: 1200 }} 1200w"
+                  sizes="(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw"
+                  alt="{{ article.image.alt | default: article.title | escape }}"
+                  width="800"
+                  height="{{ 800 | divided_by: article.image.aspect_ratio | round }}"
+                  loading="lazy"
+                  class="vf-journal-card__image"
+                >
+              </div>
+            {%- endif -%}
+            <div class="vf-journal-card__body">
+              <time class="vf-journal-card__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                {{- article.published_at | date: '%b %d, %Y' | upcase -}}
+              </time>
+              <h2 class="vf-journal-card__title">{{ article.title | escape }}</h2>
+              {%- if article.excerpt != blank -%}
+                <p class="vf-journal-card__excerpt">{{ article.excerpt | strip_html | truncatewords: 24 }}</p>
+              {%- elsif article.content != blank -%}
+                <p class="vf-journal-card__excerpt">{{ article.content | strip_html | truncatewords: 24 }}</p>
+              {%- endif -%}
+              <div class="vf-journal-card__meta">
+                <span class="vf-journal-card__reading-time">{% render 'vf-reading-time', article: article %} MIN READ</span>
+                <span class="vf-journal-card__arrow" aria-hidden="true">→</span>
+              </div>
+            </div>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="vf-journal-index__pagination page-width" role="navigation" aria-label="Pagination">
+        <ul class="vf-journal-pagination__list" role="list">
+          {%- if paginate.previous -%}
+            <li>
+              <a class="vf-journal-pagination__link vf-journal-pagination__link--prev" href="{{ paginate.previous.url }}" aria-label="Previous page">←</a>
+            </li>
+          {%- endif -%}
+          {%- for part in paginate.parts -%}
+            <li>
+              {%- if part.is_link -%}
+                <a class="vf-journal-pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+              {%- elsif part.title == paginate.current_page -%}
+                <span class="vf-journal-pagination__current" aria-current="page">{{ part.title }}</span>
+              {%- else -%}
+                <span class="vf-journal-pagination__gap">{{ part.title }}</span>
+              {%- endif -%}
+            </li>
+          {%- endfor -%}
+          {%- if paginate.next -%}
+            <li>
+              <a class="vf-journal-pagination__link vf-journal-pagination__link--next" href="{{ paginate.next.url }}" aria-label="Next page">→</a>
+            </li>
+          {%- endif -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+
+</section>
+
+{% schema %}
+{
+  "name": "VF Journal Index",
+  "class": "vf-journal-index-section",
+  "enabled_on": {
+    "templates": ["blog"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Journal"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "default": "Studio Notes."
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Italic subtitle"
+    }
+  ],
+  "presets": [
+    {
+      "name": "VF Journal Index"
+    }
+  ]
+}
+{% endschema %}

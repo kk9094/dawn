@@ -199,6 +199,8 @@ Dawn registers JavaScript-upgraded custom elements (`<header-drawer>`, `<menu-dr
 
 Shopify enforces a 3-character minimum on metafield namespace identifiers. The `vf` prefix is two characters and is rejected at save time. The canonical metafield namespace for this project is `vox`. File names, CSS classes, and Liquid variable prefixes remain `vf-*` — the split is intentional and permanent. When adding new metafields: namespace = `vox`, key = snake_case descriptor (e.g., `vox.edition_size`, `vox.italic_subtitle`).
 
+**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces. Established metafield uses: `product.metafields.vox.edition_size` (Phase 1B, commit c2ca9e95) and `collection.metafields.vox.italic_subtitle` (§16).
+
 ### Conditional list separators via CSS `::before`
 
 For flex lists where items are conditionally rendered in Liquid (e.g., breadcrumbs with optional middle segments), inject separators via CSS rather than HTML or Liquid markup. A `::before` pseudo-element on `.item:not(:first-child)` generates the separator only when a sibling precedes it — no trailing-separator edge case when the first item is conditionally absent, and no Liquid conditionals needed. The separator character belongs in the CSS `content` property, not the Liquid template. Established in `vf-product-header` breadcrumb (Phase 1B).
@@ -207,9 +209,81 @@ For flex lists where items are conditionally rendered in Liquid (e.g., breadcrum
 
 When a section setting is removed from `{% schema %}`, the corresponding key in `templates/*.json` is not automatically cleared — Shopify retains it, and the Customiser may restore the value on the next admin save. Atomic cleanup pattern: remove the key from both the schema and the JSON template in the same commit. If the admin has already cleared the field via the Customiser, the JSON stores `"key": ""` (empty string), not a missing key — the entry still exists and must be explicitly removed. A schema-only commit leaves a stale key that resurfaces on the next Customiser save.
 
+**Before (stale key remains after schema-only removal):**
+```json
+"vf-collection-header": {
+  "type": "vf-collection-header",
+  "settings": {
+    "italic_subtitle": ""
+  }
+}
+```
+
+**After (atomic cleanup — schema removal + JSON key deletion in one commit):**
+```json
+"vf-collection-header": {
+  "type": "vf-collection-header",
+  "settings": {}
+}
+```
+
+Confirmed in §16: `italic_subtitle` was removed from the section schema and simultaneously deleted from `templates/collection.json`.
+
 ### Section settings vs metafields — refactor signal and pattern
 
 Detection signal: `section.settings.X` in Liquid for content that should differ per page. Confirm by attempting to change the value for one page — if the change propagates to all pages of the same template, the value belongs in a metafield. Refactor path: (1) change the Liquid read from `section.settings.X` to `resource.metafields.vox.X`; (2) remove the setting from `{% schema %}`; (3) remove the key from `templates/*.json` — all three changes in one atomic commit. The principle is stated in §6; the atomic three-step commit pattern is the implementation detail worth remembering. Confirmed in §16 (collection page italic subtitle).
+
+**Admin workflow for the refactor:** in Shopify Admin, navigate to Settings → Custom data → Collections (or Products, Pages, etc.) and define the metafield (`vox.italic_subtitle`, type Single line text) before deploying the Liquid change. The metafield must exist in admin before the storefront reads it — deploying the Liquid read first produces a blank value, not an error, which can be mistaken for a Liquid bug. Set values per-resource after the metafield is defined.
+
+| Content type | Where to set | Scope |
+| --- | --- | --- |
+| Identical across all pages of template | `section.settings.*` via Customiser | All pages sharing that template |
+| Varies per collection / product / page | `resource.metafields.vox.*` via Admin | One record at a time |
+| Varies per collection, auto-populated | `collection.description` | One record at a time |
+
+### CSS specificity vs source order with body-injected stylesheets
+
+Dawn component CSS is loaded via `{{ stylesheet_tag }}` calls inside section Liquid files, placing `<link>` tags in the document body. `vf-tokens.css` is loaded in `<head>` via `theme.liquid`. Browsers process `<link>` tags in document order — body-injected stylesheets load after all head-injected stylesheets. At equal specificity, the later (body-injected) rule wins. This means Dawn component rules at a given specificity will override `vf-tokens.css` rules at the same specificity even when `vf-tokens.css` is the intended winner.
+
+Implication: do not rely on source-order wins when overriding Dawn component CSS from `vf-tokens.css`. Use `!important` for suppression rules where Dawn's component CSS must be decisively overridden. Document the reason for `!important` at the rule site — it is the correct response to the load-order asymmetry, not a specificity hack.
+
+Established in §17 (`vf-cart-empty`): suppressing `.cart__warnings` required `!important` because `component-cart.css` is body-injected and matched the same (0,2,0) specificity as the suppression rule in `vf-tokens.css`.
+
+### Axis-scoped CSS resets on `.page-width` containers
+
+Dawn's `.page-width` class (defined in `base.css`) applies `padding: 0 1.5rem` on mobile and `padding: 0 5rem` at ≥750px, along with `margin: 0 auto`. Applying a blanket `padding: 0` or `margin: 0` reset on an element carrying `.page-width` overrides the inline padding at equal specificity via source order, causing content to bleed to the container edge.
+
+Fix: use axis-scoped resets. `padding-block: 0` zeroes block-axis padding without touching inline padding. `margin-block: 0` zeroes block-axis margin without disturbing the `auto` inline margins that centre the container.
+
+```css
+/* Wrong — bleeds content past container edge */
+.vf-section__grid {
+  padding: 0;
+  margin: 0;
+}
+
+/* Correct — resets only block axis; preserves .page-width inline padding */
+.vf-section__grid {
+  padding-block: 0;
+  margin-block: 0;
+}
+```
+
+Applied in §17 (`vf-cart-empty__grid`) and §14 (`vf-collection-list__grid`). Applies to any element combining a custom class with `.page-width` where block padding must be zeroed without disturbing horizontal container margins.
+
+### Whitespace-trim discipline on inline render calls
+
+The §3 rule captures the principle. The concrete manifestation: `{%- ... -%}` trim dashes collapse whitespace (including the space character) on both sides of the tag. When a `{% render %}` call sits between words in running text, the leading trim eats the space before the snippet output.
+
+```liquid
+{# Wrong — produces "Edition ofseventy" #}
+<p>Edition of {%- render 'vf-num-words', n: edition_size -%}</p>
+
+{# Correct — preserves word spacing around snippet output #}
+<p>Edition of {% render 'vf-num-words', n: edition_size %}</p>
+```
+
+Rule of thumb: if a render tag is surrounded by text nodes, omit trim dashes. If it is surrounded only by HTML elements or whitespace-only Liquid tags (producing block-level markup with no adjacent text), trim dashes are fine. Established in Phase 1B (`vf-edition-statement`).
 
 ---
 

@@ -1770,7 +1770,9 @@ cart-items.is-empty .cart__warnings,
 
 .vf-journal-index,
 .vf-journal-article {
-  padding-block: var(--vf-s-7);
+  background-color: var(--vf-obsidian);
+  color:            var(--vf-bone);
+  padding-block:    var(--vf-s-7);
 }
 
 /* ── B · Blog index header ── */

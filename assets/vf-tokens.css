@@ -240,6 +240,7 @@
   /* ── BORDERS ── */
   --vf-hairline:        0.5px;
   --vf-rule:            1px;
+  --vf-rule-short:      120px;
 
   /* ── SHADOWS ── */
   --vf-shadow-0:        none;
@@ -1661,7 +1662,7 @@ cart-items.is-empty .cart__warnings,
   border:     0;
   border-top: var(--vf-hairline) solid var(--vf-iron);
   margin:     var(--vf-s-3) auto var(--vf-s-6) auto;
-  width:      120px;
+  width:      var(--vf-rule-short);
 }
 
 /* ── E · Tile grid layout ── */
@@ -1675,10 +1676,16 @@ cart-items.is-empty .cart__warnings,
   padding-block:         0;
 }
 
+@media screen and (min-width: 750px) {
+  .vf-cart-empty__grid {
+    gap: var(--vf-s-6);   /* 48px */
+  }
+}
+
 @media screen and (min-width: 990px) {
   .vf-cart-empty__grid {
     grid-template-columns: repeat(3, 1fr);
-    gap:                   var(--vf-s-6);   /* 48px at desktop */
+    gap:                   var(--vf-s-7);   /* 64px at desktop */
   }
 }
 
@@ -1747,7 +1754,7 @@ cart-items.is-empty .cart__warnings,
 
   .vf-cart-empty-tile:hover .vf-cart-empty-tile__image,
   .vf-cart-empty-tile:focus-visible .vf-cart-empty-tile__image {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 }
 
@@ -1807,7 +1814,7 @@ cart-items.is-empty .cart__warnings,
   border-top: var(--vf-hairline) solid var(--vf-bone);
   opacity:    0.3;
   margin:     var(--vf-s-3) auto var(--vf-s-7) auto;
-  width:      120px;
+  width:      var(--vf-rule-short);
 }
 
 /* ── C · Article card grid ── */
@@ -1817,7 +1824,7 @@ cart-items.is-empty .cart__warnings,
 .vf-journal-index__grid {
   display:               grid;
   grid-template-columns: 1fr;
-  gap:                   var(--vf-s-6);
+  gap:                   var(--vf-s-5);
   list-style:            none;
   margin-block:          0;
   padding-block:         0;
@@ -1826,13 +1833,14 @@ cart-items.is-empty .cart__warnings,
 @media screen and (min-width: 750px) {
   .vf-journal-index__grid {
     grid-template-columns: repeat(2, 1fr);
+    gap:                   var(--vf-s-6);
   }
 }
 
 @media screen and (min-width: 990px) {
   .vf-journal-index__grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--vf-s-7);
+    gap:                   var(--vf-s-7);
   }
 }
 
@@ -1915,7 +1923,7 @@ cart-items.is-empty .cart__warnings,
 
   .vf-journal-card:hover .vf-journal-card__image,
   .vf-journal-card:focus-visible .vf-journal-card__image {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 }
 
@@ -1961,7 +1969,7 @@ cart-items.is-empty .cart__warnings,
 
 .vf-journal-pagination__link:focus-visible {
   outline:        1.5px solid var(--vf-teal-bright);
-  outline-offset: 2px;
+  outline-offset: 4px;
 }
 
 /* ── F · Article back link ── */
@@ -2126,7 +2134,7 @@ cart-items.is-empty .cart__warnings,
   border-top: var(--vf-hairline) solid var(--vf-bone);
   opacity:    0.3;
   margin:     var(--vf-s-7) auto;
-  width:      120px;
+  width:      var(--vf-rule-short);
 }
 
 /* ── L · Next/previous navigation ── */

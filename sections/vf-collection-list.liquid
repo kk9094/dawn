@@ -177,7 +177,7 @@
   .vf-collection-list__grid {
     display:               grid;
     grid-template-columns: 1fr;
-    gap:                   var(--vf-s-4);
+    gap:                   var(--vf-s-5);
     list-style:            none;
     margin-block:          0;
     padding-block:         0;
@@ -243,7 +243,7 @@
 
   .vf-collection-tile:focus-visible {
     outline:        1.5px solid var(--vf-teal-deep);
-    outline-offset: 2px;
+    outline-offset: 4px;
   }
 
   .vf-collection-list__closing {
@@ -258,17 +258,22 @@
     .vf-collection-list__title {
       font-size: var(--vf-fs-h1);
     }
+
+    .vf-collection-list__grid {
+      gap: var(--vf-s-6);
+    }
   }
 
   @media screen and (min-width: 990px) {
     .vf-collection-list__grid {
       grid-template-columns: repeat(3, 1fr);
+      gap:                   var(--vf-s-7);
     }
   }
 
   @media (prefers-reduced-motion: no-preference) {
     .vf-collection-tile__image {
-      transition: transform var(--vf-dur-base) ease;
+      transition: transform var(--vf-dur-fast) ease;
     }
 
     .vf-collection-tile:hover .vf-collection-tile__image {

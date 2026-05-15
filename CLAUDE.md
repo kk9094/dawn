@@ -285,6 +285,24 @@ The §3 rule captures the principle. The concrete manifestation: `{%- ... -%}` t
 
 Rule of thumb: if a render tag is surrounded by text nodes, omit trim dashes. If it is surrounded only by HTML elements or whitespace-only Liquid tags (producing block-level markup with no adjacent text), trim dashes are fine. Established in Phase 1B (`vf-edition-statement`).
 
+### Explicit surface declaration required on every VF section
+
+Body-level CSS inheritance (e.g., `body { background: var(--vf-obsidian) }`) does NOT reliably propagate through Dawn's wrapper hierarchy. Dawn's `<main>` element or `.shopify-section` wrapper can interpose its own `background-color` via Dawn's color-scheme system, breaking visual inheritance even though cascade analysis suggests otherwise.
+
+Rule: every VF section must explicitly declare both `background-color` and `color` on its outermost wrapper. No exceptions.
+
+```css
+.vf-section-name {
+  background-color: var(--vf-obsidian); /* or --vf-bone */
+  color:            var(--vf-bone);     /* or --vf-jet */
+  /* ... other properties */
+}
+```
+
+Anti-pattern: relying on body inheritance for section background. May appear to work in cascade analysis (`vf-tokens.css` §7 `body { background: var(--vf-obsidian) }` loads after `theme.liquid` inline style at same specificity) but fails in production because Dawn's intervening wrapper rules can override at higher specificity or via `.color-scheme-*` class application.
+
+Reference: §18 journal theming initial implementation shipped without explicit `background-color` on `.vf-journal-index` and `.vf-journal-article` wrappers, resulting in article body content rendering against Dawn's light scheme background (invisible Bone-on-white text). Fix added explicit declarations to §18 A. This rule was previously implicit; the §18 fix promotes it to explicit. Apply to every future VF section. The `vf-statement`, `vf-process`, `vf-cart-empty`, `vf-collection-list` sections already follow this pattern.
+
 ---
 
 ## 10 · QA and verification
@@ -300,3 +318,20 @@ Shopify theme preview and headless screenshot tools can omit sections that requi
 ### DevTools verification before accepting "no code change needed"
 
 When an agent concludes that no code change is needed after a code-path trace, the conclusion covers logical correctness of the dispatch chain — not necessarily what the live storefront renders. Closing the gap takes 30 seconds: inspect the element in DevTools, confirm the computed value of `color` (or relevant property) matches the expected token. This applies especially to tier color dispatch, `data-mode` inheritance, and CSS custom property chains that are invisible to static code analysis.
+
+### Screenshot perception unreliable for editorial register surfaces
+
+Bone (#E8E2D6) text on Obsidian (#0A0A0A) at opacity 0.65–0.9 reads cleanly in a live browser at normal brightness but can render as visibly dim in PNG screenshots due to image compression and ambient-lighting differences in screenshot review contexts.
+
+When QA-ing editorial register surfaces, verify rendering in a live browser at normal display brightness. Do not rely on screenshot inspection alone to diagnose perceived legibility issues.
+
+If a screenshot shows text "disappearing":
+
+1. First check DevTools computed `color` value — confirms actual rendered color
+2. Then check DevTools computed `background-color` on the surrounding element — confirms actual surface
+3. Only after computed-style verification, decide whether the issue is:
+   - Genuine surface bug (background wrong) → fix surface
+   - Genuine text bug (color wrong) → fix text color
+   - Compression artifact (computed values are correct) → no fix needed
+
+Reference: §18 Round 2 → Round 3 debugging cycle. DevTools confirmed `color: rgb(232, 226, 214)` on `.vf-journal-index__title` was correct. The actual bug was a separate `background-color` issue on the section wrapper, not the text color. Both bugs were initially conflated due to relying on screenshot inspection.

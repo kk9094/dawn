@@ -25,7 +25,7 @@
             "link_3_label": "Atelier",
             "link_3_url": "shopify://collections/atelier",
             "link_4_label": "Archive",
-            "link_4_url": "shopify://collections"
+            "link_4_url": "/pages/archive"
           }
         },
         "link_column_Th6yVg": {
@@ -33,11 +33,11 @@
           "settings": {
             "title": "Studio",
             "link_1_label": "The Process",
-            "link_1_url": "",
+            "link_1_url": "/pages/process",
             "link_2_label": "Materials",
             "link_2_url": "",
             "link_3_label": "Studio",
-            "link_3_url": "",
+            "link_3_url": "/pages/studio",
             "link_4_label": "",
             "link_4_url": ""
           }
@@ -53,7 +53,7 @@
             "link_3_label": "Care · Cleaning",
             "link_3_url": "",
             "link_4_label": "Contact",
-            "link_4_url": ""
+            "link_4_url": "/pages/contact"
           }
         },
         "link_column_ktYmFA": {
@@ -61,11 +61,11 @@
           "settings": {
             "title": "Legal",
             "link_1_label": "Terms of Service",
-            "link_1_url": "",
+            "link_1_url": "/policies/terms-of-service",
             "link_2_label": "Privacy Policy",
-            "link_2_url": "",
+            "link_2_url": "/policies/privacy-policy",
             "link_3_label": "Refund Policy",
-            "link_3_url": "",
+            "link_3_url": "/policies/refund-policy",
             "link_4_label": "",
             "link_4_url": ""
           }

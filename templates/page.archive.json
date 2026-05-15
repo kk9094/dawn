@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "vf-archive",
+      "settings": {
+        "eyebrow": "Archive",
+        "heading": "Closed Editions.",
+        "body": "<p>The archive will catalogue closed editions and past works. Edition I — Volute, Intaglio, Massif, Filigree, Lamina — opened May 2026 and remains in active production. The first archival entries are expected in 2027.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

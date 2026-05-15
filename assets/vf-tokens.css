@@ -2194,3 +2194,60 @@ cart-items.is-empty .cart__warnings,
     margin-left: 0;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   §19 · Archive surface — Bone transactional register
+
+   Single-page placeholder for the closed-editions catalogue.
+   Intentionally sparse content matching brand voice. Will be
+   populated as editions close in 2027+.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* A — Section wrapper */
+.vf-archive {
+  background-color: var(--vf-bone);
+  color:            var(--vf-jet);
+  padding-block:    var(--vf-s-9);
+}
+
+/* B — Inner container */
+.vf-archive__inner {
+  text-align: center;
+}
+
+/* C — Title */
+.vf-archive__title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-page-title);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-3) 0 0 0;
+}
+
+/* D — Hairline divider */
+.vf-archive__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-iron);
+  margin:     var(--vf-s-5) auto var(--vf-s-5) auto;
+  width:      var(--vf-rule-short);
+}
+
+/* E — Body copy */
+.vf-archive__body {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  opacity:     0.85;
+}
+
+.vf-archive__body p {
+  margin: 0 0 var(--vf-s-3) 0;
+}
+
+.vf-archive__body p:last-child {
+  margin-bottom: 0;
+}

@@ -1,0 +1,58 @@
+{%- comment -%}
+  vf-archive.liquid
+
+  Bone-register placeholder for the closed-editions catalogue.
+  Single section, no blocks — fixed editorial layout.
+  URL: /pages/archive (page handle = archive, template = page.archive)
+
+  Content is intentionally sparse: signals the archive will fill as
+  editions close in 2027+. Richtext body allows copy revision without
+  a code deploy.
+
+  Schema contract: docs/section-schemas.md (§19 pending)
+  CSS: assets/vf-tokens.css §19
+{%- endcomment -%}
+
+<section class="vf-archive" data-mode="bone">
+  <div class="vf-archive__inner page-width page-width--narrow">
+    {%- if section.settings.eyebrow != blank -%}
+      {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+    {%- endif -%}
+    <h1 class="vf-archive__title">{{ section.settings.heading | escape }}</h1>
+    <hr class="vf-archive__rule" aria-hidden="true">
+    {%- if section.settings.body != blank -%}
+      <div class="vf-archive__body">
+        {{ section.settings.body }}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VF Archive",
+  "class": "vf-archive-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Archive"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page heading",
+      "default": "Closed Editions."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body copy",
+      "default": "<p>The archive will catalogue closed editions and past works. Edition I — Volute, Intaglio, Massif, Filigree, Lamina — opened May 2026 and remains in active production. The first archival entries are expected in 2027.</p>"
+    }
+  ],
+  "presets": [{ "name": "VF Archive" }]
+}
+{% endschema %}

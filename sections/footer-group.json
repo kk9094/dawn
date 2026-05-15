@@ -19,13 +19,13 @@
           "settings": {
             "title": "Collections",
             "link_1_label": "Série I",
-            "link_1_url": "",
+            "link_1_url": "shopify://collections/serie-1",
             "link_2_label": "Série II",
-            "link_2_url": "",
+            "link_2_url": "shopify://collections/serie-2",
             "link_3_label": "Atelier",
-            "link_3_url": "",
+            "link_3_url": "shopify://collections/atelier",
             "link_4_label": "Archive",
-            "link_4_url": ""
+            "link_4_url": "shopify://collections"
           }
         },
         "link_column_Th6yVg": {

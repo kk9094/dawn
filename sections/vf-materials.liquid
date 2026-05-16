@@ -1,0 +1,216 @@
+{%- comment -%}
+  vf-materials.liquid
+
+  Production methodology page. Bone-register transactional surface.
+  Single section, no blocks — fixed editorial layout with five
+  content sections (shade material, print methodology, Série I
+  hardware, Série II hardware, on the current catalogue) plus
+  eyebrow, headline, lead paragraph, and closing line.
+  URL: /pages/materials (page handle = materials, template = page.materials)
+
+  All content lives in section settings — no admin Content field needed.
+  Matches architecture established by §19 (Archive).
+
+  Schema contract: docs/section-schemas.md (§20 pending)
+  CSS: assets/vf-tokens.css §20
+{%- endcomment -%}
+
+<section class="vf-materials" data-mode="bone">
+  <div class="vf-materials__inner page-width page-width--narrow">
+
+    {%- if section.settings.eyebrow != blank -%}
+      {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
+    {%- endif -%}
+
+    <h1 class="vf-materials__headline">{{ section.settings.headline | escape }}</h1>
+
+    {%- if section.settings.lead != blank -%}
+      <div class="vf-materials__lead">
+        {{ section.settings.lead }}
+      </div>
+    {%- endif -%}
+
+    <hr class="vf-materials__rule" aria-hidden="true">
+
+    {%- if section.settings.section_1_title != blank or section.settings.section_1_body != blank -%}
+      <section class="vf-materials__section">
+        {%- if section.settings.section_1_title != blank -%}
+          <h2 class="vf-materials__section-title">{{ section.settings.section_1_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.section_1_body != blank -%}
+          <div class="vf-materials__section-body">{{ section.settings.section_1_body }}</div>
+        {%- endif -%}
+      </section>
+    {%- endif -%}
+
+    {%- if section.settings.section_2_title != blank or section.settings.section_2_body != blank -%}
+      <section class="vf-materials__section">
+        {%- if section.settings.section_2_title != blank -%}
+          <h2 class="vf-materials__section-title">{{ section.settings.section_2_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.section_2_body != blank -%}
+          <div class="vf-materials__section-body">{{ section.settings.section_2_body }}</div>
+        {%- endif -%}
+      </section>
+    {%- endif -%}
+
+    {%- if section.settings.section_3_title != blank or section.settings.section_3_body != blank -%}
+      <section class="vf-materials__section">
+        {%- if section.settings.section_3_title != blank -%}
+          <h2 class="vf-materials__section-title">{{ section.settings.section_3_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.section_3_body != blank -%}
+          <div class="vf-materials__section-body">{{ section.settings.section_3_body }}</div>
+        {%- endif -%}
+      </section>
+    {%- endif -%}
+
+    {%- if section.settings.section_4_title != blank or section.settings.section_4_body != blank -%}
+      <section class="vf-materials__section">
+        {%- if section.settings.section_4_title != blank -%}
+          <h2 class="vf-materials__section-title">{{ section.settings.section_4_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.section_4_body != blank -%}
+          <div class="vf-materials__section-body">{{ section.settings.section_4_body }}</div>
+        {%- endif -%}
+      </section>
+    {%- endif -%}
+
+    {%- if section.settings.section_5_title != blank or section.settings.section_5_body != blank -%}
+      <section class="vf-materials__section">
+        {%- if section.settings.section_5_title != blank -%}
+          <h2 class="vf-materials__section-title">{{ section.settings.section_5_title | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.section_5_body != blank -%}
+          <div class="vf-materials__section-body">{{ section.settings.section_5_body }}</div>
+        {%- endif -%}
+      </section>
+    {%- endif -%}
+
+    {%- if section.settings.closing != blank -%}
+      <div class="vf-materials__closing">
+        {{ section.settings.closing }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VF Materials",
+  "class": "vf-materials-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Production"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Page heading",
+      "default": "Production methodology."
+    },
+    {
+      "type": "richtext",
+      "id": "lead",
+      "label": "Lead paragraph (italic)",
+      "default": "<p>The material and production methodology behind the studio's current lighting line.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section 1 — The shade"
+    },
+    {
+      "type": "text",
+      "id": "section_1_title",
+      "label": "Section 1 heading",
+      "default": "The shade"
+    },
+    {
+      "type": "richtext",
+      "id": "section_1_body",
+      "label": "Section 1 body",
+      "default": "<p>Every shade in both Série I and Série II is printed in Bambu Lab PLA Basic — Jade White. The material was selected after testing multiple filaments against one criterion: how the material behaves when light passes through it. Most filaments scatter light unevenly, producing hotspots and dim regions that work against the geometry. Jade White diffuses warmly, maintains dimensional stability at fine layer heights, and weathers without yellowing under long-term interior use.</p><p>The studio has not changed this material since lighting production began. Material consistency is part of what makes each piece comparable to the others.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section 2 — Print methodology"
+    },
+    {
+      "type": "text",
+      "id": "section_2_title",
+      "label": "Section 2 heading",
+      "default": "Print methodology"
+    },
+    {
+      "type": "richtext",
+      "id": "section_2_body",
+      "label": "Section 2 body",
+      "default": "<p>Shades are printed on the Bambu Lab P2S at 0.16mm layer height across both Série I and Série II. Walls use the Arachne generator; supports are minimized through orientation choices rather than density. Each piece is hand-finished — supports removed, surfaces inspected, edges refined — before assembly.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section 3 — Série I hardware"
+    },
+    {
+      "type": "text",
+      "id": "section_3_title",
+      "label": "Section 3 heading",
+      "default": "Série I hardware"
+    },
+    {
+      "type": "richtext",
+      "id": "section_3_body",
+      "label": "Section 3 body",
+      "default": "<p>Série I pieces use the Bambu Lab LED Lamp Kit 001 — a self-contained lighting module designed for use with PLA-printed enclosures. The kit draws 3 to 4 watts and emits warm light at 3000 Kelvin, well within the safe thermal range for PLA enclosures. The lamp connects directly to any USB power source.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section 4 — Série II hardware"
+    },
+    {
+      "type": "text",
+      "id": "section_4_title",
+      "label": "Section 4 heading",
+      "default": "Série II hardware"
+    },
+    {
+      "type": "richtext",
+      "id": "section_4_body",
+      "label": "Section 4 body",
+      "default": "<p>Série II pieces use a metal base with a standard E27 socket, manufactured to studio specification. The shade attaches to the base magnetically — four 6mm neodymium magnets installed in the shade's underside engage with the base, allowing the shade to be lifted free for bulb replacement or cleaning without tools.</p><p>The E27 socket accepts any standard LED bulb up to 8 watts. The studio recommends warm LED bulbs at 3000 Kelvin to preserve the intended appearance of the shade material. Maintain at least 4cm clearance between the bulb and the shade's inner surface.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Section 5 — On the current catalogue"
+    },
+    {
+      "type": "text",
+      "id": "section_5_title",
+      "label": "Section 5 heading",
+      "default": "On the current catalogue"
+    },
+    {
+      "type": "richtext",
+      "id": "section_5_body",
+      "label": "Section 5 body",
+      "default": "<p>The sculptural designs in Série I and Série II are produced under license from Leora Studio, a design house specialising in printable sculptural lighting. The arrangement allows Voxel Forge to focus on material discipline, production quality, and assembly methodology while developing original collections.</p><p>Original Voxel Forge designs are available through the Atelier programme — commissioned pieces designed for specific clients, rooms, and intentions. Future Voxel Forge product lines, beyond the current lighting catalogue, will be original studio work.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Closing line"
+    },
+    {
+      "type": "richtext",
+      "id": "closing",
+      "label": "Closing line (italic)",
+      "default": "<p>Materials and methodology, made open. Designs evolve. Discipline does not.</p>"
+    }
+  ],
+  "presets": [{ "name": "VF Materials" }]
+}
+{% endschema %}

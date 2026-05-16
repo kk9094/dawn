@@ -2251,3 +2251,115 @@ cart-items.is-empty .cart__warnings,
 .vf-archive__body p:last-child {
   margin-bottom: 0;
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §20 · Materials surface — Bone transactional register
+
+   Production methodology page. Multi-section content
+   (eyebrow + headline + lead + 5 content sections + closing).
+   Architecture matches §19 (Archive) extended for multi-section
+   narrative content.
+   ─────────────────────────────────────────────────────────── */
+
+/* A — Section wrapper */
+.vf-materials {
+  background-color: var(--vf-bone);
+  color:            var(--vf-jet);
+  padding-block:    var(--vf-s-9);
+}
+
+/* B — Inner container and headline cluster */
+.vf-materials__inner {
+  text-align: left;
+}
+
+.vf-materials__headline {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-page-title);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-3) 0 var(--vf-s-4) 0;
+  text-align:     center;
+}
+
+.vf-materials__lead {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-display-md);
+  font-style:  italic;
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  opacity:     0.85;
+  text-align:  center;
+  margin:      0;
+}
+
+.vf-materials__lead p {
+  margin: 0;
+}
+
+/* C — Hairline divider */
+.vf-materials__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-iron);
+  margin:     var(--vf-s-6) auto var(--vf-s-7) auto;
+  width:      var(--vf-rule-short);
+}
+
+/* D — Content sections */
+.vf-materials__section {
+  margin-bottom: var(--vf-s-7);
+}
+
+.vf-materials__section:last-of-type {
+  margin-bottom: var(--vf-s-6);
+}
+
+.vf-materials__section-title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h2);
+  font-weight:    var(--vf-w-light);
+  font-style:     italic;
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         0 0 var(--vf-s-3) 0;
+}
+
+.vf-materials__section-body {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  opacity:     0.85;
+}
+
+.vf-materials__section-body p {
+  margin: 0 0 var(--vf-s-3) 0;
+}
+
+.vf-materials__section-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* E — Closing line */
+.vf-materials__closing {
+  text-align:  center;
+  margin-top:  var(--vf-s-5);
+  padding-top: var(--vf-s-5);
+  border-top:  var(--vf-hairline) solid var(--vf-iron);
+}
+
+.vf-materials__closing p {
+  font-family: var(--vf-ff-display);
+  font-size:   var(--vf-fs-display-md);
+  font-style:  italic;
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  opacity:     0.8;
+  margin:      0;
+}

@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "vf-materials",
+      "settings": {
+        "eyebrow": "Production",
+        "headline": "Production methodology.",
+        "lead": "<p>The material and production methodology behind the studio's current lighting line.</p>",
+        "section_1_title": "The shade",
+        "section_1_body": "<p>Every shade in both Série I and Série II is printed in Bambu Lab PLA Basic — Jade White. The material was selected after testing multiple filaments against one criterion: how the material behaves when light passes through it. Most filaments scatter light unevenly, producing hotspots and dim regions that work against the geometry. Jade White diffuses warmly, maintains dimensional stability at fine layer heights, and weathers without yellowing under long-term interior use.</p><p>The studio has not changed this material since lighting production began. Material consistency is part of what makes each piece comparable to the others.</p>",
+        "section_2_title": "Print methodology",
+        "section_2_body": "<p>Shades are printed on the Bambu Lab P2S at 0.16mm layer height across both Série I and Série II. Walls use the Arachne generator; supports are minimized through orientation choices rather than density. Each piece is hand-finished — supports removed, surfaces inspected, edges refined — before assembly.</p>",
+        "section_3_title": "Série I hardware",
+        "section_3_body": "<p>Série I pieces use the Bambu Lab LED Lamp Kit 001 — a self-contained lighting module designed for use with PLA-printed enclosures. The kit draws 3 to 4 watts and emits warm light at 3000 Kelvin, well within the safe thermal range for PLA enclosures. The lamp connects directly to any USB power source.</p>",
+        "section_4_title": "Série II hardware",
+        "section_4_body": "<p>Série II pieces use a metal base with a standard E27 socket, manufactured to studio specification. The shade attaches to the base magnetically — four 6mm neodymium magnets installed in the shade's underside engage with the base, allowing the shade to be lifted free for bulb replacement or cleaning without tools.</p><p>The E27 socket accepts any standard LED bulb up to 8 watts. The studio recommends warm LED bulbs at 3000 Kelvin to preserve the intended appearance of the shade material. Maintain at least 4cm clearance between the bulb and the shade's inner surface.</p>",
+        "section_5_title": "On the current catalogue",
+        "section_5_body": "<p>The sculptural designs in Série I and Série II are produced under license from Leora Studio, a design house specialising in printable sculptural lighting. The arrangement allows Voxel Forge to focus on material discipline, production quality, and assembly methodology while developing original collections.</p><p>Original Voxel Forge designs are available through the Atelier programme — commissioned pieces designed for specific clients, rooms, and intentions. Future Voxel Forge product lines, beyond the current lighting catalogue, will be original studio work.</p>",
+        "closing": "<p>Materials and methodology, made open. Designs evolve. Discipline does not.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

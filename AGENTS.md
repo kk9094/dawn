@@ -335,3 +335,53 @@ If a screenshot shows text "disappearing":
    - Compression artifact (computed values are correct) → no fix needed
 
 Reference: §18 Round 2 → Round 3 debugging cycle. DevTools confirmed `color: rgb(232, 226, 214)` on `.vf-journal-index__title` was correct. The actual bug was a separate `background-color` issue on the section wrapper, not the text color. Both bugs were initially conflated due to relying on screenshot inspection.
+
+---
+
+## 11 · Brand language and content
+
+### Engineering-document language drift on technical content
+
+When describing technical specifications — materials, hardware, production methodology, manufacturing detail — language defaults to procurement and engineering vocabulary. This breaks the brand voice on the surfaces that most need it to hold (Materials, Process, product spec tables), because technical content is where the voice has the least room to compensate.
+
+The failure mode is consistent enough to name. Vocabulary that reads as a datasheet, a vendor brief, or an engineering note rather than a studio note.
+
+**Known failure patterns and replacements:**
+
+- "sourced and finished" → "produced" / "manufactured to specification"
+- "hardware integration" → studio vocabulary (varies by context — "fitted with," "assembled with")
+- "switches on" / "powers on" → "connects directly"
+- "spec'd" / "spec-ed" → "manufactured to specification"
+- "ensure" / "guarantee" → declarative form, no hedge
+- "utilize" → "use"
+- Cross-material performance comparisons ("lighter than X, stronger than Y") → design-relevance framing ("holds its geometry," "carries its own weight")
+- "Engineering note" attribution → "Studio note" attribution
+
+The list is illustrative, not exhaustive. The test is whether a sentence reads as something a studio would say about its own work, or as something a procurement document would say about a vendor's product.
+
+**Fix discipline:** technical surfaces require an extra read-through against this rule before commit. The voice does not enforce itself on spec content.
+
+### Content audits must cover four locations, not one
+
+Shopify theme content lives in four distinct locations. An audit that searches only one will produce false negatives that look like clean findings.
+
+**The four locations:**
+
+1. **Section Liquid files** — `sections/vf-*.liquid` and similar. Version-controlled. Searchable by grep. Contains hardcoded copy and schema defaults.
+
+2. **JSON template overrides** — `templates/*.json` files (index.json, page.*.json, product.json, etc.). Version-controlled. Contains saved Customizer state that overrides schema defaults. A schema default edit will not change live copy if a saved override exists at this layer.
+
+3. **Admin rich-text Content fields** — Shopify Admin → Pages → individual page → Content. Not in repo. Renders through Dawn's `main-page` section into the `page.content` Liquid variable. Visible only by reading the live page or opening the admin HTML view.
+
+4. **Customizer block instances inside JSON templates** — section instances and their block configurations saved via the Theme Customizer, stored inside `templates/*.json` files but accessed and edited through the Customizer UI rather than direct file edits. These do not match grep searches for their rendered copy because the strings live as JSON values inside template files, often with surrounding JSON syntax that breaks naive text searches.
+
+**Audit-scoping checklist:**
+
+For any content audit, the audit prompt must explicitly cover all four locations. Findings-only passes against section files alone will miss content in locations 2, 3, and 4. The check pattern:
+
+- Search section files for the literal string.
+- Search JSON templates for the literal string.
+- Verify admin Content fields by opening each page in Shopify admin and checking both visual and HTML view.
+- Inspect the Theme Customizer for any section instances that render the surface in question, and read the block-level settings for that instance.
+
+**Trigger:** when a live render contains copy that the codebase search cannot locate, assume one of locations 2, 3, or 4 holds it before assuming the search was wrong or the content is missing.

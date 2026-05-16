@@ -47,7 +47,7 @@
           "type": "step",
           "settings": {
             "number": "01",
-            "title": "India origin",
+            "title": "Single studio",
             "body": "<p>Designed, printed, and finished within a single studio. Provenance is traceable to a layer height, not a country of origin.</p>"
           }
         }

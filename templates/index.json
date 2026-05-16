@@ -172,24 +172,24 @@
         "spec_row_MeMAmH": {
           "type": "spec_row",
           "settings": {
-            "key": "Polymer",
-            "value": "PETG-CF · matte",
+            "key": "Layer height",
+            "value": "0.16 mm",
             "accent": "none"
           }
         },
         "spec_row_kUREUK": {
           "type": "spec_row",
           "settings": {
-            "key": "Layer height",
-            "value": "0.16 mm",
+            "key": "Wall Loop (perimeters)",
+            "value": "4",
             "accent": "none"
           }
         },
         "spec_row_3ktw6F": {
           "type": "spec_row",
           "settings": {
-            "key": "Infill",
-            "value": "40% gyroid",
+            "key": "Wall Generator",
+            "value": "Arachne",
             "accent": "none"
           }
         },
@@ -197,7 +197,7 @@
           "type": "spec_row",
           "settings": {
             "key": "Tensile strength",
-            "value": "52 MPa",
+            "value": "35 ± 4 MPa",
             "accent": "none"
           }
         },
@@ -223,8 +223,8 @@
         "eyebrow": "Material · Method",
         "headline_part_1": "Engineered",
         "headline_part_2": "from the inside.",
-        "body": "<p>A gyroid lattice carries the load. Light scatters through it.</p>",
-        "figure_caption": "FIG. 04 · INTERNAL GEOMETRY · GYROID 40%",
+        "body": "<p>Engineered with a single-surface shell. Where light scatters through it. <br/><br/></p>",
+        "figure_caption": "FIG. 04 · INTERNAL GEOMETRY · 0.16mm",
         "figure_image": "shopify://shop_images/Volute_engg4.svg",
         "pull_text": "Lighter than aluminium. Stronger than ABS.",
         "pull_attribution": "Engineering note · 2026"

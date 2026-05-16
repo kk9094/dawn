@@ -1,0 +1,108 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 80,
+        "padding_bottom": 40
+      }
+    },
+    "studio_pillars": {
+      "type": "vf-process",
+      "blocks": {
+        "geometry": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Geometry first",
+            "body": "<p>Every object originates as a parametric definition. Curvature, wall thickness, and tolerance are derived — never sketched.</p>"
+          }
+        },
+        "material": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Material as decision",
+            "body": "<p>PLA Carbon Fibre, PETG, resin-infused polymer. The material is selected for the object's structural reality, not its appearance.</p>"
+          }
+        },
+        "edition": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Edition discipline",
+            "body": "<p>Série I is open. Série II is sealed at 200 per design. Atelier exists only by application. Scarcity is recorded, not implied.</p>"
+          }
+        },
+        "origin": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "India origin",
+            "body": "<p>Designed, printed, and finished within a single studio. Provenance is traceable to a layer height, not a country of origin.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "geometry",
+        "material",
+        "edition",
+        "origin"
+      ],
+      "settings": {
+        "eyebrow": "The studio",
+        "headline_part_1": "Four stages.",
+        "headline_part_2": "One object.",
+        "method_label": "Read the full method",
+        "method_url": ""
+      }
+    },
+    "footer_group": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Notes from the studio.",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Quiet dispatches when a new edition opens, and the occasional process note. No promotions.</p>"
+          }
+        },
+        "email": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "studio_pillars",
+    "footer_group"
+  ]
+}

@@ -7,6 +7,11 @@
 > The principle: **layout, type ramp, colour pairings, and structural
 > hairlines are brand-locked.** Copy, images, and links are editable.
 > If a setting could let a merchant break the brand, it doesn't ship.
+>
+> Coverage is incremental: homepage sections and site chrome are
+> documented first, with template-bound and template-fragment sections
+> added as they are ported. Sections not yet listed below are present
+> in `/sections/vf-*.liquid` but await documentation.
 
 ---
 
@@ -285,6 +290,43 @@ The header is the one place where modifying a Dawn file is acceptable, because t
 No new `settings` introduced — header content (nav links, announcement bar) continues to use Dawn's existing schema.
 
 > **Responsive breakpoint note:** Real browser windows at 990px width report approximately 975px CSS viewport due to scrollbar reservation (~15px). The mobile drawer appears at this exact window width. Chrome DevTools device-emulation mode reports the inner viewport directly, so "990px" there shows the desktop nav correctly. Both behaviors are correct per Dawn's `min-width: 990px` responsive design — this is not a bug.
+
+---
+
+## 9 · `vf-materials` (Production methodology page)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone register surface (`data-mode="bone"`) | Transactional page surface |
+| `.page-width--narrow` container | Editorial measure for long-form prose |
+| Fixed editorial sequence: eyebrow → headline → lead → rule → five numbered sections → closing | Brand-locked composition |
+| Hairline rule between lead and section 1 | Brand structural element |
+| H1 headline (single per page — page heading register) | Type system |
+| Section heading register (H2 per numbered section) | Type system |
+| `enabled_on: templates: ["page"]` — pinned to page template | Section is wired to `/pages/materials` only |
+| Single section, no blocks — five content sections are fixed-count schema settings | Editorial layout is brand-locked; sections cannot be added or removed |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `eyebrow` | text | Eyebrow text | "Production" |
+| `headline` | text | Page heading | "Production methodology." |
+| `lead` | richtext | Lead paragraph (italic) | "The material and production methodology behind the studio's current lighting line." |
+| `section_1_title` | text | Section 1 heading | "The shade" |
+| `section_1_body` | richtext | Section 1 body | "Every shade in both Série I and Série II is printed in Bambu Lab PLA Basic — Jade White…" |
+| `section_2_title` | text | Section 2 heading | "Print methodology" |
+| `section_2_body` | richtext | Section 2 body | "Shades are printed on the Bambu Lab P2S at 0.16mm layer height across both Série I and Série II…" |
+| `section_3_title` | text | Section 3 heading | "Série I hardware" |
+| `section_3_body` | richtext | Section 3 body | "Série I pieces use the Bambu Lab LED Lamp Kit 001 — a self-contained lighting module…" |
+| `section_4_title` | text | Section 4 heading | "Série II hardware" |
+| `section_4_body` | richtext | Section 4 body | "Série II pieces use a metal base with a standard E27 socket, manufactured to studio specification…" |
+| `section_5_title` | text | Section 5 heading | "On the current catalogue" |
+| `section_5_body` | richtext | Section 5 body | "The sculptural designs in Série I and Série II are produced under license from Leora Studio, a design house specialising in printable lighting designs…" |
+| `closing` | richtext | Closing line (italic) | "Materials and methodology, made open. Designs evolve. Discipline does not." |
+
+### Editable (blocks)
+None. Editorial sequence is fixed-count by schema design — five content sections, no block-based extensibility.
 
 ---
 

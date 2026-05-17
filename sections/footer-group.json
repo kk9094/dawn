@@ -35,7 +35,7 @@
             "link_1_label": "The Process",
             "link_1_url": "/pages/process",
             "link_2_label": "Materials",
-            "link_2_url": "",
+            "link_2_url": "shopify://pages/materials",
             "link_3_label": "Studio",
             "link_3_url": "/pages/studio",
             "link_4_label": "",

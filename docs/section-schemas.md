@@ -36,10 +36,10 @@ The "Type" column maps to Shopify's input types: `text`, `richtext`, `image_pick
 ### Editable (settings)
 | ID | Type | Label | Default |
 | --- | --- | --- | --- |
-| `eyebrow` | text | Eyebrow | "Voxel Forge · Chennai · Edition 2026" |
+| `eyebrow` | text | Eyebrow | "Voxel Forge · India · Edition 2026" |
 | `headline_part_1` | text | Headline (first line, regular) | "Form follows" |
 | `headline_part_2` | text | Headline (second line, italic) | "light." |
-| `body` | richtext | Body copy | "Precision 3D-printed sculptural lighting…" |
+| `body` | richtext | Body copy | "Precision 3D-printed sculptural objects in numbered editions…" |
 | `cta_primary_label` | text | Primary CTA label | "See the editions" |
 | `cta_primary_href` | url | Primary CTA link | `/collections/all` |
 | `cta_secondary_label` | text | Secondary CTA label | "Read the brief" |
@@ -250,7 +250,7 @@ Block type `metric` — required exactly 3. Renders as the metric row.
 | `newsletter_eyebrow` | text | Newsletter eyebrow | "A quarterly note from the workshop floor." |
 | `newsletter_body` | richtext | Newsletter body | "Production updates, edition openings…" |
 | `newsletter_cta_label` | text | Submit button label | "Subscribe" |
-| `bottom_bar_text` | text | Bottom-bar mono text | "Voxel Forge · Chennai · 2026" |
+| `bottom_bar_text` | text | Bottom-bar mono text | "Voxel Forge · India · 2026" |
 
 ### Editable (blocks)
 Block type `link_column` — repeating. Maximum 4.
@@ -301,7 +301,7 @@ Every section ships with at least one preset so it appears in the section picker
     "name": "Voxel Forge · Hero",
     "category": "Voxel Forge",
     "settings": {
-      "eyebrow": "Voxel Forge · Chennai · Edition 2026"
+      "eyebrow": "Voxel Forge · India · Edition 2026"
     }
   }
 ]

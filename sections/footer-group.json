@@ -33,11 +33,11 @@
           "settings": {
             "title": "Studio",
             "link_1_label": "The Process",
-            "link_1_url": "/pages/process",
+            "link_1_url": "shopify://pages/process",
             "link_2_label": "Materials",
             "link_2_url": "shopify://pages/materials",
             "link_3_label": "Studio",
-            "link_3_url": "/pages/studio",
+            "link_3_url": "shopify://pages/studio",
             "link_4_label": "",
             "link_4_url": ""
           }
@@ -51,7 +51,7 @@
             "link_2_label": "Returns",
             "link_2_url": "",
             "link_3_label": "Care · Cleaning",
-            "link_3_url": "",
+            "link_3_url": "shopify://pages/care-cleaning",
             "link_4_label": "Contact",
             "link_4_url": "/pages/contact"
           }

@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "vf-editorial",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

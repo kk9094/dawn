@@ -1,0 +1,47 @@
+{%- comment -%}
+  vf-editorial.liquid
+
+  Reusable editorial-register page template surface. Bone register.
+  Renders page.title as the H1 and page.content as the body, wrapped
+  in the Materials-page visual chrome.
+
+  Visual mirror of vf-materials but reads page.content instead of
+  schema fields. vf-materials is page-specific (production methodology,
+  hardcoded five-section structure); vf-editorial is reusable across
+  any editorial-register page whose body content lives in admin
+  Content rather than in template-specific schema (Care · Cleaning,
+  Process, Shipping, Returns, future editorial pages).
+
+  URL pattern: any page whose template is set to "editorial" in the
+  Shopify admin Page → Template dropdown.
+
+  All visible body content lives in the page's admin Content field —
+  no section settings, no schema-driven copy. Empty Content renders
+  the visual chrome without errors.
+
+  Schema contract: docs/section-schemas.md (§10 pending)
+  CSS: assets/vf-tokens.css §21
+{%- endcomment -%}
+
+<section class="vf-editorial" data-mode="bone">
+  <div class="vf-editorial__inner page-width page-width--narrow">
+
+    <h1 class="vf-editorial__headline">{{ page.title | escape }}</h1>
+
+    {%- if page.content != blank -%}
+      <div class="vf-editorial__content">
+        {{ page.content }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VF Editorial",
+  "class": "vf-editorial-section",
+  "enabled_on": { "templates": ["page"] },
+  "settings": []
+}
+{% endschema %}

@@ -2363,3 +2363,137 @@ cart-items.is-empty .cart__warnings,
   opacity:     0.8;
   margin:      0;
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §21 · Editorial surface — Bone register, page.content body
+
+   Reusable editorial-register page template. Visual mirror of
+   §20 (Materials) but reads page.title and page.content instead
+   of section settings. Serves any editorial-register page whose
+   body lives in admin Content (Care · Cleaning, Process,
+   Shipping, Returns, future editorial pages).
+
+   H1 styling matches .vf-materials__headline byte-for-byte.
+   Body paragraph styling matches .vf-materials__section-body.
+   Body H2 styling matches .vf-materials__section-title with
+   added top margin for intra-prose separation.
+
+   Defensive rules below H2 (H3, links, lists, blockquote,
+   images) cover valid HTML the merchant may paste; Materials
+   had no precedent for these because its content is schema-
+   driven.
+   ─────────────────────────────────────────────────────────── */
+
+/* A — Section wrapper */
+.vf-editorial {
+  background-color: var(--vf-bone);
+  color:            var(--vf-jet);
+  padding-block:    var(--vf-s-9);
+}
+
+/* B — Inner container and headline */
+.vf-editorial__inner {
+  text-align: left;
+}
+
+.vf-editorial__headline {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-page-title);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-3) 0 var(--vf-s-6) 0;
+  text-align:     center;
+}
+
+/* C — Content body */
+.vf-editorial__content {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  opacity:     0.85;
+}
+
+.vf-editorial__content p {
+  margin: 0 0 var(--vf-s-3) 0;
+}
+
+.vf-editorial__content p:last-child {
+  margin-bottom: 0;
+}
+
+/* D — Body headings (in-prose, from page.content) */
+.vf-editorial__content h2 {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h2);
+  font-weight:    var(--vf-w-light);
+  font-style:     italic;
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-6) 0 var(--vf-s-3) 0;
+}
+
+.vf-editorial__content h2:first-child {
+  margin-top: 0;
+}
+
+.vf-editorial__content h3 {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h3);
+  font-weight:    var(--vf-w-light);
+  font-style:     italic;
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-5) 0 var(--vf-s-2) 0;
+}
+
+/* E — Inline links (defensive — Materials defaults had none) */
+.vf-editorial__content a {
+  color:                     var(--vf-jet);
+  text-decoration:           underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset:     3px;
+}
+
+/* F — Lists */
+.vf-editorial__content ul,
+.vf-editorial__content ol {
+  padding-inline-start: var(--vf-s-5);
+  margin:               0 0 var(--vf-s-3) 0;
+}
+
+.vf-editorial__content li {
+  margin-bottom: var(--vf-s-2);
+}
+
+.vf-editorial__content li:last-child {
+  margin-bottom: 0;
+}
+
+/* G — Blockquote (Bone-register translation of journal-article blockquote;
+   Dawn base.css applies border-left and inline-flex which are banned per §4) */
+.vf-editorial__content blockquote {
+  display:      block;
+  font-family:  var(--vf-ff-display);
+  font-size:    var(--vf-fs-display-md);
+  font-style:   italic;
+  font-weight:  var(--vf-w-light);
+  line-height:  var(--vf-lh-body);
+  color:        var(--vf-jet);
+  border-left:  0;
+  padding-left: 0;
+  margin:       var(--vf-s-5) 0;
+  text-align:   center;
+}
+
+/* H — Images (defensive — bare <img> from admin paste) */
+.vf-editorial__content img {
+  max-width: 100%;
+  height:    auto;
+  display:   block;
+  margin:    var(--vf-s-5) auto;
+}

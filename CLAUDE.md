@@ -48,7 +48,7 @@ These are non-negotiable. If a rule conflicts with anything else, this rule wins
 - **Schema:** every section file ends with `{% schema %}` JSON. Refer to `docs/section-schemas.md` for the per-section editable-fields contract.
 - **Schema: resource-reference settings cannot have `"default"`.** Settings of type `image_picker`, `url`, `collection`, `product`, `page`, `video`, `article`, `blog` reject the `"default"` property — Shopify raises a validation error on save. Handle missing values in Liquid: `{%- if section.settings.image -%}…{%- else -%}{% render 'vf-cube' %}{%- endif -%}`.
 - **Liquid whitespace:** use `{%-` and `-%}` aggressively. Rendered HTML must not contain blank lines from Liquid logic.
-- **Whitespace trim and inline render:** Never apply `{%-` / `-%}` trim dashes to a `{% render %}` tag whose output flows into running prose. The leading trim eats the space between the preceding word and the snippet output — `{%- render 'vf-num-words' -%}` inside `<p>Edition of …</p>` produces "Edition ofseventy". Use `{% render %}` (no dashes) when adjacent whitespace is intentional. Trim dashes are safe on block-level renders that produce only markup.
+- **Whitespace trim and inline render:** Never apply `{%-` / `-%}` trim dashes to a `{% render %}` tag whose output flows into running prose. The leading trim eats the space between the preceding word and the snippet output — `{%- render 'vf-mono', text: '04' -%}` inside `<p>Batch </p>` produces "Batch04". Use `{% render %}` (no dashes) when adjacent whitespace is intentional. Trim dashes are safe on block-level renders that produce only markup.
 
 ### Mobile breakpoint
 - **750px**, not 768px. Dawn defines `@media screen and (min-width: 750px)`. Match it everywhere.
@@ -276,11 +276,11 @@ Applied in §17 (`vf-cart-empty__grid`) and §14 (`vf-collection-list__grid`). A
 The §3 rule captures the principle. The concrete manifestation: `{%- ... -%}` trim dashes collapse whitespace (including the space character) on both sides of the tag. When a `{% render %}` call sits between words in running text, the leading trim eats the space before the snippet output.
 
 ```liquid
-{# Wrong — produces "Edition ofseventy" #}
-<p>Batch {%- render 'vf-num-words', n: batch_number -%}</p>
+{# Wrong — produces "Batch04" #}
+<p>Batch {%- render 'vf-mono', text: '04' -%}</p>
 
 {# Correct — preserves word spacing around snippet output #}
-<p>Batch {% render 'vf-num-words', n: batch_number %}</p>
+<p>Batch {% render 'vf-mono', text: '04' %}</p>
 ```
 
 Rule of thumb: if a render tag is surrounded by text nodes, omit trim dashes. If it is surrounded only by HTML elements or whitespace-only Liquid tags (producing block-level markup with no adjacent text), trim dashes are fine. Established in Phase 1B (`vf-edition-statement`).

@@ -197,9 +197,9 @@ Dawn registers JavaScript-upgraded custom elements (`<header-drawer>`, `<menu-dr
 
 ### Metafield namespace minimum length
 
-Shopify enforces a 3-character minimum on metafield namespace identifiers. The `vf` prefix is two characters and is rejected at save time. The canonical metafield namespace for this project is `vox`. File names, CSS classes, and Liquid variable prefixes remain `vf-*` — the split is intentional and permanent. When adding new metafields: namespace = `vox`, key = snake_case descriptor (e.g., `vox.edition_size`, `vox.italic_subtitle`).
+Shopify enforces a 3-character minimum on metafield namespace identifiers. The `vf` prefix is two characters and is rejected at save time. The canonical metafield namespace for this project is `vox`. File names, CSS classes, and Liquid variable prefixes remain `vf-*` — the split is intentional and permanent. When adding new metafields: namespace = `vox`, key = snake_case descriptor (e.g., `vox.batch_number`, `vox.italic_subtitle`).
 
-**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces. Established metafield uses: `product.metafields.vox.edition_size` (Phase 1B, commit c2ca9e95) and `collection.metafields.vox.italic_subtitle` (§16).
+**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces. Established metafield uses: `product.metafields.vox.batch_number` (Phase 1B, commit c2ca9e95) and `collection.metafields.vox.italic_subtitle` (§16).
 
 ### Conditional list separators via CSS `::before`
 
@@ -277,10 +277,10 @@ The §3 rule captures the principle. The concrete manifestation: `{%- ... -%}` t
 
 ```liquid
 {# Wrong — produces "Edition ofseventy" #}
-<p>Edition of {%- render 'vf-num-words', n: edition_size -%}</p>
+<p>Batch {%- render 'vf-num-words', n: batch_number -%}</p>
 
 {# Correct — preserves word spacing around snippet output #}
-<p>Edition of {% render 'vf-num-words', n: edition_size %}</p>
+<p>Batch {% render 'vf-num-words', n: batch_number %}</p>
 ```
 
 Rule of thumb: if a render tag is surrounded by text nodes, omit trim dashes. If it is surrounded only by HTML elements or whitespace-only Liquid tags (producing block-level markup with no adjacent text), trim dashes are fine. Established in Phase 1B (`vf-edition-statement`).

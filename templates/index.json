@@ -29,8 +29,8 @@
         "metric_7pWqn9": {
           "type": "metric",
           "settings": {
-            "value": "200 / yr",
-            "label": "Production cap"
+            "value": "± 0.2 mm",
+            "label": "Tolerance"
           }
         }
       },

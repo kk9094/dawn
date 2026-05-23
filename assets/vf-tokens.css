@@ -295,7 +295,7 @@
 .vf-input:focus-visible,
 [class^="vf-"]:focus-visible,
 [class*=" vf-"]:focus-visible {
-  outline: 2px solid var(--vf-teal);
+  outline: 2px solid var(--vf-color-eyebrow);
   outline-offset: 2px;
   box-shadow: none;                    /* override Dawn's ring */
   transition: outline-color var(--vf-dur-focus) var(--vf-ease);

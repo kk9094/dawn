@@ -49,7 +49,7 @@
             "link_1_label": "Shipping",
             "link_1_url": "shopify://pages/shipping",
             "link_2_label": "Returns",
-            "link_2_url": "",
+            "link_2_url": "shopify://pages/returns",
             "link_3_label": "Care · Cleaning",
             "link_3_url": "shopify://pages/care-cleaning",
             "link_4_label": "Contact",

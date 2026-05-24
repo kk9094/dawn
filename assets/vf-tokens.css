@@ -1460,6 +1460,35 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   }
 }
 
+/* ── F · Inline cart errors ──
+   Fires on stock-exceed / quantity-rule violation (line-item .cart-item__error,
+   global #cart-errors). Dawn defaults render red; re-tone to the transactional
+   register so a sold-out-heavy catalogue's error states stay on-surface. */
+
+cart-items .cart-item__error {
+  color: var(--vf-iron);
+}
+
+cart-items .cart-item__error-text {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);          /* 12px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);      /* 0.18em */
+  color:          var(--vf-teal-deep);
+}
+
+cart-items .cart-item__error .svg-wrapper {
+  color: var(--vf-teal-deep);
+}
+
+.cart__footer-wrapper #cart-errors {
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-meta);          /* 12px */
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);      /* 0.18em */
+  color:          var(--vf-teal-deep);
+}
+
 /* ─────────────────────────────────────────────────────────
    §14 · COLLECTION PAGES — Bone surface
    Extends the transactional register (§11 product, §13 cart).

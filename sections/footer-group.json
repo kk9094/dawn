@@ -47,7 +47,7 @@
           "settings": {
             "title": "Care",
             "link_1_label": "Shipping",
-            "link_1_url": "",
+            "link_1_url": "shopify://pages/shipping",
             "link_2_label": "Returns",
             "link_2_url": "",
             "link_3_label": "Care · Cleaning",

@@ -11,7 +11,13 @@
 
 {%- liquid
   assign c_i  = collections['serie-1']
+  if c_i == empty
+    assign c_i = collections['serie-i']
+  endif
   assign c_ii = collections['serie-2']
+  if c_ii == empty
+    assign c_ii = collections['serie-ii']
+  endif
 -%}
 
 <div class="vf-collection-list" data-mode="bone">

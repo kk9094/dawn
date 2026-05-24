@@ -112,11 +112,13 @@
   --vf-gold:            #C9A96E;
   --vf-gold-warm:       #B89856;
   --vf-gold-deep:       #7A5C25;              /* transactional-safe — 4.81:1 on Bone (AA pass) */
+  --vf-gold-deeper:     #5A4218;              /* small-text legibility on Bone — deeper than gold-deep */
   --vf-gold-pale:       #DBC089;
 
   /* ── PALETTE · Atelier ── */
   --vf-ember:           #C4614A;
   --vf-ember-deep:      #A04A35;
+  --vf-ember-deeper:    #7A3525;              /* small-text legibility on Bone — deeper than ember-deep */
   --vf-ember-bright:    #DD7A60;
 
   /* ── PALETTE · Signal (system, not brand) ── */
@@ -277,10 +279,12 @@
   --vf-border-2:       var(--vf-border-on-bone-2);
   --vf-color-eyebrow:  var(--vf-teal-deep);         /* 6.1:1 on Bone */
 
-  /* Tier accents on Bone — bright/warm variants fail small-text contrast; swap to deep */
-  --vf-color-tier-i:       var(--vf-teal-deep);    /* 9.8:1 on Bone */
-  --vf-color-tier-ii:      var(--vf-gold-deep);    /* 4.81:1 on Bone (AA pass) */
-  --vf-color-tier-atelier: var(--vf-ember-deep);   /* 4.7:1 on Bone */
+  /* Tier accents on Bone — bright/warm variants fail small-text contrast; swap to deeper.
+     Série II / Atelier use *-deeper palette entries: small uppercase tracked-out eyebrow
+     type at 4.7–4.81:1 reads as low contrast; deeper aliases target AAA-range legibility. */
+  --vf-color-tier-i:       var(--vf-teal-deep);      /* 9.8:1 on Bone */
+  --vf-color-tier-ii:      var(--vf-gold-deeper);    /* deeper than gold-deep — small-text on Bone */
+  --vf-color-tier-atelier: var(--vf-ember-deeper);   /* deeper than ember-deep — small-text on Bone */
 }
 
 
@@ -1468,10 +1472,16 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   display: none;
 }
 
-/* ── B. Product grid — Bone surface, suppress Dawn gradient ── */
-.vf-collection-header-section ~ .shopify-section [id$="__product-grid"] .gradient {
-  background-color: var(--vf-bone);
-  background-image: none;
+/* ── B. Product grid — Bone surface, suppress Dawn gradient ──
+   Targets the outer .gradient wrapper (direct child of the Dawn
+   section), not #product-grid descendants. Pins Dawn's surface
+   tokens to Bone so any child component reading them inherits
+   the transactional surface (parity with §13 cart). */
+.vf-collection-header-section ~ .shopify-section > .gradient {
+  --gradient-background: var(--vf-bone);
+  --color-background:    232, 226, 214;   /* Bone — RGB triplet for Dawn composition */
+  background-color:      var(--vf-bone);
+  background-image:      none;
 }
 
 /* ── C. Cards — no elevation, layout-only on Bone ── */

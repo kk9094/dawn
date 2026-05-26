@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -5,9 +14,11 @@
       "settings": {
         "eyebrow": "Archive",
         "heading": "Closed Editions.",
-        "body": "<p>The archive will catalogue closed editions and past works. Edition I — Volute, Intaglio, Massif, Filigree, Lamina — opened May 2026 and remains in active production. The first archival entries are expected in 2027.</p>"
+        "body": "<p>The archive will catalogue closed editions and past works. Edition I opened in May 2026 and remains in active production. The first archival entries are expected in 2028.</p>"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

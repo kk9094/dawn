@@ -2536,3 +2536,411 @@ cart-items.is-empty .cart__warnings,
   display:   block;
   margin:    var(--vf-s-5) auto;
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §22 · Contact surface — Bone transactional register
+
+   Surface:     Bone        #E8E2D6   var(--vf-bone)
+   Ink primary: Jet         #111111   var(--vf-jet)
+   Ink meta:    Iron        #3A3A3A   var(--vf-iron)
+   Accent:      Teal Deep   #2A5A50   var(--vf-teal-deep)
+   Error:       Ember Deeper #7A3525  var(--vf-ember-deeper)
+
+   Owns: vf-contact section header, form chrome (inputs, labels,
+   select, textarea, submit), success/error status blocks, and
+   studio-identity dl. Re-skins Shopify {%- form 'contact' -%}
+   without touching Dawn's contact-form.liquid.
+
+   Field hairlines: 0.5px on idle, 1px on focus (no double-line
+   with the 1.5px Teal Deep focus ring per AGENTS.md §3).
+   Focus ring uses 1.5px Teal Deep (Bone transactional spec).
+   Submit mirrors .vf-btn--filled bone-mode palette directly —
+   vf-button is an <a>, this is a <button type="submit">.
+   ─────────────────────────────────────────────────────────── */
+
+/* ── A · Section wrapper and surface ── */
+
+.vf-contact {
+  background-color: var(--vf-bone);
+  color:            var(--vf-jet);
+  padding-block:    var(--vf-s-7);
+}
+
+@media screen and (min-width: 750px) {
+  .vf-contact {
+    padding-block: var(--vf-s-8);
+  }
+}
+
+.vf-contact__inner {
+  display:        flex;
+  flex-direction: column;
+}
+
+/* ── B · Header cluster ── */
+
+.vf-contact__header {
+  text-align:    center;
+  margin-bottom: var(--vf-s-5);
+}
+
+.vf-contact__title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-page-title);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         var(--vf-s-3) 0 var(--vf-s-3) 0;
+}
+
+.vf-contact__intro {
+  font-family:  var(--vf-ff-body);
+  font-size:    var(--vf-fs-body-large);
+  font-weight:  var(--vf-w-light);
+  line-height:  var(--vf-lh-body);
+  color:        var(--vf-jet);
+  opacity:      0.85;
+  max-width:    52ch;
+  margin:       0 auto;
+}
+
+.vf-contact__intro p {
+  margin: 0 0 var(--vf-s-2) 0;
+}
+
+.vf-contact__intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── C · Hairline divider ── */
+
+.vf-contact__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-iron);
+  margin:     var(--vf-s-3) auto var(--vf-s-6) auto;
+  width:      var(--vf-rule-short);
+}
+
+.vf-contact__rule--identity {
+  margin: var(--vf-s-7) auto var(--vf-s-5) auto;
+}
+
+/* ── D · Form status (success and error) ── */
+
+.vf-contact__status {
+  padding:       var(--vf-s-3) var(--vf-s-4);
+  margin:        0 0 var(--vf-s-5) 0;
+  border:        var(--vf-hairline) solid;
+  border-radius: var(--vf-radius-2);
+}
+
+.vf-contact__status:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+.vf-contact__status--success {
+  border-color:     var(--vf-teal-deep);
+  background-color: rgba(42, 90, 80, 0.06);
+  color:            var(--vf-teal-deep);
+}
+
+.vf-contact__status--error {
+  border-color:     var(--vf-ember-deeper);
+  background-color: rgba(122, 53, 37, 0.06);
+  color:            var(--vf-ember-deeper);
+}
+
+.vf-contact__status-text {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-body);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-body);
+  line-height:    var(--vf-lh-body);
+  margin:         0;
+}
+
+.vf-contact__status-list {
+  list-style:           none;
+  padding-inline-start: 0;
+  margin:               var(--vf-s-1) 0 0 0;
+  font-family:          var(--vf-ff-body);
+  font-size:            var(--vf-fs-body);
+  line-height:          var(--vf-lh-body);
+}
+
+.vf-contact__status-list li {
+  margin: var(--vf-s-0) 0 0 0;
+}
+
+.vf-contact__status-link {
+  color:                     var(--vf-ember-deeper);
+  text-decoration:           underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset:     3px;
+}
+
+/* ── E · Field grid ── */
+
+.vf-contact__fields {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-4);
+}
+
+.vf-contact__field {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-1);
+}
+
+/* ── F · Labels ── */
+
+.vf-contact__label {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-label);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);
+  text-transform: uppercase;
+  line-height:    1;
+  color:          var(--vf-jet);
+}
+
+.vf-contact__required {
+  color:       var(--vf-ember-deeper);
+  margin-left: 2px;
+}
+
+.vf-contact__optional {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-label);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-label);
+  text-transform: none;
+  color:          var(--vf-fg-on-bone-3);
+  margin-left:    var(--vf-s-1);
+}
+
+/* ── G · Inputs, textarea, select ── */
+
+.vf-contact__input,
+.vf-contact__textarea,
+.vf-contact__select {
+  font-family:      var(--vf-ff-body);
+  font-size:        var(--vf-fs-body);
+  font-weight:      var(--vf-w-light);
+  line-height:      var(--vf-lh-body);
+  color:            var(--vf-jet);
+  background-color: var(--vf-bone);
+  border:           var(--vf-hairline) solid var(--vf-border-on-bone-1);
+  border-radius:    var(--vf-radius-2);
+  padding:          0 var(--vf-s-3);
+  width:            100%;
+  box-sizing:       border-box;
+  appearance:       none;
+  -webkit-appearance: none;
+}
+
+.vf-contact__input,
+.vf-contact__select {
+  height: var(--vf-hit-min);
+}
+
+.vf-contact__textarea {
+  min-height:  calc(var(--vf-hit-min) * 3);
+  padding:     var(--vf-s-2) var(--vf-s-3);
+  resize:      vertical;
+  font-family: var(--vf-ff-body);
+}
+
+.vf-contact__input::placeholder,
+.vf-contact__textarea::placeholder {
+  color:   var(--vf-fg-on-bone-3);
+  opacity: 1;
+}
+
+/* Focus: 1.5px Teal Deep per AGENTS.md §3 transactional Bone spec.
+   Border thickens to 1px (max-rule weight per §4) to avoid double-line
+   with the outline. */
+.vf-contact__input:focus-visible,
+.vf-contact__textarea:focus-visible,
+.vf-contact__select:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+  border-color:   var(--vf-jet);
+  border-width:   1px;
+  box-shadow:     none;
+}
+
+/* ── H · Select arrow ── */
+
+.vf-contact__select-wrap {
+  position: relative;
+}
+
+.vf-contact__select {
+  padding-right: var(--vf-s-5);
+  cursor:        pointer;
+}
+
+.vf-contact__select-arrow {
+  position:       absolute;
+  right:          var(--vf-s-3);
+  top:            50%;
+  transform:      translateY(-50%);
+  font-family:    var(--vf-ff-mono);
+  font-size:      var(--vf-fs-mono-1);
+  color:          var(--vf-iron);
+  pointer-events: none;
+}
+
+/* ── I · Per-field error state ── */
+
+.vf-contact__field--error .vf-contact__input,
+.vf-contact__field--error .vf-contact__textarea,
+.vf-contact__field--error .vf-contact__select {
+  border-color: var(--vf-ember-deeper);
+}
+
+.vf-contact__field-error {
+  display:     block;
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-meta);
+  font-weight: var(--vf-w-regular);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-ember-deeper);
+}
+
+/* ── J · Submit ── */
+
+.vf-contact__submit-row {
+  margin-top: var(--vf-s-5);
+}
+
+.vf-contact__submit {
+  display:          inline-flex;
+  align-items:      center;
+  justify-content:  center;
+  min-height:       var(--vf-hit-min);
+  padding:          0 var(--vf-s-5);
+  font-family:      var(--vf-ff-body);
+  font-size:        var(--vf-fs-label);
+  font-weight:      var(--vf-w-light);
+  letter-spacing:   var(--vf-track-label);
+  text-transform:   uppercase;
+  color:            var(--vf-bone);
+  background-color: var(--vf-teal-deep);
+  border:           var(--vf-hairline) solid var(--vf-teal-deep);
+  border-radius:    var(--vf-radius-0);
+  cursor:           pointer;
+}
+
+.vf-contact__submit:focus-visible {
+  outline:        1.5px solid var(--vf-teal-deep);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vf-contact__submit {
+    transition:
+      background-color var(--vf-dur-fast) var(--vf-ease),
+      border-color     var(--vf-dur-fast) var(--vf-ease),
+      color            var(--vf-dur-fast) var(--vf-ease);
+  }
+}
+
+.vf-contact__submit:hover {
+  background-color: var(--vf-teal);
+  border-color:     var(--vf-teal);
+}
+
+/* ── K · Studio-identity block ── */
+
+.vf-contact__identity {
+  margin-top: 0;
+}
+
+.vf-contact__identity-heading {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h3);
+  font-weight:    var(--vf-w-light);
+  font-style:     italic;
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-tight);
+  color:          var(--vf-jet);
+  margin:         0 0 var(--vf-s-4) 0;
+  text-align:     center;
+}
+
+.vf-contact__identity-list {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-3);
+  margin:         0;
+  padding:        0;
+}
+
+.vf-contact__identity-row {
+  display:               grid;
+  grid-template-columns: 1fr;
+  gap:                   var(--vf-s-0);
+  padding-bottom:        var(--vf-s-3);
+  border-bottom:         var(--vf-hairline) solid var(--vf-border-on-bone-2);
+}
+
+.vf-contact__identity-row:last-child {
+  border-bottom:  0;
+  padding-bottom: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .vf-contact__identity-row {
+    grid-template-columns: 200px 1fr;
+    gap:                   var(--vf-s-4);
+    align-items:           baseline;
+  }
+}
+
+.vf-contact__identity-label {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-label);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);
+  text-transform: uppercase;
+  color:          var(--vf-iron);
+  margin:         0;
+}
+
+.vf-contact__identity-value {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  margin:      0;
+}
+
+.vf-contact__identity-value--block {
+  white-space: normal;
+}
+
+.vf-contact__identity-value p {
+  margin: 0 0 var(--vf-s-1) 0;
+}
+
+.vf-contact__identity-value p:last-child {
+  margin-bottom: 0;
+}
+
+.vf-contact__identity-link {
+  color:                     var(--vf-jet);
+  text-decoration:           underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset:     3px;
+}
+
+.vf-contact__identity-link:hover {
+  color: var(--vf-teal-deep);
+}

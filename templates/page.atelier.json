@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -6,26 +15,30 @@
         "eyebrow": "Atelier · Commission",
         "headline_part_1": "One object.",
         "headline_italic": "Made for one room.",
-        "opening_body": "<p>Placeholder. Studio copy pending.</p>",
+        "opening_body": "<p>The Atelier programme is Voxel Forge's commission track for singular sculptural objects. Each commission begins with a brief from one client: typically an architect, an interior lead, or a collector working on a specific space. The studio reads that brief as a spatial and material problem. What returns is not a product selection but a proposal: one object, designed and produced for one room.<br/><br/></p>",
         "step_1_number": "01",
         "step_1_title": "Brief",
-        "step_1_body": "<p>Placeholder.</p>",
+        "step_1_body": "<p>The brief describes the space, the object's intended position, and any dimensional or material constraints. The studio reads it as a set of spatial conditions.<br/></p>",
         "step_2_number": "02",
         "step_2_title": "Studio response",
-        "step_2_body": "<p>Placeholder.</p>",
+        "step_2_body": "<p>The studio returns a written response covering feasibility, a direction for materials, and an indicative timeline. If the commission is viable, this response opens the working conversation.</p>",
         "step_3_number": "03",
         "step_3_title": "Production",
-        "step_3_body": "<p>Placeholder.</p>",
+        "step_3_body": "<p>Material selection is finalised before production begins. Each Atelier commission is produced as a single object: no editions, no multiples. The studio maintains involvement through each production stage.</p>",
         "step_4_number": "04",
         "step_4_title": "Delivery",
-        "step_4_body": "<p>Placeholder.</p>",
+        "step_4_body": "<p>Each object ships with documentation covering materials, production method, and installation guidance where relevant. Packaging is protective and purpose-built for the object's geometry.</p>",
         "scope_eyebrow": "Scope",
         "scope_heading": "Capability",
-        "scope_body": "<p>Placeholder.</p>",
+        "scope_body": "<p>Atelier commissions are precision 3D-printed sculptural objects, produced to a single brief. The programme accommodates a range of scales, from tabletop to floor-standing, and works across the material vocabulary of the studio's current production capability. Objects are designed in-house, from the brief to the final geometry. Form is not drawn from an existing catalogue. Every dimension, surface texture, and structural decision responds to the specific brief.<br/></p>",
+        "pull_text": "",
+        "pull_attribution": "",
         "submit_label": "Submit brief",
         "success_message": "Your brief is with the studio. We respond within five working days."
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

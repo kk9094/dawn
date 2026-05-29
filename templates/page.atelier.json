@@ -1,0 +1,31 @@
+{
+  "sections": {
+    "main": {
+      "type": "vf-atelier-page",
+      "settings": {
+        "eyebrow": "Atelier · Commission",
+        "headline_part_1": "One object.",
+        "headline_italic": "Made for one room.",
+        "opening_body": "<p>Placeholder. Studio copy pending.</p>",
+        "step_1_number": "01",
+        "step_1_title": "Brief",
+        "step_1_body": "<p>Placeholder.</p>",
+        "step_2_number": "02",
+        "step_2_title": "Studio response",
+        "step_2_body": "<p>Placeholder.</p>",
+        "step_3_number": "03",
+        "step_3_title": "Production",
+        "step_3_body": "<p>Placeholder.</p>",
+        "step_4_number": "04",
+        "step_4_title": "Delivery",
+        "step_4_body": "<p>Placeholder.</p>",
+        "scope_eyebrow": "Scope",
+        "scope_heading": "Capability",
+        "scope_body": "<p>Placeholder.</p>",
+        "submit_label": "Submit brief",
+        "success_message": "Your brief is with the studio. We respond within five working days."
+      }
+    }
+  },
+  "order": ["main"]
+}

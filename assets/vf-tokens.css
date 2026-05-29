@@ -2952,7 +2952,8 @@ cart-items.is-empty .cart__warnings,
    Surface:     Obsidian    #0A0A0A   var(--vf-obsidian)
    Ink primary: Bone        #E8E2D6   var(--vf-fg-1)
    Ink meta:    Bone 70%             var(--vf-fg-2)
-   Accent:      Teal Bright #5BA89A   var(--vf-teal-bright)
+   Accent:      Atelier tier         var(--vf-color-tier-atelier)
+                (resolves to Ember Bright #DD7A60 on Obsidian)
    Error:       Ember       #C4614A   var(--vf-ember)
 
    Owns: vf-atelier-page section header, four-step process list,
@@ -2961,11 +2962,18 @@ cart-items.is-empty .cart__warnings,
    contact-form.liquid. Hidden field contact[Form source] =
    "Atelier brief" surfaces verbatim in the notification email.
 
-   Focus ring: 2px Teal Bright per AGENTS.md §3 editorial spec
-   (resolved by §4 via --vf-color-eyebrow). On inputs the border
-   thickens from 0.5px to 1px on focus to prevent double-line
-   with the outline — same anti-double-line discipline as §22
-   inverted to Obsidian register.
+   Tier-color discipline: accents use the Atelier tier semantic
+   alias for parity with sections/vf-atelier.liquid (homepage
+   CTA) and every other Atelier-tier surface across the site.
+   Eyebrows and step numbers render via vf-eyebrow / vf-mono
+   snippets with color='teal' default — overridden here under
+   scoped selectors so the snippets stay untouched.
+
+   Focus ring: 2px var(--vf-color-tier-atelier) — AGENTS.md §3
+   editorial spec calls for 2px, only the colour token changes.
+   On inputs the border thickens from 0.5px to 1px on focus to
+   prevent double-line with the outline — same anti-double-line
+   discipline as §22 inverted to Obsidian register.
 
    No new tokens introduced. No pixel literals introduced — step
    hairlines use --vf-border-1, content measure uses 52ch.
@@ -3018,7 +3026,15 @@ cart-items.is-empty .cart__warnings,
 .vf-atelier-page__headline em {
   font-style:  italic;
   font-weight: var(--vf-w-light);
-  color:       var(--vf-fg-1);
+  color:       var(--vf-color-tier-atelier);
+}
+
+/* Snippet tier-accent override — flips vf-eyebrow and vf-mono
+   instances inside this section from Teal to the Atelier tier
+   without touching the snippets or the section markup. */
+.vf-atelier-page .vf-eyebrow--teal,
+.vf-atelier-page .vf-mono--teal {
+  color: var(--vf-color-tier-atelier);
 }
 
 .vf-atelier-page__opening-body {
@@ -3081,7 +3097,7 @@ cart-items.is-empty .cart__warnings,
 }
 
 .vf-atelier-page__step-number {
-  color: var(--vf-teal-bright);
+  color: var(--vf-color-tier-atelier);
 }
 
 .vf-atelier-page__step-content {
@@ -3184,14 +3200,17 @@ cart-items.is-empty .cart__warnings,
 }
 
 .vf-atelier-page__status:focus-visible {
-  outline:        2px solid var(--vf-teal-bright);
+  outline:        2px solid var(--vf-color-tier-atelier);
   outline-offset: 2px;
 }
 
+/* Tinted bg uses literal rgba on Ember Bright (#DD7A60 = 221,122,96)
+   because no rgba-composable tier token exists. Mirrors §22 pattern
+   of using the resolved palette RGB for 6% surface tints. */
 .vf-atelier-page__status--success {
-  border-color:     var(--vf-teal-bright);
-  background-color: rgba(91, 168, 154, 0.06);
-  color:            var(--vf-teal-bright);
+  border-color:     var(--vf-color-tier-atelier);
+  background-color: rgba(221, 122, 96, 0.06);
+  color:            var(--vf-color-tier-atelier);
 }
 
 .vf-atelier-page__status--error {
@@ -3292,12 +3311,12 @@ cart-items.is-empty .cart__warnings,
   opacity: 1;
 }
 
-/* Focus: 2px Teal Bright per AGENTS.md §3 editorial spec. Border
-   thickens to 1px (max rule weight per §4 banned-patterns) to
-   prevent double-line with the outline. */
+/* Focus: 2px var(--vf-color-tier-atelier) per AGENTS.md §3
+   editorial spec. Border thickens to 1px (max rule weight per §4
+   banned-patterns) to prevent double-line with the outline. */
 .vf-atelier-page__input:focus-visible,
 .vf-atelier-page__textarea:focus-visible {
-  outline:        2px solid var(--vf-teal-bright);
+  outline:        2px solid var(--vf-color-tier-atelier);
   outline-offset: 2px;
   border-color:   var(--vf-fg-1);
   border-width:   1px;
@@ -3335,6 +3354,8 @@ cart-items.is-empty .cart__warnings,
   margin-top: var(--vf-s-4);
 }
 
+/* Text colour is Obsidian (not Bone) for AA contrast on the
+   Ember Bright fill — #0A0A0A on #DD7A60 ≈ 6.55:1, AA pass. */
 .vf-atelier-page__submit {
   display:          inline-flex;
   align-items:      center;
@@ -3346,9 +3367,9 @@ cart-items.is-empty .cart__warnings,
   font-weight:      var(--vf-w-light);
   letter-spacing:   var(--vf-track-label);
   text-transform:   uppercase;
-  color:            var(--vf-bone);
-  background-color: var(--vf-teal);
-  border:           var(--vf-hairline) solid var(--vf-teal);
+  color:            var(--vf-obsidian);
+  background-color: var(--vf-color-tier-atelier);
+  border:           var(--vf-hairline) solid var(--vf-color-tier-atelier);
   border-radius:    var(--vf-radius-0);
   cursor:           pointer;
   transition:
@@ -3357,6 +3378,6 @@ cart-items.is-empty .cart__warnings,
 }
 
 .vf-atelier-page__submit:hover {
-  background-color: var(--vf-teal-bright);
-  border-color:     var(--vf-teal-bright);
+  background-color: var(--vf-color-tier-atelier);
+  border-color:     var(--vf-color-tier-atelier);
 }

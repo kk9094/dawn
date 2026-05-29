@@ -2944,3 +2944,419 @@ cart-items.is-empty .cart__warnings,
 .vf-contact__identity-link:hover {
   color: var(--vf-teal-deep);
 }
+
+
+/* ─────────────────────────────────────────────────────────
+   §23 · vf-atelier-page · editorial (Obsidian) · added 2026-05-29
+
+   Surface:     Obsidian    #0A0A0A   var(--vf-obsidian)
+   Ink primary: Bone        #E8E2D6   var(--vf-fg-1)
+   Ink meta:    Bone 70%             var(--vf-fg-2)
+   Accent:      Teal Bright #5BA89A   var(--vf-teal-bright)
+   Error:       Ember       #C4614A   var(--vf-ember)
+
+   Owns: vf-atelier-page section header, four-step process list,
+   scope cluster, and brief intake form. Re-skins
+   Shopify {%- form 'contact' -%} without touching Dawn's
+   contact-form.liquid. Hidden field contact[Form source] =
+   "Atelier brief" surfaces verbatim in the notification email.
+
+   Focus ring: 2px Teal Bright per AGENTS.md §3 editorial spec
+   (resolved by §4 via --vf-color-eyebrow). On inputs the border
+   thickens from 0.5px to 1px on focus to prevent double-line
+   with the outline — same anti-double-line discipline as §22
+   inverted to Obsidian register.
+
+   No new tokens introduced. No pixel literals introduced — step
+   hairlines use --vf-border-1, content measure uses 52ch.
+   ─────────────────────────────────────────────────────────── */
+
+/* ── A · Section wrapper and surface ── */
+
+.vf-atelier-page {
+  background-color: var(--vf-obsidian);
+  color:            var(--vf-fg-1);
+  padding-block:    var(--vf-s-7);
+}
+
+@media screen and (min-width: 750px) {
+  .vf-atelier-page {
+    padding-block: var(--vf-s-8);
+  }
+}
+
+.vf-atelier-page__inner {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-6);
+}
+
+@media screen and (min-width: 750px) {
+  .vf-atelier-page__inner {
+    gap: var(--vf-s-7);
+  }
+}
+
+/* ── B · Opening cluster ── */
+
+.vf-atelier-page__opening {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-3);
+}
+
+.vf-atelier-page__headline {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h-section);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-h);
+  color:          var(--vf-fg-1);
+  margin:         var(--vf-s-2) 0 0 0;
+}
+
+.vf-atelier-page__headline em {
+  font-style:  italic;
+  font-weight: var(--vf-w-light);
+  color:       var(--vf-fg-1);
+}
+
+.vf-atelier-page__opening-body {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-fg-2);
+  max-width:   52ch;
+}
+
+.vf-atelier-page__opening-body p {
+  margin: 0 0 var(--vf-s-2) 0;
+}
+
+.vf-atelier-page__opening-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── C · Hairline divider ── */
+
+.vf-atelier-page__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-border-1);
+  margin:     0;
+  width:      100%;
+}
+
+/* ── D · Process steps ── */
+
+.vf-atelier-page__steps {
+  list-style:           none;
+  padding-inline-start: 0;
+  margin:               0;
+  display:              flex;
+  flex-direction:       column;
+  gap:                  var(--vf-s-5);
+}
+
+.vf-atelier-page__step {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-2);
+  padding-bottom: var(--vf-s-5);
+  border-bottom:  var(--vf-hairline) solid var(--vf-border-1);
+}
+
+.vf-atelier-page__step:last-child {
+  padding-bottom: 0;
+  border-bottom:  0;
+}
+
+@media screen and (min-width: 750px) {
+  .vf-atelier-page__step {
+    display:               grid;
+    grid-template-columns: 96px 1fr;
+    column-gap:            var(--vf-s-5);
+    align-items:           start;
+  }
+}
+
+.vf-atelier-page__step-number {
+  color: var(--vf-teal-bright);
+}
+
+.vf-atelier-page__step-content {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-2);
+}
+
+.vf-atelier-page__step-title {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h3);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-h);
+  color:          var(--vf-fg-1);
+  margin:         0;
+}
+
+.vf-atelier-page__step-body {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-fg-2);
+  max-width:   52ch;
+}
+
+.vf-atelier-page__step-body p {
+  margin: 0 0 var(--vf-s-1) 0;
+}
+
+.vf-atelier-page__step-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── E · Scope ── */
+
+.vf-atelier-page__scope {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-3);
+}
+
+.vf-atelier-page__scope-heading {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h2);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-h);
+  color:          var(--vf-fg-1);
+  margin:         var(--vf-s-2) 0 0 0;
+}
+
+.vf-atelier-page__scope-body {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-fg-2);
+  max-width:   52ch;
+}
+
+.vf-atelier-page__scope-body p {
+  margin: 0 0 var(--vf-s-2) 0;
+}
+
+.vf-atelier-page__scope-body p:last-child {
+  margin-bottom: 0;
+}
+
+.vf-atelier-page__pull {
+  margin-top: var(--vf-s-4);
+}
+
+/* ── F · Intake heading ── */
+
+.vf-atelier-page__intake {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-4);
+}
+
+.vf-atelier-page__intake-heading {
+  font-family:    var(--vf-ff-display);
+  font-size:      var(--vf-fs-h2);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-tight);
+  line-height:    var(--vf-lh-h);
+  color:          var(--vf-fg-1);
+  margin:         0;
+}
+
+/* ── G · Form status (success and error) ── */
+
+.vf-atelier-page__status {
+  padding:       var(--vf-s-3) var(--vf-s-4);
+  margin:        0 0 var(--vf-s-4) 0;
+  border:        var(--vf-hairline) solid;
+  border-radius: var(--vf-radius-2);
+}
+
+.vf-atelier-page__status:focus-visible {
+  outline:        2px solid var(--vf-teal-bright);
+  outline-offset: 2px;
+}
+
+.vf-atelier-page__status--success {
+  border-color:     var(--vf-teal-bright);
+  background-color: rgba(91, 168, 154, 0.06);
+  color:            var(--vf-teal-bright);
+}
+
+.vf-atelier-page__status--error {
+  border-color:     var(--vf-ember);
+  background-color: rgba(196, 97, 74, 0.06);
+  color:            var(--vf-ember);
+}
+
+.vf-atelier-page__status-text {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-body);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-body);
+  line-height:    var(--vf-lh-body);
+  margin:         0;
+}
+
+.vf-atelier-page__status-list {
+  list-style:           none;
+  padding-inline-start: 0;
+  margin:               var(--vf-s-1) 0 0 0;
+  font-family:          var(--vf-ff-body);
+  font-size:            var(--vf-fs-body);
+  line-height:          var(--vf-lh-body);
+}
+
+.vf-atelier-page__status-list li {
+  margin: var(--vf-s-0) 0 0 0;
+}
+
+/* ── H · Field grid and labels ── */
+
+.vf-atelier-page__fields {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-4);
+}
+
+.vf-atelier-page__field {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-1);
+}
+
+.vf-atelier-page__label {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-label);
+  font-weight:    var(--vf-w-regular);
+  letter-spacing: var(--vf-track-label);
+  text-transform: uppercase;
+  line-height:    1;
+  color:          var(--vf-fg-1);
+}
+
+.vf-atelier-page__optional {
+  font-family:    var(--vf-ff-body);
+  font-size:      var(--vf-fs-label);
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-label);
+  text-transform: none;
+  color:          var(--vf-fg-3);
+  margin-left:    var(--vf-s-1);
+}
+
+/* ── I · Inputs and textarea ── */
+
+.vf-atelier-page__input,
+.vf-atelier-page__textarea {
+  font-family:        var(--vf-ff-body);
+  font-size:          var(--vf-fs-body);
+  font-weight:        var(--vf-w-light);
+  line-height:        var(--vf-lh-body);
+  color:              var(--vf-fg-1);
+  background-color:   transparent;
+  border:             var(--vf-hairline) solid var(--vf-border-1);
+  border-radius:      var(--vf-radius-2);
+  padding:            0 var(--vf-s-3);
+  width:              100%;
+  box-sizing:         border-box;
+  appearance:         none;
+  -webkit-appearance: none;
+}
+
+.vf-atelier-page__input {
+  height: var(--vf-hit-min);
+}
+
+.vf-atelier-page__textarea {
+  min-height:  calc(var(--vf-hit-min) * 3);
+  padding:     var(--vf-s-2) var(--vf-s-3);
+  resize:      vertical;
+  font-family: var(--vf-ff-body);
+}
+
+.vf-atelier-page__input::placeholder,
+.vf-atelier-page__textarea::placeholder {
+  color:   var(--vf-fg-3);
+  opacity: 1;
+}
+
+/* Focus: 2px Teal Bright per AGENTS.md §3 editorial spec. Border
+   thickens to 1px (max rule weight per §4 banned-patterns) to
+   prevent double-line with the outline. */
+.vf-atelier-page__input:focus-visible,
+.vf-atelier-page__textarea:focus-visible {
+  outline:        2px solid var(--vf-teal-bright);
+  outline-offset: 2px;
+  border-color:   var(--vf-fg-1);
+  border-width:   1px;
+  box-shadow:     none;
+}
+
+.vf-atelier-page__field-help {
+  display:     block;
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-meta);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-fg-3);
+}
+
+/* ── J · Per-field error state ── */
+
+.vf-atelier-page__field--error .vf-atelier-page__input,
+.vf-atelier-page__field--error .vf-atelier-page__textarea {
+  border-color: var(--vf-ember);
+}
+
+.vf-atelier-page__field-error {
+  display:     block;
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-meta);
+  font-weight: var(--vf-w-regular);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-ember);
+}
+
+/* ── K · Submit ── */
+
+.vf-atelier-page__submit-row {
+  margin-top: var(--vf-s-4);
+}
+
+.vf-atelier-page__submit {
+  display:          inline-flex;
+  align-items:      center;
+  justify-content:  center;
+  min-height:       var(--vf-hit-min);
+  padding:          0 var(--vf-s-5);
+  font-family:      var(--vf-ff-body);
+  font-size:        var(--vf-fs-label);
+  font-weight:      var(--vf-w-light);
+  letter-spacing:   var(--vf-track-label);
+  text-transform:   uppercase;
+  color:            var(--vf-bone);
+  background-color: var(--vf-teal);
+  border:           var(--vf-hairline) solid var(--vf-teal);
+  border-radius:    var(--vf-radius-0);
+  cursor:           pointer;
+  transition:
+    background-color var(--vf-dur-base) var(--vf-ease),
+    border-color     var(--vf-dur-base) var(--vf-ease);
+}
+
+.vf-atelier-page__submit:hover {
+  background-color: var(--vf-teal-bright);
+  border-color:     var(--vf-teal-bright);
+}

@@ -1,0 +1,57 @@
+{
+  "sections": {
+    "main": {
+      "type": "vf-process",
+      "blocks": {
+        "stage_1": {
+          "type": "step",
+          "settings": {
+            "number": "01",
+            "title": "Design",
+            "body": "<p>Each object's geometry is modelled in CAD around a single light source. The brief is a spatial problem: the light's position, the object's interception of it, and the shadow the geometry produces. Wall thickness, surface texture, internal structure, and clearances are resolved in the model before any print begins. The model goes to production once; there is no mid-run revision, because the printing process does not permit correction after a run starts. Every design decision is committed before production begins.</p>"
+          }
+        },
+        "stage_2": {
+          "type": "step",
+          "settings": {
+            "number": "02",
+            "title": "Forge",
+            "body": "<p>Each object is printed once at 0.16 mm layer height. If a print fails at any stage, the run does not resume from that point; the bed is cleared and the object returns to preparation. The print is monitored throughout for delamination, warping, or surface deviation outside the model's tolerance. Any departure from that tolerance ends the run. The layer height is not adjusted between editions of the same object.</p>"
+          }
+        },
+        "stage_3": {
+          "type": "step",
+          "settings": {
+            "number": "03",
+            "title": "Finish",
+            "body": "<p>Finishing begins when the print comes off the bed. Supports are removed by hand, and the object moves through nine sanding grits in sequence, from coarse through fine. Layer lines are not removed; the finish discipline brings them to a controlled, consistent surface condition rather than erasing them. The layer line is evidence of the production method, not a defect to be concealed. Surface quality is assessed by hand and by eye before the object advances to numbering.</p>"
+          }
+        },
+        "stage_4": {
+          "type": "step",
+          "settings": {
+            "number": "04",
+            "title": "Number",
+            "body": "<p>Each piece receives a number in the edition sequence, applied to the object and entered into the studio's production register with the print date and batch reference. The object ships with a signed certificate covering the edition number, full object specification, and production date. A wax seal closes the certificate carrier. The documentation set is not reproduced; it travels with the object.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "stage_1",
+        "stage_2",
+        "stage_3",
+        "stage_4"
+      ],
+      "settings": {
+        "eyebrow": "The Studio · Method",
+        "headline_part_1": "The Process.",
+        "headline_part_2": "Stage by stage.",
+        "method_label": "",
+        "method_url": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

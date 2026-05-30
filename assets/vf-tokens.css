@@ -3313,9 +3313,12 @@ cart-items.is-empty .cart__warnings,
 
 /* Focus: 2px var(--vf-color-tier-atelier) per AGENTS.md §3
    editorial spec. Border thickens to 1px (max rule weight per §4
-   banned-patterns) to prevent double-line with the outline. */
-.vf-atelier-page__input:focus-visible,
-.vf-atelier-page__textarea:focus-visible {
+   banned-patterns) to prevent double-line with the outline.
+   Selector chains the section class — specificity (0,2,1) — to
+   defeat Dawn body-injected stylesheets that tie §4 / single-class
+   rules at (0,1,1) and win on source-order. No !important. */
+.vf-atelier-page .vf-atelier-page__input:focus-visible,
+.vf-atelier-page .vf-atelier-page__textarea:focus-visible {
   outline:        2px solid var(--vf-color-tier-atelier);
   outline-offset: 2px;
   border-color:   var(--vf-fg-1);
@@ -3380,4 +3383,15 @@ cart-items.is-empty .cart__warnings,
 .vf-atelier-page__submit:hover {
   background-color: var(--vf-color-tier-atelier);
   border-color:     var(--vf-color-tier-atelier);
+}
+
+/* Submit focus ring — explicit, at chained-class specificity (0,2,1)
+   to defeat Dawn body-injected button focus rules. Without this
+   override the cascade falls back to outline-color: currentColor on
+   the submit (text is var(--vf-obsidian) post-Ember-swap), producing
+   an invisible black-on-black ring. Outline-offset 2px places the
+   ring on the Obsidian surface beyond the Ember fill for contrast. */
+.vf-atelier-page .vf-atelier-page__submit:focus-visible {
+  outline:        2px solid var(--vf-color-tier-atelier);
+  outline-offset: 2px;
 }

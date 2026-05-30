@@ -121,6 +121,7 @@
             id="VfContactForm-phone"
             name="contact[{{ 'templates.contact.form.phone' | t }}]"
             autocomplete="tel"
+            inputmode="tel"
             pattern="[0-9+\-\s]*"
             value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
           >

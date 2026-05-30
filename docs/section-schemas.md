@@ -46,9 +46,9 @@ The "Type" column maps to Shopify's input types: `text`, `richtext`, `image_pick
 | `headline_part_2` | text | Headline (second line, italic) | "light." |
 | `body` | richtext | Body copy | "Precision 3D-printed sculptural objects in numbered editions…" |
 | `cta_primary_label` | text | Primary CTA label | "See the editions" |
-| `cta_primary_href` | url | Primary CTA link | `/collections/all` |
+| `cta_primary_href` | url | Primary CTA link | — |
 | `cta_secondary_label` | text | Secondary CTA label | "Read the brief" |
-| `cta_secondary_href` | url | Secondary CTA link | `/pages/about` |
+| `cta_secondary_href` | url | Secondary CTA link | — |
 | `feature_image` | image_picker | Feature image | — |
 
 > **Figure column:** When `feature_image` is blank the IsoCube renders at 420px with glow. When set, the image replaces the cube entirely — the figure div gains the modifier class `vf-hero__figure--media`, which applies `aspect-ratio: var(--vf-ratio-process)` and `overflow: hidden`. The cube is never rendered alongside the image.

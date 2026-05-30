@@ -199,7 +199,7 @@ Dawn registers JavaScript-upgraded custom elements (`<header-drawer>`, `<menu-dr
 
 Shopify enforces a 3-character minimum on metafield namespace identifiers. The `vf` prefix is two characters and is rejected at save time. The canonical metafield namespace for this project is `vox`. File names, CSS classes, and Liquid variable prefixes remain `vf-*` — the split is intentional and permanent. When adding new metafields: namespace = `vox`, key = snake_case descriptor (e.g., `vox.batch_number`, `vox.italic_subtitle`).
 
-**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces. Established metafield uses: `product.metafields.vox.batch_number` (Phase 1B, commit c2ca9e95) and `collection.metafields.vox.italic_subtitle` (§16).
+**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces. Established metafield uses: `product.metafields.vox.batch_number` (Phase 1B, commit c2ca9e95) and `collection.metafields.vox.italic_subtitle`.
 
 ### Conditional list separators via CSS `::before`
 
@@ -227,11 +227,11 @@ When a section setting is removed from `{% schema %}`, the corresponding key in 
 }
 ```
 
-Confirmed in §16: `italic_subtitle` was removed from the section schema and simultaneously deleted from `templates/collection.json`.
+Confirmed: `italic_subtitle` was removed from the section schema and simultaneously deleted from `templates/collection.json`.
 
 ### Section settings vs metafields — refactor signal and pattern
 
-Detection signal: `section.settings.X` in Liquid for content that should differ per page. Confirm by attempting to change the value for one page — if the change propagates to all pages of the same template, the value belongs in a metafield. Refactor path: (1) change the Liquid read from `section.settings.X` to `resource.metafields.vox.X`; (2) remove the setting from `{% schema %}`; (3) remove the key from `templates/*.json` — all three changes in one atomic commit. The principle is stated in §6; the atomic three-step commit pattern is the implementation detail worth remembering. Confirmed in §16 (collection page italic subtitle).
+Detection signal: `section.settings.X` in Liquid for content that should differ per page. Confirm by attempting to change the value for one page — if the change propagates to all pages of the same template, the value belongs in a metafield. Refactor path: (1) change the Liquid read from `section.settings.X` to `resource.metafields.vox.X`; (2) remove the setting from `{% schema %}`; (3) remove the key from `templates/*.json` — all three changes in one atomic commit. The principle is stated in §6; the atomic three-step commit pattern is the implementation detail worth remembering. Confirmed (collection page italic subtitle).
 
 **Admin workflow for the refactor:** in Shopify Admin, navigate to Settings → Custom data → Collections (or Products, Pages, etc.) and define the metafield (`vox.italic_subtitle`, type Single line text) before deploying the Liquid change. The metafield must exist in admin before the storefront reads it — deploying the Liquid read first produces a blank value, not an error, which can be mistaken for a Liquid bug. Set values per-resource after the metafield is defined.
 

@@ -95,7 +95,7 @@ None. The statement is a single moment.
 | 4-column grid (1-col mobile) | Brand-locked rhythm |
 | Hairline column dividers | Brand structural element |
 | Step number above title (Mono, 11px base) | Type system |
-| Gold tick mark at column top | Prestige sparingly — fine here |
+| Gold tick mark at column top | Open brand-judgment item — Gold reads as the Atelier / Série II tier accent elsewhere in the system. Its use on a generic-editorial Process surface conflicts with that reservation. Tracked in the project-state Open questions; not resolved here. |
 
 ### Editable (settings)
 | ID | Type | Label | Default |
@@ -113,6 +113,8 @@ Block type `step` — required exactly 4. Lower or higher counts will read wrong
 | `number` | text | Step number (e.g. "01") |
 | `title` | text | Step title (e.g. "Geometry") |
 | `body` | richtext | Step body |
+
+> Deployed on: `templates/index.json` (homepage) AND `templates/page.process.json`. The page instance uses headline "The Process. / Stage by stage." with `method_label`/`method_url` blank (no self-referential anchor). Both instances render via Customizer `step` blocks — same mechanism, no schema divergence. The homepage instance was the original; the page instance was added 2026-05-30 (`cb28ca43`).
 
 ---
 
@@ -327,6 +329,265 @@ No new `settings` introduced — header content (nav links, announcement bar) co
 
 ### Editable (blocks)
 None. Editorial sequence is fixed-count by schema design — five content sections, no block-based extensibility.
+
+---
+
+## 10 · `vf-collection-header` (Collection page header)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone register (`data-mode="bone"`) | Transactional collection surface |
+| `.page-width` container | Standard grid width on collection pages |
+| `data-tier` dispatch on inner wrapper (handle → `i` / `ii` / `atelier`) | Downstream tier-aware re-skin via CSS sibling selectors |
+| Edition-count auto-render (`collection.products_count`, zero-padded) | Edition rhythm convention |
+| Replaces Dawn's `main-collection-banner` | Brand-locked surface; no Dawn header retained |
+
+### Editable (settings)
+None — content derives from `collection.title`, `collection.description`, and `collection.metafields.vox.italic_subtitle`. The italic subtitle metafield must be defined in Shopify Admin → Settings → Custom data → Collections (`vox.italic_subtitle`, single line text) before values appear; see CLAUDE.md §9 "Section settings vs metafields".
+
+> Deployed on: `templates/collection.json`.
+
+---
+
+## 11 · `vf-collection-footer` (End-of-edition closing mark)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone register (`data-mode="bone"`) | Pairs with collection header surface |
+| Centred hairline + tier-accented "END OF EDITION" label | Brand structural element |
+| Tier dispatch by `collection.handle` (Série I / II / Atelier) | Carries the same tier ink as the header |
+| Must render after `main-collection-product-grid` in `collection.json` | Sequencing rule — closing mark, not a header |
+
+No editable settings.
+
+> Deployed on: `templates/collection.json`.
+
+---
+
+## 12 · `vf-collection-list` (Three-tier collection directory)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone register (`data-mode="bone"`) | Transactional list surface |
+| Hardcoded three-tile architecture (Série I → Série II → Atelier) | Brand catalogue is fixed-shape, not merchant-extensible |
+| Tile URLs: `/collections/serie-1`, `/collections/serie-2`, `/pages/atelier` | Atelier is commission-only (no collection record) |
+| Per-tile fallback: collection's `featured_image` if `image_*` setting is blank | Avoids empty tiles during catalogue bring-up |
+| Replaces Dawn's `main-list-collections` on `/collections` | Brand-locked surface |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `heading` | text | Page heading | "Collections" |
+| `image_i` | image_picker | Série I — tile image | — |
+| `image_ii` | image_picker | Série II — tile image | — |
+| `image_atelier` | image_picker | Atelier — tile image | — |
+| `closing_quote` | text | Closing pull-quote | — |
+
+> Deployed on: `templates/list-collections.json`.
+
+---
+
+## 13 · `vf-product-header` (PDP breadcrumb)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Three-segment breadcrumb (Collection → tier collection → product title) | Brand-locked navigation pattern |
+| Tier-collection segment auto-resolves from `product.collections` (`serie-1`/`serie-i`/`serie-2`/`serie-ii`) | Tier dispatch from tags |
+| Middle segment conditionally rendered; CSS `::before` separators | See CLAUDE.md §9 "Conditional list separators via CSS `::before`" |
+| Pinned into `templates/product.json` directly (no `enabled_on`, no `presets`) | Single-use; not customiser-surfaced |
+
+No editable settings.
+
+> Deployed on: `templates/product.json`.
+>
+> Note: this is a **section**, not a snippet — the file is `sections/vf-product-header.liquid`. Path confusion is common because PDP chrome conventionally lives in snippets in other themes.
+
+---
+
+## 14 · `vf-cart-empty` (Empty-cart editorial fallback)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone register (`data-mode="bone"`) | Pairs with cart page surface |
+| Renders only when `cart == empty`; zero DOM output otherwise | Conditional surface — never bleeds into populated cart |
+| Three-tile architecture mirrors `vf-collection-list` (Série I → Série II → Atelier) | Cross-surface tile consistency |
+| Per-tile fallback: collection's `featured_image` if `image_*` setting blank | Same fallback discipline as `vf-collection-list` |
+| Suppresses Dawn's `.cart__warnings` via `vf-tokens.css` §17 (`!important`) | See CLAUDE.md §9 "CSS specificity vs source order with body-injected stylesheets" |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `image_i` | image_picker | Série I — tile image | — |
+| `image_ii` | image_picker | Série II — tile image | — |
+| `image_atelier` | image_picker | Atelier — tile image | — |
+
+> Deployed on: `templates/cart.json`.
+
+---
+
+## 15 · `vf-journal-index` (Blog article index)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Obsidian editorial register (`data-mode="obsidian"`) | Journal lives in the editorial register, not transactional |
+| Card grid (3-col desktop / 2-col tablet / 1-col mobile) with landscape lead image | Brand-locked rhythm |
+| 8 articles per page via `paginate by 8`; inline numbered pagination | Brand-locked pagination shape |
+| Replaces Dawn's `main-blog` section | Brand-locked surface |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `eyebrow` | text | Eyebrow text | "Journal" |
+| `heading` | text | Page heading | "Studio Notes." |
+| `subtitle` | text | Italic subtitle | — |
+
+> Deployed on: `templates/blog.json`.
+
+---
+
+## 16 · `vf-journal-article` (Individual article body)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Obsidian editorial register (`data-mode="obsidian"`) | Matches index surface |
+| Fixed editorial sequence: back link → optional lead image → header (date + reading time + title + excerpt) → body → rule → prev/next nav | Brand-locked composition |
+| `.page-width--narrow` measure on header, body, nav | Editorial readability measure |
+| Article structured data preserved at end (`article \| structured_data`) | SEO baseline |
+| Replaces Dawn's `main-article` section | Brand-locked surface |
+
+No editable settings. All content derives from the `article` object (title, image, content, excerpt, published_at).
+
+> Deployed on: `templates/article.json`.
+
+---
+
+## 17 · `vf-editorial` (Generic editorial page wrapper)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone editorial register (`data-mode="bone"`) | Standard editorial-page surface |
+| `.page-width--narrow` measure | Editorial readability measure |
+| Renders `page.title` as H1 + `page.content` as body | Reusable wrapper, no per-page schema |
+| Visual mirror of `vf-materials` chrome | Cross-surface consistency for editorial pages |
+
+No editable settings. All visible body content lives in the page's admin **Content** field.
+
+> Deployed on: `templates/page.editorial.json`.
+>
+> Note: this is the reuse target for editorial-register pages whose body lives in admin Content rather than in template-specific schema (Care · Cleaning, Shipping, Returns, Studio, future editorial pages). Set the Shopify Page record's template to `editorial` to route a page through this surface. Empty Content renders the chrome without errors.
+
+---
+
+## 18 · `vf-archive` (Closed-editions placeholder)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone editorial register (`data-mode="bone"`) | Editorial placeholder surface |
+| `.page-width--narrow` measure | Editorial readability measure |
+| Fixed sequence: eyebrow → H1 → hairline rule → richtext body | Brand-locked composition |
+| Single section, no blocks | Editorial layout is brand-locked; entries arrive as copy, not as block-based extensibility |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `eyebrow` | text | Eyebrow text | "Archive" |
+| `heading` | text | Page heading | "Closed Editions." |
+| `body` | richtext | Body copy | "<p>The archive will catalogue closed editions and past works. Edition I — Volute, Intaglio, Massif, Filigree, Lamina — opened May 2026 and remains in active production. The first archival entries are expected in 2027.</p>" |
+
+> Deployed on: `templates/page.archive.json`.
+>
+> Note: schema default vs live drift — the live `templates/page.archive.json` body has been edited via the Customizer to drop the model-name list and the prose em-dash, and to push the first-entry date to 2028. The schema **default** above is preserved as-is (the original copy). Do **not** "fix" the default to match live — the schema default is the customiser-reset value and changing it would propagate the old copy back into any new preset instance. The live JSON is authoritative for what renders; the schema default is the reset value.
+
+---
+
+## 19 · `vf-contact` (Studio contact form + identity)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Bone register (`data-mode="bone"`) | Transactional contact surface |
+| `.page-width--narrow` measure | Editorial readability measure on long-form text |
+| Form fields — name, email, phone, "Enquiry type" select (General / Atelier brief / Press), body — are hardcoded markup | Brand-locked field set; no merchant-managed fields |
+| Form posts through Shopify's native `{%- form 'contact' -%}` handler | Uses Shopify's built-in contact pipeline |
+| `.vf-contact*` classes; Dawn `.field` / `.contact` primitives not reused (full surface re-skin) | Brand surface, not a re-themed Dawn component |
+| Studio-of-record section (legal name / address / contact / grievance officer) is a fixed `<dl>` layout | Compliance display |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `eyebrow` | text | Eyebrow | "Contact" |
+| `heading` | text | Heading | "Write to the studio." |
+| `intro` | richtext | Intro paragraph | "<p>For enquiries about open editions, Atelier commissions, or press requests. The studio replies within two working days.</p>" |
+| `success_message` | text | Success message | "Message received. The studio will reply within two working days." |
+| `legal_name` | text | Registered legal name | "[PLACEHOLDER — Registered legal name]" |
+| `studio_address` | textarea | Studio address | "[PLACEHOLDER — Studio address]" |
+| `contact_email` | text | Contact email | "[PLACEHOLDER — contact email]" |
+| `grievance_officer` | richtext | Grievance officer | "<p>[PLACEHOLDER — Grievance officer name, role, contact route]</p>" |
+
+> Deployed on: `templates/page.contact.json`.
+>
+> Notes:
+> - **Form fields are hardcoded markup, not blocks.** Only labels and the studio-identity copy are merchant-editable. To change the field set (add an enquiry-type option, add a field), edit the section file.
+> - **Shopify canonical contact field names must be lowercase.** `contact[email]`, `contact[body]`, etc. Capitalised variants (`contact[Email]`) silently strip server-side validation, and Shopify rejects all submissions through that form. The current section uses the canonical lowercase keys; do not rename them.
+> - **Identity settings ship as `[PLACEHOLDER …]` defaults.** Live values are set per the Contact decision (`P Radha` / `studio@voxelforge.in` / `grievance@voxelforge.in`) and stored in `templates/page.contact.json`. The placeholders are the schema reset value, not the live render.
+
+---
+
+## 20 · `vf-atelier-page` (Atelier landing — long-form intake surface)
+
+### Hardcoded
+| What | Why |
+| --- | --- |
+| Obsidian editorial register (no `data-mode` attribute; `.vf-atelier-page` selector sets `background-color: var(--vf-obsidian)` directly per §23 CSS) | Editorial register surface |
+| Tier-coded Ember accent on this surface (the only page surface that is tier-coded, not generic Teal) — §23 scope-overrides `.vf-atelier-page .vf-eyebrow--teal` and `.vf-mono--teal` to `var(--vf-color-tier-atelier)` | Atelier identity carries through to the landing page |
+| `.page-width--narrow` measure throughout | Editorial readability |
+| Four fixed regions: A · Opening → B · Process (four steps) → C · Scope → D · Intake form | Brand-locked composition; sequence cannot be reordered |
+| Process steps render via `{%- for i in (1..4) -%}` over flat `step_N_*` settings, not Customizer blocks | Deliberate discipline — locks the step count to exactly 4 and the order to 1→2→3→4 |
+| Headline second segment renders inside `<em>` (italic span pattern) | Type system, matches `vf-hero` / `vf-process` headline shape |
+| Intake form: `{%- form 'contact' -%}` with `contact[Form source]` = "Atelier brief" hidden input | Routes briefs into the same contact pipeline, taggable on the admin side |
+
+### Editable (settings)
+| ID | Type | Label | Default |
+| --- | --- | --- | --- |
+| `eyebrow` | text | Eyebrow | "Atelier · Commission" |
+| `headline_part_1` | text | Headline | "One object." |
+| `headline_italic` | text | Headline (italic span) | "Made for one room." |
+| `opening_body` | richtext | Opening body | "<p>Placeholder. Studio copy pending.</p>" |
+| `step_1_number` | text | Number (step 1) | "01" |
+| `step_1_title` | text | Title (step 1) | "Brief" |
+| `step_1_body` | richtext | Body (step 1) | "<p>Placeholder.</p>" |
+| `step_2_number` | text | Number (step 2) | "02" |
+| `step_2_title` | text | Title (step 2) | "Studio response" |
+| `step_2_body` | richtext | Body (step 2) | "<p>Placeholder.</p>" |
+| `step_3_number` | text | Number (step 3) | "03" |
+| `step_3_title` | text | Title (step 3) | "Production" |
+| `step_3_body` | richtext | Body (step 3) | "<p>Placeholder.</p>" |
+| `step_4_number` | text | Number (step 4) | "04" |
+| `step_4_title` | text | Title (step 4) | "Delivery" |
+| `step_4_body` | richtext | Body (step 4) | "<p>Placeholder.</p>" |
+| `scope_eyebrow` | text | Eyebrow (scope) | "Scope" |
+| `scope_heading` | text | Heading (scope) | "Capability" |
+| `scope_body` | richtext | Body (scope) | "<p>Placeholder.</p>" |
+| `pull_text` | text | Pull-quote (optional) | — |
+| `pull_attribution` | text | Pull-quote attribution (optional) | — |
+| `submit_label` | text | Submit button label | "Submit brief" |
+| `success_message` | text | Success message | "Your brief is with the studio. We respond within five working days." |
+
+> Deployed on: `templates/page.atelier.json`.
+>
+> Notes:
+> - **Process steps are fixed-count flat settings, not Customizer blocks.** The four steps are `step_1_*` through `step_4_*` (number / title / body each), iterated via a Liquid `(1..4)` range. This is the deliberate discipline distinguishing this section from homepage `vf-process` (which uses `step` blocks). The fixed-count pattern locks the step count and order at the schema layer; merchants cannot add a fifth step or reorder.
+> - **Schema `name` must stay ≤ 25 characters.** Shopify enforces a 25-char limit on section schema `name`. The current value `"VF · Atelier (page)"` is 19 chars and is safe. The original 30-char name caused a validation failure that blocked the whole theme import. When renaming, count characters before saving.
+> - **Tier-coded Ember accent — markup vs surface routing.** The section markup calls `{%- render 'vf-mono', ..., color: 'teal' -%}` for step numbers, but `vf-tokens.css` §23 scope-overrides `.vf-atelier-page .vf-mono--teal` and `.vf-eyebrow--teal` to `var(--vf-color-tier-atelier)` (Ember). Don't be misled by the `color: 'teal'` calls in the section file — the rendered ink is Ember on this surface. This is the only **page** template that carries tier ink (the homepage `vf-atelier` strip is the other Ember surface).
 
 ---
 

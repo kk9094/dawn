@@ -89,14 +89,15 @@
     padding: 0 var(--vf-s-5);
   }
 
-  /* Filled — primary CTA. Teal on Obsidian. */
+  /* Filled — primary CTA. Teal-Deep resting, Teal-Bright on hover. */
   .vf-btn--filled {
-    background: var(--vf-teal);
+    background: var(--vf-teal-deep);
     color: var(--vf-bone);
-    border-color: var(--vf-teal);
+    border-color: var(--vf-teal-deep);
   }
   .vf-btn--filled:hover {
     background: var(--vf-teal-bright);
+    color: var(--vf-jet);
     border-color: var(--vf-teal-bright);
   }
 
@@ -132,8 +133,9 @@
     border-color: var(--vf-teal-deep);
   }
   [data-mode="bone"] .vf-btn--filled:hover {
-    background: var(--vf-teal);
-    border-color: var(--vf-teal);
+    background: var(--vf-teal-bright);
+    color: var(--vf-jet);
+    border-color: var(--vf-teal-bright);
   }
   [data-mode="bone"] .vf-btn--ghost {
     color: var(--vf-fg-on-bone-1);

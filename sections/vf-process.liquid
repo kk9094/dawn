@@ -1,7 +1,7 @@
 {%- comment -%}
   vf-process.liquid
 
-  Four-stage numbered strip on Obsidian. Step numbers in Gold Mono,
+  Four-stage numbered strip on Obsidian. Step numbers in Teal Bright Mono,
   hairline column dividers between steps, single text-link CTA right.
 
   Schema contract: docs/section-schemas.md §3
@@ -74,7 +74,7 @@
     <div class="vf-process__grid" role="list">
       {%- for block in section.blocks -%}
         <div class="vf-process__step" role="listitem" {{ block.shopify_attributes }}>
-          {%- render 'vf-mono', text: block.settings.number, color: 'gold', size: 'base' -%}
+          {%- render 'vf-mono', text: block.settings.number, color: 'teal', size: 'base' -%}
           <h3 class="vf-process__step-title">
             {{- block.settings.title | escape -}}
           </h3>

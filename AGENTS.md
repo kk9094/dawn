@@ -385,3 +385,11 @@ For any content audit, the audit prompt must explicitly cover all four locations
 - Inspect the Theme Customizer for any section instances that render the surface in question, and read the block-level settings for that instance.
 
 **Trigger:** when a live render contains copy that the codebase search cannot locate, assume one of locations 2, 3, or 4 holds it before assuming the search was wrong or the content is missing.
+
+### Verify documentation against ground truth before acting; scope audits to every location
+
+Engineering docs — the state doc, AGENTS.md/CLAUDE.md, schema docs, convention notes — accumulate claims that quietly stop matching the repo or the live store. Drift is silent: a "DONE" line, a schema default, a backlog item, a branch-status flag. Acting on a stale claim propagates the error. Two recurring failure modes: document drift (the doc says X, ground truth is Y) and audit-scoping miss (an audit checks a subset of locations and certifies "clean" while an untouched location still holds the defect). The two entries above are specific instances of this; this is the general discipline.
+
+Practice: (a) Investigate-first — before editing or closing anything off a documented claim, ground-truth it (grep the file, read the live surface, check the branch ancestry); never act on the doc alone. (b) Scope audits to all locations — enumerate every place the thing can live before declaring clean: all four logo references, AGENTS.md and CLAUDE.md in both repos, every page record's template rather than only the suspected one. (c) Reconcile in place — when ground truth contradicts the doc, fix the doc in the same pass; do not merely note it.
+
+Worked example (2026-05-31 backlog session): verify-first found the AGENTS.md backlog already landed, three dead cross-references where the doc claimed two, a stale schema example, a stale checkout-theming convention, a stale logo backlog, and a "1 commit ahead" branch flag that was actually fully merged — every one a drift catch surfaced before any wrong action.

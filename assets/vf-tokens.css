@@ -3395,3 +3395,79 @@ cart-items.is-empty .cart__warnings,
   outline:        2px solid var(--vf-color-tier-atelier);
   outline-offset: 2px;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   §24 · Search results · Editorial register lock
+
+   Stock Dawn main-search renders Dawn .color-{scheme} cards
+   (merchant-configured, often light-bg) while the body supplies
+   Bone text — producing Bone-on-white invisibility on the
+   results heading, product name+price, no-results message, and
+   filter/sort labels.
+
+   CSS-only rescope (stock Dawn liquid untouched per house
+   convention). Mirrors §11A product-info.gradient pattern —
+   rebases --color-background / --color-foreground /
+   --gradient-background on the wrapper so every nested Dawn
+   rule reading those tokens picks up VF Obsidian register.
+   Card selectors are chained (0,0,2,0) to beat the .color-{scheme}
+   class (0,0,1,0) on Dawn card surfaces. Badge .color-{scheme}
+   classes are intentionally left alone so badges remain readable
+   against the new Obsidian surface.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── A · Section surface ── */
+.template-search {
+  background-color:      var(--vf-obsidian);
+  color:                 var(--vf-bone);
+  --color-background:    10,  10,  10;        /* Obsidian RGB triplet */
+  --color-foreground:    232, 226, 214;       /* Bone */
+  --gradient-background: var(--vf-obsidian);
+}
+
+.template-search .gradient,
+.template-search .loading-overlay {
+  background: var(--vf-obsidian);
+}
+
+/* ── B · Card surfaces (product-card, article-card, inline page-card) ── */
+.template-search .card,
+.template-search .card--card,
+.template-search .card-wrapper .card {
+  --color-background:  10,  10,  10;
+  --color-foreground:  232, 226, 214;
+  background-color:    var(--vf-obsidian);
+  color:               var(--vf-bone);
+}
+
+.template-search .card__heading,
+.template-search .card__heading a,
+.template-search .card__information,
+.template-search .card .price,
+.template-search .card .price .price-item {
+  color: var(--vf-bone);
+}
+
+/* ── C · Facets, sort, result count ── */
+.template-search .facets-wrapper,
+.template-search .facet-filters,
+.template-search .facet-filters__field,
+.template-search .facet-filters__label,
+.template-search .product-count-vertical,
+.template-search .product-count__text {
+  color: var(--vf-bone);
+}
+
+.template-search .select__select,
+.template-search .facet-filters__sort {
+  --color-foreground: 232, 226, 214;
+  color: var(--vf-bone);
+}
+
+/* ── D · Pagination (stock Dawn) ── */
+.template-search .pagination,
+.template-search .pagination__list,
+.template-search .pagination__item,
+.template-search .pagination__item-link {
+  color: var(--vf-bone);
+}

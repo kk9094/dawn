@@ -237,7 +237,7 @@
           "type": "metric",
           "settings": {
             "value": "04",
-            "label": "Per year"
+            "label": "Per quarter"
           }
         },
         "metric_rdYCxm": {
@@ -250,8 +250,8 @@
         "metric_9XEU3g": {
           "type": "metric",
           "settings": {
-            "value": "1 / 1",
-            "label": "Edition"
+            "value": "New",
+            "label": "Origin"
           }
         }
       },
@@ -264,11 +264,11 @@
       "settings": {
         "eyebrow": "Atelier · Commission",
         "headline_part_1": "One object.",
-        "headline_part_2": "Made for one room.",
-        "body": "<p>Atelier commissions are designed alongside the architect or interior lead. One object, one brief, one room.</p>",
+        "headline_part_2": "Made for one owner.",
+        "body": "<p>Atelier commissions are designed alongside the studio. One object, one brief.</p>",
         "cta_label": "Request a commission",
         "cta_href": "/pages/atelier",
-        "next_intake": "NEXT INTAKE · Q3 2026 · 4 OF 4 SLOTS REMAIN"
+        "next_intake": "NEXT INTAKE · Q3 2026 · 4 SLOTS PER QUARTER"
       }
     }
   },

@@ -14,8 +14,8 @@
       "settings": {
         "eyebrow": "Atelier · Commission",
         "headline_part_1": "One object.",
-        "headline_italic": "Made for one room.",
-        "opening_body": "<p>The Atelier programme is Voxel Forge's commission track for singular sculptural objects. Each commission begins with a brief from one client: typically an architect, an interior lead, or a collector working on a specific space. The studio reads that brief as a spatial and material problem. What returns is not a product selection but a proposal: one object, designed and produced for one room.<br/><br/></p>",
+        "headline_italic": "Made for one owner.",
+        "opening_body": "<p>The Atelier programme is Voxel Forge's commission track for singular sculptural objects. Each commission begins with a brief from one client: typically an architect, an interior lead, or a collector working on a specific space. The studio reads that brief as a spatial and material problem. What returns is not a product selection but a proposal: one object, designed and produced for a single space.<br/><br/></p>",
         "step_1_number": "01",
         "step_1_title": "Brief",
         "step_1_body": "<p>The brief describes the space, the object's intended position, and any dimensional or material constraints. The studio reads it as a set of spatial conditions.<br/></p>",

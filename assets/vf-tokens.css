@@ -3515,3 +3515,22 @@ cart-items.is-empty .cart__warnings,
 .template-404 p {
   color: var(--vf-bone);
 }
+
+/* ── C · Full-bleed page surface (404-only)
+   .template-404 lives inside .page-width (max-width centred),
+   so §25-A only paints the inner box. The viewport-wide surface
+   is body.gradient (theme.liquid L303 + base.css L2934), which
+   paints var(--gradient-background) from the merchant's first
+   color scheme — a light value by default, producing the white
+   gutters above/below/beside the dark inner block.
+
+   Repaints body Obsidian when a .template-404 is present so the
+   7rem .page-margin and side gutters now show Obsidian instead
+   of merchant white. Scoped via :has(.template-404) — fires only
+   on /404. Specificity (0,0,1,1) beats .gradient (0,0,1,0).
+   :has() shipped in all major browsers in 2023; safe on the VF
+   stack. Fallback if :has must be avoided: add a 404-only body
+   class via JS, or a wrapper class in sections/main-404.liquid. */
+body:has(.template-404) {
+  background: var(--vf-obsidian);
+}

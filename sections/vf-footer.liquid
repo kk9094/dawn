@@ -184,7 +184,9 @@
   {%- comment -%}── Region 3 · Bottom bar ──{%- endcomment -%}
   <div class="vf-footer__bottom">
     <div class="vf-footer__bottom-inner">
-      {%- render 'vf-mono', text: section.settings.bottom_bar_text, size: 'small', color: 'fg-3' -%}
+      {%- assign vf_year = 'now' | date: '%Y' -%}
+      {%- assign vf_copyright = '© ' | append: vf_year | append: ' ' | append: section.settings.bottom_bar_text -%}
+      {%- render 'vf-mono', text: vf_copyright, size: 'small', color: 'fg-3' -%}
       {%- assign has_social_blocks = false -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'social_link' -%}
@@ -565,7 +567,8 @@
       "type": "text",
       "id": "bottom_bar_text",
       "label": "Bottom-bar mono text",
-      "default": "Voxel Forge · India · 2026"
+      "info": "© and current year are added automatically — enter brand name only.",
+      "default": "Voxel Forge"
     }
   ],
   "blocks": [
@@ -649,7 +652,7 @@
         "newsletter_headline_part_1": "A quarterly note from",
         "newsletter_headline_part_2": "the workshop floor.",
         "newsletter_cta_label": "Subscribe",
-        "bottom_bar_text": "Voxel Forge · India · 2026"
+        "bottom_bar_text": "Voxel Forge"
       },
       "blocks": [
         {

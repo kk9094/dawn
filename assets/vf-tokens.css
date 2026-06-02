@@ -3485,3 +3485,33 @@ cart-items.is-empty .cart__warnings,
 .template-search .article-card__footer {
   color: var(--vf-fg-2);
 }
+
+/* ─────────────────────────────────────────────────────────────
+   §25 · 404 page · Editorial register lock
+
+   Stock Dawn main-404 renders Dawn color-scheme surface (light)
+   while body supplies Bone text — ghosted light-on-light on
+   "Page not found" (.title) + subtext (p). Mirrors §24 /search
+   rescope. Button (.button) intentionally untouched — its scheme
+   tokens render legibly already (scope-to-need, per §24).
+   ───────────────────────────────────────────────────────────── */
+
+/* ── A · Section surface ── */
+.template-404 {
+  background-color:      var(--vf-obsidian);
+  color:                 var(--vf-bone);
+  --color-background:    10,  10,  10;        /* Obsidian RGB triplet */
+  --color-foreground:    232, 226, 214;       /* Bone */
+  --gradient-background: var(--vf-obsidian);
+}
+
+.template-404 .gradient,
+.template-404 .loading-overlay {
+  background: var(--vf-obsidian);
+}
+
+/* ── B · Text elements (explicit; do not rely on inheritance) ── */
+.template-404 .title,
+.template-404 p {
+  color: var(--vf-bone);
+}

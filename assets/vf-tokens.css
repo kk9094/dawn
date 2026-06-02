@@ -3516,6 +3516,14 @@ cart-items.is-empty .cart__warnings,
   color: var(--vf-bone);
 }
 
+/* Promote 'templates.404.subtext' = "404" from body 14px DM Sans to
+   mono-display 26px DM Mono — deliberate numeric/edition-mark
+   treatment on the error page. .title intentionally unchanged. */
+.template-404 p {
+  font-size:   var(--vf-fs-mono-display);
+  font-family: var(--vf-ff-mono);
+}
+
 /* ── C · Full-bleed page surface (404-only)
    .template-404 lives inside .page-width (max-width centred),
    so §25-A only paints the inner box. The viewport-wide surface

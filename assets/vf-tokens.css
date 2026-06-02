@@ -3471,3 +3471,17 @@ cart-items.is-empty .cart__warnings,
 .template-search .pagination__item-link {
   color: var(--vf-bone);
 }
+
+/* ── E · Article/page card meta — muted on Obsidian
+   The date wrapper (.article-card__info) inherits color from
+   .card__information but a Dawn caption-tier cascade leaves it
+   reading dark on the new Obsidian surface. Explicit (0,0,2,0)
+   scope locks date + author + excerpt + footer to --vf-fg-2
+   (Bone @ 70%; ~7.7:1 on Obsidian, AA-clean), one hierarchy
+   level below the full-Bone card title. Badge .color-{scheme}
+   intentionally unchanged. */
+.template-search .article-card__info,
+.template-search .article-card__excerpt,
+.template-search .article-card__footer {
+  color: var(--vf-fg-2);
+}

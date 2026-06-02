@@ -68,7 +68,7 @@
           "settings": {
             "number": "01",
             "title": "Design",
-            "body": "<p>Geometry developed in CAD. Each form modelled around a single light source — never lit from inside.</p>"
+            "body": "<p>Geometry developed across modelling tools. Each form built around a single light source, never lit from inside.</p>"
           }
         },
         "step_qUkChE": {
@@ -76,7 +76,7 @@
           "settings": {
             "number": "02",
             "title": "Forge",
-            "body": "<p>Printed once at 0.08mm resolution. 196 hours per object. No second pulls, no reprints.</p>"
+            "body": "<p>Printed once at 0.16 mm layer height. 196 hours per object. No second pulls, no reprints.<br/></p>"
           }
         },
         "step_Np7hDn": {
@@ -84,15 +84,15 @@
           "settings": {
             "number": "03",
             "title": "Finish",
-            "body": "<p>Hand-sanded across nine grits. Layer lines remain visible — they are the proof of method.</p>"
+            "body": "<p>Hand-sanded through progressively finer grits. Layer lines remain visible. They are the proof of method.</p>"
           }
         },
         "step_Xewraj": {
           "type": "step",
           "settings": {
             "number": "04",
-            "title": "Number",
-            "body": "<p>Wax-sealed and numbered against the edition. A signed certificate ships with the piece.</p>"
+            "title": "Package",
+            "body": "<p>Packed by hand as a DIY assembly kit. A numbered certificate of authenticity ships with every piece.</p>"
           }
         }
       },

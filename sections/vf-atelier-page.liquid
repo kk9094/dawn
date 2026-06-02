@@ -33,7 +33,7 @@
       <h1 class="vf-atelier-page__headline">
         {{- section.settings.headline_part_1 | escape -}}
         {%- if section.settings.headline_italic != blank -%}
-          <em>{{- section.settings.headline_italic | escape -}}</em>
+          <br>{{- '' -}}<em>{{- section.settings.headline_italic | escape -}}</em>
         {%- endif -%}
       </h1>
       {%- if section.settings.opening_body != blank -%}

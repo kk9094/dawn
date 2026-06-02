@@ -74,7 +74,7 @@
           "type": "social_link",
           "settings": {
             "label": "INSTAGRAM",
-            "url": ""
+            "url": "https://www.instagram.com/voxelforge.in/"
           }
         },
         "social_link_RN4GR3": {
@@ -86,8 +86,9 @@
         },
         "social_link_qdX6MA": {
           "type": "social_link",
+          "disabled": true,
           "settings": {
-            "label": "PINTEREST",
+            "label": "",
             "url": ""
           }
         }

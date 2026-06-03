@@ -3065,34 +3065,46 @@ cart-items.is-empty .cart__warnings,
 
 /* ── D · Process steps ── */
 
+/* 4-across desktop grid mirroring vf-process (section's own {%- style -%}).
+   Number stacks above title above body in each narrow column. Column
+   dividers via border-left (desktop), row dividers via border-top
+   (mobile); :first-child suppresses the leading divider in both modes. */
 .vf-atelier-page__steps {
   list-style:           none;
   padding-inline-start: 0;
   margin:               0;
-  display:              flex;
-  flex-direction:       column;
-  gap:                  var(--vf-s-5);
+  display:              grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   0;
 }
 
 .vf-atelier-page__step {
   display:        flex;
   flex-direction: column;
   gap:            var(--vf-s-2);
-  padding-bottom: var(--vf-s-5);
-  border-bottom:  var(--vf-hairline) solid var(--vf-border-1);
+  padding:        0 var(--vf-s-5);
+  border-left:    var(--vf-hairline) solid var(--vf-border-2);
 }
 
-.vf-atelier-page__step:last-child {
-  padding-bottom: 0;
-  border-bottom:  0;
+.vf-atelier-page__step:first-child {
+  border-left:  0;
+  padding-left: 0;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (max-width: 749px) {
+  .vf-atelier-page__steps {
+    grid-template-columns: 1fr;
+  }
+
   .vf-atelier-page__step {
-    display:               grid;
-    grid-template-columns: var(--vf-s-8) 1fr;
-    column-gap:            var(--vf-s-5);
-    align-items:           start;
+    border-left: 0;
+    padding:     var(--vf-s-4) 0;
+    border-top:  var(--vf-hairline) solid var(--vf-border-2);
+  }
+
+  .vf-atelier-page__step:first-child {
+    border-top:  0;
+    padding-top: 0;
   }
 }
 
@@ -3188,6 +3200,29 @@ cart-items.is-empty .cart__warnings,
   line-height:    var(--vf-lh-h);
   color:          var(--vf-fg-1);
   margin:         0;
+}
+
+/* Intake-full state (vf_slots_n == 0): contact fallback after the heading. */
+.vf-atelier-page__intake-full {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-4);
+}
+
+.vf-atelier-page__intake-full-body {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-fg-2);
+  max-width:   52ch;
+  margin:      0;
+}
+
+.vf-atelier-page__intake-full-links {
+  display:   flex;
+  flex-wrap: wrap;
+  gap:       var(--vf-s-2);
 }
 
 /* ── G · Form status (success and error) ── */

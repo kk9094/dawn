@@ -23,6 +23,24 @@
 {%- endcomment -%}
 
 <section class="vf-atelier-page">
+  {%- liquid
+    assign vf_slots = shop.metafields.vox.atelier_slots_remaining
+    if vf_slots == blank
+      assign vf_slots = 4
+    endif
+    assign vf_slots_n = vf_slots | plus: 0
+    if vf_slots_n < 0
+      assign vf_slots_n = 0
+    endif
+    if vf_slots_n > 4
+      assign vf_slots_n = 4
+    endif
+    if vf_slots_n > 0
+      assign vf_slots_phrase = vf_slots_n | append: ' of 4 remaining'
+    else
+      assign vf_slots_phrase = 'Intake full'
+    endif
+  -%}
   <div class="vf-atelier-page__inner page-width page-width--narrow">
 
     {%- comment -%} ── A · Opening ── {%- endcomment -%}
@@ -41,6 +59,9 @@
           {{- section.settings.opening_body -}}
         </div>
       {%- endif -%}
+      <p class="vf-atelier-page__opening-status">
+        {%- render 'vf-mono', text: vf_slots_phrase, size: 'small', color: 'fg-3' -%}
+      </p>
     </header>
 
     <hr class="vf-atelier-page__rule" aria-hidden="true">
@@ -105,28 +126,10 @@
 
     <hr class="vf-atelier-page__rule" aria-hidden="true">
 
-    {%- comment -%} ── D · Intake form ── {%- endcomment -%}
+    {%- comment -%} ── D · Intake form (open) / contact fallback (full) ── {%- endcomment -%}
     <section class="vf-atelier-page__intake" aria-labelledby="VfAtelierPageIntakeHeading">
+    {%- if vf_slots_n > 0 -%}
       <h2 id="VfAtelierPageIntakeHeading" class="vf-atelier-page__intake-heading">Brief intake.</h2>
-
-      {%- liquid
-        assign vf_slots = shop.metafields.vox.atelier_slots_remaining
-        if vf_slots == blank
-          assign vf_slots = 4
-        endif
-        assign vf_slots_n = vf_slots | plus: 0
-        if vf_slots_n < 0
-          assign vf_slots_n = 0
-        endif
-        if vf_slots_n > 4
-          assign vf_slots_n = 4
-        endif
-        if vf_slots_n > 0
-          assign vf_slots_phrase = vf_slots_n | append: ' of 4 remaining'
-        else
-          assign vf_slots_phrase = 'Intake full'
-        endif
-      -%}
       <p class="vf-atelier-page__intake-status">{%- render 'vf-mono', text: vf_slots_phrase, size: 'small', color: 'fg-3' -%}</p>
 
       {%- form 'contact', id: 'VfAtelierPageForm', class: 'vf-atelier-page__form' -%}
@@ -316,6 +319,19 @@
         </div>
 
       {%- endform -%}
+    {%- else -%}
+      <h2 id="VfAtelierPageIntakeHeading" class="vf-atelier-page__intake-heading">Intake is full this quarter.</h2>
+      <div class="vf-atelier-page__intake-full">
+        <p class="vf-atelier-page__intake-full-body">
+          This quarter's Atelier intake is full. For a smaller project, an off-cycle enquiry, or to register interest for next quarter, reach the studio directly.
+        </p>
+        <div class="vf-atelier-page__intake-full-links">
+          {%- render 'vf-button', label: 'Message us on Instagram', href: 'https://www.instagram.com/voxelforge.in/', variant: 'ghost', target: '_blank' -%}
+          {%- render 'vf-button', label: 'WhatsApp the studio', href: 'https://wa.me/919363348356', variant: 'ghost', target: '_blank' -%}
+          {%- render 'vf-button', label: 'Email the studio', href: 'mailto:studio@voxelforge.in', variant: 'ghost' -%}
+        </div>
+      </div>
+    {%- endif -%}
     </section>
 
   </div>

@@ -83,6 +83,13 @@
             "label": "YOUTUBE",
             "url": "https://www.youtube.com/@VoxelForge_IN"
           }
+        },
+        "social_link_WpPQjb": {
+          "type": "social_link",
+          "settings": {
+            "label": "WHATSAPP",
+            "url": "https://wa.me/919363381797"
+          }
         }
       },
       "block_order": [
@@ -91,7 +98,8 @@
         "link_column_d8YQTx",
         "link_column_ktYmFA",
         "social_link_Lt7xhT",
-        "social_link_RN4GR3"
+        "social_link_RN4GR3",
+        "social_link_WpPQjb"
       ],
       "name": "Voxel Forge · Footer",
       "settings": {

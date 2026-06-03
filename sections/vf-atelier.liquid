@@ -71,8 +71,29 @@
             label: section.settings.cta_label,
             href: section.settings.cta_href,
             variant: 'ember' -%}
+        {%- liquid
+          assign vf_slots = shop.metafields.vox.atelier_slots_remaining
+          if vf_slots == blank
+            assign vf_slots = 4
+          endif
+          assign vf_slots_n = vf_slots | plus: 0
+          if vf_slots_n < 0
+            assign vf_slots_n = 0
+          endif
+          if vf_slots_n > 4
+            assign vf_slots_n = 4
+          endif
+          if vf_slots_n > 0
+            assign vf_slots_phrase = vf_slots_n | append: ' of 4 remaining'
+          else
+            assign vf_slots_phrase = 'Intake full'
+          endif
+        -%}
         {%- if section.settings.next_intake != blank -%}
-          {%- render 'vf-mono', text: section.settings.next_intake, size: 'small', color: 'fg-3' -%}
+          {%- assign vf_caption = section.settings.next_intake | append: ' · ' | append: vf_slots_phrase -%}
+          {%- render 'vf-mono', text: vf_caption, size: 'small', color: 'fg-3' -%}
+        {%- else -%}
+          {%- render 'vf-mono', text: vf_slots_phrase, size: 'small', color: 'fg-3' -%}
         {%- endif -%}
       </div>
     </div>
@@ -283,9 +304,9 @@
     {
       "type": "text",
       "id": "next_intake",
-      "label": "Next intake line",
-      "info": "Mono metadata line displayed beside the CTA. Leave blank to hide.",
-      "default": "NEXT INTAKE · Q3 2026 · 4 OF 4 SLOTS REMAIN"
+      "label": "Next intake prefix",
+      "info": "Mono metadata line displayed beside the CTA. Slot count is appended automatically from shop.metafields.vox.atelier_slots_remaining; enter only the date/prefix (e.g. 'NEXT INTAKE · Q3 2026'). Leave blank to render the slot phrase alone.",
+      "default": "NEXT INTAKE · Q3 2026"
     }
   ],
   "blocks": [
@@ -319,7 +340,7 @@
         "headline_part_2": "Made for one room.",
         "cta_label": "Request a commission",
         "cta_href": "/pages/atelier",
-        "next_intake": "NEXT INTAKE · Q3 2026 · 4 OF 4 SLOTS REMAIN"
+        "next_intake": "NEXT INTAKE · Q3 2026"
       },
       "blocks": [
         {

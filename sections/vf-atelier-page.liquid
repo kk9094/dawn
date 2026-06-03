@@ -109,6 +109,26 @@
     <section class="vf-atelier-page__intake" aria-labelledby="VfAtelierPageIntakeHeading">
       <h2 id="VfAtelierPageIntakeHeading" class="vf-atelier-page__intake-heading">Brief intake.</h2>
 
+      {%- liquid
+        assign vf_slots = shop.metafields.vox.atelier_slots_remaining
+        if vf_slots == blank
+          assign vf_slots = 4
+        endif
+        assign vf_slots_n = vf_slots | plus: 0
+        if vf_slots_n < 0
+          assign vf_slots_n = 0
+        endif
+        if vf_slots_n > 4
+          assign vf_slots_n = 4
+        endif
+        if vf_slots_n > 0
+          assign vf_slots_phrase = vf_slots_n | append: ' of 4 remaining'
+        else
+          assign vf_slots_phrase = 'Intake full'
+        endif
+      -%}
+      <p class="vf-atelier-page__intake-status">{%- render 'vf-mono', text: vf_slots_phrase, size: 'small', color: 'fg-3' -%}</p>
+
       {%- form 'contact', id: 'VfAtelierPageForm', class: 'vf-atelier-page__form' -%}
 
         <input type="hidden" name="contact[Form source]" value="Atelier brief">

@@ -143,6 +143,21 @@
       <line x1="6" y1="18" x2="18" y2="6"/>
       <polyline points="9,6 18,6 18,15"/>
 
+    {%- when 'instagram' -%}
+      {%- comment -%} PLACEHOLDER — replace with official Instagram glyph. Keep viewBox="0 0 24 24"; for outline use stroke="currentColor" fill="none"; if pasting a filled brand logo, strip hardcoded brand colors so it inherits currentColor. {%- endcomment -%}
+      <rect x="3" y="3" width="18" height="18" rx="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17" cy="7" r="1"/>
+
+    {%- when 'whatsapp' -%}
+      {%- comment -%} PLACEHOLDER — replace with official WhatsApp glyph. Same viewBox/currentColor convention as above. {%- endcomment -%}
+      <path d="M4 20l1.5-4a8 8 0 1 1 3 3z"/>
+
+    {%- when 'mail' -%}
+      {%- comment -%} PLACEHOLDER — replace with envelope/mail glyph if desired. Same convention. {%- endcomment -%}
+      <rect x="3" y="5" width="18" height="14" rx="1"/>
+      <path d="M3 6l9 7 9-7"/>
+
     {%- else -%}
       {%- comment -%} Unknown icon — render an empty circle so it's visible {%- endcomment -%}
       <circle cx="12" cy="12" r="9"/>

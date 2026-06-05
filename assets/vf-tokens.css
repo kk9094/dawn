@@ -3005,6 +3005,17 @@ cart-items.is-empty .cart__warnings,
   }
 }
 
+/* Container widen — scoped override of Dawn's .page-width--narrow (max-width
+   72.6rem at >=990px). Loosens the wrapper to 100rem so the 4-across process
+   row gets ~250px/col vs ~180px; per-region 52ch prose caps stay intact, so
+   paragraph measure on opening / step / scope / intake-full bodies is
+   unchanged. Specificity (0,0,3,0) beats .page-width--narrow (0,0,1,0). */
+@media screen and (min-width: 990px) {
+  .vf-atelier-page .vf-atelier-page__inner.page-width--narrow {
+    max-width: 100rem;
+  }
+}
+
 /* ── B · Opening cluster ── */
 
 .vf-atelier-page__opening {

@@ -3024,6 +3024,71 @@ cart-items.is-empty .cart__warnings,
   gap:            var(--vf-s-3);
 }
 
+.vf-atelier-page__opening-content {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-3);
+}
+
+/* Desktop: prose left (1fr), stat strip right (auto). Mirrors the homepage
+   vf-atelier 2-col grid pattern, page-scoped. Below 990px the opening
+   stays stacked (single column); the strip rotates its hairline divider. */
+@media screen and (min-width: 990px) {
+  .vf-atelier-page__opening {
+    display:               grid;
+    grid-template-columns: 1fr auto;
+    gap:                   var(--vf-s-8);
+    align-items:           center;
+  }
+}
+
+/* Stat strip — page-scoped mirror of homepage .vf-atelier__metrics.
+   Vertical flex column, left hairline + padding-left at desktop;
+   below 990px the divider rotates from border-left to border-top
+   (the strip stacks below the prose in that range, so a left border
+   would read as a misplaced rule). */
+.vf-atelier-page__metrics {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-4);
+  padding-left:   var(--vf-s-7);
+  border-left:    var(--vf-hairline) solid var(--vf-border-2);
+}
+
+@media screen and (max-width: 989px) {
+  .vf-atelier-page__metrics {
+    border-left:  0;
+    padding-left: 0;
+    border-top:   var(--vf-hairline) solid var(--vf-border-2);
+    padding-top:  var(--vf-s-5);
+  }
+}
+
+.vf-atelier-page__metric {
+  display:        flex;
+  flex-direction: column;
+  gap:            var(--vf-s-0);
+}
+
+/* Editorial annotation chrome — deliberate 9px exception. Not body copy;
+   matches the homepage strip's call-out at sections/vf-atelier.liquid §style. */
+.vf-atelier-page__metric-label {
+  font-family:    var(--vf-ff-mono);
+  font-size:      9px;
+  font-weight:    var(--vf-w-light);
+  letter-spacing: var(--vf-track-eyebrow);
+  text-transform: uppercase;
+  color:          var(--vf-fg-3);
+}
+
+/* Long-value sizing demotion — "Tabletop–Floor" at full mono-display (26px)
+   would force the auto column wide and squeeze the prose. Drop to mono-strong
+   (22px) and lock no-wrap so the string fits cleanly on one line. */
+.vf-atelier-page__metric--scale .vf-mono {
+  font-size:   var(--vf-fs-mono-strong);
+  white-space: nowrap;
+}
+
 .vf-atelier-page__headline {
   font-family:    var(--vf-ff-display);
   font-size:      var(--vf-fs-h-section);

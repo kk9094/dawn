@@ -45,23 +45,44 @@
 
     {%- comment -%} ── A · Opening ── {%- endcomment -%}
     <header class="vf-atelier-page__opening">
-      {%- if section.settings.eyebrow != blank -%}
-        {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
-      {%- endif -%}
-      <h1 class="vf-atelier-page__headline">
-        {{- section.settings.headline_part_1 | escape -}}
-        {%- if section.settings.headline_italic != blank -%}
-          <br>{{- '' -}}<em>{{- section.settings.headline_italic | escape -}}</em>
+      <div class="vf-atelier-page__opening-content">
+        {%- if section.settings.eyebrow != blank -%}
+          {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
         {%- endif -%}
-      </h1>
-      {%- if section.settings.opening_body != blank -%}
-        <div class="vf-atelier-page__opening-body">
-          {{- section.settings.opening_body -}}
-        </div>
+        <h1 class="vf-atelier-page__headline">
+          {{- section.settings.headline_part_1 | escape -}}
+          {%- if section.settings.headline_italic != blank -%}
+            <br>{{- '' -}}<em>{{- section.settings.headline_italic | escape -}}</em>
+          {%- endif -%}
+        </h1>
+        {%- if section.settings.opening_body != blank -%}
+          <div class="vf-atelier-page__opening-body">
+            {{- section.settings.opening_body -}}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if vf_slots_n > 0 -%}
+        {%- assign vf_slots_metric_value = vf_slots_n -%}
+        {%- assign vf_slots_metric_label = 'Slots open' -%}
+      {%- else -%}
+        {%- assign vf_slots_metric_value = 'FULL' -%}
+        {%- assign vf_slots_metric_label = 'Slots' -%}
       {%- endif -%}
-      <p class="vf-atelier-page__opening-status">
-        {%- render 'vf-mono', text: vf_slots_phrase, size: 'small', color: 'fg-3' -%}
-      </p>
+      <aside class="vf-atelier-page__metrics" aria-label="Atelier at a glance">
+        <div class="vf-atelier-page__metric">
+          {%- render 'vf-mono', text: vf_slots_metric_value, size: 'display', color: 'ember' -%}
+          <span class="vf-atelier-page__metric-label">{{ vf_slots_metric_label }}</span>
+        </div>
+        <div class="vf-atelier-page__metric">
+          {%- render 'vf-mono', text: '1 of 1', size: 'display', color: 'ember' -%}
+          <span class="vf-atelier-page__metric-label">Edition</span>
+        </div>
+        <div class="vf-atelier-page__metric vf-atelier-page__metric--scale">
+          {%- render 'vf-mono', text: 'Tabletop–Floor', size: 'display', color: 'ember' -%}
+          <span class="vf-atelier-page__metric-label">Scale</span>
+        </div>
+      </aside>
     </header>
 
     <hr class="vf-atelier-page__rule" aria-hidden="true">

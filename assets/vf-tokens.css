@@ -185,7 +185,7 @@
   --vf-fs-mono-card:    15px;              /* DM Mono · product grid card price */
   --vf-fs-mono-strong:  22px;              /* DM Mono strong — settlement total, order amounts */
   --vf-fs-eyebrow:      11px;
-  --vf-fs-label:        10px;
+  --vf-fs-label:        11px;
 
   /* ── TYPE · letter-spacing ── */
   --vf-track-tight:     -0.01em;

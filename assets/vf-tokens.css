@@ -3701,3 +3701,49 @@ cart-items.is-empty .cart__warnings,
 body:has(.template-404) {
   background: var(--vf-obsidian);
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   §26 · Snippet primitives — relocated (perf hygiene)
+
+   Rules below were previously emitted inline by their snippet's
+   {% style %} block on every {% render %} call — 32 duplicate
+   <style> tags on Home alone (QA #17). Consolidated here so the
+   CSS is defined once globally. Selectors, values, and specificity
+   are byte-identical to the pre-move snippet emission; higher-
+   specificity overrides in other sections continue to win because
+   their specificity is above the moved rules' (0,1,0). For example:
+     - .vf-atelier-page__metric--scale .vf-mono           (0,2,0)
+     - .vf-atelier-page .vf-mono--teal                     (0,2,0)
+     - .vf-footer__social-link .vf-mono                    (0,2,0)
+   The move only changes source-order position within head; the
+   cascade winner at every callsite is unchanged.
+
+   NEXT: batch also relocates vf-eyebrow and any remaining snippet
+   {% style %} blocks. Type-floor edits (QA #2/#3/#5) come after
+   the move so the diff for each concern is isolated.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── A · vf-mono ── */
+.vf-mono {
+  font-family: var(--vf-ff-mono);
+  font-weight: var(--vf-w-light);
+  letter-spacing: 0.02em;
+}
+.vf-mono--micro   { font-size: 9px; }
+.vf-mono--small   { font-size: var(--vf-fs-mono-2); }
+.vf-mono--base    { font-size: var(--vf-fs-mono-1); }
+.vf-mono--large   { font-size: var(--vf-fs-meta); }
+.vf-mono--display { font-size: var(--vf-fs-mono-display); }
+
+.vf-mono--fg-1  { color: var(--vf-fg-1); }
+.vf-mono--fg-2  { color: var(--vf-fg-2); }
+.vf-mono--fg-3  { color: var(--vf-fg-3); }
+.vf-mono--gold  { color: var(--vf-gold); }
+.vf-mono--teal  { color: var(--vf-color-eyebrow); }
+.vf-mono--ember { color: var(--vf-ember-bright); }
+
+/* Tier semantic aliases — resolve through --vf-color-tier-* tokens */
+.vf-mono--tier-i        { color: var(--vf-color-tier-i); }
+.vf-mono--tier-ii       { color: var(--vf-color-tier-ii); }
+.vf-mono--tier-atelier  { color: var(--vf-color-tier-atelier); }

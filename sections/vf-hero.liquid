@@ -183,6 +183,14 @@
     }
   }
 
+  /* 320x568 (iPhone SE 1st gen): reclaim vertical space so the primary
+     CTA sits in-fold. Gated on both axes -- <=360px wide AND <=600px tall --
+     so short+narrow SE-class screens get the fix while tall 360px Androids
+     (>=640px tall) keep the standard --vf-s-9 top padding. 375+ untouched. */
+  @media screen and (max-width: 360px) and (max-height: 600px) {
+    .vf-hero { padding-top: var(--vf-s-8); }
+  }
+
   .vf-hero__figure {
     display: flex;
     justify-content: center;

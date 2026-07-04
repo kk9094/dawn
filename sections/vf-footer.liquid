@@ -469,6 +469,21 @@
     color: var(--vf-fg-1);
   }
 
+  /* QA #16 (P3): footer nav link rows render at ~31px tall (14px font x
+     2.2 line-height), under the 44px touch rhythm. Below 769px, add
+     --vf-s-1 (8px) padding-block per anchor -> ~47px effective row
+     height. Font-size, line-height, colour, register untouched (D2
+     type-floor decision separate). Ceiling-gated at 768px so the
+     >=960px 5-column desktop grid is byte-identical. The 750-959px
+     tablet 2x2 grid uses align-items: start, so taller cells still
+     top-align; the footer grows in height but nothing misaligns or
+     overflows. */
+  @media screen and (max-width: 768px) {
+    .vf-footer__link {
+      padding-block: var(--vf-s-1);
+    }
+  }
+
   /* ── Region 3 · Bottom bar ── */
   .vf-footer__bottom {
     padding: var(--vf-s-4) var(--vf-grid-margin-d);

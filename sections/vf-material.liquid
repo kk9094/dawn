@@ -12,9 +12,12 @@
 
   Judgement calls
   ───────────────
-  1. Figure caption rendered with size: 'micro' (9px).
-     CLAUDE.md 11px floor applies to body copy; this is editorial
-     annotation chrome (museum-label register). Deliberate exception.
+  1. Figure caption rendered with size: 'base' (11px).
+     Ported at 'micro' (9px) as editorial annotation chrome, but
+     D2 2026-07-04 reclassifies the caption as a functional
+     read-to-decide label and raises it to the 11px floor. The
+     museum-label register remains available for the two decorative
+     'micro' callers (vf-cube axis label, vf-pull attribution).
 
   2. Figure caption positioned at --vf-s-3 (16px). JSX uses 20px —
      no exact token. --vf-s-3 (16px) is the nearest value below 20px.
@@ -70,8 +73,8 @@
       {%- endif -%}
       {%- if section.settings.figure_caption != blank -%}
         <div class="vf-material__figure-caption">
-          {%- comment -%}Editorial caption — deliberate 9px exception. Not body copy; do not escalate.{%- endcomment -%}
-          {%- render 'vf-mono', text: section.settings.figure_caption, size: 'micro', color: 'fg-3' -%}
+          {%- comment -%}Functional caption (read to decide) — raised to 11px per D2 2026-07-04.{%- endcomment -%}
+          {%- render 'vf-mono', text: section.settings.figure_caption, size: 'base', color: 'fg-3' -%}
         </div>
       {%- endif -%}
     </div>

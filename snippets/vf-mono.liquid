@@ -39,29 +39,10 @@
   endif
 -%}
 
+{%- comment -%}
+  CSS lives in assets/vf-tokens.css §26 · A (QA #17 relocation, 2026-07-04).
+  The snippet emits markup only; do not restore an inline {% style %} block
+  here without matching the token file. Snippet-registered styles were
+  duplicating on every render (~32 tags/Home).
+{%- endcomment -%}
 <{{ tag }} class="vf-mono vf-mono--{{ size }} vf-mono--{{ _modifier }} {{ class }}">{{ text | escape }}</{{ tag }}>
-
-{% style %}
-  .vf-mono {
-    font-family: var(--vf-ff-mono);
-    font-weight: var(--vf-w-light);
-    letter-spacing: 0.02em;
-  }
-  .vf-mono--micro   { font-size: 9px; }
-  .vf-mono--small   { font-size: var(--vf-fs-mono-2); }
-  .vf-mono--base    { font-size: var(--vf-fs-mono-1); }
-  .vf-mono--large   { font-size: var(--vf-fs-meta); }
-  .vf-mono--display { font-size: var(--vf-fs-mono-display); }
-
-  .vf-mono--fg-1  { color: var(--vf-fg-1); }
-  .vf-mono--fg-2  { color: var(--vf-fg-2); }
-  .vf-mono--fg-3  { color: var(--vf-fg-3); }
-  .vf-mono--gold  { color: var(--vf-gold); }
-  .vf-mono--teal  { color: var(--vf-color-eyebrow); }
-  .vf-mono--ember { color: var(--vf-ember-bright); }
-
-  /* Tier semantic aliases — resolve through --vf-color-tier-* tokens */
-  .vf-mono--tier-i        { color: var(--vf-color-tier-i); }
-  .vf-mono--tier-ii       { color: var(--vf-color-tier-ii); }
-  .vf-mono--tier-atelier  { color: var(--vf-color-tier-atelier); }
-{% endstyle %}

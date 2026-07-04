@@ -478,9 +478,28 @@
   }
 
   .vf-footer__social-link {
+    position: relative;
     color: var(--vf-fg-3);
     text-decoration: none;
     transition: color var(--vf-dur-fast) var(--vf-ease);
+  }
+
+  /* Hit-target extension: layout-neutral --vf-hit-min (48px) tap zone in
+     both axes. Invisible ::before centred on the anchor; because it is
+     absolutely positioned it does not participate in layout, so the text
+     baseline stays byte-identical at every width. width: max(100%,
+     --vf-hit-min) preserves the natural horizontal bounds for the current
+     labels (INSTAGRAM/YOUTUBE/WHATSAPP all >44px wide) and only expands
+     if a merchant sets a shorter label. Sibling social links are 24px
+     apart (--vf-s-4 gap); worst-case expansion stays inside that gap. */
+  .vf-footer__social-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, var(--vf-hit-min));
+    height: var(--vf-hit-min);
+    transform: translate(-50%, -50%);
   }
 
   /* ↗ injected via CSS — approved unicode glyph (CLAUDE.md §3). Not in merchant content. */

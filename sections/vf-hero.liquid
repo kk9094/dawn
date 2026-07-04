@@ -191,6 +191,20 @@
     .vf-hero { padding-top: var(--vf-s-8); }
   }
 
+  /* QA #10: at 320 the eyebrow "VOXEL FORGE ... EDITION 2026" wraps at the
+     stock --vf-track-eyebrow (0.28em) tracking, orphaning "2026" onto line 2.
+     Drop tracking to --vf-track-label (0.18em) below 361px -- ~28px reclaimed
+     on the ~26-character string, enough to hold single-line at 320px hero
+     content width. Register stays tracked (0.18em is the standard label
+     tracking used across buttons + section eyebrows). Font-size, colour,
+     casing untouched (D2 type-floor decision separate). Scoped to
+     .vf-hero .vf-eyebrow so other section eyebrows are unaffected. */
+  @media screen and (max-width: 360px) {
+    .vf-hero .vf-eyebrow {
+      letter-spacing: var(--vf-track-label);
+    }
+  }
+
   .vf-hero__figure {
     display: flex;
     justify-content: center;

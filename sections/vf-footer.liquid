@@ -292,9 +292,21 @@
     border-bottom: var(--vf-hairline) solid var(--vf-border-1);
   }
 
+  /* QA #1 (P1, D3): input rendered at ~19px tall -- underline-only field
+     dwarfed by the 48px SUBSCRIBE button and under the touch floor.
+     --vf-hit-min (48px) matches the button height exactly, so the row's
+     cross-axis (align-items: center) stays 48px + 12px padding-bottom =
+     60px byte-for-byte: only the input's own box grows to fill the row.
+     The underline lives on .vf-footer__email-row's border-bottom -- the
+     input remains border-less, transparent, radius-less: register intact.
+     inline-flex + align-items: center mirror .vf-footer__submit for a
+     consistent text baseline across UAs. */
   .vf-footer__email-input {
     flex: 1;
     min-width: 0;
+    min-height: var(--vf-hit-min);
+    display: inline-flex;
+    align-items: center;
     background: transparent;
     border: none;
     color: var(--vf-fg-1);
@@ -455,6 +467,21 @@
 
   .vf-footer__link:hover {
     color: var(--vf-fg-1);
+  }
+
+  /* QA #16 (P3): footer nav link rows render at ~31px tall (14px font x
+     2.2 line-height), under the 44px touch rhythm. Below 769px, add
+     --vf-s-1 (8px) padding-block per anchor -> ~47px effective row
+     height. Font-size, line-height, colour, register untouched (D2
+     type-floor decision separate). Ceiling-gated at 768px so the
+     >=960px 5-column desktop grid is byte-identical. The 750-959px
+     tablet 2x2 grid uses align-items: start, so taller cells still
+     top-align; the footer grows in height but nothing misaligns or
+     overflows. */
+  @media screen and (max-width: 768px) {
+    .vf-footer__link {
+      padding-block: var(--vf-s-1);
+    }
   }
 
   /* ── Region 3 · Bottom bar ── */

@@ -1313,6 +1313,28 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   }
 }
 
+/* Small-mobile line-item stack: at <=480px the details column is crushed
+   (~55px at 320w) which wraps the title per-word. Suppress the duplicated
+   per-unit price inside .cart-item__details (both the regular-price div
+   and the sale-price twin); the right-aligned line total in
+   .cart-item__totals remains the single price shown. Frees width for
+   title + variant/property meta. Dawn's `medium-hide large-up-hide`
+   utilities already scope the mobile totals cell, so this pairs with
+   the stock stacking pattern without touching main-cart-items.liquid.
+
+   Selector notes:
+   - `> div.product-option` targets only the top-level price wrapper
+     (<div class="product-option">{{ price }}</div>). Variant/property
+     rows are grandchildren inside <dl>, so `>` excludes them. The
+     selling-plan <p class="product-option"> is a different element
+     type and is preserved. */
+@media screen and (max-width: 480px) {
+  cart-items .cart-item__details > div.product-option,
+  cart-items .cart-item__details > .cart-item__discounted-prices {
+    display: none;
+  }
+}
+
 /* ── C · Settlement section ── */
 
 /* Settlement column: 44% at desktop (component-cart.css sets fixed 35rem; (0,0,2,1) beats (0,0,1,1)) */

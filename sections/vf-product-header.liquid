@@ -30,6 +30,39 @@
   </nav>
 </div>
 
+{% style %}
+  /* QA #9: at 320-360px the three-crumb trail "COLLECTION / SÉRIE II /
+     VOLUTE" wraps, orphaning "/ VOLUTE" onto line 2 and growing the
+     header from 53px to 72px. Below 361px we drop the leading
+     COLLECTION crumb (users navigate via the main header nav at this
+     width) so the trail becomes "SÉRIE II / VOLUTE" and stays single
+     line. flex-wrap: nowrap + min-width: 0 + text-overflow: ellipsis
+     on the current item is a belt-and-braces guard against a merchant
+     setting a title longer than the remaining container width. Base
+     breadcrumb styling lives in assets/vf-tokens.css §15A; this block
+     is a small mobile-only override scoped strictly <=360px. */
+  @media screen and (max-width: 360px) {
+    .vf-product-header__item:first-child {
+      display: none;
+    }
+    .vf-product-header__item:nth-child(2)::before {
+      content: none;
+    }
+    .vf-product-header__list {
+      flex-wrap: nowrap;
+    }
+    .vf-product-header__item:last-child {
+      min-width: 0;
+    }
+    .vf-product-header__current {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+{% endstyle %}
+
 {% schema %}
 {
   "name": "VF Product Header",

@@ -1335,6 +1335,32 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   }
 }
 
+/* QA #14 (P3): the "Continue shopping" link in cart's .title-wrapper-with-link
+   renders as a 112x22px text anchor -- under the 44px touch floor. Below 769px
+   an invisible ::before overlay extends the tap area to --vf-hit-min (48px)
+   in both axes, mirroring the vf-footer social pattern. Layout-neutral --
+   the pseudo is absolutely positioned so it does not participate in the row's
+   flex sizing, and the anchor's own border-box (22px tall) is untouched. The
+   parent .title-wrapper-with-link stays flex/space-between and its cross-axis
+   is still driven by the h1 title, so no row reflow anywhere. Base
+   .underlined-link styling in base.css (text-underline-offset, decoration
+   thickness, hover) is preserved. Scoped to cart-items only so other uses of
+   .underlined-link across the theme are unaffected. */
+@media screen and (max-width: 768px) {
+  cart-items .title-wrapper-with-link .underlined-link {
+    position: relative;
+  }
+  cart-items .title-wrapper-with-link .underlined-link::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, var(--vf-hit-min));
+    height: var(--vf-hit-min);
+    transform: translate(-50%, -50%);
+  }
+}
+
 /* ── C · Settlement section ── */
 
 /* Settlement column: 44% at desktop (component-cart.css sets fixed 35rem; (0,0,2,1) beats (0,0,1,1)) */

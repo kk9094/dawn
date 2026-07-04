@@ -179,7 +179,8 @@
   --vf-fs-body-large:   16px;
   --vf-fs-meta:         12px;
   --vf-fs-mono-1:       11px;
-  --vf-fs-mono-2:       10px;
+  --vf-fs-mono-2:       10px;              /* documented sub-11px exception: decorative mono only — see D2 2026-07-04 */
+  --vf-fs-mono-fn:      11px;              /* functional-label mono — cart th, settlement label, PDP counter, figure caption. Forked from --vf-fs-mono-1 so decorative uses can drift independently (D2 2026-07-04) */
   --vf-fs-mono-display: 26px;
   --vf-fs-mono-price:   18px;              /* DM Mono price / mono emphasis */
   --vf-fs-mono-card:    15px;              /* DM Mono · product grid card price */
@@ -1003,6 +1004,19 @@ product-info .thumbnail-list:has(.thumbnail:hover) .thumbnail:not(:hover):not([a
   }
 }
 
+/* ── L2 · Media-gallery counter ── */
+
+/* PDP "1 / 4" position indicator. Dawn's base .caption resolves under 11px
+   on this stack; raise to --vf-fs-mono-fn (11px) since the counter is a
+   read-to-act functional label. Scoped inside product-info so slider-counter
+   instances in other sections (slideshow, multicolumn, featured-collection,
+   featured-blog, collection-list) stay on Dawn's default. .slider-counter
+   has min-width: 4.4rem, so 1px growth on "1 / 4" (~22px) does not overflow.
+   Specificity (0,1,1) beats .caption (0,1,0). D2 2026-07-04. */
+product-info .slider-counter {
+  font-size: var(--vf-fs-mono-fn);
+}
+
 /* ── M · Cart notification popup ── */
 /* Outside product-info — targeted directly. Source-order over .color-{scheme} at equal spec. */
 
@@ -1166,10 +1180,12 @@ cart-items.gradient {
 
 /* ── B · Line item table ── */
 
-/* Column headers — (0,0,1,2) beats component-cart-items.css .cart-items th at (0,0,1,1) */
+/* Column headers — (0,0,1,2) beats component-cart-items.css .cart-items th at (0,0,1,1).
+   Functional labels (Product/Quantity/Total — read to act) raised to
+   --vf-fs-mono-fn (11px) per D2 2026-07-04. */
 cart-items .cart-items th {
   font-family:    var(--vf-ff-mono);
-  font-size:      var(--vf-fs-mono-2);          /* 10px */
+  font-size:      var(--vf-fs-mono-fn);         /* 11px */
   font-weight:    var(--vf-w-regular);
   letter-spacing: var(--vf-track-meta-strong);  /* 0.22em */
   text-transform: uppercase;
@@ -1375,10 +1391,11 @@ cart-items .cart-items:has(.cart-item:hover) .cart-item:not(:hover) {
   justify-content: space-between;
 }
 
-/* Settlement label */
+/* Settlement label — "Estimated total" is a functional read-to-act label;
+   raised to --vf-fs-mono-fn (11px) per D2 2026-07-04. */
 .cart__footer-wrapper .totals__total {
   font-family:    var(--vf-ff-mono);
-  font-size:      var(--vf-fs-mono-2);          /* 10px */
+  font-size:      var(--vf-fs-mono-fn);         /* 11px */
   font-weight:    var(--vf-w-regular);
   letter-spacing: var(--vf-track-meta-strong);  /* 0.22em */
   text-transform: uppercase;
@@ -3730,6 +3747,9 @@ body:has(.template-404) {
   font-weight: var(--vf-w-light);
   letter-spacing: 0.02em;
 }
+/* documented sub-11px exception: decorative mono only — see D2 2026-07-04.
+   Callers: vf-cube axis label, vf-pull attribution. Functional callers
+   (e.g. vf-material figure caption) use size: 'base' instead. */
 .vf-mono--micro   { font-size: 9px; }
 .vf-mono--small   { font-size: var(--vf-fs-mono-2); }
 .vf-mono--base    { font-size: var(--vf-fs-mono-1); }

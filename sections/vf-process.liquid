@@ -220,6 +220,37 @@
       padding-top: 0;
     }
   }
+
+  /* QA Pass 2 #1 (P1, 2026-07-09): 750-1023px tablet band. The 4-col
+     desktop grid squeezes each column into a 3-5 word/line ribbon
+     across the whole tablet range (and landscape ~844) -- pages/process
+     ends up ~5 screens tall. Collapse to 2x2 here; below 749 stays
+     single-column, at >=1024 stays the 4-col desktop layout.
+     Divider bookkeeping for the 2x2:
+       [1: no L, no T]    [2: L, no T]
+       [3: no L, T]       [4: L, T]
+     row-gap gives the vertical breathing room between rows;
+     padding-top on the second row gives content breathing below the
+     horizontal hairline. Applies on BOTH surfaces this section renders
+     on -- /pages/process (long step copy) and Home (short step copy). */
+  @media screen and (min-width: 750px) and (max-width: 1023px) {
+    .vf-process__grid {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: var(--vf-s-6);
+    }
+
+    .vf-process__step:nth-child(3) {
+      border-left: none;
+      padding-left: 0;
+      padding-top: var(--vf-s-5);
+      border-top: var(--vf-hairline) solid var(--vf-border-2);
+    }
+
+    .vf-process__step:nth-child(4) {
+      padding-top: var(--vf-s-5);
+      border-top: var(--vf-hairline) solid var(--vf-border-2);
+    }
+  }
 {% endstyle %}
 
 {% schema %}

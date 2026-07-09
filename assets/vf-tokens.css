@@ -179,6 +179,7 @@
   --vf-fs-body-large:   16px;
   --vf-fs-editorial-body: 18px;            /* editorial-template prose (vf-editorial). Forked so raising it to shorten the 726px column's measure doesn't sweep every --vf-fs-body-large consumer. QA Pass 2 #2 2026-07-09. */
   --vf-fs-editorial-h2: clamp(2rem, 2.4vw, 2.25rem);   /* editorial-template in-prose h2. Forked from --vf-fs-h2 (clamp(1.625rem, 2.4vw, 2.25rem)) to raise the mobile floor from 16.25px to 20px so h2 reads clearly larger than the raised 18px body at <=430. Desktop clamp maximum (22.5px) unchanged. QA Pass 2 #3 2026-07-09. */
+  --vf-fs-editorial-h3: clamp(1.9rem, 1.6vw, 2rem);    /* editorial-template in-prose h3. Forked from --vf-fs-h3 (clamp(1.25rem, 1.6vw, 1.5rem)) — old clamp (12.5-15px) was BELOW the raised 18px body at every width. New clamp holds h3 in the band body(18) < h3 < h2(20-22.5) everywhere: 19px mobile floor, 20px desktop max. QA Pass 2 #3 follow-up 2026-07-09. */
   --vf-fs-meta:         12px;
   --vf-fs-mono-1:       11px;
   --vf-fs-mono-2:       10px;              /* documented sub-11px exception: decorative mono only — see D2 2026-07-04 */
@@ -2573,9 +2574,16 @@ cart-items.is-empty .cart__warnings,
   margin-top: 0;
 }
 
+/* QA Pass 2 #3 follow-up (2026-07-09): the shared --vf-fs-h3 clamps
+   to 12.5-15px, below the 18px body at every width. Forked to
+   --vf-fs-editorial-h3 = clamp(1.9rem, 1.6vw, 2rem) so h3 sits in
+   the band body(18) < h3(19-20) < h2(20-22.5) everywhere. Italic
+   Cormorant, weight, line-height, margins byte-identical. Desktop
+   also grows (15->20 at >=1250px, +5px) -- deliberate, since old
+   max was itself below body. */
 .vf-editorial__content h3 {
   font-family:    var(--vf-ff-display);
-  font-size:      var(--vf-fs-h3);
+  font-size:      var(--vf-fs-editorial-h3);
   font-weight:    var(--vf-w-light);
   font-style:     italic;
   line-height:    var(--vf-lh-tight);

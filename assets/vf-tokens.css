@@ -177,6 +177,7 @@
   --vf-fs-body:         14px;
   --vf-fs-body-sm:      13px;              /* small secondary body — accordion content, metadata */
   --vf-fs-body-large:   16px;
+  --vf-fs-editorial-body: 18px;            /* editorial-template prose (vf-editorial). Forked so raising it to shorten the 726px column's measure doesn't sweep every --vf-fs-body-large consumer. QA Pass 2 #2 2026-07-09. */
   --vf-fs-meta:         12px;
   --vf-fs-mono-1:       11px;
   --vf-fs-mono-2:       10px;              /* documented sub-11px exception: decorative mono only — see D2 2026-07-04 */
@@ -2512,10 +2513,22 @@ cart-items.is-empty .cart__warnings,
   text-align:     center;
 }
 
-/* C — Content body */
+/* C — Content body
+   QA Pass 2 #2 (2026-07-09, Route B): raised from --vf-fs-body-large
+   (16px) to --vf-fs-editorial-body (18px) to shorten the 726px column's
+   measure from ~103ch toward the ~78–82ch comfortable band. Column
+   max-width unchanged; line-height stays at 1.6 (proportional leading).
+   Scoped via a dedicated forked token so the ~10 other consumers of
+   --vf-fs-body-large across the site are unaffected. Heading rules
+   below are byte-identical (#3 is a separate call).
+
+   Journal article (.vf-journal-article__content, §19) has an
+   independent rule that also references --vf-fs-body-large; it is
+   untouched by this change. Follow-up decision pending on whether
+   the same raise applies there. */
 .vf-editorial__content {
   font-family: var(--vf-ff-body);
-  font-size:   var(--vf-fs-body-large);
+  font-size:   var(--vf-fs-editorial-body);
   font-weight: var(--vf-w-light);
   line-height: var(--vf-lh-body);
   color:       var(--vf-jet);

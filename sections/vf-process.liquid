@@ -42,6 +42,16 @@
 
   8. Step title letter-spacing: JSX uses -0.005em; no exact token exists.
      --vf-track-tight (-0.01em) is the closest and is used here.
+
+  9. Headline tag polymorphism (QA Pass 2 #5, 2026-07-09):
+     - /pages/process (template.suffix == 'process') has no other h1,
+       so this section IS the page title -> render as <h1>.
+     - Home (template.name == 'index') and every other placement
+       already carries a page h1 elsewhere (vf-hero on Home) ->
+       render as <h2> to avoid duplicate-h1 a11y regressions.
+     Visual styling is byte-identical either way (font-size,
+     tracking, colour, weight, margin all set on
+     .vf-process__headline, not on the tag).
 {%- endcomment -%}
 
 <section
@@ -56,10 +66,16 @@
         {%- if section.settings.eyebrow != blank -%}
           {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
         {%- endif -%}
-        <h2 id="vf-process-title" class="vf-process__headline">
+        {%- liquid
+          assign _heading_tag = 'h2'
+          if template.suffix == 'process'
+            assign _heading_tag = 'h1'
+          endif
+        -%}
+        <{{ _heading_tag }} id="vf-process-title" class="vf-process__headline">
           {{- section.settings.headline_part_1 | escape -}}<br>
           <em>{{- section.settings.headline_part_2 | escape -}}</em>
-        </h2>
+        </{{ _heading_tag }}>
       </div>
       {%- if section.settings.method_label != blank -%}
         <a
@@ -169,7 +185,11 @@
   .vf-process__step-title {
     font-family: var(--vf-ff-display);
     font-weight: var(--vf-w-regular);
-    font-size: var(--vf-fs-h3);
+    /* QA Pass 2 #5: forked from --vf-fs-h3 (clamp(12.5, 1.6vw, 15px)) to
+       --vf-fs-process-step (fixed 15px) so mobile floor rises 12.5->15,
+       clearing the 14px body. Desktop 937px+ was already at the 15px max,
+       so 1024/1440/1920 stay byte-identical. */
+    font-size: var(--vf-fs-process-step);
     line-height: var(--vf-lh-h);
     letter-spacing: var(--vf-track-tight);
     color: var(--vf-fg-1);

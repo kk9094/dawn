@@ -181,6 +181,7 @@
   --vf-fs-mono-1:       11px;
   --vf-fs-mono-2:       10px;              /* documented sub-11px exception: decorative mono only — see D2 2026-07-04 */
   --vf-fs-mono-fn:      11px;              /* functional-label mono — cart th, settlement label, PDP counter, figure caption. Forked from --vf-fs-mono-1 so decorative uses can drift independently (D2 2026-07-04) */
+  --vf-fs-process-step: 15px;              /* vf-process step title. Forked from --vf-fs-h3 (clamp(12.5, 1.6vw, 15px)) — old clamp hit 12.5px min at <=780px, below the 14px body, breaking heading hierarchy on mobile. Fixed at 15px = old desktop max, so 1024/1440/1920 are byte-identical and mobile floor rises 12.5->15. QA Pass 2 #5 2026-07-09. */
   --vf-fs-mono-display: 26px;
   --vf-fs-mono-price:   18px;              /* DM Mono price / mono emphasis */
   --vf-fs-mono-card:    15px;              /* DM Mono · product grid card price */

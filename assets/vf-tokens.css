@@ -2157,11 +2157,17 @@ cart-items.is-empty .cart__warnings,
   margin:      0;
 }
 
-/* ── I · Article body content ── */
+/* ── I · Article body content ──
+   QA Pass 2 #2 follow-up (2026-07-09): raised from --vf-fs-body-large
+   (16px) to --vf-fs-editorial-body (18px) to match the editorial-template
+   raise (commit 646596e). Article body wrapper uses the same
+   .page-width.page-width--narrow container as .vf-editorial (726px cap),
+   so the same measure math applies. Token reused rather than forked --
+   journal article and editorial pages share the same register. */
 
 .vf-journal-article__content {
   font-family: var(--vf-ff-body);
-  font-size:   var(--vf-fs-body-large);
+  font-size:   var(--vf-fs-editorial-body);
   font-weight: var(--vf-w-light);
   line-height: var(--vf-lh-body);
   color:       var(--vf-bone);

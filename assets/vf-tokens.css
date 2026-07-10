@@ -227,6 +227,7 @@
   --vf-grid-margin-d:   48px;
   --vf-grid-margin-m:   24px;
   --vf-grid-max:        1400px;
+  --vf-measure-editorial: 640px;           /* Editorial-register column cap. 726px inherited from Dawn's .page-width--narrow yielded 92ch on 18px body (QA Pass 2 #1 f/u); target ~80ch → 726 × 80/92 = 631, rounded up to 640 (81ch). Applied to .vf-editorial__inner and .vf-journal-article__content at >=990px via a vf-scoped rule that beats Dawn's .page-width--narrow at equal specificity by source order. QA Pass 2 #1 f/u 2026-07-10. */
   --vf-baseline:        8px;
 
   /* ── ASPECT RATIOS ── */
@@ -2176,6 +2177,17 @@ cart-items.is-empty .cart__warnings,
   opacity:     0.9;
 }
 
+/* QA Pass 2 #1 f/u (2026-07-10): mirror the .vf-editorial__inner cap so
+   journal articles move in lockstep with the editorial pages -- same
+   .page-width--narrow inheritance, same 92ch measure at 18px, same fix.
+   See the .vf-editorial__inner comment above for scope/specificity math. */
+@media screen and (min-width: 990px) {
+  .vf-journal-article__content {
+    max-width:     var(--vf-measure-editorial);
+    margin-inline: auto;
+  }
+}
+
 .vf-journal-article__content > * + * {
   margin-top: var(--vf-s-4);
 }
@@ -2509,6 +2521,22 @@ cart-items.is-empty .cart__warnings,
 /* B — Inner container and headline */
 .vf-editorial__inner {
   text-align: left;
+}
+
+/* QA Pass 2 #1 f/u (2026-07-10): narrow the editorial column from Dawn's
+   inherited .page-width--narrow (72.6rem/726px at >=990px per base.css:133)
+   to --vf-measure-editorial (640px), targeting ~80ch on the 18px body.
+   Scoped to >=990px to match Dawn's own breakpoint where the 726 cap
+   engages; below 990 no cap is imposed and layout stays unchanged.
+   Specificity: .vf-editorial__inner is (0,1,0); Dawn's .page-width--narrow
+   at the same element is also (0,1,0); vf-tokens.css loads after base.css
+   so my rule wins at equal specificity by source order. margin-inline auto
+   keeps the narrower column centred inside the 726 gutter. */
+@media screen and (min-width: 990px) {
+  .vf-editorial__inner {
+    max-width:     var(--vf-measure-editorial);
+    margin-inline: auto;
+  }
 }
 
 .vf-editorial__headline {

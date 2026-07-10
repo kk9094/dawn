@@ -42,6 +42,16 @@
 
   8. Step title letter-spacing: JSX uses -0.005em; no exact token exists.
      --vf-track-tight (-0.01em) is the closest and is used here.
+
+  9. Headline tag polymorphism (QA Pass 2 #5, 2026-07-09):
+     - /pages/process (template.suffix == 'process') has no other h1,
+       so this section IS the page title -> render as <h1>.
+     - Home (template.name == 'index') and every other placement
+       already carries a page h1 elsewhere (vf-hero on Home) ->
+       render as <h2> to avoid duplicate-h1 a11y regressions.
+     Visual styling is byte-identical either way (font-size,
+     tracking, colour, weight, margin all set on
+     .vf-process__headline, not on the tag).
 {%- endcomment -%}
 
 <section
@@ -56,10 +66,16 @@
         {%- if section.settings.eyebrow != blank -%}
           {%- render 'vf-eyebrow', text: section.settings.eyebrow -%}
         {%- endif -%}
-        <h2 id="vf-process-title" class="vf-process__headline">
+        {%- liquid
+          assign _heading_tag = 'h2'
+          if template.suffix == 'process'
+            assign _heading_tag = 'h1'
+          endif
+        -%}
+        <{{ _heading_tag }} id="vf-process-title" class="vf-process__headline">
           {{- section.settings.headline_part_1 | escape -}}<br>
           <em>{{- section.settings.headline_part_2 | escape -}}</em>
-        </h2>
+        </{{ _heading_tag }}>
       </div>
       {%- if section.settings.method_label != blank -%}
         <a
@@ -169,7 +185,11 @@
   .vf-process__step-title {
     font-family: var(--vf-ff-display);
     font-weight: var(--vf-w-regular);
-    font-size: var(--vf-fs-h3);
+    /* QA Pass 2 #5: forked from --vf-fs-h3 (clamp(12.5, 1.6vw, 15px)) to
+       --vf-fs-process-step (fixed 15px) so mobile floor rises 12.5->15,
+       clearing the 14px body. Desktop 937px+ was already at the 15px max,
+       so 1024/1440/1920 stay byte-identical. */
+    font-size: var(--vf-fs-process-step);
     line-height: var(--vf-lh-h);
     letter-spacing: var(--vf-track-tight);
     color: var(--vf-fg-1);
@@ -218,6 +238,37 @@
     .vf-process__step:first-child {
       border-top: none;
       padding-top: 0;
+    }
+  }
+
+  /* QA Pass 2 #1 (P1, 2026-07-09): 750-1023px tablet band. The 4-col
+     desktop grid squeezes each column into a 3-5 word/line ribbon
+     across the whole tablet range (and landscape ~844) -- pages/process
+     ends up ~5 screens tall. Collapse to 2x2 here; below 749 stays
+     single-column, at >=1024 stays the 4-col desktop layout.
+     Divider bookkeeping for the 2x2:
+       [1: no L, no T]    [2: L, no T]
+       [3: no L, T]       [4: L, T]
+     row-gap gives the vertical breathing room between rows;
+     padding-top on the second row gives content breathing below the
+     horizontal hairline. Applies on BOTH surfaces this section renders
+     on -- /pages/process (long step copy) and Home (short step copy). */
+  @media screen and (min-width: 750px) and (max-width: 1023px) {
+    .vf-process__grid {
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: var(--vf-s-6);
+    }
+
+    .vf-process__step:nth-child(3) {
+      border-left: none;
+      padding-left: 0;
+      padding-top: var(--vf-s-5);
+      border-top: var(--vf-hairline) solid var(--vf-border-2);
+    }
+
+    .vf-process__step:nth-child(4) {
+      padding-top: var(--vf-s-5);
+      border-top: var(--vf-hairline) solid var(--vf-border-2);
     }
   }
 {% endstyle %}

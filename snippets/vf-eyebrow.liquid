@@ -38,28 +38,10 @@
   endif
 -%}
 
+{%- comment -%}
+  CSS lives in assets/vf-tokens.css §26 · B (QA Pass 2 #6 relocation,
+  2026-07-09). The snippet emits markup only; do not restore an inline
+  {% style %} block here without matching the token file.
+  Snippet-registered styles were duplicating on every render.
+{%- endcomment -%}
 <{{ tag }} class="vf-eyebrow vf-eyebrow--{{ _modifier }} {{ class }}">{{ text | escape }}</{{ tag }}>
-
-{% style %}
-  .vf-eyebrow {
-    display: inline-block;
-    font-family: var(--vf-ff-body);
-    font-size: var(--vf-fs-eyebrow);
-    font-weight: var(--vf-w-light);
-    letter-spacing: var(--vf-track-eyebrow);
-    text-transform: uppercase;
-    line-height: 1;
-  }
-  .vf-eyebrow--teal  { color: var(--vf-color-eyebrow); }
-  .vf-eyebrow--gold  { color: var(--vf-gold); }
-  .vf-eyebrow--ember { color: var(--vf-ember); }
-  .vf-eyebrow--bone  { color: var(--vf-fg-2); }
-
-  /* Tier semantic aliases — resolve through --vf-color-tier-* tokens */
-  .vf-eyebrow--tier-i        { color: var(--vf-color-tier-i); }
-  .vf-eyebrow--tier-ii       { color: var(--vf-color-tier-ii); }
-  .vf-eyebrow--tier-atelier  { color: var(--vf-color-tier-atelier); }
-
-  /* Bone-mode parity for bone variant — teal cascade handled by vf-tokens.css */
-  [data-mode="bone"] .vf-eyebrow--bone  { color: var(--vf-fg-on-bone-2); }
-{% endstyle %}

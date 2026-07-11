@@ -551,6 +551,25 @@ body {
   border-color: var(--vf-border-2);
 }
 
+/* Shrunken (floated) label on search fields raised from Dawn default
+   1rem = 10px to --vf-fs-mono-fn (11px) — matches QA Pass 3 functional
+   floor. Dawn base.css L1739-1749 sets the shrunk state at (0,0,2);
+   scoping to the `.search__input.field__input` combined class
+   (unique to Dawn's search input in both /search main-search and the
+   header search modal) gives (0,0,3) so this beats Dawn without
+   affecting other .field__label instances (login, contact, newsletter,
+   PDP recipient, facets). Do NOT generalise to `.field__label` alone —
+   that would sweep every form in the theme.
+   Dawn-coupling flag: overrides a Dawn base.css component rule. If a
+   future Dawn update renames `.search__input` or `.field__label`, this
+   block must be re-anchored to the new class names. Position,
+   transition, color, letter-spacing left to Dawn's own rule. */
+.search__input.field__input:focus ~ .field__label,
+.search__input.field__input:not(:placeholder-shown) ~ .field__label,
+.search__input.field__input:-webkit-autofill ~ .field__label {
+  font-size: var(--vf-fs-mono-fn);
+}
+
 /* ─────────────────────────────────────────────────────────────
    11 · Product page · Transactional register
 

@@ -19,7 +19,9 @@
   }
 
   /* VF brand-locked logo sizing. 40px desktop / 32px mobile.
-     SVG aspect ratio 4:1; width follows automatically via width: auto. */
+     SVG aspect ratio ~4.118:1 (post viewBox crop, 2026-07-11 — removed
+     the 8.79% left dead canvas that was pushing the mark right of the
+     shared page margin); width follows automatically via width: auto. */
   .header__heading-logo {
     height: 40px;
     width: auto;
@@ -162,7 +164,7 @@
                 src="{{ 'shopify_logo.svg' | asset_url }}"
                 alt="Voxel Forge"
                 class="header__heading-logo"
-                width="160"
+                width="165"
                 height="40"
                 loading="eager"
               >
@@ -197,7 +199,7 @@
                 src="{{ 'shopify_logo.svg' | asset_url }}"
                 alt="Voxel Forge"
                 class="header__heading-logo"
-                width="160"
+                width="165"
                 height="40"
                 loading="eager"
               >

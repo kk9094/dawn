@@ -551,6 +551,52 @@ body {
   border-color: var(--vf-border-2);
 }
 
+/* Shrunken (floated) label on search fields raised from Dawn default
+   1rem = 10px to --vf-fs-mono-fn (11px) — matches QA Pass 3 functional
+   floor. Dawn base.css L1739-1749 sets the shrunk state at (0,0,2);
+   scoping to the `.search__input.field__input` combined class
+   (unique to Dawn's search input in both /search main-search and the
+   header search modal) gives (0,0,3) so this beats Dawn without
+   affecting other .field__label instances (login, contact, newsletter,
+   PDP recipient, facets). Do NOT generalise to `.field__label` alone —
+   that would sweep every form in the theme.
+   Dawn-coupling flag: overrides a Dawn base.css component rule. If a
+   future Dawn update renames `.search__input` or `.field__label`, this
+   block must be re-anchored to the new class names. Position,
+   transition, color, letter-spacing left to Dawn's own rule. */
+.search__input.field__input:focus ~ .field__label,
+.search__input.field__input:not(:placeholder-shown) ~ .field__label,
+.search__input.field__input:-webkit-autofill ~ .field__label {
+  font-size: var(--vf-fs-mono-fn);
+}
+
+/* QA Pass 3 #1 (P2, 2026-07-11): mobile "Filter and sort" facets
+   trigger measured 131x30 — the only mobile filter/sort control,
+   well under the 44px floor and CLAUDE.md §3 48px hit-target rule.
+   Dawn's .mobile-facets__open (component-facets.css L833-841) sets
+   only padding-block: 0.5rem on the flex inner. Raise to --vf-hit-min
+   (48px); existing display: flex + align-items: center on the same
+   Dawn rule handle vertical centring of the icon and label. The
+   parent summary (.mobile-facets__open-wrapper) grows to match its
+   flex child, so the native summary hit area IS the 48px surface.
+   Font-size, register, corners, drawer contents, and drawer behaviour
+   all untouched.
+   Gated to Dawn's mobile band (<=749) so the desktop facets sidebar,
+   which does not render this trigger, is byte-identical at 750+.
+   Applies to both /search results and collection results (same
+   snippets/facets.liquid partial).
+   Dawn-coupling flag: overrides component-facets.css classes; if a
+   future Dawn update renames .mobile-facets__open or its wrapper,
+   this block must be re-anchored. Specificity (0,0,2) beats Dawn's
+   (0,0,1) — required because component-facets.css is body-injected
+   (per CLAUDE.md §9) and would win at equal specificity even though
+   vf-tokens.css sits later in source order. */
+@media screen and (max-width: 749px) {
+  .mobile-facets__open-wrapper .mobile-facets__open {
+    min-height: var(--vf-hit-min);
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────
    11 · Product page · Transactional register
 

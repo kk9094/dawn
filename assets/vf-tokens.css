@@ -219,6 +219,19 @@
   --vf-s-8:             96px;
   --vf-s-9:             160px;
 
+  /* ── SEMANTIC · layout · page top-bottom padding ── */
+  /* Eyebrow-first page sections (§20 Materials, §21 Editorial, §22
+     Contact) share one padding-block so the header-bar -> eyebrow
+     offset is uniform across all six pages. Base = --vf-s-7 (64px);
+     the media query override on :root immediately after this block
+     closes (at Dawn's canonical 750px breakpoint, matching Contact's
+     original override before this refactor) grows the desktop offset
+     to --vf-s-8 (96px). Was three independent declarations before
+     this token landed; §20 and §21 had drifted to --vf-s-9 (160px)
+     — the eyebrow-first calibration retunes them to the Contact
+     spec (2026-07-12). */
+  --vf-pad-page:        var(--vf-s-7);
+
   /* ── GRID ── */
   --vf-grid-cols-d:     12;
   --vf-grid-cols-m:     4;
@@ -266,6 +279,18 @@
   --vf-dur-hero:        1200ms;
   --vf-ease:            cubic-bezier(0.25, 0, 0, 1);
   --vf-ease-soft:       cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive :root override — page padding grows at Dawn's canonical
+   750px breakpoint (CLAUDE.md §3). Kept adjacent to :root so token
+   consumers (.vf-contact, .vf-editorial, .vf-materials) do not need
+   their own media queries. Reuses the exact breakpoint Contact used
+   before this refactor; the token flip is transparent to Contact and
+   moves Editorial + Materials into the same responsive rhythm. */
+@media screen and (min-width: 750px) {
+  :root {
+    --vf-pad-page: var(--vf-s-8);
+  }
 }
 
 
@@ -2438,7 +2463,7 @@ cart-items.is-empty .cart__warnings,
 .vf-materials {
   background-color: var(--vf-bone);
   color:            var(--vf-jet);
-  padding-block:    var(--vf-s-9);
+  padding-block:    var(--vf-pad-page);
 }
 
 /* B — Inner container and headline cluster */
@@ -2597,7 +2622,7 @@ cart-items.is-empty .cart__warnings,
 .vf-editorial {
   background-color: var(--vf-bone);
   color:            var(--vf-jet);
-  padding-block:    var(--vf-s-9);
+  padding-block:    var(--vf-pad-page);
 }
 
 /* B — Inner container and headline */
@@ -2828,13 +2853,7 @@ cart-items.is-empty .cart__warnings,
 .vf-contact {
   background-color: var(--vf-bone);
   color:            var(--vf-jet);
-  padding-block:    var(--vf-s-7);
-}
-
-@media screen and (min-width: 750px) {
-  .vf-contact {
-    padding-block: var(--vf-s-8);
-  }
+  padding-block:    var(--vf-pad-page);
 }
 
 .vf-contact__inner {

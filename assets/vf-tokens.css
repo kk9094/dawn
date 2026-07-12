@@ -2446,17 +2446,39 @@ cart-items.is-empty .cart__warnings,
   text-align: left;
 }
 
-/* Eyebrow centring (2026-07-12): the .vf-eyebrow snippet is display:
-   inline-block (§26 B); anchored to the left inside .vf-materials__inner
-   (text-align: left) it sits off-axis from the centered headline and
-   lead. Setting display: block + text-align: center on the eyebrow
-   itself (specificity 0,2,0 beats the base §26 B rule at 0,1,0) centres
-   it without touching headline / lead (both explicitly text-align:
-   center on themselves) or body copy (inherits text-align: left from
-   __inner). Selector is scoped via .vf-materials__inner > so vf-contact
-   and every other page eyebrow are untouched. */
+/* Eyebrow centring — Route 1 (2026-07-12 hotfix, supersedes 24eaa0ad).
+   Keep the base §26 B display: inline-block INTACT and instead grow the
+   eyebrow to width: 100% with text-align: center. The eyebrow still
+   participates in the parent's inline formatting context, so the line
+   box strut (from --vf-lh-body on --vf-fs-body inside .vf-materials__
+   inner) survives — the ~5-6px of half-leading above and below the
+   inline-block box are preserved by construction, and the eyebrow -> h1
+   joint stays at ~21.4px (no h1 margin-top collapse into a block
+   sibling). Zero magic numbers.
+
+   Previous approach (24eaa0ad) used display: block + text-align: center;
+   centring was exact but the line box vanished, dropping the eyebrow
+   bottom by 6.0px and collapsing the eyebrow -> h1 gap from 21.4px to
+   16.0px (h1's 16px margin-top now block-block collapsed) — total
+   -11.4px vertical shift on every element below. This rule restores the
+   pre-fix geometry.
+
+   Preconditions verified:
+     (a) box-sizing: border-box — no universal reset in base.css; base
+         §26 B .vf-eyebrow has zero padding and zero border, so width:
+         100% + default content-box is already safe. box-sizing set here
+         defensively so a future padding on .vf-eyebrow cannot overflow.
+     (b) no adjacent whitespace text nodes — vf-materials.liquid trims
+         both the {% if %} and the {% render %} with {%- -%}, so the
+         inline-block at width: 100% has no sibling inline content on
+         its line box.
+
+   Scope: .vf-materials__inner > keeps vf-contact and every other page
+   eyebrow untouched. Specificity (0,2,0) beats the base §26 B rule
+   (0,1,0). */
 .vf-materials__inner > .vf-eyebrow {
-  display:    block;
+  width:      100%;
+  box-sizing: border-box;
   text-align: center;
 }
 

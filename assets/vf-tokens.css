@@ -4019,3 +4019,50 @@ body:has(.template-404) {
 
 /* Bone-mode parity for bone variant — teal cascade handled by vf-tokens.css */
 [data-mode="bone"] .vf-eyebrow--bone  { color: var(--vf-fg-on-bone-2); }
+
+
+/* ─────────────────────────────────────────────────────────
+   §27 · Product PDP · vf-design-credit — Leora License Schedule A
+
+   Contract-mandated attribution line rendered by
+   snippets/vf-design-credit.liquid on any PDP where
+   product.metafields.vox.design_origin.value | downcase == 'leora'.
+
+   Legal source: legal/leora-license/agreement.pdf Schedule A + §7.2.
+
+   Typography choices — pinned to Schedule A's "reasonably visible
+   font size" requirement:
+
+     - font-size = --vf-fs-body-large (16px). Chose the larger of the
+       two body tokens to remove any ambiguity around "reasonably
+       visible" — 16px is the web's standard body-copy size, legible
+       at any zoom level. Do not downgrade to --vf-fs-body-sm or
+       --vf-fs-meta without legal review.
+     - color = inherit. The block sits inside Dawn's main-product
+       content column which paints via --color-foreground per the
+       chosen color scheme. Inheriting keeps contrast correct on
+       every Dawn scheme without hardcoding an ink token that could
+       fail on a future scheme change.
+     - font-weight = light (300), matching the brand voice (§3);
+       weight 500-700 would read as bold emphasis and stray from
+       §5.5 nominative-use plainness.
+
+   Spacing:
+     margin-top = --vf-s-3 (16px) — sits close under the description
+     block, reinforcing the reading-order pairing.
+     margin-bottom = --vf-s-4 (24px) — comfortable gap above the
+     variant_picker without adding a semantic separator.
+
+   No border, no background, no italic, no uppercase — plain text
+   per §5.5. Any decorative treatment risks framing this as a
+   collaboration mark rather than the required nominative credit.
+   ─────────────────────────────────────────────────────────── */
+
+.vf-design-credit {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       inherit;
+  margin:      var(--vf-s-3) 0 var(--vf-s-4) 0;
+}

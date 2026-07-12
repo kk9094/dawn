@@ -1,0 +1,48 @@
+{%- comment -%}
+  vf-design-credit — mandated per Leora License Schedule A, bound
+  via §7.2 of the master agreement (legal/leora-license/agreement.pdf).
+
+  Renders the exact contract-mandated string "Design by Leora" on any
+  PDP where product.metafields.vox.design_origin.value | downcase
+  equals the literal 'leora'. Anywhere else, renders nothing.
+
+  Contract rules — do NOT alter without legal review:
+
+    - EXACT STRING hardcoded: "Design by Leora". Never derived from
+      the metafield value. The metafield value is a lookup key
+      (currently "leora"); the credit is the contract-mandated
+      wording verbatim. No variants, no abbreviations, no
+      stylisation, no translation, no case changes.
+
+    - Value-gate, never presence-gate. A future third-party creator
+      with their own metafield value (e.g. "studio-foo") MUST NOT
+      inherit Leora's credit. The downcase compare against the
+      literal 'leora' enforces this: any other value falls through.
+
+    - §5.5 nominative use: plain text only. No Leora logo, no Brand
+      Elements, no framing as collaboration, partnership, or
+      endorsement. Just the credit line.
+
+    - Never nested inside a collapsible_tab or any interaction-gated
+      container. Schedule A requires "reasonably visible font size"
+      without burial. This snippet is placed as a custom_liquid
+      block in templates/product.json immediately below the
+      description block, outside every collapsible.
+
+    - Atelier exclusion (contract §5.5, endorsement misrepresentation
+      risk): Atelier products are original Voxel Forge work and MUST
+      NOT carry the Leora credit. The value-gate handles this — no
+      Atelier product carries vox.design_origin = 'leora' in admin.
+      Do not introduce a presence-based fallback.
+
+  Placement: registered as a custom_liquid block in
+  templates/product.json, key "design-credit", block_order slot
+  immediately after "description".
+
+  CSS: assets/vf-tokens.css §27.
+{%- endcomment -%}
+
+{%- assign _origin = product.metafields.vox.design_origin.value | downcase -%}
+{%- if _origin == 'leora' -%}
+  <p class="vf-design-credit">Design by Leora</p>
+{%- endif -%}

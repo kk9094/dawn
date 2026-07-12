@@ -128,7 +128,7 @@
           "type": "tile",
           "disabled": true,
           "settings": {
-            "product": "lamina",
+            "product": "volute",
             "tier": "II",
             "name_override": "Volute",
             "subtitle": "Lamp"

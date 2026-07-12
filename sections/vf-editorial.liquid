@@ -21,14 +21,28 @@
 
   Optional page metafields (namespace vox — CLAUDE.md §9 — the vf
   prefix is <3 chars and rejected by Shopify at save time):
-    vox.eyebrow  (single line text)  — renders via snippets/vf-eyebrow
-    vox.headline (single line text)  — replaces page.title on the h1
-    vox.intro    (multi-line text)   — renders as Contact-spec intro
-                                       below the h1 with a Materials-
-                                       spec hairline below the header
-  When ALL three are blank, the bare <h1>page.title</h1> renders
+    vox.eyebrow  (single_line_text_field) — via .value (string),
+                                            passed to snippets/vf-eyebrow
+    vox.headline (single_line_text_field) — via .value (string),
+                                            replaces page.title on the h1
+    vox.intro    (rich_text_field)        — kept as the whole metafield
+                                            object (no .value) and
+                                            rendered explicitly via
+                                            | metafield_tag so Shopify
+                                            emits real <p> tags with
+                                            inline markup, matching
+                                            vf-contact's multi-paragraph
+                                            spec. Explicit filter drops
+                                            the implicit-metafield-
+                                            render assumption. Blank
+                                            check uses vf_intro.value
+                                            != blank so an unset (nil)
+                                            metafield falls through to
+                                            the bare-h1 branch and never
+                                            triggers the header wrapper.
+  When all three are blank / nil, the bare <h1>page.title</h1> renders
   exactly as it did before the metafields were wired (pixel-identical
-  fallback — verify against preprod before this commit landed).
+  fallback — verified against preprod tip 088e5604).
 
   Schema contract: docs/section-schemas.md (§10 pending)
   CSS: assets/vf-tokens.css §21
@@ -37,7 +51,7 @@
 {%- liquid
   assign vf_eyebrow       = page.metafields.vox.eyebrow.value
   assign vf_headline_meta = page.metafields.vox.headline.value
-  assign vf_intro         = page.metafields.vox.intro.value
+  assign vf_intro         = page.metafields.vox.intro
 
   if vf_headline_meta != blank
     assign vf_headline = vf_headline_meta
@@ -46,7 +60,7 @@
   endif
 
   assign vf_has_header_extras = false
-  if vf_eyebrow != blank or vf_headline_meta != blank or vf_intro != blank
+  if vf_eyebrow != blank or vf_headline_meta != blank or vf_intro.value != blank
     assign vf_has_header_extras = true
   endif
 -%}
@@ -60,11 +74,11 @@
           {%- render 'vf-eyebrow', text: vf_eyebrow -%}
         {%- endif -%}
         <h1 class="vf-editorial__headline">{{ vf_headline | escape }}</h1>
-        {%- if vf_intro != blank -%}
-          <div class="vf-editorial__intro">{{ vf_intro }}</div>
+        {%- if vf_intro.value != blank -%}
+          <div class="vf-editorial__intro">{{ vf_intro | metafield_tag }}</div>
         {%- endif -%}
       </header>
-      {%- if vf_intro != blank -%}
+      {%- if vf_intro.value != blank -%}
         <hr class="vf-editorial__rule" aria-hidden="true">
       {%- endif -%}
     {%- else -%}

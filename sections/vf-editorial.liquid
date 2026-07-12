@@ -19,14 +19,57 @@
   no section settings, no schema-driven copy. Empty Content renders
   the visual chrome without errors.
 
+  Optional page metafields (namespace vox — CLAUDE.md §9 — the vf
+  prefix is <3 chars and rejected by Shopify at save time):
+    vox.eyebrow  (single line text)  — renders via snippets/vf-eyebrow
+    vox.headline (single line text)  — replaces page.title on the h1
+    vox.intro    (multi-line text)   — renders as Contact-spec intro
+                                       below the h1 with a Materials-
+                                       spec hairline below the header
+  When ALL three are blank, the bare <h1>page.title</h1> renders
+  exactly as it did before the metafields were wired (pixel-identical
+  fallback — verify against preprod before this commit landed).
+
   Schema contract: docs/section-schemas.md (§10 pending)
   CSS: assets/vf-tokens.css §21
 {%- endcomment -%}
 
+{%- liquid
+  assign vf_eyebrow       = page.metafields.vox.eyebrow.value
+  assign vf_headline_meta = page.metafields.vox.headline.value
+  assign vf_intro         = page.metafields.vox.intro.value
+
+  if vf_headline_meta != blank
+    assign vf_headline = vf_headline_meta
+  else
+    assign vf_headline = page.title
+  endif
+
+  assign vf_has_header_extras = false
+  if vf_eyebrow != blank or vf_headline_meta != blank or vf_intro != blank
+    assign vf_has_header_extras = true
+  endif
+-%}
+
 <section class="vf-editorial" data-mode="bone">
   <div class="vf-editorial__inner page-width page-width--narrow">
 
-    <h1 class="vf-editorial__headline">{{ page.title | escape }}</h1>
+    {%- if vf_has_header_extras -%}
+      <header class="vf-editorial__header">
+        {%- if vf_eyebrow != blank -%}
+          {%- render 'vf-eyebrow', text: vf_eyebrow -%}
+        {%- endif -%}
+        <h1 class="vf-editorial__headline">{{ vf_headline | escape }}</h1>
+        {%- if vf_intro != blank -%}
+          <div class="vf-editorial__intro">{{ vf_intro }}</div>
+        {%- endif -%}
+      </header>
+      {%- if vf_intro != blank -%}
+        <hr class="vf-editorial__rule" aria-hidden="true">
+      {%- endif -%}
+    {%- else -%}
+      <h1 class="vf-editorial__headline">{{ page.title | escape }}</h1>
+    {%- endif -%}
 
     {%- if page.content != blank -%}
       <div class="vf-editorial__content">

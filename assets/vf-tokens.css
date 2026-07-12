@@ -2596,6 +2596,58 @@ cart-items.is-empty .cart__warnings,
   text-align:     center;
 }
 
+/* Header cluster — emitted only when at least one of the vox.eyebrow /
+   vox.headline / vox.intro page metafields is set (see sections/vf-
+   editorial.liquid). Mirrors §22 .vf-contact__header rhythm so the four
+   editorial pages match Contact once their metafields are filled. When
+   NO metafield is present, the wrapper is not emitted and the bare h1
+   above retains its 48px bottom margin — pixel-identical to preprod
+   (2026-07-12). */
+.vf-editorial__header {
+  text-align:    center;
+  margin-bottom: var(--vf-s-5);
+}
+
+/* Inside the header wrapper, drop h1 margin-bottom from 48px to 16px
+   so the headline→intro rhythm matches Contact. Specificity (0,2,0)
+   beats the base .vf-editorial__headline (0,1,0) above. */
+.vf-editorial__header .vf-editorial__headline {
+  margin-bottom: var(--vf-s-3);
+}
+
+/* Intro paragraph — byte-identical to §22 .vf-contact__intro so the
+   editorial pages carry the same subtitle spec as the contact surface. */
+.vf-editorial__intro {
+  font-family: var(--vf-ff-body);
+  font-size:   var(--vf-fs-body-large);
+  font-weight: var(--vf-w-light);
+  line-height: var(--vf-lh-body);
+  color:       var(--vf-jet);
+  opacity:     0.85;
+  max-width:   52ch;
+  margin:      0 auto;
+}
+
+.vf-editorial__intro p {
+  margin: 0 0 var(--vf-s-2) 0;
+}
+
+.vf-editorial__intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* Hairline divider (owner-visible judgement call, 2026-07-12) — matches
+   §20 .vf-materials__rule so the four editorial pages register the same
+   horizontal beat between header and body as Materials. Rendered only
+   when vox.intro is present; drop the hr in the Liquid if the owner
+   prefers the editorial page to keep its unbroken header→body cadence. */
+.vf-editorial__rule {
+  border:     0;
+  border-top: var(--vf-hairline) solid var(--vf-iron);
+  margin:     var(--vf-s-6) auto var(--vf-s-7) auto;
+  width:      var(--vf-rule-short);
+}
+
 /* C — Content body
    QA Pass 2 #2 (2026-07-09, Route B): raised from --vf-fs-body-large
    (16px) to --vf-fs-editorial-body (18px) to shorten the 726px column's

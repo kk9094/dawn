@@ -2446,6 +2446,20 @@ cart-items.is-empty .cart__warnings,
   text-align: left;
 }
 
+/* Eyebrow centring (2026-07-12): the .vf-eyebrow snippet is display:
+   inline-block (§26 B); anchored to the left inside .vf-materials__inner
+   (text-align: left) it sits off-axis from the centered headline and
+   lead. Setting display: block + text-align: center on the eyebrow
+   itself (specificity 0,2,0 beats the base §26 B rule at 0,1,0) centres
+   it without touching headline / lead (both explicitly text-align:
+   center on themselves) or body copy (inherits text-align: left from
+   __inner). Selector is scoped via .vf-materials__inner > so vf-contact
+   and every other page eyebrow are untouched. */
+.vf-materials__inner > .vf-eyebrow {
+  display:    block;
+  text-align: center;
+}
+
 .vf-materials__headline {
   font-family:    var(--vf-ff-display);
   font-size:      var(--vf-fs-page-title);

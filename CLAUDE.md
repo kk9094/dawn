@@ -158,7 +158,7 @@ Examples:
 If a request would require any of the following, **stop and ask**:
 
 - Editing files outside the allowed prefix (`vf-*`, `vf-tokens.css`, `theme.liquid` token block). **Exception: `templates/*.json` config files are permitted** when wiring custom `vf-*` sections into templates — these are configuration, not Liquid logic, and follow the established pattern in `templates/collection.json`, `templates/list-collections.json`, etc.
-- Modifying any default Dawn section (`main-product`, `header`, `footer`, etc.)
+- Modifying any default Dawn section (`main-product`, `header`, `footer`, etc.). **Sanctioned exception on file**: `sections/main-product.liquid` — Leora License Schedule A compliance render, owner-approved 2026-07-14. See §9 "Dawn-native section modification: sanctioned exceptions" for the rationale, injection site, and Dawn-upgrade discipline.
 - Adding a new colour, font weight, or breakpoint not in `vf-tokens.css`
 - Bypassing a snippet contract by re-implementing a primitive inline
 - Disabling the reduced-motion baseline on a specific surface
@@ -199,7 +199,20 @@ Dawn registers JavaScript-upgraded custom elements (`<header-drawer>`, `<menu-dr
 
 Shopify enforces a 3-character minimum on metafield namespace identifiers. The `vf` prefix is two characters and is rejected at save time. The canonical metafield namespace for this project is `vox`. File names, CSS classes, and Liquid variable prefixes remain `vf-*` — the split is intentional and permanent. When adding new metafields: namespace = `vox`, key = snake_case descriptor (e.g., `vox.batch_number`, `vox.italic_subtitle`).
 
-**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces. Established metafield uses: `product.metafields.vox.batch_number` (Phase 1B, commit c2ca9e95) and `collection.metafields.vox.italic_subtitle`.
+**Critical distinction** — do not unify these prefixes. `vf-*` applies to file naming, CSS classes, and Liquid section naming (vf-tokens.css, vf-collection-header, `.vf-edition-statement`). `vox.*` applies exclusively to metafield namespaces.
+
+**Established metafield uses in source** (audited 2026-07-12; grep against this list before adding a new one):
+
+| Read | File · line | Type expected | Purpose |
+| --- | --- | --- | --- |
+| `product.metafields.vox.design_origin` | `snippets/vf-design-credit.liquid` | `single_line_text_field` (value gate: `'leora'`) | Leora License Schedule A attribution gate. |
+| `collection.metafields.vox.italic_subtitle` | `sections/vf-collection-header.liquid:50` | `single_line_text_field` | Italic subtitle under collection heading. |
+| `shop.metafields.vox.atelier_slots_remaining` | `sections/vf-atelier.liquid:75`, `sections/vf-atelier-page.liquid:27` | `single_line_text_field` | Slot count appended to Atelier CTA. |
+| `page.metafields.vox.eyebrow` | `sections/vf-editorial.liquid:52` | `single_line_text_field` | Editorial page eyebrow. |
+| `page.metafields.vox.headline` | `sections/vf-editorial.liquid:53` | `single_line_text_field` | Editorial page h1 override (falls back to `page.title`). |
+| `page.metafields.vox.intro` | `sections/vf-editorial.liquid:54, 78` | `rich_text_field` (consumed as the whole metafield object via `| metafield_tag`) | Editorial page multi-paragraph intro. |
+
+Prior versions of this note cited `product.metafields.vox.batch_number` (Phase 1B, commit c2ca9e95) as an established use. That claim did not survive an audit against source — grep for `batch_number` returned zero matches. Corrected 2026-07-12; verify future claims against the tree before adding them here.
 
 ### Conditional list separators via CSS `::before`
 
@@ -302,6 +315,27 @@ Rule: every VF section must explicitly declare both `background-color` and `colo
 Anti-pattern: relying on body inheritance for section background. May appear to work in cascade analysis (`vf-tokens.css` §7 `body { background: var(--vf-obsidian) }` loads after `theme.liquid` inline style at same specificity) but fails in production because Dawn's intervening wrapper rules can override at higher specificity or via `.color-scheme-*` class application.
 
 Reference: §18 journal theming initial implementation shipped without explicit `background-color` on `.vf-journal-index` and `.vf-journal-article` wrappers, resulting in article body content rendering against Dawn's light scheme background (invisible Bone-on-white text). Fix added explicit declarations to §18 A. This rule was previously implicit; the §18 fix promotes it to explicit. Apply to every future VF section. The `vf-statement`, `vf-process`, `vf-cart-empty`, `vf-collection-list` sections already follow this pattern.
+
+### Theme Editor auto-regenerates `templates/*.json`
+
+The Shopify Theme Editor autonomously rewrites `templates/*.json` files when a merchant saves any Customizer change to a section or block on that template. The rewrite is committed to the connected repo as `Update from Shopify for theme Pre Production` under the `shopify[bot]` author. Demonstrated live: commit `c484bf93` (2026-07-12) rewrote `templates/index.json` — a single-line homepage tile edit — between two of our deploys.
+
+Consequence for compliance-mandatory renders: a `custom_liquid` block registered in `templates/product.json` (or any other template JSON) can be silently dropped by a future Customizer roundtrip. A dropped block produces no error, no test failure, no visual anomaly on the rest of the page — the mandated content simply vanishes.
+
+Corollary: **content whose absence is a legal breach must not depend on `templates/*.json` block config alone.** Route it through Liquid source (a section file, a snippet, or a layout include) — the Theme Editor does not rewrite `.liquid` files, so the render is stable across Customizer roundtrips.
+
+### Dawn-native section modification: sanctioned exceptions
+
+§8's "stop and ask" list forbids modifying Dawn-native sections (`main-product`, `header`, `footer`, etc.). Exceptions are individually owner-approved and logged here so future agents see the trail.
+
+**`sections/main-product.liquid` — Leora License Schedule A attribution**
+
+- **Approved:** owner, 2026-07-14
+- **Scope:** one-line injection at the end of the `{%- when 'description' -%}` case handler, rendering `{% render 'vf-design-credit' %}` after the existing description `<div>` closes.
+- **Rationale:** Schedule A (bound via §7.2 of the master agreement) mandates a "Design by Leora" attribution on every Leora-derived PDP, visible without interaction. The prior implementation registered a `custom_liquid` block in `templates/product.json`; that surface is Theme-Editor-touchable (see the subsection above), and a dropped block re-enters §12.1 termination exposure invisibly. Moving the render into `sections/main-product.liquid` — a `.liquid` file, not rewritten by the Theme Editor — closes the failure mode entirely.
+- **Placement invariant:** below the description block, above the next block in `block_order`. Byte-identical to the original placement. Do NOT relocate to a `collapsible_tab` or any interaction-gated container.
+- **Injection-site comment:** the render is fronted by a large `{% comment %}` block naming the contract, the rationale, and Dawn-upgrade discipline. Read that comment before touching this area.
+- **Dawn upgrade discipline:** if a future upstream Dawn pull replaces `sections/main-product.liquid`, reapply this render inside the same case handler and reinstate the comment. Add a post-upgrade grep for `vf-design-credit` in `sections/main-product.liquid` to any Dawn-upgrade checklist.
 
 ---
 

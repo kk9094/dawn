@@ -197,6 +197,47 @@
                     {{ product.description }}
                   </div>
                 {%- endif -%}
+                {%- comment -%}
+                  ═══════════════════════════════════════════════════════════
+                  CONTRACT-MANDATED · DO NOT REMOVE · DO NOT MOVE
+                  ───────────────────────────────────────────────────────────
+                  Renders "Design by Leora" attribution on any PDP where
+                  product.metafields.vox.design_origin.value | downcase ==
+                  'leora'. The snippet's internal gate keeps non-Leora
+                  products (Atelier, future third-party creators) clean —
+                  presence-gating is forbidden by §5.5 endorsement rules.
+
+                  Contract: Leora License Schedule A, binding via §7.2 of
+                  the master agreement (legal/leora-license/agreement.pdf).
+                  Absence on Leora-derived PDPs is an active breach with
+                  §12.1 termination exposure.
+
+                  Why this render lives HERE, not in templates/product.json:
+                  the Shopify Theme Editor autonomously rewrites .json
+                  template files on Customizer edits (demonstrated live by
+                  auto-commit c484bf93 on 2026-07-12, which rewrote
+                  templates/index.json between deploys). A custom_liquid
+                  block in templates/product.json could be silently dropped
+                  by a future Customizer roundtrip, re-entering breach
+                  invisibly. Liquid section source is NOT rewritten by the
+                  Theme Editor — this injection point is stable across
+                  Customizer roundtrips.
+
+                  §2 exception on main-product.liquid (a Dawn-native
+                  section, normally off-limits per CLAUDE.md §8) —
+                  OWNER-APPROVED 2026-07-14 for compliance robustness.
+                  See CLAUDE.md §9 "Dawn-native section modification:
+                  sanctioned exceptions" for the trail.
+
+                  If pulling a Dawn upgrade: REAPPLY THIS RENDER at the
+                  end of the {%- when 'description' -%} case handler.
+                  Placement must remain below the description block and
+                  above the next block in block_order — do NOT relocate
+                  to a collapsible_tab or any interaction-gated container
+                  (Schedule A: reasonably visible font size, no burial).
+                  ═══════════════════════════════════════════════════════════
+                {%- endcomment -%}
+                {% render 'vf-design-credit' %}
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"

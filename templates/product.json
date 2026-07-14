@@ -48,12 +48,6 @@
           "type": "description",
           "settings": {}
         },
-        "design-credit": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "{% render 'vf-design-credit' %}"
-          }
-        },
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
@@ -121,7 +115,6 @@
         "edition",
         "price",
         "description",
-        "design-credit",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",

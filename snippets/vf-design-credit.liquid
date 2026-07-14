@@ -25,9 +25,10 @@
 
     - Never nested inside a collapsible_tab or any interaction-gated
       container. Schedule A requires "reasonably visible font size"
-      without burial. This snippet is placed as a custom_liquid
-      block in templates/product.json immediately below the
-      description block, outside every collapsible.
+      without burial. This snippet is rendered from sections/main-
+      product.liquid's {%- when 'description' -%} case handler, which
+      sits in the block loop above every collapsible_tab in the
+      current block_order — visible without interaction.
 
     - Atelier exclusion (contract §5.5, endorsement misrepresentation
       risk): Atelier products are original Voxel Forge work and MUST
@@ -35,9 +36,18 @@
       Atelier product carries vox.design_origin = 'leora' in admin.
       Do not introduce a presence-based fallback.
 
-  Placement: registered as a custom_liquid block in
-  templates/product.json, key "design-credit", block_order slot
-  immediately after "description".
+  Placement: rendered from sections/main-product.liquid inside the
+  existing {%- when 'description' -%} case handler, immediately after
+  the description <div> closes. The render deliberately does NOT live
+  in a custom_liquid block in templates/product.json — the Shopify
+  Theme Editor autonomously rewrites .json template files on Customizer
+  edits (demonstrated live by auto-commit c484bf93 on 2026-07-12,
+  which rewrote templates/index.json between two of our deploys).
+  A dropped block would re-enter Schedule A breach with §12.1
+  termination exposure invisibly, so the render was moved into Dawn-
+  native Liquid source (which the Theme Editor does not rewrite) by
+  commit aacaf381 on 2026-07-14. See CLAUDE.md §9 "Dawn-native section
+  modification: sanctioned exceptions" for the §2-exception ledger.
 
   CSS: assets/vf-tokens.css §27.
 {%- endcomment -%}

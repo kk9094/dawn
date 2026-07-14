@@ -100,8 +100,8 @@
         {%- if img != blank -%}
           <div class="vf-cart-empty-tile__image-wrap">
             <img
-              src="{{ img | image_url: width: 800 }}"
-              srcset="{{ img | image_url: width: 400 }} 400w, {{ img | image_url: width: 800 }} 800w"
+              src="{{ img | image_url: width: 800, format: 'pjpg' }}"
+              srcset="{{ img | image_url: width: 400, format: 'pjpg' }} 400w, {{ img | image_url: width: 800, format: 'pjpg' }} 800w"
               sizes="(min-width: 750px) 33vw, 100vw"
               alt="{{ img.alt | default: 'Atelier' | escape }}"
               width="800"
